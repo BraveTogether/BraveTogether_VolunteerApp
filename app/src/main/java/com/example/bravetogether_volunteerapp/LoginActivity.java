@@ -38,7 +38,7 @@ public class LoginActivity extends AppCompatActivity {
 //        loginButton.setReadPermissions(Arrays.asList(EMAIL));
         // If you are using in a fragment, call loginButton.setFragment(this);
 
-        // Callback registration
+//         Callback registration
         loginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
             @Override
             public void onSuccess(LoginResult loginResult) {
@@ -57,10 +57,10 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
-    public void signIn(View view) {
-        String mUsername = username.getText().toString();
-        String mEmail = email.getText().toString();
-        String mPassword = password.getText().toString();
-        String mConfirmPassword = confirmPassword.getText().toString();
-    }
+//    public void signIn(View view) {
+//        String mUsername = username.getText().toString();
+//        String mEmail = email.getText().toString();
+//        String mPassword = password.getText().toString();
+//        String mConfirmPassword = confirmPassword.getText().toString();
+//    }
 }
