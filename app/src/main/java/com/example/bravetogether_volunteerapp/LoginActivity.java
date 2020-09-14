@@ -1,5 +1,6 @@
 package com.example.bravetogether_volunteerapp;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -13,10 +14,17 @@ import android.widget.Toast;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
+import com.facebook.login.Login;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.auth.api.signin.GoogleSignInResult;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.SignInButton;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.auth.api.Auth;
 
-public class LoginActivity extends AppCompatActivity {
+public class LoginActivity extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener {
 
     private CallbackManager callbackManager;
     private TextView username;
@@ -24,6 +32,9 @@ public class LoginActivity extends AppCompatActivity {
     private TextView password;
     private TextView confirmPassword;
     private LoginButton facebookLoginButton;
+    private SignInButton googleSignInButton;
+    private GoogleApiClient googleApiClient;
+    private static final int SIGN_IN = 1; //Google request call
 
 
     @Override
@@ -55,12 +66,36 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
+        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).requestEmail().build();
+        googleApiClient = new GoogleApiClient.Builder(this).enableAutoManage(this,this)
+                .addApi(Auth.GOOGLE_SIGN_IN_API,gso).build();
+
+        googleSignInButton = findViewById(R.id.googleSignInButton);
+        googleSignInButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = Auth.GoogleSignInApi.getSignInIntent(googleApiClient);
+                startActivityForResult(intent, SIGN_IN);
+            }
+        });
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        callbackManager.onActivityResult(requestCode,resultCode,data);
+        callbackManager.onActivityResult(requestCode,resultCode,data); //Facebook callback manager
+        if(requestCode == SIGN_IN){ //Google activity result
+            GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
+            if(result.isSuccess()){
+                startActivity(new Intent(LoginActivity.this,MainActivity.class));
+                Toast.makeText(this, "You have logged in", Toast.LENGTH_SHORT).show();
+                finish();
+                //TODO implement the backend for the google login
+            }else{
+                Toast.makeText(this, "Login has failed", Toast.LENGTH_SHORT).show();
+            }
+
+        }
     }
 
     public void signIn(View view) { //Sign in using email and password
@@ -76,12 +111,11 @@ public class LoginActivity extends AppCompatActivity {
         String mPassword = password.getText().toString();
         String mConfirmPassword = confirmPassword.getText().toString();
 
-        //TODO
-        //Implement sending the data to the database,confirming it's valid,creating a user and signing him in.
-
+        //TODO Implement sending the data to the database,confirming it's valid,creating a user and signing him in.
     }
 
-    public void registerWithFacebook(View view){
+    @Override
+    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) { //A google API method
 
     }
 }
