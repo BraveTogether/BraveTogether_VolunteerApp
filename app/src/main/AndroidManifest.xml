@@ -13,6 +13,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".VolunteerApprovalActivity"></activity>
+        <activity android:name=".GeneralActivity"></activity>
         <activity android:name=".IntroFirstTimeActivity" />
         <activity
             android:name=".LoginActivity"

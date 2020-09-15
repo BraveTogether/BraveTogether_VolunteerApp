@@ -18,4 +18,14 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(MainActivity.this,LoginActivity.class);
         startActivity(intent);
     }
+
+    public void goToFirstTime(View view){
+        Intent intent = new Intent(MainActivity.this,IntroFirstTimeActivity.class);
+        startActivity(intent);
+    }
+
+    public void goToGeneralActivity(View view){
+        Intent intent = new Intent(MainActivity.this,GeneralActivity.class);
+        startActivity(intent);
+    }
 }
