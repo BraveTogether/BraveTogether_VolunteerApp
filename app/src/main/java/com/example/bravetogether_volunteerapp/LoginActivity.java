@@ -14,7 +14,6 @@ import android.widget.Toast;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
-import com.facebook.login.Login;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
@@ -112,6 +111,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         String mConfirmPassword = confirmPassword.getText().toString();
 
         //TODO Implement sending the data to the database,confirming it's valid,creating a user and signing him in.
+        //Check if username not exist && email not exists && passwords match
     }
 
     @Override
