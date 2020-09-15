@@ -16,21 +16,21 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 public class GeneralActivity extends AppCompatActivity {
 
     BottomNavigationView bottomNavigationView; //Refers to the navigation buttons of the list view
-    ListView optionsListView;
-    GeneralActivityListAdapter adapter;
+    ListView optionsListView; //Refers to the volunteering options list view
+    GeneralActivityListAdapter adapter; //volunteering options list view adapter
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_general);
 
-        String title[] = {"one","two","three"}; //Placeholders untill we have real data
-        String description[] = {"one","two","three"};
+        String title[] = {"מורה לציור","מורה לריקוד","מורה לתנך"}; //Placeholders untill we have real data
+        String description[] = {"ללמד ציור","ללמד ריקוד","ללמד תנך"};
 
         bottomNavigationView = findViewById(R.id.topNavigationDrawer);
         optionsListView = findViewById(R.id.volunteeringOptionsListView);
-        adapter = new GeneralActivityListAdapter(this,title,description);
-        optionsListView.setAdapter(adapter);
+        adapter = new GeneralActivityListAdapter(this,title,description); //Creating the custom adapter object
+        optionsListView.setAdapter(adapter); //Linking the listview with the adapter
         optionsListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
