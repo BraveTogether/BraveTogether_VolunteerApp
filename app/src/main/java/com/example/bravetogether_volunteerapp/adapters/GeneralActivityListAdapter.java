@@ -15,14 +15,14 @@ import com.example.bravetogether_volunteerapp.R;
 public class GeneralActivityListAdapter extends ArrayAdapter<String> {
 
     Context context;
-    String title;
-    String description;
+    String rTitle[];
+    String rDescription[];
 
-    GeneralActivityListAdapter(Context c,String title,String description){
-        super(c, R.layout.general_activity_list_item);
+    public GeneralActivityListAdapter(Context c,String title[],String description[]){
+        super(c, R.layout.general_activity_list_item,title);
         this.context = c;
-        this.title = title;
-        this.description = description;
+        this.rTitle = title;
+        this.rDescription = description;
     }
 
     @NonNull
@@ -32,6 +32,10 @@ public class GeneralActivityListAdapter extends ArrayAdapter<String> {
         View row = layoutInflater.inflate(R.layout.general_activity_list_item,parent,false);
         TextView myTitle = row.findViewById(R.id.volunteerTitleTextView);
         TextView myDescription = row.findViewById(R.id.volunteerDescriptionTextView);
-        return super.getView(position, convertView, parent);
+
+        myTitle.setText(rTitle[position]);
+        myDescription.setText(rDescription[position]);
+
+        return row;
     }
 }
