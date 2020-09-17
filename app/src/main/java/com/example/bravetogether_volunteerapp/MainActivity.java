@@ -19,6 +19,11 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    public void goToProfilePage(View view) {
+        Intent intent = new Intent(MainActivity.this,ProfileActivity.class);
+        startActivity(intent);
+    }
+
     public void goToFirstTime(View view){
         Intent intent = new Intent(MainActivity.this,IntroFirstTimeActivity.class);
         startActivity(intent);
