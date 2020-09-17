@@ -22,4 +22,10 @@
     <string name="menu_home">Home</string>
     <string name="menu_gallery">Gallery</string>
     <string name="menu_slideshow">Slideshow</string>
+    <string name="textviewCoins">textViewCoinsNum</string>
+    <string name="textviewDescription">\@string/textviewDescription</string>
+    <string name="textviewEvent">textviewEvent</string>
+    <string name="textviewTime">textviewTime</string>
+    <string name="textviewLocation">textviewLocation</string>
+    <string name="textviewDate">textviewDate</string>
 </resources>

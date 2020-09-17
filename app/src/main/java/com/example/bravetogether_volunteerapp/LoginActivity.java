@@ -14,6 +14,7 @@ import android.widget.Toast;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
+import com.facebook.FacebookSdk;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
@@ -40,7 +41,6 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-
         callbackManager = CallbackManager.Factory.create();
 
         facebookLoginButton = (LoginButton) findViewById(R.id.facebook_login_button); //referencing the facebook login button
@@ -98,12 +98,6 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
     }
 
     public void signIn(View view) { //Sign in using email and password
-
-        username = findViewById(R.id.usernameEditText);
-        email = findViewById(R.id.emailTextView);
-        password = findViewById(R.id.passwordEditText);
-        confirmPassword = findViewById(R.id.confirmPasswordEditText);
-
 
         String mUsername = username.getText().toString();
         String mEmail = email.getText().toString();
