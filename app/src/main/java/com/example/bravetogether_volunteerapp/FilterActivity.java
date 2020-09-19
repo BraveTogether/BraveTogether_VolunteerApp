@@ -65,15 +65,15 @@ public class FilterActivity extends AppCompatActivity {
     }
 
     public float getDistance(LatLng place1, LatLng place2) {
-        Location locationA = new Location("point A");
+        Location locationA = new Location("התקוה 23 רמת השרון");
 
         locationA.setLatitude(place1.latitude);
         locationA.setLongitude(place1.longitude);
 
-        Location locationB = new Location("point B");
+        Location locationB = new Location("הרצל 22 הרצליה");
 
-        locationB.setLatitude(place1.latitude);
-        locationB.setLongitude(place1.longitude);
+        locationB.setLatitude(place2.latitude);
+        locationB.setLongitude(place2.longitude);
 
         float distance = locationA.distanceTo(locationB);
         return distance;
@@ -83,15 +83,13 @@ public class FilterActivity extends AppCompatActivity {
         //change addressUser for query to our db for the user address
         //change addressFoundation for query to our db for the user address
         String addressUser = "התקוה 23 רמת השרון";
-        String addressFoundation = "הרצל 22 הרצליה";
+        String addressFoundation = "דוד בן גוריון 22 הרצליה";
 
         Context cont = getApplicationContext();
         LatLng user = getLocationFromAddress(cont, addressUser);
         LatLng foundation = getLocationFromAddress(cont, addressFoundation);
 
         float distance = getDistance(foundation, user);
-        String test = String.valueOf(distance);
-
     }
 
     public void Save(View view) {
