@@ -20,6 +20,9 @@ import com.android.volley.toolbox.Volley;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
+import com.facebook.GraphRequest;
+import com.facebook.GraphResponse;
+import com.facebook.Profile;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
@@ -50,13 +53,37 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         callbackManager = CallbackManager.Factory.create();
 
         facebookLoginButton = (LoginButton) findViewById(R.id.facebook_login_button); //referencing the facebook login button
-        facebookLoginButton.setReadPermissions("email", "public_profile", "user_friends"); //For the facebook login to work
+        facebookLoginButton.setReadPermissions("email"); //For the facebook login to work
 
         facebookLoginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() { //A callback manager for our facebook button
             @Override
             public void onSuccess(LoginResult loginResult) {
+                Log.e("onSuccess", "--------" + loginResult.getAccessToken());
+                Log.e("Token", "--------" + loginResult.getAccessToken().getToken());
+                Log.e("Permision", "--------" + loginResult.getRecentlyGrantedPermissions());
+                Profile profile = Profile.getCurrentProfile();
+                Log.e("ProfileDataNameF", "--" + profile.getFirstName());
+                Log.e("ProfileDataNameL", "--" + profile.getLastName());
+
+                Log.e("Image URI", "--" + profile.getLinkUri());
+
+                Log.e("OnGraph", "------------------------");
+                GraphRequest request = GraphRequest.newMeRequest(
+                        loginResult.getAccessToken(),
+                        new GraphRequest.GraphJSONObjectCallback() {
+                            @Override
+                            public void onCompleted(
+                                    JSONObject object,
+                                    GraphResponse response) {
+                                // Application code
+                                Log.e("GraphResponse", "-------------" + response.toString());
+                            }
+                        });
+                Bundle parameters = new Bundle();
+                parameters.putString("fields", "id,name,link,gender,birthday,email");
+                request.setParameters(parameters);
+                request.executeAsync();
                 Toast.makeText(LoginActivity.this, "Success", Toast.LENGTH_SHORT).show();
-                username.setText(loginResult.getAccessToken().getUserId());
             }
 
             @Override
@@ -92,6 +119,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         if (requestCode == SIGN_IN) { //Google activity result
             GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
             if (result.isSuccess()) {
+                Log.i("result",result.getStatus().toString());
                 startActivity(new Intent(LoginActivity.this, MainActivity.class));
                 Toast.makeText(this, "You have logged in", Toast.LENGTH_SHORT).show();
                 finish();
