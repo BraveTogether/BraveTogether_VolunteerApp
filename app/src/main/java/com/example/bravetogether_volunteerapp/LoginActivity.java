@@ -5,6 +5,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -23,6 +24,7 @@ import com.facebook.FacebookException;
 import com.facebook.GraphRequest;
 import com.facebook.GraphResponse;
 import com.facebook.Profile;
+import com.facebook.internal.ImageRequest;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
@@ -31,13 +33,20 @@ import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.auth.api.Auth;
+
+import org.json.JSONException;
 import org.json.JSONObject;
 
 public class LoginActivity extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener {
 
     private CallbackManager callbackManager;
-    private TextView username;
-    private TextView email;
+    private String uid;
+    private String Fname;
+    private String Lname;
+    private String email;
+    private String imageURL;
+    private TextView usernameView;
+    private TextView emailView;
     private TextView password;
     private TextView confirmPassword;
     private LoginButton facebookLoginButton;
@@ -58,32 +67,48 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         facebookLoginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() { //A callback manager for our facebook button
             @Override
             public void onSuccess(LoginResult loginResult) {
-                Log.e("onSuccess", "--------" + loginResult.getAccessToken());
-                Log.e("Token", "--------" + loginResult.getAccessToken().getToken());
-                Log.e("Permision", "--------" + loginResult.getRecentlyGrantedPermissions());
+//                Log.e("onSuccess", "--------" + loginResult.getAccessToken());
+//                Log.e("Token", "--------" + loginResult.getAccessToken().getToken());
+//                Log.e("Permision", "--------" + loginResult.getRecentlyGrantedPermissions());
                 Profile profile = Profile.getCurrentProfile();
-                Log.e("ProfileDataNameF", "--" + profile.getFirstName());
-                Log.e("ProfileDataNameL", "--" + profile.getLastName());
-
-                Log.e("Image URI", "--" + profile.getLinkUri());
-
-                Log.e("OnGraph", "------------------------");
-                GraphRequest request = GraphRequest.newMeRequest(
-                        loginResult.getAccessToken(),
+                Fname = profile.getFirstName();
+                Lname = profile.getLastName();
+//                Log.e("ProfileDataNameF", "--" + profile.getFirstName());
+//                Log.e("ProfileDataNameL", "--" + profile.getLastName());
+//                imageURL = profile.getLinkUri();
+//                Log.e("Image URI", "--" + profile.getLinkUri());
+//
+//                Log.e("OnGraph", "------------------------");
+                GraphRequest request = GraphRequest.newMeRequest(loginResult.getAccessToken(),
                         new GraphRequest.GraphJSONObjectCallback() {
                             @Override
-                            public void onCompleted(
-                                    JSONObject object,
-                                    GraphResponse response) {
+                            public void onCompleted(JSONObject object, GraphResponse response) {
                                 // Application code
                                 Log.e("GraphResponse", "-------------" + response.toString());
+                                try {
+//                                    String obj = object.toString();                     //get complete JSON object refrence.
+//                                    String name = object.getString("name");                 //get particular JSON Object
+                                    email = object.getString("email");
+//                                    String birthday = object.getString("birthday"); // 01/31/1980 format
+                                    uid = object.getString("id");
+                                    if (Profile.getCurrentProfile() != null) {                  //add this check because some people don't have profile picture
+                                        imageURL = ImageRequest.getProfilePictureUri(Profile.getCurrentProfile().getId(), 400, 400).toString();
+                                    }
+
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+                                Log.e("email", "email: " + email);
+                                Log.e("URL", "URL: " + imageURL);
+                                Log.e("name", "name: " + Fname + " " + Lname);
+                                Log.e("id", "id: " + uid);
                             }
                         });
                 Bundle parameters = new Bundle();
                 parameters.putString("fields", "email");
                 request.setParameters(parameters);
                 request.executeAsync();
-                Toast.makeText(LoginActivity.this, "first name: " + profile.getFirstName(), Toast.LENGTH_SHORT).show();
+
             }
 
             @Override
@@ -118,8 +143,8 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         callbackManager.onActivityResult(requestCode, resultCode, data); //Facebook callback manager
         if (requestCode == SIGN_IN) { //Google activity result
             GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
+            Log.i("result",result.getStatus().toString());
             if (result.isSuccess()) {
-                Log.i("result",result.getStatus().toString());
                 startActivity(new Intent(LoginActivity.this, MainActivity.class));
                 Toast.makeText(this, "You have logged in", Toast.LENGTH_SHORT).show();
                 finish();
