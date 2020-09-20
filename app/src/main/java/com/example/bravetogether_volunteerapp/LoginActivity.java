@@ -18,13 +18,16 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
 import com.facebook.GraphRequest;
 import com.facebook.GraphResponse;
+import com.facebook.HttpMethod;
 import com.facebook.Profile;
 import com.facebook.internal.ImageRequest;
+import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
@@ -53,6 +56,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
     private SignInButton googleSignInButton;
     private GoogleApiClient googleApiClient;
     private static final int SIGN_IN_GOOGLE = 1; //Google request call
+
 
 
     @Override
@@ -94,21 +98,21 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                                     if (Profile.getCurrentProfile() != null) {                  //add this check because some people don't have profile picture
                                         imageURL = ImageRequest.getProfilePictureUri(Profile.getCurrentProfile().getId(), 400, 400).toString();
                                     }
-
+                                    disconnectFromFacebook();
+                                    //TODO: call to database and register information
                                 } catch (JSONException e) {
                                     e.printStackTrace();
                                 }
-                                Log.e("email", "email: " + email);
-                                Log.e("URL", "URL: " + imageURL);
-                                Log.e("name", "name: " + Fname + " " + Lname);
-                                Log.e("id", "id: " + uid);
                             }
                         });
                 Bundle parameters = new Bundle();
-                parameters.putString("fields", "email");
+                parameters.putString("fields", "id,email");  //set these parameter
                 request.setParameters(parameters);
                 request.executeAsync();
-
+                Log.e("email", "email: " + email);
+                Log.e("URL", "URL: " + imageURL);
+                Log.e("name", "name: " + Fname + " " + Lname);
+                Log.e("id", "id: " + uid);
             }
 
             @Override
@@ -140,7 +144,6 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        callbackManager.onActivityResult(requestCode, resultCode, data); //Facebook callback manager
         if (requestCode == SIGN_IN_GOOGLE) { //Google activity result
             GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
             Log.i("result",result.getStatus().toString());
@@ -152,6 +155,10 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
             } else {
                 Toast.makeText(this, "Login has failed", Toast.LENGTH_SHORT).show();
             }
+
+        }
+        else {
+            callbackManager.onActivityResult(requestCode, resultCode, data); //Facebook callback manager
 
         }
     }
@@ -189,4 +196,28 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
 
     }
+
+
+    public void disconnectFromFacebook()
+    {
+        if (AccessToken.getCurrentAccessToken() == null) {
+            return; // already logged out
+        }
+
+        new GraphRequest(
+                AccessToken.getCurrentAccessToken(),
+                "/me/permissions/",
+                null,
+                HttpMethod.DELETE,
+                new GraphRequest
+                        .Callback() {
+                    @Override
+                    public void onCompleted(GraphResponse graphResponse)
+                    {
+                        LoginManager.getInstance().logOut();
+                    }
+                })
+                .executeAsync();
+    }
+
 }
