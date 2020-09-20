@@ -80,10 +80,10 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                             }
                         });
                 Bundle parameters = new Bundle();
-                parameters.putString("fields", "id,name,link,gender,birthday,email");
+                parameters.putString("fields", "email");
                 request.setParameters(parameters);
                 request.executeAsync();
-                Toast.makeText(LoginActivity.this, "Success", Toast.LENGTH_SHORT).show();
+                Toast.makeText(LoginActivity.this, "first name: " + profile.getFirstName(), Toast.LENGTH_SHORT).show();
             }
 
             @Override
