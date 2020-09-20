@@ -88,19 +88,19 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-//        callbackManager.onActivityResult(requestCode, resultCode, data); //Facebook callback manager
-//        if (requestCode == SIGN_IN) { //Google activity result
-//            GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
-//            if (result.isSuccess()) {
-//                startActivity(new Intent(LoginActivity.this, MainActivity.class));
-//                Toast.makeText(this, "You have logged in", Toast.LENGTH_SHORT).show();
-//                finish();
-//                //TODO implement the backend for the google login
-//            } else {
-//                Toast.makeText(this, "Login has failed", Toast.LENGTH_SHORT).show();
-//            }
-//
-//        }
+        callbackManager.onActivityResult(requestCode, resultCode, data); //Facebook callback manager
+        if (requestCode == SIGN_IN) { //Google activity result
+            GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
+            if (result.isSuccess()) {
+                startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                Toast.makeText(this, "You have logged in", Toast.LENGTH_SHORT).show();
+                finish();
+                //TODO implement the backend for the google login
+            } else {
+                Toast.makeText(this, "Login has failed", Toast.LENGTH_SHORT).show();
+            }
+
+        }
     }
 
     public void signIn(View view) { //Sign in using email and password
