@@ -52,7 +52,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
     private LoginButton facebookLoginButton;
     private SignInButton googleSignInButton;
     private GoogleApiClient googleApiClient;
-    private static final int SIGN_IN = 1; //Google request call
+    private static final int SIGN_IN_GOOGLE = 1; //Google request call
 
 
     @Override
@@ -132,7 +132,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
             @Override
             public void onClick(View v) {
                 Intent intent = Auth.GoogleSignInApi.getSignInIntent(googleApiClient);
-                startActivityForResult(intent, SIGN_IN);
+                startActivityForResult(intent, SIGN_IN_GOOGLE);
             }
         });
     }
@@ -141,7 +141,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         callbackManager.onActivityResult(requestCode, resultCode, data); //Facebook callback manager
-        if (requestCode == SIGN_IN) { //Google activity result
+        if (requestCode == SIGN_IN_GOOGLE) { //Google activity result
             GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
             Log.i("result",result.getStatus().toString());
             if (result.isSuccess()) {
