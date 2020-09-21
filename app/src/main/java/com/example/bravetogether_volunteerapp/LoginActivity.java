@@ -5,16 +5,12 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.net.Uri;
 import android.os.Bundle;
-import android.util.Config;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -50,8 +46,8 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
 
     private CallbackManager callbackManager;
     private String uid;
-    private String Fname;
-    private String Lname;
+    private String firstname;
+    private String lastname;
     private String email;
     private String imageURL;
     private TextView usernameView;
@@ -88,15 +84,15 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                                     String name = object.getString("name");                 //get particular JSON Object
                                     Log.d("name", "name: " + name);
                                     String[] FAndLname = name.split(" ", 2);
-                                    Fname = FAndLname[0];
-                                    Lname = FAndLname[1];
+                                    firstname = FAndLname[0];
+                                    lastname = FAndLname[1];
                                     email = object.getString("email");
                                     uid = object.getString("id");
                                     if (Profile.getCurrentProfile() != null) {                  //add this check because some people don't have profile picture
                                         imageURL = ImageRequest.getProfilePictureUri(Profile.getCurrentProfile().getId(), 400, 400).toString();
                                     }
                                     Log.d("before", "uid: "+ uid + ", email:  "+email);
-                                    registerSocialUser(uid, Fname, Lname, email, imageURL);
+                                    registerSocialUser(uid, firstname, lastname, email, imageURL);
                                     disconnectFromFacebook();
                                     //TODO: call to database and register information
                                     } catch (JSONException e) {
@@ -157,9 +153,8 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
 
         }
     }
-    private void registerSocialUser (final String uid, final String Fname, final String Lname, final String email, final String imageURL) {
-        Log.d("after", "uid: "+ uid + ", email:  "+email);
-        String url = "https://mean-bat-31.loca.lt/";
+    private void registerSocialUser (final String uid, final String firstname, final String lastname, final String email, final String imageURL) {
+        String url = "http://35.214.78.251:8080/";
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
                 new Response.Listener<String>() {
                     @Override
@@ -177,14 +172,13 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
             protected Map<String, String> getParams(){
                 Map<String, String> params = new HashMap<>();
                 params.put("uid", uid);
-                params.put("firstname", Fname);
-                params.put("lastname", Lname);
+                params.put("firstname", firstname);
+                params.put("lastname", lastname);
                 params.put("email", email);
 //                params.put("profile_picture", imageURL);
                 return params;
             }
         };
-
         VolleySingleton.getInstance(this).addToRequestQueue(stringRequest);
     }
 
