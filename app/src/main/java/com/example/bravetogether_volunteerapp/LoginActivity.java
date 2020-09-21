@@ -5,13 +5,16 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Config;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -39,6 +42,9 @@ import com.google.android.gms.auth.api.Auth;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class LoginActivity extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener {
 
@@ -88,7 +94,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                             @Override
                             public void onCompleted(JSONObject object, GraphResponse response) {
                                 // Application code
-                                Log.e("GraphResponse", "-------------" + response.toString());
+                                Log.e("GraphRequest", "-------------" + response.toString());
                                 try {
 //                                    String obj = object.toString();                     //get complete JSON object refrence.
 //                                    String name = object.getString("name");                 //get particular JSON Object
@@ -98,9 +104,11 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                                     if (Profile.getCurrentProfile() != null) {                  //add this check because some people don't have profile picture
                                         imageURL = ImageRequest.getProfilePictureUri(Profile.getCurrentProfile().getId(), 400, 400).toString();
                                     }
+                                    Log.d("before", "uid: "+ uid + ", email:  "+email);
+                                    registerSocialUser(uid, Fname, Lname, email, imageURL);
                                     disconnectFromFacebook();
                                     //TODO: call to database and register information
-                                } catch (JSONException e) {
+                                    } catch (JSONException e) {
                                     e.printStackTrace();
                                 }
                             }
@@ -109,10 +117,10 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                 parameters.putString("fields", "id,email");  //set these parameter
                 request.setParameters(parameters);
                 request.executeAsync();
-                Log.e("email", "email: " + email);
-                Log.e("URL", "URL: " + imageURL);
-                Log.e("name", "name: " + Fname + " " + Lname);
-                Log.e("id", "id: " + uid);
+//                Log.e("email", "email: " + email);
+//                Log.e("URL", "URL: " + imageURL);
+//                Log.e("name", "name: " + Fname + " " + Lname);
+//                Log.e("id", "id: " + uid);
             }
 
             @Override
@@ -162,6 +170,98 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
 
         }
     }
+    private void registerSocialUser (final String uid, final String Fname, final String Lname, final String email, final String imageURL) {
+        Log.d("after", "uid: "+ uid + ", email:  "+email);
+        String url = "https://cold-jellyfish-94.loca.lt/insert";
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+//                        progressBar.setVisibility(View.GONE);
+
+                        try {
+                            //converting response to json object
+                            JSONObject obj = new JSONObject(response);
+
+                            //if no error in response
+                            if (!obj.getBoolean("error")) {
+                                Log.d("success", "success");
+//                                Toast.makeText(getApplicationContext(), obj.getString("message"), Toast.LENGTH_SHORT).show();
+//
+//                                //getting the user from the response
+//                                JSONObject userJson = obj.getJSONObject("user");
+//
+//                                //creating a new user object
+//                                User user = new User(
+//                                        userJson.getInt("id"),
+//                                        userJson.getString("username"),
+//                                        userJson.getString("email"),
+//                                        userJson.getString("gender")
+//                                );
+//
+//                                //storing the user in shared preferences
+//                                SharedPrefManager.getInstance(getApplicationContext()).userLogin(user);
+
+                                //starting the profile activity
+                                finish();
+//                                startActivity(new Intent(getApplicationContext(), ProfileActivity.class));
+                            } else {
+                                Log.d("error", "error");
+//                                Toast.makeText(getApplicationContext(), obj.getString("message"), Toast.LENGTH_SHORT).show();
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Log.d("handshake", error.getMessage());
+//                        Toast.makeText(getApplicationContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                }) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                params.put("uid", uid);
+                params.put("firstname", Fname);
+                params.put("lastname", Lname);
+                params.put("email", email);
+//                params.put("profile_picture", imageURL);
+                return params;
+            }
+        };
+
+        VolleySingleton.getInstance(this).addToRequestQueue(stringRequest);
+
+    }
+//        RequestQueue queue = Volley.newRequestQueue(this); //A queue for our requests
+////        String stopArchiveUrl = Config.REGISTER_SOCIAL_URL;
+//        String url = "https://polite-snail-23.loca.lt:3000/";
+//        StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() { //A single get request
+//            @Override
+//            public void onResponse(String response) {
+//                Log.d("CREATION", "Social Media Account Added: " + Fname + " " + email);
+////                try {
+////                    JSONObject obj = new JSONObject(response.substring(1, response.length() - 1));
+////                    Toast.makeText(LoginActivity.this, obj.get("vid").toString(), Toast.LENGTH_SHORT).show();
+////                } catch (Exception e) {
+////                    e.printStackTrace();
+////                }
+//            }
+//        }, new Response.ErrorListener() {
+//            @Override
+//            public void onErrorResponse(VolleyError error) {
+//                Log.d("ERROR", "Error adding Social Media Account");
+////                Toast.makeText(LoginActivity.this, error.getMessage(), Toast.LENGTH_SHORT).show();
+//            }
+//        });
+//        // Add the request to the RequestQueue.
+//        queue.add(stringRequest);
+//        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+//        startActivity(intent);
+//        finish();
 
     public void signIn(View view) { //Sign in using email and password
         //TODO Implement sending the data to the database,confirming it's valid,creating a user and signing him in.
