@@ -3,6 +3,7 @@ package com.example.bravetogether_volunteerapp;
 import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.provider.CalendarContract;
 import android.view.View;
 
 import com.example.bravetogether_volunteerapp.R;
@@ -17,12 +18,14 @@ public class addToCalendar extends AppCompatActivity {
     public void AddCalendarEvent(View view) {
         Calendar calendarEvent = Calendar.getInstance();
         Intent i = new Intent(Intent.ACTION_EDIT);
-        i.setType("vnd.android.cursor.item/event");
+        i.setType("vnd.android.cursor.item/event"); //set a type to event
+
         i.putExtra("beginTime", calendarEvent.getTimeInMillis());
         i.putExtra("allDay", true);
         i.putExtra("rule", "FREQ=YEARLY");
         i.putExtra("endTime", calendarEvent.getTimeInMillis() + 60 * 60 * 1000);
-        i.putExtra("title", "Calendar Event");
+        i.putExtra(CalendarContract.Events.TITLE, "Calendar Event"); //the title of the event
         startActivity(i);
     }
 }
+
