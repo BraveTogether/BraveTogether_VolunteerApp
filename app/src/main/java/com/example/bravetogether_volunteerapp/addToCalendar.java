@@ -13,7 +13,7 @@ public class addToCalendar extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        setContentView(R.layout.activity_add_to_calendar);
+        setContentView(R.layout.activity_add_to_calendar);
     }
     public void AddCalendarEvent(View view) {
         Calendar calendarEvent = Calendar.getInstance();
