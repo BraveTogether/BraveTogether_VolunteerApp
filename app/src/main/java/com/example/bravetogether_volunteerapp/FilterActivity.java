@@ -1,8 +1,8 @@
 package com.example.bravetogether_volunteerapp;
-
 import androidx.appcompat.app.AppCompatActivity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
@@ -21,17 +21,25 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-
-
 public class FilterActivity extends AppCompatActivity {
 
-    static int radius;
+    // configure the info regarding the file that holds the info about the current user.
+    private static SharedPreferences mPreferences;
+    private String sharedPrefFile =
+            "com.example.android.BraveTogether_VolunteerApp";
+    static int radius, duration, time, nature;
+    static JSONObject UserData;
     static Intent i;
+
+    // get the user email from the file that holds the user info for the app.
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_filter);
-        /// make sure to change MainActivity to the activiry you fish to forward the data to.
+        mPreferences = getSharedPreferences(sharedPrefFile, MODE_PRIVATE);
+
+
+        /// make sure to change MainActivity to the activity you wish to forward the data to.
         i = new Intent(FilterActivity.this, MainActivity.class);
     }
 
@@ -41,8 +49,11 @@ public class FilterActivity extends AppCompatActivity {
     }
     public void duration(View view) {
         view.setSelected(!view.isSelected());
-        String duration = view.getTag().toString();
-        i.putExtra("duration", duration);
+        duration = Integer.parseInt(view.getTag().toString());
+    }
+    public void time(View view) {
+        view.setSelected(!view.isSelected());
+        time = Integer.parseInt(view.getTag().toString());
     }
 
     public static LatLng getLocationFromAddress(Context context, String strAddress)
@@ -75,12 +86,12 @@ public class FilterActivity extends AppCompatActivity {
         Context cont = getApplicationContext();
         LatLng place1 = getLocationFromAddress(cont, address1);
         LatLng place2 = getLocationFromAddress(cont, address2);
-        Location locationA = new Location("התקוה 23 רמת השרון");
+        Location locationA = new Location("location");
 
         locationA.setLatitude(place1.latitude);
         locationA.setLongitude(place1.longitude);
 
-        Location locationB = new Location("הרצל 22 הרצליה");
+        Location locationB = new Location("location");
 
         locationB.setLatitude(place2.latitude);
         locationB.setLongitude(place2.longitude);
@@ -93,41 +104,52 @@ public class FilterActivity extends AppCompatActivity {
     }
 
     public void display(View view) {
-
         String URL = getString(R.string.apiUrl);
         JsonArrayRequest JsonArrayRequest = new JsonArrayRequest
                 (Request.Method.GET, URL, null, new Response.Listener<JSONArray>() {
-                    String ActivityAddress, UserAddress;
+                    JSONObject Activity;
                     @Override
                     public void onResponse(JSONArray response) {
-                        UserAddress = "test";
-                        for (int i=0; i<response.length(); i++){
-                            try {
-                                ActivityAddress=(response.getJSONObject(0).get("address")).toString();
-                                if (getDistance(ActivityAddress,UserAddress) < radius) {
+                        // get the user address from the shared preference file
+                        String UserAddress = mPreferences.getString("UserAddress", "null");
 
+                        if (UserAddress == null) {
+                            // redirect the user to the activity in which he fills the required info.
+                        }
+                        else {
+                            ArrayList<JSONObject> activities = new ArrayList<JSONObject>();
+                            boolean dur, distance, times;
+                            for (int i = 0; i < response.length(); i++) {
+                                try {
+                                    Activity = response.getJSONObject(i);
+                                    // havent yes calculated the time because i dont know if we will use time ranges entered by
+                                    // user or time frames as like in the current layout
+                                    distance = getDistance(Activity.get("address").toString(), UserAddress) < radius;
+                                    dur = Activity.getInt("duration") <= duration;
+                                    if (distance && dur) {
+                                        activities.add(response.getJSONObject(i));
+                                    }
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
                                 }
                             }
-                            catch (JSONException e) { e.printStackTrace(); }
                         }
                     }
                 }, new Response.ErrorListener() {
 
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        // TODO: Handle error
                         Log.e("Response", "there was an error!!! :(");
                     }
                 });
 // Access the RequestQueue through your singleton class.
         VolleySingleton.getInstance(this).addToRequestQueue(JsonArrayRequest);
-
     }
-
 
     public void Save(View view) {
 
     }
+
 }
 
 

@@ -140,6 +140,7 @@
         android:layout_marginRight="26dp"
         android:background="@drawable/filter_buttons"
         android:text="בוקר"
+        android:tag="6"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/activity_hours" />
 
@@ -154,6 +155,7 @@
         android:layout_marginRight="40dp"
         android:background="@drawable/filter_buttons"
         android:text="ערב"
+        android:tag="5"
         app:layout_constraintEnd_toStartOf="@+id/afternoon"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/activity_hours" />
@@ -184,6 +186,7 @@
         android:layout_marginRight="10dp"
         android:background="@drawable/filter_buttons"
         android:text="אחר הצהריים"
+        android:onClick="time"
         app:layout_constraintEnd_toStartOf="@+id/noon"
         app:layout_constraintStart_toEndOf="@+id/evening"
         app:layout_constraintTop_toBottomOf="@id/activity_hours" />
@@ -199,6 +202,7 @@
         android:layout_marginRight="26dp"
         android:background="@drawable/filter_buttons"
         android:text="ללא הגבלה"
+        android:tag="10000000"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"

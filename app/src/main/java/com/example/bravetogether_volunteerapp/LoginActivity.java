@@ -5,6 +5,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -15,6 +16,7 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.facebook.AccessToken;
@@ -59,13 +61,15 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
     private GoogleApiClient googleApiClient;
     private static final int SIGN_IN_GOOGLE = 1; //Google request call
 
-
-
+    private SharedPreferences mPreferences;
+    private String sharedPrefFile =
+            "com.example.android.BraveTogether_VolunteerApp";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         callbackManager = CallbackManager.Factory.create();
+        mPreferences = getSharedPreferences(sharedPrefFile, MODE_PRIVATE);
 
         facebookLoginButton = (LoginButton) findViewById(R.id.facebook_login_button); //referencing the facebook login button
         facebookLoginButton.setReadPermissions("email"); //For the facebook login to work
@@ -214,6 +218,47 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
     @Override
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
 
+    }
+
+    @Override
+    protected void onPause(){
+        super.onPause();
+            String URL = "http://35.214.78.251/getuserbymail:8080";
+            JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
+                    (Request.Method.GET, URL, null, new Response.Listener<JSONObject>() {
+
+                        @Override
+                        public void onResponse(JSONObject response) {
+                            // fill the preferences file with data regarding the current user
+                            String address=null, fname=null, lname=null;
+                            try {
+                                //required details
+                                fname = response.getString("first_name");
+                                lname = response.getString("last_name");
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                            try {
+                                //non required details
+                                address = response.getString("address");
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                            SharedPreferences.Editor preferencesEditor = mPreferences.edit();
+                            preferencesEditor.putString("UserEmail", email);
+                            preferencesEditor.putString("UserFirstName", fname);
+                            preferencesEditor.putString("UserLastName", lname);
+                            preferencesEditor.putString("UserAddress", address);
+                            preferencesEditor.apply();
+                        }
+                    }, new Response.ErrorListener() {
+
+                        @Override
+                        public void onErrorResponse(VolleyError error) { }
+                    });
+// Access the RequestQueue through your singleton class.
+            VolleySingleton.getInstance(this).addToRequestQueue(jsonObjectRequest);
+        // ...
     }
 
 
