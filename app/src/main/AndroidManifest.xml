@@ -58,7 +58,6 @@
                 <data android:scheme="@string/fb_login_protocol_scheme" />
             </intent-filter>
         </activity>
-
         <activity
         android:name=".addToCalendar"
             android:exported="true">
@@ -67,6 +66,9 @@
             <category android:name="android.intent.category.LAUNCHER" />
         </intent-filter>
     </activity>
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyA0hReShDEqNU3cdSm9eot1atb8-CKBy0Q"/>
     </application>
 
 </manifest>

@@ -1,25 +1,31 @@
 package com.example.bravetogether_volunteerapp;
 
 import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
-import android.view.Window;
-import android.widget.Toast;
-
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonArrayRequest;
 import com.google.android.gms.maps.model.LatLng;
-
+import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Filter;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+
 
 public class FilterActivity extends AppCompatActivity {
 
+    static int radius;
     static Intent i;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,10 +37,10 @@ public class FilterActivity extends AppCompatActivity {
 
     public void radius(View view) {
         view.setSelected(!view.isSelected());
-        String radius = view.getTag().toString();
-        i.putExtra("radius", radius);
+        radius = Integer.parseInt(view.getTag().toString());
     }
     public void duration(View view) {
+        view.setSelected(!view.isSelected());
         String duration = view.getTag().toString();
         i.putExtra("duration", duration);
     }
@@ -64,7 +70,11 @@ public class FilterActivity extends AppCompatActivity {
         return mylocation;
     }
 
-    public float getDistance(LatLng place1, LatLng place2) {
+    public float getDistance(String address1, String address2) {
+
+        Context cont = getApplicationContext();
+        LatLng place1 = getLocationFromAddress(cont, address1);
+        LatLng place2 = getLocationFromAddress(cont, address2);
         Location locationA = new Location("התקוה 23 רמת השרון");
 
         locationA.setLatitude(place1.latitude);
@@ -80,19 +90,58 @@ public class FilterActivity extends AppCompatActivity {
     }
 
     public void Search(View view) {
-        //change addressUser for query to our db for the user address
-        //change addressFoundation for query to our db for the user address
-        String addressUser = "התקוה 23 רמת השרון";
-        String addressFoundation = "דוד בן גוריון 22 הרצליה";
-
-        Context cont = getApplicationContext();
-        LatLng user = getLocationFromAddress(cont, addressUser);
-        LatLng foundation = getLocationFromAddress(cont, addressFoundation);
-
-        float distance = getDistance(foundation, user);
     }
+
+    public void display(View view) {
+
+        String URL = getString(R.string.apiUrl);
+        JsonArrayRequest JsonArrayRequest = new JsonArrayRequest
+                (Request.Method.GET, URL, null, new Response.Listener<JSONArray>() {
+                    String ActivityAddress, UserAddress;
+                    @Override
+                    public void onResponse(JSONArray response) {
+                        UserAddress = "test";
+                        for (int i=0; i<response.length(); i++){
+                            try {
+                                ActivityAddress=(response.getJSONObject(0).get("address")).toString();
+                                if (getDistance(ActivityAddress,UserAddress) < radius) {
+
+                                }
+                            }
+                            catch (JSONException e) { e.printStackTrace(); }
+                        }
+                    }
+                }, new Response.ErrorListener() {
+
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        // TODO: Handle error
+                        Log.e("Response", "there was an error!!! :(");
+                    }
+                });
+// Access the RequestQueue through your singleton class.
+        VolleySingleton.getInstance(this).addToRequestQueue(JsonArrayRequest);
+
+    }
+
 
     public void Save(View view) {
 
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

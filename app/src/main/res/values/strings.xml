@@ -28,4 +28,5 @@
     <string name="textviewTime">textviewTime</string>
     <string name="textviewLocation">textviewLocation</string>
     <string name="textviewDate">textviewDate</string>
+    <string name="apiUrl">http://35.214.78.251:8080/</string>
 </resources>
