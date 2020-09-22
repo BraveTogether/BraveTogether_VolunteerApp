@@ -1,5 +1,7 @@
 package com.example.bravetogether_volunteerapp.ui.about;
 
+import android.app.ActionBar;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;

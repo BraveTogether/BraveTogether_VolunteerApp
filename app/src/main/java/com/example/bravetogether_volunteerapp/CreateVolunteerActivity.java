@@ -7,9 +7,9 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.EditText;
 
+import com.facebook.places.Places;
 import com.google.android.gms.common.api.Status;
 import com.google.android.gms.maps.model.LatLng;
-import com.google.android.libraries.places.api.Places;
 import com.google.android.libraries.places.api.model.Place;
 import com.google.android.libraries.places.api.model.RectangularBounds;
 import com.google.android.libraries.places.api.net.PlacesClient;
@@ -29,8 +29,8 @@ public class CreateVolunteerActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_volunteer);
 
-        Places.initialize(getApplicationContext(), apiKey); //Initialize SDK
-        PlacesClient placesClient = Places.createClient(this);
+    //    Places.initialize(getApplicationContext(), apiKey); //Initialize SDK
+      //  PlacesClient placesClient = Places.createClient(this);
 
         // Initialize the AutocompleteSupportFragment.
         AutocompleteSupportFragment autocompleteFragment = (AutocompleteSupportFragment)
