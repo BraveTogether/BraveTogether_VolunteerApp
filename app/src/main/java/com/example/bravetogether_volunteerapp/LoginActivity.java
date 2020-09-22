@@ -222,7 +222,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
     @Override
     protected void onPause(){
         super.onPause();
-            String URL = "http://35.214.78.251/getuserbymail:8080";
+            String URL = "http://35.214.78.251:8080/getuserbymail";
             JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
                     (Request.Method.GET, URL, null, new Response.Listener<JSONObject>() {
 
@@ -255,9 +255,8 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                         @Override
                         public void onErrorResponse(VolleyError error) { }
                     });
-// Access the RequestQueue through your singleton class.
+            // Access the RequestQueue through your singleton class.
             VolleySingleton.getInstance(this).addToRequestQueue(jsonObjectRequest);
-        // ...
     }
 
 
