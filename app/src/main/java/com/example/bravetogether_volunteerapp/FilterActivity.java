@@ -23,12 +23,9 @@ import org.json.JSONObject;
 
 public class FilterActivity extends AppCompatActivity {
 
-    // configure the info regarding the file that holds the info about the current user.
     private static SharedPreferences mPreferences;
-    private String sharedPrefFile =
-            "com.example.android.BraveTogether_VolunteerApp";
-    static int radius, duration, time, nature;
-    static JSONObject UserData;
+    static int radius, duration, time;
+    static boolean nature;
     static Intent i;
 
     // get the user email from the file that holds the user info for the app.
@@ -36,6 +33,9 @@ public class FilterActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_filter);
+        // configure the preference file
+        String sharedPrefFile =
+                "com.example.android.BraveTogether_VolunteerApp";
         mPreferences = getSharedPreferences(sharedPrefFile, MODE_PRIVATE);
 
 
@@ -54,6 +54,10 @@ public class FilterActivity extends AppCompatActivity {
     public void time(View view) {
         view.setSelected(!view.isSelected());
         time = Integer.parseInt(view.getTag().toString());
+    }
+    public void nature(View view) {
+        view.setSelected(!view.isSelected());
+        nature = Boolean.parseBoolean(view.getTag().toString());
     }
 
     public static LatLng getLocationFromAddress(Context context, String strAddress)
@@ -96,14 +100,11 @@ public class FilterActivity extends AppCompatActivity {
         locationB.setLatitude(place2.latitude);
         locationB.setLongitude(place2.longitude);
 
-        float distance = locationA.distanceTo(locationB);
-        return distance;
+
+        return locationA.distanceTo(locationB);
     }
 
     public void Search(View view) {
-    }
-
-    public void display(View view) {
         String URL = getString(R.string.apiUrl);
         JsonArrayRequest JsonArrayRequest = new JsonArrayRequest
                 (Request.Method.GET, URL, null, new Response.Listener<JSONArray>() {
@@ -118,15 +119,16 @@ public class FilterActivity extends AppCompatActivity {
                         }
                         else {
                             ArrayList<JSONObject> activities = new ArrayList<JSONObject>();
-                            boolean dur, distance, times;
+                            boolean dur, distance, times, natureofactivity;
                             for (int i = 0; i < response.length(); i++) {
                                 try {
                                     Activity = response.getJSONObject(i);
-                                    // havent yes calculated the time because i dont know if we will use time ranges entered by
+                                    // havent yet calculated the time because i dont know if we will use time ranges entered by
                                     // user or time frames as like in the current layout
                                     distance = getDistance(Activity.get("address").toString(), UserAddress) < radius;
                                     dur = Activity.getInt("duration") <= duration;
-                                    if (distance && dur) {
+                                    natureofactivity = (nature == (Activity.getBoolean("online")));
+                                    if (distance && dur && natureofactivity) {
                                         activities.add(response.getJSONObject(i));
                                     }
                                 } catch (JSONException e) {

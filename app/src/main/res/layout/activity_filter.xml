@@ -248,6 +248,8 @@
         android:layout_marginEnd="16dp"
         android:layout_marginRight="16dp"
         android:background="@drawable/filter_buttons"
+        android:tag="true"
+        android:onClick="nature"
         android:text="להתנדב אונליין"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/nature" />
@@ -263,6 +265,8 @@
         android:layout_marginRight="59dp"
         android:background="@drawable/filter_buttons"
         android:text="להתנדב במקום"
+        android:tag="false"
+        android:onClick="nature"
         app:layout_constraintEnd_toStartOf="@+id/online"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/nature" />
