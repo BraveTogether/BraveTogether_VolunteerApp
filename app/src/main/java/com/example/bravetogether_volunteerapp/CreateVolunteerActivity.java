@@ -36,7 +36,8 @@ public class CreateVolunteerActivity extends AppCompatActivity {
         AutocompleteSupportFragment autocompleteFragment = (AutocompleteSupportFragment)
                 getSupportFragmentManager().findFragmentById(R.id.autocomplete_address);
 
-        //TODO: change hint of address
+        autocompleteFragment.setHint("כתובת");
+        //TODO: change to rtl text direction
         autocompleteFragment.setLocationBias(RectangularBounds.newInstance(
                 new LatLng(29.4533796, 34.2674994),
                 new LatLng(33.3356317, 35.8950234)));
