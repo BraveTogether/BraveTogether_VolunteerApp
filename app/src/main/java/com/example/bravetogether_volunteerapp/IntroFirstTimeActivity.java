@@ -1,42 +1,61 @@
 package com.example.bravetogether_volunteerapp;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.viewpager2.widget.ViewPager2;
 
 import android.content.Intent;
+import android.graphics.Paint;
 import android.os.Bundle;
-import android.view.MotionEvent;
+import android.util.Log;
 import android.view.View;
+import android.widget.Button;
+import android.widget.TextView;
+
+import com.example.bravetogether_volunteerapp.adapters.IntroViewPageAdapter;
+import com.google.android.material.tabs.TabLayout;
+
+import java.util.ArrayList;
 
 
 public class IntroFirstTimeActivity extends AppCompatActivity {
 
-    float x1, x2, y1, y2;
-
-    @Override
+    ViewPager2 viewPager2;
+    ArrayList list;
+    TextView alreadyHaveAnAccountTextView;
+    Button letsStartButton;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_intro_first_time);
+
+        viewPager2 = findViewById(R.id.viewPager2);
+
+        list = new ArrayList<>();
+        list.add(0);
+        list.add(1);
+        list.add(2);
+        list.add(3);
+
+        IntroViewPageAdapter introViewPageAdapter = new IntroViewPageAdapter(list);
+        viewPager2.setAdapter(introViewPageAdapter);
+
+        alreadyHaveAnAccountTextView = findViewById(R.id.alreadyHaveAnAccountTextView);
+        alreadyHaveAnAccountTextView.setPaintFlags(alreadyHaveAnAccountTextView.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
+        alreadyHaveAnAccountTextView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(IntroFirstTimeActivity.this,LoginActivity.class));
+                finish();
+            }
+        });
+
+        letsStartButton = findViewById(R.id.letsBegin);
+        letsStartButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(IntroFirstTimeActivity.this,LoginActivity.class));
+            }
+        });
     }
 
-    // Handles the left and right swipes
-    public boolean onTouchEvent(MotionEvent touchEvent){
-        switch(touchEvent.getAction()){
-            case MotionEvent.ACTION_DOWN:
-                x1 = touchEvent.getX();
-                y1 = touchEvent.getY();
-                break;
-            case MotionEvent.ACTION_UP:
-                x2 = touchEvent.getX();
-                y2 = touchEvent.getY();
-                if(x1 < x2){
-                    Intent i = new Intent(IntroFirstTimeActivity.this, IntroPageActivity.class);
-                    startActivity(i);
-                }else if(x1 > x2){
-                    // backwards
-                }
-                break;
-        }
-        return false;
-    }
 }

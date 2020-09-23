@@ -4,61 +4,49 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/my_layout"
-    tools:context=".IntroFirstTimeActivity">
+    android:background="#FFF5DC">
 
-    <!-- Rectangle 77 -->
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/viewPager2"
+        android:layout_width="411dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="20dp"
+        app:layout_constraintBottom_toTopOf="@+id/letsBegin"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/letsBegin"
+        android:layout_width="0dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="50dp"
+        android:layout_marginLeft="50dp"
+        android:layout_marginEnd="50dp"
+        android:layout_marginRight="50dp"
+        android:layout_marginBottom="20dp"
+        android:background="@drawable/intro_screen_button_purple"
+        android:text="בוא נתחיל"
+        android:textColor="#FFF"
+        android:textStyle="bold"
+        android:textSize="16dp"
+        app:layout_constraintBottom_toTopOf="@+id/alreadyHaveAnAccountTextView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
-        android:id="@+id/description"
-        android:layout_width="350dp"
-        android:layout_height="200dp"
-        android:layout_marginStart="33dp"
-        android:layout_marginLeft="33dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginEnd="28dp"
-        android:layout_marginRight="28dp"
-        android:layout_marginBottom="75dp"
-        android:text="Here will be a description Here will be a description Here will be a description Here will be a description Here will be a description"
+        android:id="@+id/alreadyHaveAnAccountTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="30dp"
+        android:text="יש לך חשבון? התחבר כאן"
+        android:textColor="#350016"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/welcome"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent" />
 
-    <TextView
-        android:id="@+id/welcome"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="113dp"
-        android:layout_marginLeft="113dp"
-        android:layout_marginTop="62dp"
-        android:layout_marginEnd="112dp"
-        android:layout_marginRight="112dp"
-        android:layout_marginBottom="100dp"
-        android:text="Welcome"
-        android:textAppearance="@style/TextAppearance.AppCompat.Display2"
-        app:layout_constraintBottom_toTopOf="@+id/description"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView" />
-
-    <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="141dp"
-        android:layout_marginLeft="141dp"
-        android:layout_marginTop="88dp"
-        android:layout_marginEnd="142dp"
-        android:layout_marginRight="142dp"
-        android:layout_marginBottom="13dp"
-        app:layout_constraintBottom_toTopOf="@+id/welcome"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:src="@tools:sample/avatars" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
