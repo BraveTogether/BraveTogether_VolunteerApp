@@ -27,7 +27,7 @@
     <string name="textviewTime">textviewTime</string>
     <string name="textviewLocation">textviewLocation</string>
     <string name="textviewDate">textviewDate</string>
-    <string name="apiUrl">http://35.214.78.251:8080/</string>
+    <string name="apiUrl">http://35.214.78.251:8080</string>
     <!-- Preference Titles -->
     <string name="messages_header">Messages</string>
     <string name="sync_header">Sync</string>
