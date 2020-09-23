@@ -44,4 +44,12 @@
     <string name="attachment_summary_off">Only download attachments when manually requested</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="todoDescription">מה אעשה בהתנדבות?</string>
+    <string name="placeDescription">על המקום</string>
+    <string name="volunteerName">שם התנדבות</string>
+    <string name="chooseDate">בחר תאריך</string>
+    <string name="pick_time">בחר שעה</string>
+    <string name="createVolunteerHeadline">יצירת התנדבות</string>
+    <string name="addPicText">הוסף תמונה</string>
+
 </resources>
