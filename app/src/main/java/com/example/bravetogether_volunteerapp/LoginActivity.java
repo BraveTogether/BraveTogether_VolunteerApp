@@ -46,8 +46,10 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.Map;
 
+
 public class LoginActivity extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener {
 
+    private String url= getResources().getString(R.string.apiUrl);;
     private CallbackManager callbackManager;
     private String uid;
     private String firstname;
@@ -159,7 +161,6 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         }
     }
     private void registerSocialUser (final String uid, final String firstname, final String lastname, final String email, final String imageURL) {
-        String url = "http://35.214.78.251:8080/";
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
                 new Response.Listener<String>() {
                     @Override
@@ -224,8 +225,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
     @Override
     protected void onPause(){
         super.onPause();
-
-            String URL = "http://35.214.78.251:8080/getuserbymail";
+            String URL = url + "/user/" + email;
             JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
                     (Request.Method.GET, URL, null, new Response.Listener<JSONObject>() {
 
