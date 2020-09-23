@@ -1,5 +1,8 @@
 package com.example.bravetogether_volunteerapp.ui.about;
 
+import android.app.ActionBar;
+import android.graphics.drawable.ColorDrawable;
+
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;

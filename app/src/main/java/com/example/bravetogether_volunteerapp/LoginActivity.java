@@ -4,10 +4,12 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -44,8 +46,10 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.Map;
 
+
 public class LoginActivity extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener {
 
+    private String url= getResources().getString(R.string.apiUrl);;
     private CallbackManager callbackManager;
     private String uid;
     private String firstname;
@@ -157,7 +161,6 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         }
     }
     private void registerSocialUser (final String uid, final String firstname, final String lastname, final String email, final String imageURL) {
-        String url = "http://35.214.78.251:8080/";
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
                 new Response.Listener<String>() {
                     @Override
@@ -222,14 +225,14 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
     @Override
     protected void onPause(){
         super.onPause();
-            String URL = "http://35.214.78.251:8080/getuserbymail";
+            String URL = url + "/user/" + email;
             JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
                     (Request.Method.GET, URL, null, new Response.Listener<JSONObject>() {
 
                         @Override
                         public void onResponse(JSONObject response) {
                             // fill the preferences file with data regarding the current user
-                            String address=null, fname=null, lname=null;
+                            String address=null, fname=null, lname=null, phone=null;
                             try {
                                 //required details
                                 fname = response.getString("first_name");
@@ -240,6 +243,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                             try {
                                 //non required details
                                 address = response.getString("address");
+                                phone = response.getString("phone_number");
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
@@ -248,6 +252,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                             preferencesEditor.putString("UserFirstName", fname);
                             preferencesEditor.putString("UserLastName", lname);
                             preferencesEditor.putString("UserAddress", address);
+                            preferencesEditor.putString("UserPhoneNumber", phone);
                             preferencesEditor.apply();
                         }
                     }, new Response.ErrorListener() {

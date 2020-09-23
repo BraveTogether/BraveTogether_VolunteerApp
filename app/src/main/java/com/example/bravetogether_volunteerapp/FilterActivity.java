@@ -9,6 +9,8 @@ import android.location.Location;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Toast;
+
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -115,7 +117,8 @@ public class FilterActivity extends AppCompatActivity {
                         String UserAddress = mPreferences.getString("UserAddress", "null");
 
                         if (UserAddress == null) {
-                            // redirect the user to the activity in which he fills the required info.
+                            String message= "לפני שתוכל לחפש עלייך להזין את כתובתך בדף ההגדרות";
+                            Toast.makeText(FilterActivity.this, message, Toast.LENGTH_LONG).show();
                         }
                         else {
                             ArrayList<JSONObject> activities = new ArrayList<JSONObject>();
