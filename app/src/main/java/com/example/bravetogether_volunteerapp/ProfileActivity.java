@@ -27,7 +27,6 @@ import java.util.Map;
 public class ProfileActivity extends AppCompatActivity {
 
     private AppBarConfiguration mAppBarConfiguration;
-    private static SharedPreferences mPreferences;
     static String email, lastname, firstname;
 
     @Override
@@ -35,6 +34,7 @@ public class ProfileActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
         // configure the preference file
+        SharedPreferences mPreferences;
         String sharedPrefFile =
                 "com.example.android.BraveTogether_VolunteerApp";
         mPreferences = getSharedPreferences(sharedPrefFile, MODE_PRIVATE);
@@ -56,14 +56,14 @@ public class ProfileActivity extends AppCompatActivity {
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
 
-        NavigationView mNavigationView = findViewById(R.id.nav_view);
-        View headerView = mNavigationView.getHeaderView(0);
+        View headerView = navigationView.getHeaderView(0);
         // get user name and email textViews
         TextView userEmail = headerView.findViewById(R.id.CurrentUserEmail);
         TextView userName = headerView.findViewById(R.id.CurrentUserName);
         // set user name and email
         userEmail.setText(email);
-        userName.setText(firstname + " " + lastname);
+        String FullName= firstname + " " + lastname;
+        userName.setText(FullName);
     }
 
     @Override
@@ -86,14 +86,13 @@ public class ProfileActivity extends AppCompatActivity {
 
     public void Update(View view) {
 
+        String url = getResources().getString(R.string.apiUrl);
         // gather information from the form
         final String firstname = ((EditText) findViewById(R.id.FirstNameText)).getText().toString();
         final String lastname = ((EditText) findViewById(R.id.LastNameText)).getText().toString();
         final String address = ((EditText) findViewById(R.id.AddressText)).getText().toString();
         final String phone = ((EditText) findViewById(R.id.PhoneText)).getText().toString();
         // make post request here
-
-        String url = "http://35.214.78.251:8080/";
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
                 new Response.Listener<String>() {
                     @Override

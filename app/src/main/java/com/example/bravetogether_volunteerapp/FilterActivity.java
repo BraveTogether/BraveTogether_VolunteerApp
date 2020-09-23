@@ -9,6 +9,7 @@ import android.location.Location;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -16,7 +17,12 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.google.android.gms.maps.model.LatLng;
+
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.json.JSONArray;
@@ -26,8 +32,10 @@ import org.json.JSONObject;
 public class FilterActivity extends AppCompatActivity {
 
     private static SharedPreferences mPreferences;
-    static int radius, duration, time;
+    static int radius, duration;
+    static Date from, until;
     static boolean nature;
+    static DateFormat formatter = new SimpleDateFormat("HH:mm");
     static Intent i;
 
     // get the user email from the file that holds the user info for the app.
@@ -52,10 +60,6 @@ public class FilterActivity extends AppCompatActivity {
     public void duration(View view) {
         view.setSelected(!view.isSelected());
         duration = Integer.parseInt(view.getTag().toString());
-    }
-    public void time(View view) {
-        view.setSelected(!view.isSelected());
-        time = Integer.parseInt(view.getTag().toString());
     }
     public void nature(View view) {
         view.setSelected(!view.isSelected());
@@ -106,8 +110,16 @@ public class FilterActivity extends AppCompatActivity {
         return locationA.distanceTo(locationB);
     }
 
-    public void Search(View view) {
-        String URL = getString(R.string.apiUrl);
+    public void Search(View view) throws ParseException {
+        // get time and create date objects
+        String FromTime = ((EditText)findViewById(R.id.from)).getText().toString();
+        String UntilTime = ((EditText)findViewById(R.id.until)).getText().toString();
+        from = formatter.parse(FromTime);
+        until = formatter.parse(UntilTime);
+
+        String email = mPreferences.getString("UserEmail", "null");
+        // send GET request for user information to get address
+        String URL = getResources().getString(R.string.apiUrl)+"/user/"+email;
         JsonArrayRequest JsonArrayRequest = new JsonArrayRequest
                 (Request.Method.GET, URL, null, new Response.Listener<JSONArray>() {
                     JSONObject Activity;
@@ -126,15 +138,18 @@ public class FilterActivity extends AppCompatActivity {
                             for (int i = 0; i < response.length(); i++) {
                                 try {
                                     Activity = response.getJSONObject(i);
-                                    // havent yet calculated the time because i dont know if we will use time ranges entered by
-                                    // user or time frames as like in the current layout
+                                    Date activity_start =  formatter.parse(Activity.get("start_time").toString());
                                     distance = getDistance(Activity.get("address").toString(), UserAddress) < radius;
                                     dur = Activity.getInt("duration") <= duration;
+
+                                    // getTime returns epoch so 3600000 represents the milliseconds in one hour
+                                    times = (activity_start.getTime() >= from.getTime()) && (activity_start.getTime() + 3600000*duration <= until.getTime());
+
                                     natureofactivity = (nature == (Activity.getBoolean("online")));
-                                    if (distance && dur && natureofactivity) {
+                                    if (distance && dur && natureofactivity && times) {
                                         activities.add(response.getJSONObject(i));
                                     }
-                                } catch (JSONException e) {
+                                } catch (JSONException | ParseException e) {
                                     e.printStackTrace();
                                 }
                             }
