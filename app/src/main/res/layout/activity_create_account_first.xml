@@ -64,23 +64,92 @@
         app:srcCompat="@drawable/add_circle_24" />
 
     <EditText
-        android:id="@+id/editTextTextPersonName"
+        android:id="@+id/nameEditText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:background="@drawable/textfield_d"
+        android:drawableRight=" "
         android:ems="10"
+        android:hint="שם פרטי"
         android:inputType="textPersonName"
-        android:text="Name"
-
-        tools:layout_editor_absoluteX="163dp"
-        tools:layout_editor_absoluteY="346dp" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.494"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/profile_image" />
 
     <EditText
-        android:id="@+id/editTextTextPersonName2"
+        android:id="@+id/familyNameEditText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:background="@drawable/textfield_d"
         android:ems="10"
+        android:hint="שם משפחה"
         android:inputType="textPersonName"
-        android:text="Name"
-        tools:layout_editor_absoluteX="150dp"
-        tools:layout_editor_absoluteY="416dp" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.505"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/nameEditText" />
+
+    <EditText
+        android:id="@+id/emailEditText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:background="@drawable/textfield_d"
+        android:ems="10"
+        android:inputType="textEmailAddress"
+        android:hint="אימייל"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/familyNameEditText" />
+
+    <EditText
+        android:id="@+id/passwordEditText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:background="@drawable/textfield_d"
+        android:ems="10"
+        android:inputType="textPassword"
+        android:hint="סיסמה"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/emailEditText" />
+
+    <EditText
+        android:id="@+id/confirmPasswordEditText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:background="@drawable/textfield_d"
+        android:ems="10"
+        android:inputType="textPassword"
+        android:hint="אימות סיסמה"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/passwordEditText" />
+
+    <Button
+        android:id="@+id/button7"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="130dp"
+        android:layout_marginLeft="130dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginEnd="130dp"
+        android:layout_marginRight="130dp"
+        android:background="@drawable/intro_screen_button_purple"
+        android:text="הבא"
+        android:textColor="#FFF"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/confirmPasswordEditText" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
