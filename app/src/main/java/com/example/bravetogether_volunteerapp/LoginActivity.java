@@ -3,6 +3,8 @@ package com.example.bravetogether_volunteerapp;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -44,7 +46,7 @@ import java.util.Map;
 
 public class LoginActivity extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener {
 
-    private String url = getResources().getString(R.string.apiUrl);;
+    private String url= "http://35.214.78.251:8080";
     private CallbackManager callbackManager;
     private String uid;
     private String firstname;
