@@ -9,11 +9,8 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.TextView;
 import android.widget.Toast;
-
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -49,17 +46,13 @@ import java.util.Map;
 
 public class LoginActivity extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener {
 
-    private String url= getResources().getString(R.string.apiUrl);;
+    private String url= "http://35.214.78.251:8080";
     private CallbackManager callbackManager;
     private String uid;
     private String firstname;
     private String lastname;
     private String email;
     private String imageURL;
-    private TextView usernameView;
-    private TextView emailView;
-    private TextView password;
-    private TextView confirmPassword;
     private LoginButton facebookLoginButton;
     private SignInButton googleSignInButton;
     private GoogleApiClient googleApiClient;

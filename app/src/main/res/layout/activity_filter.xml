@@ -116,97 +116,20 @@
 
     <TextView
         android:id="@+id/activity_hours"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="326dp"
-        android:layout_marginLeft="326dp"
+        android:layout_width="65dp"
+        android:layout_height="31dp"
+        android:layout_marginStart="320dp"
+        android:layout_marginLeft="320dp"
         android:layout_marginTop="22dp"
-        android:layout_marginEnd="42dp"
-        android:layout_marginRight="42dp"
-        android:text="זמנים במהלך היום"
+        android:layout_marginEnd="26dp"
+        android:layout_marginRight="26dp"
+        android:text="זמינות"
         android:textSize="18sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.788"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/m30" />
-
-    <Button
-        android:id="@+id/morning"
-        android:layout_width="52dp"
-        android:layout_height="26dp"
-        android:layout_marginTop="17dp"
-        android:layout_marginEnd="26dp"
-        android:layout_marginRight="26dp"
-        android:background="@drawable/filter_buttons"
-        android:text="בוקר"
-        android:tag="6"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/activity_hours" />
-
-    <Button
-        android:id="@+id/evening"
-        android:layout_width="52dp"
-        android:layout_height="26dp"
-        android:layout_marginStart="33dp"
-        android:layout_marginLeft="33dp"
-        android:layout_marginTop="17dp"
-        android:layout_marginEnd="40dp"
-        android:layout_marginRight="40dp"
-        android:background="@drawable/filter_buttons"
-        android:text="ערב"
-        android:tag="5"
-        app:layout_constraintEnd_toStartOf="@+id/afternoon"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/activity_hours" />
-
-    <Button
-        android:id="@+id/noon"
-        android:layout_width="52dp"
-        android:layout_height="26dp"
-        android:layout_marginStart="29dp"
-        android:layout_marginLeft="29dp"
-        android:layout_marginTop="17dp"
-        android:layout_marginEnd="36dp"
-        android:layout_marginRight="36dp"
-        android:background="@drawable/filter_buttons"
-        android:text="צהריים"
-        app:layout_constraintEnd_toStartOf="@+id/morning"
-        app:layout_constraintStart_toEndOf="@+id/afternoon"
-        app:layout_constraintTop_toBottomOf="@+id/activity_hours" />
-
-    <Button
-        android:id="@+id/afternoon"
-        android:layout_width="91dp"
-        android:layout_height="26dp"
-        android:layout_marginStart="5dp"
-        android:layout_marginLeft="5dp"
-        android:layout_marginTop="17dp"
-        android:layout_marginEnd="10dp"
-        android:layout_marginRight="10dp"
-        android:background="@drawable/filter_buttons"
-        android:text="אחר הצהריים"
-        android:onClick="time"
-        app:layout_constraintEnd_toStartOf="@+id/noon"
-        app:layout_constraintStart_toEndOf="@+id/evening"
-        app:layout_constraintTop_toBottomOf="@id/activity_hours" />
-
-    <Button
-        android:id="@+id/unlimited_duration"
-        android:layout_width="85dp"
-        android:layout_height="24dp"
-        android:layout_marginStart="301dp"
-        android:layout_marginLeft="301dp"
-        android:layout_marginTop="7dp"
-        android:layout_marginEnd="26dp"
-        android:layout_marginRight="26dp"
-        android:background="@drawable/filter_buttons"
-        android:text="ללא הגבלה"
-        android:tag="10000000"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/morning" />
+        app:layout_constraintTop_toBottomOf="@+id/m30" />
 
     <TextView
         android:id="@+id/nature"
@@ -214,7 +137,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="326dp"
         android:layout_marginLeft="326dp"
-        android:layout_marginTop="22dp"
+        android:layout_marginTop="30dp"
         android:layout_marginEnd="42dp"
         android:layout_marginRight="42dp"
         android:text="אופי ההתנדבות"
@@ -223,7 +146,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.691"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/unlimited_duration" />
+        app:layout_constraintTop_toBottomOf="@+id/from" />
 
     <TextView
         android:id="@+id/save"
@@ -356,5 +279,83 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/save" />
+
+    <EditText
+        android:id="@+id/from"
+        android:layout_width="113dp"
+        android:layout_height="39dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginLeft="30dp"
+        android:layout_marginTop="27dp"
+        android:layout_marginEnd="40dp"
+        android:layout_marginRight="40dp"
+        android:ems="10"
+        android:gravity="center"
+        android:hint="14:30"
+        android:inputType="time"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/until"
+        app:layout_constraintTop_toBottomOf="@+id/activity_hours" />
+
+    <EditText
+        android:id="@+id/until"
+        android:layout_width="113dp"
+        android:layout_height="39dp"
+        android:layout_marginStart="40dp"
+        android:layout_marginLeft="40dp"
+        android:layout_marginTop="27dp"
+        android:layout_marginEnd="30dp"
+        android:layout_marginRight="30dp"
+        android:ems="10"
+        android:gravity="center"
+        android:hint="17:00"
+        android:inputType="time"
+        app:layout_constraintEnd_toStartOf="@+id/from"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/activity_hours" />
+
+    <TextView
+        android:id="@+id/untiltext"
+        android:layout_width="37dp"
+        android:layout_height="38dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="28dp"
+        android:layout_marginEnd="36dp"
+        android:layout_marginRight="36dp"
+        android:text="עד-"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toStartOf="@+id/from"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toEndOf="@+id/until"
+        app:layout_constraintTop_toBottomOf="@+id/activity_hours" />
+
+    <TextView
+        android:id="@+id/fromtext2"
+        android:layout_width="23dp"
+        android:layout_height="32dp"
+        android:layout_marginStart="1dp"
+        android:layout_marginLeft="1dp"
+        android:layout_marginTop="27dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginRight="32dp"
+        android:text="מ-"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/from"
+        app:layout_constraintTop_toBottomOf="@+id/activity_hours" />
+
+    <Button
+        android:id="@+id/button3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="86dp"
+        android:layout_marginLeft="86dp"
+        android:layout_marginTop="10dp"
+        android:text="Button"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/until" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
