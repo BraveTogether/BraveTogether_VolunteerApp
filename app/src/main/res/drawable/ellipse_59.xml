@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- drawable/ellipse_59.xml -->
+ drawable/ellipse_59.xml
 <vector
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:aapt="http://schemas.android.com/aapt"
@@ -18,3 +18,14 @@
             />
     </group>
 </vector>
+
+<!--<shape xmlns:android="http://schemas.android.com/apk/res/android">-->
+<!--<solid android:color="#FFF5DC"/>-->
+<!--<corners-->
+<!--    android:bottomLeftRadius="10dip"-->
+<!--    android:bottomRightRadius="10dip"-->
+<!--    />-->
+<!--<padding android:left="500dip" android:top="50dip" android:right="50dip"-->
+<!--    android:bottom="500dip" />-->
+
+<!--</shape>-->
