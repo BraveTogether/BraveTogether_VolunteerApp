@@ -7,7 +7,7 @@
     tools:context=".CreateAccountFirstActivity">
 
     <ImageView
-        android:id="@+id/imageView3"
+        android:id="@+id/topRoundedCircleImageView"
         android:layout_width="500dp"
         android:layout_height="1500dp"
         android:layout_marginBottom="520dp"
@@ -25,10 +25,10 @@
         app:civ_border_width="1dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView2" />
+        app:layout_constraintTop_toBottomOf="@+id/createAccTextView" />
 
     <TextView
-        android:id="@+id/textView2"
+        android:id="@+id/createAccTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
@@ -42,7 +42,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
-        android:id="@+id/imageView4"
+        android:id="@+id/backButtonImageView"
         android:layout_width="24dp"
         android:layout_height="24dp"
         android:layout_marginTop="25dp"
@@ -53,13 +53,34 @@
         app:srcCompat="@drawable/top_back_arrow_24" />
 
     <ImageView
-        android:id="@+id/imageView5"
+        android:id="@+id/addImageButtonImageView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="43dp"
         android:layout_marginEnd="115dp"
         android:layout_marginRight="115dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView3"
+        app:layout_constraintTop_toBottomOf="@+id/topRoundedCircleImageView"
         app:srcCompat="@drawable/add_circle_24" />
+
+    <EditText
+        android:id="@+id/editTextTextPersonName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="Name"
+
+        tools:layout_editor_absoluteX="163dp"
+        tools:layout_editor_absoluteY="346dp" />
+
+    <EditText
+        android:id="@+id/editTextTextPersonName2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="Name"
+        tools:layout_editor_absoluteX="150dp"
+        tools:layout_editor_absoluteY="416dp" />
 </androidx.constraintlayout.widget.ConstraintLayout>
