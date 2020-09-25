@@ -86,7 +86,7 @@ public class ProfileActivity extends AppCompatActivity {
 
     public void Update(View view) {
 
-        String url = getResources().getString(R.string.apiUrl);
+        String url = getResources().getString(R.string.apiUrl)+"/user/";
         // gather information from the form
         final String firstname = ((EditText) findViewById(R.id.FirstNameText)).getText().toString();
         final String lastname = ((EditText) findViewById(R.id.LastNameText)).getText().toString();
