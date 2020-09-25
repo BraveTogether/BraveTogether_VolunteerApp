@@ -211,8 +211,8 @@ public class RegisterActivity extends AppCompatActivity implements GoogleApiClie
         VolleySingleton.getInstance(this).addToRequestQueue(stringRequest);
     }
 
-    public void skipToHomePage(View view) { //Sign in using email and password
-
+    public void skipToHomePage(View view) {
+        //Go to home activity.
     }
 
     @Override

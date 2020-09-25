@@ -44,7 +44,6 @@ public class IntroFirstTimeActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(IntroFirstTimeActivity.this, LoginActivity.class));
-                finish();
             }
         });
 
@@ -53,6 +52,7 @@ public class IntroFirstTimeActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(IntroFirstTimeActivity.this, RegisterActivity.class));
+                finish();
             }
         });
     }
