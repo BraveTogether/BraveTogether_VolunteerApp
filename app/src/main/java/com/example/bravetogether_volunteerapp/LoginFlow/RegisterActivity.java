@@ -285,4 +285,7 @@ public class RegisterActivity extends AppCompatActivity implements GoogleApiClie
                 .executeAsync();
     }
 
+    public void goToLoginActivity(View view) {
+        startActivity(new Intent(RegisterActivity.this,LoginActivity.class));
+    }
 }

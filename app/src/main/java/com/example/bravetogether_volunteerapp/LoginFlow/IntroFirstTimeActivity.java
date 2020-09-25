@@ -43,7 +43,7 @@ public class IntroFirstTimeActivity extends AppCompatActivity {
         alreadyHaveAnAccountTextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(IntroFirstTimeActivity.this, RegisterActivity.class));
+                startActivity(new Intent(IntroFirstTimeActivity.this, LoginActivity.class));
                 finish();
             }
         });
