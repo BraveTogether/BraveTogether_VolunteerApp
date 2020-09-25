@@ -12,7 +12,6 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".testLayout"></activity>
         <activity
             android:name=".CreateVolunteerActivity"
             android:exported="true" />

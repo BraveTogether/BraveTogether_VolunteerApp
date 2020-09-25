@@ -83,7 +83,7 @@
         android:layout_marginRight="20dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/placeOfActivityTextView"
-        app:srcCompat="@drawable/ic_baseline_location_on_24" />
+        android:src="@drawable/ic_baseline_location_on_24" />
 
     <ImageView
         android:id="@+id/contactIconImageView"
@@ -94,7 +94,7 @@
         android:layout_marginRight="20dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/volunteerStoriesTextView"
-        app:srcCompat="@drawable/contact_icon" />
+        android:src="@drawable/contact_icon" />
 
     <TextView
         android:id="@+id/contactInformationTextView"

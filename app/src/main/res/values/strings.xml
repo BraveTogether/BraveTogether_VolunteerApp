@@ -51,5 +51,6 @@
     <string name="pick_time">בחר שעה</string>
     <string name="createVolunteerHeadline">יצירת התנדבות</string>
     <string name="addPicText">הוסף תמונה</string>
+    <string name="media_camera">media_camera</string>
 
 </resources>

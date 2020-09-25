@@ -6,7 +6,7 @@
     android:layout_height="wrap_content"
     android:fillViewport="false">
     <LinearLayout
-        android:orientation="horizontal"
+        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
@@ -15,271 +15,221 @@
             android:layout_height="match_parent"
             tools:context=".CreateVolunteerActivity">
 
-            <LinearLayout
-                android:orientation="horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+            <View
+            android:id="@+id/ellipse_59"
+            android:layout_width="match_parent"
+            android:layout_height="88dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:background="@drawable/ellipse_59"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:elevation="1dp"/>
 
-                <View
-                    android:id="@+id/ellipse_59"
-                    android:layout_width="match_parent"
-                    android:layout_height="88dp"
+
+
+            <TextView
+                android:id="@+id/createNewVolunteerHeadline"
+                android:layout_width="164dp"
+                android:layout_height="30dp"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginStart="98dp"
+                android:layout_marginLeft="98dp"
+                android:layout_marginTop="33dp"
+                android:layout_marginEnd="99dp"
+                android:layout_marginRight="99dp"
+                android:layout_marginBottom="25dp"
+                android:gravity="end|center_vertical"
+                android:text="@string/createVolunteerHeadline"
+                android:textAppearance="@style/createHeadlineAppearance"
+                app:layout_constraintBottom_toTopOf="@+id/vector"
+                app:layout_constraintEnd_toEndOf="@+id/ellipse_59"
+                app:layout_constraintHorizontal_bias="0.765"
+                app:layout_constraintStart_toStartOf="@+id/ellipse_59"
+                app:layout_constraintTop_toTopOf="parent"
+                android:elevation="1dp"/>
+
+            <View
+                android:id="@+id/vector"
+                android:layout_width="0dp"
+                android:layout_height="165dp"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentRight="true"
+                android:layout_marginTop="65dp"
+                android:background="@drawable/vector"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/ellipse_59" />
+
+
+            <ImageView
+                android:layout_width="73dp"
+                android:layout_height="73dp"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginBottom="52dp"
+                android:contentDescription="@string/media_camera"
+                android:src="@drawable/camera_fill"
+                app:layout_constraintBottom_toBottomOf="@+id/vector"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <TextView
+                    android:id="@+id/addPicText"
+                    android:layout_width="163dp"
+                    android:layout_height="22dp"
                     android:layout_alignParentLeft="true"
                     android:layout_alignParentTop="true"
-                    android:background="@drawable/ellipse_59"
+                    android:layout_marginStart="99dp"
+                    android:layout_marginLeft="99dp"
+                    android:layout_marginTop="121dp"
+                    android:layout_marginEnd="99dp"
+                    android:layout_marginRight="99dp"
+                    android:layout_marginBottom="22dp"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:gravity="center_horizontal|center_vertical"
+                    android:text="@string/addPicText"
+                    android:textAppearance="@style/addPicTextAppearance"
+                    app:layout_constraintBottom_toBottomOf="@+id/vector"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toBottomOf="@+id/createNewVolunteerHeadline"
+                    app:layout_constraintVertical_bias="1.0" />
 
-
-                <TextView
-                    android:id="@+id/createNewVolunteerHeadline"
-                    android:layout_width="164dp"
-                    android:layout_height="30dp"
+                <EditText
+                    android:id="@+id/volunteerName"
+                    android:layout_width="320dp"
+                    android:layout_height="48dp"
                     android:layout_alignParentStart="true"
                     android:layout_alignParentLeft="true"
                     android:layout_alignParentTop="true"
-                    android:layout_marginStart="98dp"
-                    android:layout_marginLeft="98dp"
-                    android:layout_marginTop="33dp"
-                    android:layout_marginEnd="99dp"
-                    android:layout_marginRight="99dp"
-                    android:layout_marginBottom="25dp"
-                    android:gravity="end|center_vertical"
-                    android:text="@string/createVolunteerHeadline"
-                    android:textAppearance="@style/createHeadlineAppearance"
-                    app:layout_constraintBottom_toTopOf="@+id/vector"
-                    app:layout_constraintEnd_toEndOf="@+id/ellipse_59"
-                    app:layout_constraintHorizontal_bias="0.765"
-                    app:layout_constraintStart_toStartOf="@+id/ellipse_59"
-                    app:layout_constraintTop_toTopOf="parent" />
-            </LinearLayout>
-
-<!--            <View-->
-<!--                android:id="@+id/vector"-->
-<!--                android:layout_width="0dp"-->
-<!--                android:layout_height="165dp"-->
-<!--                android:layout_alignParentLeft="true"-->
-<!--                android:layout_alignParentTop="true"-->
-<!--                android:layout_alignParentRight="true"-->
-<!--                android:layout_marginTop="65dp"-->
-<!--                android:background="@drawable/vector"-->
-<!--                app:layout_constraintEnd_toEndOf="parent"-->
-<!--                app:layout_constraintStart_toStartOf="parent"-->
-<!--                app:layout_constraintTop_toTopOf="@+id/ellipse_59" />-->
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentBottom="true"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginStart="19dp"
+                    android:layout_marginLeft="19dp"
+                    android:layout_marginTop="24dp"
+                    android:layout_marginEnd="20dp"
+                    android:layout_marginRight="20dp"
+                    android:background="@drawable/textfield_d"
+                    android:hint="@string/volunteerName"
+                    android:drawableRight="@drawable/hand_heart_line"
+                    android:drawablePadding="10dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.516"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/vector"
+                    android:drawableEnd="@drawable/hand_heart_line" />
 
 
-<!--            <ImageView-->
-<!--                android:id="@+id/media_camer"-->
-<!--                android:layout_width="73dp"-->
-<!--                android:layout_height="73dp"-->
-<!--                android:layout_alignParentLeft="true"-->
-<!--                android:layout_alignParentTop="true"-->
-<!--                android:layout_marginStart="143dp"-->
-<!--                android:layout_marginLeft="143dp"-->
-<!--                android:layout_marginTop="48dp"-->
-<!--                android:layout_marginEnd="144dp"-->
-<!--                android:layout_marginRight="144dp"-->
-<!--                android:layout_marginBottom="44dp"-->
-<!--                android:background="@drawable/media_camera"-->
-<!--                android:clipToOutline="true"-->
-<!--                android:src="@drawable/camera_fill"-->
-<!--                app:layout_constraintBottom_toBottomOf="@+id/vector"-->
-<!--                app:layout_constraintEnd_toEndOf="parent"-->
-<!--                app:layout_constraintStart_toStartOf="parent"-->
-<!--                app:layout_constraintTop_toTopOf="@+id/vector" />-->
-
-<!--            <TextView-->
-<!--                android:id="@+id/addPicText"-->
-<!--                android:layout_width="163dp"-->
-<!--                android:layout_height="22dp"-->
-<!--                android:layout_alignParentLeft="true"-->
-<!--                android:layout_alignParentTop="true"-->
-<!--                android:layout_marginStart="99dp"-->
-<!--                android:layout_marginLeft="99dp"-->
-<!--                android:layout_marginTop="121dp"-->
-<!--                android:layout_marginEnd="99dp"-->
-<!--                android:layout_marginRight="99dp"-->
-<!--                android:layout_marginBottom="22dp"-->
-<!--                android:clickable="true"-->
-<!--                android:focusable="true"-->
-<!--                android:gravity="center_horizontal|center_vertical"-->
-<!--                android:text="@string/addPicText"-->
-<!--                android:textAppearance="@style/addPicTextAppearance"-->
-<!--                app:layout_constraintBottom_toBottomOf="@+id/vector"-->
-<!--                app:layout_constraintEnd_toEndOf="parent"-->
-<!--                app:layout_constraintStart_toStartOf="parent"-->
-<!--                app:layout_constraintTop_toBottomOf="@+id/createNewVolunteerHeadline"-->
-<!--                app:layout_constraintVertical_bias="1.0" />-->
-
-<!--            <EditText-->
-<!--                android:id="@+id/volunteerName"-->
-<!--                android:layout_width="320dp"-->
-<!--                android:layout_height="48dp"-->
-<!--                android:layout_alignParentStart="true"-->
-<!--                android:layout_alignParentLeft="true"-->
-<!--                android:layout_alignParentTop="true"-->
-<!--                android:layout_alignParentEnd="true"-->
-<!--                android:layout_alignParentRight="true"-->
-<!--                android:layout_alignParentBottom="true"-->
-<!--                android:layout_centerHorizontal="true"-->
-<!--                android:layout_marginStart="19dp"-->
-<!--                android:layout_marginLeft="19dp"-->
-<!--                android:layout_marginTop="24dp"-->
-<!--                android:layout_marginEnd="20dp"-->
-<!--                android:layout_marginRight="20dp"-->
-<!--                android:background="@drawable/textfield_d"-->
-<!--                android:hint="@string/volunteerName"-->
-<!--                android:drawableRight="@drawable/hand_heart_line"-->
-<!--                android:drawablePadding="10dp"-->
-<!--                app:layout_constraintEnd_toEndOf="parent"-->
-<!--                app:layout_constraintHorizontal_bias="0.516"-->
-<!--                app:layout_constraintStart_toStartOf="parent"-->
-<!--                app:layout_constraintTop_toBottomOf="@+id/vector"-->
-<!--                android:drawableEnd="@drawable/hand_heart_line" />-->
+                <androidx.fragment.app.FragmentContainerView
+                    android:id="@+id/autocomplete_address"
+                    android:name="com.google.android.libraries.places.widget.AutocompleteSupportFragment"
+                    android:layout_width="320dp"
+                    android:layout_height="48dp"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="16dp"
+                    android:background="@drawable/textfield_d"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.504"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/volunteerName"
+                     />
 
 
-<!--            <androidx.fragment.app.FragmentContainerView-->
-<!--                android:id="@+id/autocomplete_address"-->
-<!--                android:name="com.google.android.libraries.places.widget.AutocompleteSupportFragment"-->
-<!--                android:layout_width="320dp"-->
-<!--                android:layout_height="48dp"-->
-<!--                android:layout_centerHorizontal="true"-->
-<!--                android:layout_marginTop="16dp"-->
-<!--                android:drawableRight="@drawable/map_pin_line"-->
-<!--                android:drawableEnd="@drawable/map_pin_line"-->
-<!--                android:background="@drawable/textfield_d"-->
-<!--                app:layout_constraintEnd_toEndOf="parent"-->
-<!--                app:layout_constraintHorizontal_bias="0.504"-->
-<!--                app:layout_constraintStart_toStartOf="parent"-->
-<!--                app:layout_constraintTop_toBottomOf="@+id/volunteerName"-->
-<!--                 />-->
+                <EditText
+                    android:id="@+id/placeDescrition"
+                    android:layout_width="320dp"
+                    android:layout_height="123dp"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginStart="21dp"
+                    android:layout_marginLeft="21dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginEnd="18dp"
+                    android:layout_marginRight="18dp"
+                    android:autofillHints=""
+                    android:background="@drawable/textfield_d_big"
+                    android:drawablePadding="10dp"
+                    android:drawableRight="@drawable/home_smile2_line"
+                    android:ems="10"
+                    android:gravity="top|start"
+                    android:hint="@string/placeDescription"
+                    android:inputType="textMultiLine"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/autocomplete_address"
+                    android:drawableEnd="@drawable/home_smile2_line" />
 
+                <EditText
+                    android:id="@+id/todoeDescrition"
+                    android:layout_width="320dp"
+                    android:layout_height="123dp"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginStart="21dp"
+                    android:layout_marginLeft="21dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginEnd="18dp"
+                    android:layout_marginRight="18dp"
+                    android:autofillHints=""
+                    android:background="@drawable/textfield_d_big"
+                    android:drawableEnd="@drawable/chat_smile_line"
+                    android:drawableRight="@drawable/chat_smile_line"
+                    android:ems="10"
+                    android:gravity="start|top"
+                    android:hint="@string/todoDescription"
+                    android:inputType="textMultiLine"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.504"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/placeDescrition" />
 
-<!--            <EditText-->
-<!--                android:id="@+id/placeDescrition"-->
-<!--                android:layout_width="320dp"-->
-<!--                android:layout_height="123dp"-->
-<!--                android:layout_centerHorizontal="true"-->
-<!--                android:layout_marginStart="21dp"-->
-<!--                android:layout_marginLeft="21dp"-->
-<!--                android:layout_marginTop="16dp"-->
-<!--                android:layout_marginEnd="18dp"-->
-<!--                android:layout_marginRight="18dp"-->
-<!--                android:autofillHints=""-->
-<!--                android:background="@drawable/textfield_d_big"-->
-<!--                android:drawablePadding="10dp"-->
-<!--                android:drawableRight="@drawable/home_smile2_line"-->
-<!--                android:ems="10"-->
-<!--                android:gravity="top|start"-->
-<!--                android:hint="@string/placeDescription"-->
-<!--                android:inputType="textMultiLine"-->
-<!--                app:layout_constraintEnd_toEndOf="parent"-->
-<!--                app:layout_constraintStart_toStartOf="parent"-->
-<!--                app:layout_constraintTop_toBottomOf="@+id/autocomplete_address"-->
-<!--                android:drawableEnd="@drawable/home_smile2_line" />-->
+                <Button
+                    android:id="@+id/btnDate"
+                    android:layout_width="125dp"
+                    android:layout_height="38dp"
+                    android:background="@drawable/textfield_d_buttons"
+                    android:layout_centerHorizontal="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="263dp"
+                    android:layout_marginLeft="263dp"
+                    android:layout_marginTop="40dp"
+                    android:layout_marginEnd="60dp"
+                    android:layout_marginRight="60dp"
+                    android:padding="10dp"
+                    android:text="@string/chooseDate"
+                    android:drawableRight="@drawable/calender_line"
+                    android:drawableEnd="@drawable/calender_line"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="1.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/todoeDescrition" />
 
-<!--            <EditText-->
-<!--                android:id="@+id/todoeDescrition"-->
-<!--                android:layout_width="320dp"-->
-<!--                android:layout_height="123dp"-->
-<!--                android:layout_centerHorizontal="true"-->
-<!--                android:layout_marginStart="21dp"-->
-<!--                android:layout_marginLeft="21dp"-->
-<!--                android:layout_marginTop="16dp"-->
-<!--                android:layout_marginEnd="18dp"-->
-<!--                android:layout_marginRight="18dp"-->
-<!--                android:autofillHints=""-->
-<!--                android:background="@drawable/textfield_d_big"-->
-<!--                android:drawableEnd="@drawable/chat_smile_line"-->
-<!--                android:drawableRight="@drawable/chat_smile_line"-->
-<!--                android:ems="10"-->
-<!--                android:gravity="start|top"-->
-<!--                android:hint="@string/todoDescription"-->
-<!--                android:inputType="textMultiLine"-->
-<!--                app:layout_constraintEnd_toEndOf="parent"-->
-<!--                app:layout_constraintHorizontal_bias="0.504"-->
-<!--                app:layout_constraintStart_toStartOf="parent"-->
-<!--                app:layout_constraintTop_toBottomOf="@+id/placeDescrition" />-->
-
-<!--            <Button-->
-<!--                android:id="@+id/btnDate"-->
-<!--                android:layout_width="125dp"-->
-<!--                android:layout_height="38dp"-->
-<!--                android:background="@drawable/textfield_d_buttons"-->
-<!--                android:layout_centerHorizontal="true"-->
-<!--                android:layout_centerVertical="true"-->
-<!--                android:layout_marginStart="263dp"-->
-<!--                android:layout_marginLeft="263dp"-->
-<!--                android:layout_marginTop="40dp"-->
-<!--                android:layout_marginEnd="60dp"-->
-<!--                android:layout_marginRight="60dp"-->
-<!--                android:padding="10dp"-->
-<!--                android:text="@string/chooseDate"-->
-<!--                android:drawableRight="@drawable/calender_line"-->
-<!--                android:drawableEnd="@drawable/calender_line"-->
-<!--                app:layout_constraintEnd_toEndOf="parent"-->
-<!--                app:layout_constraintHorizontal_bias="1.0"-->
-<!--                app:layout_constraintStart_toStartOf="parent"-->
-<!--                app:layout_constraintTop_toBottomOf="@+id/todoeDescrition"-->
-<!-- />-->
-
-<!--            <Button-->
-<!--                android:id="@+id/btnTime"-->
-<!--                android:layout_width="112dp"-->
-<!--                android:layout_height="38dp"-->
-<!--                android:layout_centerHorizontal="true"-->
-<!--                android:layout_centerVertical="true"-->
-<!--                android:layout_marginStart="263dp"-->
-<!--                android:layout_marginLeft="263dp"-->
-<!--                android:layout_marginTop="16dp"-->
-<!--                android:layout_marginEnd="60dp"-->
-<!--                android:layout_marginRight="60dp"-->
-<!--                android:background="@drawable/textfield_d_buttons"-->
-<!--                android:drawableEnd="@drawable/time_line"-->
-<!--                android:drawableRight="@drawable/time_line"-->
-<!--                android:padding="10dp"-->
-<!--                android:text="@string/pick_time"-->
-<!--                app:layout_constraintEnd_toEndOf="parent"-->
-<!--                app:layout_constraintHorizontal_bias="1.0"-->
-<!--                app:layout_constraintStart_toStartOf="parent"-->
-<!--                app:layout_constraintTop_toBottomOf="@+id/btnDate" />-->
-
-            <!--            <DatePicker-->
-            <!--                android:id="@+id/datePicker"-->
-            <!--                android:layout_width="273dp"-->
-            <!--                android:layout_height="319dp"-->
-            <!--                android:layout_marginTop="32dp"-->
-            <!--                app:layout_constraintEnd_toEndOf="parent"-->
-            <!--                app:layout_constraintStart_toStartOf="parent"-->
-            <!--                app:layout_constraintTop_toBottomOf="@+id/todoeDescrition" />-->
-
-            <!--            <TextView-->
-            <!--                android:id="@+id/textView2"-->
-            <!--                android:layout_width="83dp"-->
-            <!--                android:layout_height="20dp"-->
-            <!--                android:layout_marginStart="259dp"-->
-            <!--                android:layout_marginLeft="259dp"-->
-            <!--                android:layout_marginTop="5dp"-->
-            <!--                android:layout_marginEnd="69dp"-->
-            <!--                android:layout_marginRight="69dp"-->
-            <!--                android:layout_marginBottom="7dp"-->
-            <!--                android:text="@string/chooseDate"-->
-            <!--                app:layout_constraintBottom_toTopOf="@+id/datePicker"-->
-            <!--                app:layout_constraintEnd_toEndOf="parent"-->
-            <!--                app:layout_constraintStart_toStartOf="parent"-->
-            <!--                app:layout_constraintTop_toBottomOf="@+id/todoeDescrition" />-->
-
-            <!--            <Button-->
-            <!--                android:layout_width="94dp"-->
-            <!--                android:layout_height="45dp"-->
-            <!--                android:layout_marginTop="32dp"-->
-            <!--                android:onClick="showTimePickerDialog"-->
-            <!--                android:text="@string/pick_time"-->
-            <!--                app:layout_constraintEnd_toEndOf="parent"-->
-            <!--                app:layout_constraintHorizontal_bias="0.804"-->
-            <!--                app:layout_constraintStart_toStartOf="parent"-->
-            <!--                app:layout_constraintTop_toBottomOf="@+id/datePicker" />-->
+                <Button
+                    android:id="@+id/btnTime"
+                    android:layout_width="112dp"
+                    android:layout_height="38dp"
+                    android:layout_centerHorizontal="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="263dp"
+                    android:layout_marginLeft="263dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginEnd="60dp"
+                    android:layout_marginRight="60dp"
+                    android:background="@drawable/textfield_d_buttons"
+                    android:drawableEnd="@drawable/time_line"
+                    android:drawableRight="@drawable/time_line"
+                    android:padding="10dp"
+                    android:text="@string/pick_time"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="1.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/btnDate" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>
