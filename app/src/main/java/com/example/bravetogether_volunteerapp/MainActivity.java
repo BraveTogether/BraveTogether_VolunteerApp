@@ -23,6 +23,9 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.Map;
 
+import LoginFlow.IntroFirstTimeActivity;
+import LoginFlow.LoginActivity;
+
 public class MainActivity extends AppCompatActivity {
 
     @Override
@@ -95,7 +98,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void goToLoginPage(View view) {
-        Intent intent = new Intent(MainActivity.this,LoginActivity.class);
+        Intent intent = new Intent(MainActivity.this, LoginActivity.class);
         startActivity(intent);
     }
 
@@ -105,7 +108,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void goToFirstTime(View view){
-        Intent intent = new Intent(MainActivity.this,IntroFirstTimeActivity.class);
+        Intent intent = new Intent(MainActivity.this, IntroFirstTimeActivity.class);
         startActivity(intent);
     }
 

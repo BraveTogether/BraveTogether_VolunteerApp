@@ -1,10 +1,9 @@
-package com.example.bravetogether_volunteerapp;
+package LoginFlow;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -18,6 +17,9 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.bravetogether_volunteerapp.MainActivity;
+import com.example.bravetogether_volunteerapp.R;
+import com.example.bravetogether_volunteerapp.VolleySingleton;
 import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;

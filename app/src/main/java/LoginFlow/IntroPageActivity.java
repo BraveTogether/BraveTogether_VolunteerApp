@@ -1,10 +1,12 @@
-package com.example.bravetogether_volunteerapp;
+package LoginFlow;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MotionEvent;
+
+import com.example.bravetogether_volunteerapp.R;
 
 public class IntroPageActivity extends AppCompatActivity {
 
