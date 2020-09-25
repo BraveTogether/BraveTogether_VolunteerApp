@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#FFF5dc"
-    tools:context="LoginFlow.LoginActivity">
+    tools:context="com.example.bravetogether_volunteerapp.LoginFlow.RegisterActivity">
 
     <com.facebook.login.widget.LoginButton
         android:id="@+id/facebook_login_button"
@@ -89,7 +89,7 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
-        android:id="@+id/conncatWithMail"
+        android:id="@+id/connectWithEmail"
         android:layout_width="259dp"
         android:layout_height="40dp"
         android:layout_marginStart="50dp"
@@ -105,7 +105,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/button4"
+        android:id="@+id/skipButton"
         android:layout_width="25dp"
         android:layout_height="13dp"
         android:layout_marginStart="167dp"
@@ -115,7 +115,7 @@
         android:layout_marginRight="167dp"
         android:layout_marginBottom="33dp"
         android:background="@drawable/__1_"
-        android:onClick="signIn"
+        android:onClick="skipToHomePage"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

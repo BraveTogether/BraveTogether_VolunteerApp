@@ -1,4 +1,4 @@
-package LoginFlow;
+package com.example.bravetogether_volunteerapp.LoginFlow;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -6,9 +6,11 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -17,7 +19,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.example.bravetogether_volunteerapp.MainActivity;
+import com.example.bravetogether_volunteerapp.CreateAccountFirstActivity;
 import com.example.bravetogether_volunteerapp.R;
 import com.example.bravetogether_volunteerapp.VolleySingleton;
 import com.facebook.AccessToken;
@@ -32,6 +34,8 @@ import com.facebook.internal.ImageRequest;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.auth.api.signin.GoogleSignInResult;
 import com.google.android.gms.common.ConnectionResult;
@@ -46,27 +50,35 @@ import java.util.HashMap;
 import java.util.Map;
 
 
-public class LoginActivity extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener {
+public class RegisterActivity extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener {
 
-    private String url= "http://35.214.78.251:8080";
+    private final String url = "http://35.214.78.251:8080";
+    private final String sharedPrefFile = "com.example.android.BraveTogether_VolunteerApp";
     private CallbackManager callbackManager;
-    private String uid;
-    private String firstname;
-    private String lastname;
-    private String email;
-    private String imageURL;
+    private String uid,firstname,lastname,email,imageURL;
     private LoginButton facebookLoginButton;
     private SignInButton googleSignInButton;
     private GoogleApiClient googleApiClient;
     private static final int SIGN_IN_GOOGLE = 1; //Google request call
-
     private SharedPreferences mPreferences;
-    private String sharedPrefFile =
-            "com.example.android.BraveTogether_VolunteerApp";
+    private Button signInWithEmailButton;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
+        setContentView(R.layout.activity_register);
+
+        signInWithEmailButton = findViewById(R.id.connectWithEmail); //The sign in with email button functionality
+        signInWithEmailButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(RegisterActivity.this,CreateAccountFirstActivity.class));
+            }
+        });
+
+
+
         callbackManager = CallbackManager.Factory.create();
         mPreferences = getSharedPreferences(sharedPrefFile, MODE_PRIVATE);
 
@@ -83,9 +95,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                                 // Application code
                                 Log.e("GraphRequest", "-------------" + response.toString());
                                 try {
-//                                    String obj = object.toString();                     //get complete JSON object refrence.
                                     String name = object.getString("name");                 //get particular JSON Object
-                                    Log.d("name", "name: " + name);
                                     String[] FAndLname = name.split(" ", 2);
                                     firstname = FAndLname[0];
                                     lastname = FAndLname[1];
@@ -94,9 +104,14 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                                     if (Profile.getCurrentProfile() != null) {                  //add this check because some people don't have profile picture
                                         imageURL = ImageRequest.getProfilePictureUri(Profile.getCurrentProfile().getId(), 400, 400).toString();
                                     }
-                                    Log.d("before", "uid: "+ uid + ", email:  "+email);
-                                    registerSocialUser(uid, firstname, lastname, email, imageURL);
+                                    Intent intent = new Intent(RegisterActivity.this, com.example.bravetogether_volunteerapp.CreateAccountFirstActivity.class);
+                                    intent.putExtra("uid",uid);
+                                    intent.putExtra("first_name",firstname);
+                                    intent.putExtra("last_name",lastname);
+                                    intent.putExtra("email",email);
                                     disconnectFromFacebook();
+                                    startActivity(intent);
+                                    finish();
                                     } catch (JSONException e) {
                                     e.printStackTrace();
                                 }
@@ -110,12 +125,12 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
 
             @Override
             public void onCancel() {
-                Toast.makeText(LoginActivity.this, "Cancel", Toast.LENGTH_SHORT).show();
+                Toast.makeText(RegisterActivity.this, "Cancel", Toast.LENGTH_SHORT).show();
             }
 
             @Override
             public void onError(FacebookException exception) {
-                Toast.makeText(LoginActivity.this, exception.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(RegisterActivity.this, exception.getMessage(), Toast.LENGTH_SHORT).show();
                 Log.i("Error", exception.getMessage());
             }
         });
@@ -141,7 +156,20 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
             GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
             Log.i("result",result.getStatus().toString());
             if (result.isSuccess()) {
-                startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                GoogleSignInAccount acct = GoogleSignIn.getLastSignedInAccount(this);
+                if (acct != null) {
+                    firstname = acct.getGivenName(); //Only the first name
+                    lastname = acct.getFamilyName(); //Only the family name
+                    email = acct.getEmail(); //google email
+                    uid = acct.getId(); //The user ID --- Use this to identify the user on the database
+                    Uri personPhoto = acct.getPhotoUrl(); //A profile picture from google
+                }
+                Intent intent = new Intent(RegisterActivity.this, CreateAccountFirstActivity.class);
+                intent.putExtra("uid",uid);
+                intent.putExtra("first_name",firstname);
+                intent.putExtra("last_name",lastname);
+                intent.putExtra("email",email);
+                startActivity(intent);
                 Toast.makeText(this, "You have logged in", Toast.LENGTH_SHORT).show();
                 finish();
                 //TODO implement the backend for the google login
@@ -156,7 +184,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         }
     }
     private void registerSocialUser (final String uid, final String firstname, final String lastname, final String email, final String imageURL) {
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, url + "/users",
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
@@ -183,38 +211,13 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         VolleySingleton.getInstance(this).addToRequestQueue(stringRequest);
     }
 
-    public void signIn(View view) { //Sign in using email and password
-        //TODO Implement sending the data to the database,confirming it's valid,creating a user and signing him in.
-        //Check if username not exist && email not exists && passwords match
+    public void skipToHomePage(View view) { //Sign in using email and password
 
-
-
-        //Getting Data From Localhost NodeJS Express Server --- Success!
-        RequestQueue queue = Volley.newRequestQueue(this); //A queue for our requests
-        String url = "http://localhost:3000/users"; //The url we are sending the get requests to
-
-        StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() { //A single get request
-            @Override
-            public void onResponse(String response) {
-                try {
-                    JSONObject obj = new JSONObject(response.substring(1,response.length()-1));
-                    Toast.makeText(LoginActivity.this, obj.get("vid").toString(),Toast.LENGTH_SHORT).show();
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Toast.makeText(LoginActivity.this, error.getMessage(), Toast.LENGTH_SHORT).show();
-            }
-        });
-        queue.add(stringRequest); //Adding our request to the Volley Queue so it can run
     }
 
     @Override
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
-
+        //Implement moving to home page
     }
 
     @Override

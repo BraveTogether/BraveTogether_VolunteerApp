@@ -1,4 +1,4 @@
-package LoginFlow;
+package com.example.bravetogether_volunteerapp.LoginFlow;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager2.widget.ViewPager2;
@@ -43,7 +43,7 @@ public class IntroFirstTimeActivity extends AppCompatActivity {
         alreadyHaveAnAccountTextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(IntroFirstTimeActivity.this, LoginActivity.class));
+                startActivity(new Intent(IntroFirstTimeActivity.this, RegisterActivity.class));
                 finish();
             }
         });
@@ -52,7 +52,7 @@ public class IntroFirstTimeActivity extends AppCompatActivity {
         letsStartButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(IntroFirstTimeActivity.this,LoginActivity.class));
+                startActivity(new Intent(IntroFirstTimeActivity.this, RegisterActivity.class));
             }
         });
     }
