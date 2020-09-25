@@ -143,7 +143,7 @@
         android:layout_marginTop="15dp"
         android:layout_marginEnd="130dp"
         android:layout_marginRight="130dp"
-        android:background="@drawable/intro_screen_button_purple"
+        android:background="@drawable/big_blue_button"
         android:text="הבא"
         android:textColor="#FFF"
         android:textStyle="bold"
