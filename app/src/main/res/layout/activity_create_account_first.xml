@@ -13,7 +13,8 @@
         android:layout_marginBottom="520dp"
         android:src="@drawable/top_half_circle"
         app:layout_constraintBottom_toBottomOf="parent"
-        tools:layout_editor_absoluteX="-35dp" />
+        tools:layout_editor_absoluteX="-35dp"
+        tools:ignore="MissingConstraints" />
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/profile_image"
@@ -32,9 +33,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        android:text="יצירת חשבון"
+        android:text="@string/createAcount"
         android:textColor="#350016"
-        android:textSize="25dp"
+        android:textSize="25sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
@@ -50,7 +51,8 @@
         android:layout_marginRight="20dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/top_back_arrow_24" />
+        app:srcCompat="@drawable/top_back_arrow_24"
+        tools:ignore="VectorDrawableCompat" />
 
     <ImageView
         android:id="@+id/addImageButtonImageView"
@@ -61,16 +63,17 @@
         android:layout_marginRight="115dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/topRoundedCircleImageView"
-        app:srcCompat="@drawable/add_circle_24" />
+        app:srcCompat="@drawable/add_circle_24"
+        tools:ignore="VectorDrawableCompat" />
 
     <EditText
-        android:id="@+id/nameEditText"
+        android:id="@+id/privateNameEditText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
         android:background="@drawable/textfield_d"
         android:ems="10"
-        android:hint="שם פרטי"
+        android:hint="@string/privateName"
         android:inputType="textPersonName"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.494"
@@ -84,12 +87,12 @@
         android:layout_marginTop="15dp"
         android:background="@drawable/textfield_d"
         android:ems="10"
-        android:hint="שם משפחה"
+        android:hint="@string/familyName"
         android:inputType="textPersonName"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.505"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/nameEditText" />
+        app:layout_constraintTop_toBottomOf="@+id/privateNameEditText" />
 
     <EditText
         android:id="@+id/emailEditText"
@@ -99,7 +102,7 @@
         android:background="@drawable/textfield_d"
         android:ems="10"
         android:inputType="textEmailAddress"
-        android:hint="אימייל"
+        android:hint="@string/email"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
@@ -113,7 +116,7 @@
         android:background="@drawable/textfield_d"
         android:ems="10"
         android:inputType="textPassword"
-        android:hint="סיסמה"
+        android:hint="@string/password"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
@@ -127,7 +130,7 @@
         android:background="@drawable/textfield_d"
         android:ems="10"
         android:inputType="textPassword"
-        android:hint="אימות סיסמה"
+        android:hint="@string/passwordVerification"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
@@ -143,7 +146,7 @@
         android:layout_marginEnd="130dp"
         android:layout_marginRight="130dp"
         android:background="@drawable/big_blue_button"
-        android:text="הבא"
+        android:text="@string/nextPage"
         android:textColor="#FFF"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"

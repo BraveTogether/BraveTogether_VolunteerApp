@@ -7,6 +7,7 @@ android {
     defaultConfig {
         applicationId "com.example.bravetogether_volunteerapp"
         minSdkVersion 16
+        multiDexEnabled true
         targetSdkVersion 29
         versionCode 1
         versionName "1.0"
@@ -44,4 +45,5 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
+    implementation 'com.basgeekball:awesome-validation:2.0'
 }
