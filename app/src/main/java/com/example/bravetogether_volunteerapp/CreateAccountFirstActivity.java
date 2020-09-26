@@ -38,6 +38,7 @@ public class CreateAccountFirstActivity extends AppCompatActivity {
         mTextUserEmail = (EditText)findViewById(R.id.emailEditText);
         mTextPassword = (EditText)findViewById(R.id.passwordEditText);
         mTextConfirmPassword = (EditText)findViewById(R.id.confirmPasswordEditText);
+        mButtonNext = (Button)findViewById(R.id.button_next);
 
         // Initialize Validation Style
         awesomeValidation = new AwesomeValidation(ValidationStyle.BASIC);

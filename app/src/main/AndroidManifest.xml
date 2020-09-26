@@ -15,6 +15,9 @@
         <activity
             android:name=".CreateVolunteerActivity"
             android:exported="true" />
+        <activity
+            android:name=".CreateAccountFirstActivity"
+            android:exported="true" />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
