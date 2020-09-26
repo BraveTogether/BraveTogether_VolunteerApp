@@ -96,7 +96,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                                     }
                                     Log.d("before", "uid: "+ uid + ", email:  "+email);
                                     registerSocialUser(uid, firstname, lastname, email, imageURL);
-                                    disconnectFromFacebook();
+//                                    disconnectFromFacebook();
                                     } catch (JSONException e) {
                                     e.printStackTrace();
                                 }
