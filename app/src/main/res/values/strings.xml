@@ -53,5 +53,9 @@
     <string name="addPicText">הוסף תמונה</string>
     <string name="media_camera">media_camera</string>
     <string name="notificationHeadline">התראות</string>
+    <string name="time_headline">זמנים</string>
+    <string name="time_text">תודיע לי על התנדבויות בטווח זמנים מסויים</string>
+    <string name="location_text">תודיע לי על התנדבויות קרובות אליי</string>
+    <string name="location_headline">מיקום</string>
 
 </resources>
