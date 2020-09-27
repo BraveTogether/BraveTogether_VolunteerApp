@@ -18,6 +18,9 @@ import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 public class app extends Application {
 
     private String uid;
+    AccessToken accessToken;
+    GoogleSignInAccount acct;
+    SharedPreferences prefs;
 
     public app(){
         //No context
@@ -28,11 +31,12 @@ public class app extends Application {
     public void onCreate() {
         super.onCreate();
         //Context
-        GoogleSignInAccount acct = GoogleSignIn.getLastSignedInAccount(this);
-        AccessToken accessToken = AccessToken.getCurrentAccessToken();
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        acct = GoogleSignIn.getLastSignedInAccount(this);
+        accessToken = AccessToken.getCurrentAccessToken();
+        prefs = PreferenceManager.getDefaultSharedPreferences(this);
         if (!prefs.getBoolean("first_time", false)) {
             Intent intent = new Intent(app.this, IntroFirstTimeActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(intent);
         } else {
             if (acct != null) {
@@ -41,16 +45,13 @@ public class app extends Application {
                 intent.putExtra("uid", uid);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(intent);
-                //Get the UID to load up user
             } else if (accessToken != null) {
                 uid = accessToken.getUserId();
                 Intent intent = new Intent(app.this, MainActivity.class);
                 intent.putExtra("uid", uid);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(intent);
-                //Get the UID to load up user
             } else if (prefs.getString("uid", null) != null) {
-                //Send the UID to the next activity
                 Intent intent = new Intent(app.this, MainActivity.class);
                 uid = prefs.getString("uid", null);
                 intent.putExtra("uid", uid);

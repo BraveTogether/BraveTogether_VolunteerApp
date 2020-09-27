@@ -59,6 +59,7 @@ public class IntroFirstTimeActivity extends AppCompatActivity {
         letsStartButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                editor = prefs.edit();
                 editor.putBoolean("first_time",true);
                 editor.apply();
                 startActivity(new Intent(IntroFirstTimeActivity.this, RegisterActivity.class));

@@ -118,7 +118,7 @@ public class RegisterActivity extends AppCompatActivity implements GoogleApiClie
                                     intent.putExtra("first_name",firstname);
                                     intent.putExtra("last_name",lastname);
                                     intent.putExtra("email",email);
-                                    disconnectFromFacebook();
+//                                    disconnectFromFacebook();
                                     startActivity(intent);
                                     finish();
                                     } catch (JSONException e) {
