@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 
 import androidx.preference.PreferenceManager;
 
+import com.example.bravetogether_volunteerapp.LoginFlow.IntroFirstTimeActivity;
 import com.example.bravetogether_volunteerapp.LoginFlow.LoginActivity;
 import com.example.bravetogether_volunteerapp.LoginFlow.RegisterActivity;
 import com.example.bravetogether_volunteerapp.MainActivity;
@@ -30,31 +31,36 @@ public class app extends Application {
         GoogleSignInAccount acct = GoogleSignIn.getLastSignedInAccount(this);
         AccessToken accessToken = AccessToken.getCurrentAccessToken();
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
-        if(acct != null){
-            Intent intent = new Intent(app.this, MainActivity.class);
-            uid = acct.getId();
-            intent.putExtra("uid",uid);
-            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        if (!prefs.getBoolean("first_time", false)) {
+            Intent intent = new Intent(app.this, IntroFirstTimeActivity.class);
             startActivity(intent);
-            //Get the UID to load up user
-        }else if(accessToken != null){
-            uid = accessToken.getUserId();
-            Intent intent = new Intent(app.this,MainActivity.class);
-            intent.putExtra("uid",uid);
-            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            startActivity(intent);
-            //Get the UID to load up user
-        }else if(prefs.getString("uid",null) != null){
-            //Send the UID to the next activity
-            Intent intent = new Intent(app.this,MainActivity.class);
-            uid = prefs.getString("uid",null);
-            intent.putExtra("uid",uid);
-            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            startActivity(intent);
-        }else{
-            Intent intent = new Intent(app.this, RegisterActivity.class);
-            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            startActivity(intent);
+        } else {
+            if (acct != null) {
+                Intent intent = new Intent(app.this, MainActivity.class);
+                uid = acct.getId();
+                intent.putExtra("uid", uid);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
+                //Get the UID to load up user
+            } else if (accessToken != null) {
+                uid = accessToken.getUserId();
+                Intent intent = new Intent(app.this, MainActivity.class);
+                intent.putExtra("uid", uid);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
+                //Get the UID to load up user
+            } else if (prefs.getString("uid", null) != null) {
+                //Send the UID to the next activity
+                Intent intent = new Intent(app.this, MainActivity.class);
+                uid = prefs.getString("uid", null);
+                intent.putExtra("uid", uid);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
+            } else {
+                Intent intent = new Intent(app.this, RegisterActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
+            }
         }
     }
 }
