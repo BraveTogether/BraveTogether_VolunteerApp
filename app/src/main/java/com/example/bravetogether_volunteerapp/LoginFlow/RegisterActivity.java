@@ -60,6 +60,7 @@ public class RegisterActivity extends AppCompatActivity implements GoogleApiClie
     private SignInButton googleSignInButton;
     private GoogleApiClient googleApiClient;
     private static final int SIGN_IN_GOOGLE = 1; //Google request call
+
     private SharedPreferences mPreferences;
     private Button signInWithEmailButton;
     private TextView skipNow,gotAnAccount;
@@ -101,7 +102,9 @@ public class RegisterActivity extends AppCompatActivity implements GoogleApiClie
                                 // Application code
                                 Log.e("GraphRequest", "-------------" + response.toString());
                                 try {
+//                                    String obj = object.toString();                     //get complete JSON object refrence.
                                     String name = object.getString("name");                 //get particular JSON Object
+                                    Log.d("name", "name: " + name);
                                     String[] FAndLname = name.split(" ", 2);
                                     firstname = FAndLname[0];
                                     lastname = FAndLname[1];
