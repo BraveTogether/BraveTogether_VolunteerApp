@@ -230,5 +230,27 @@
         app:layout_constraintTop_toTopOf="@+id/expandBox2"
         android:checked="true" />
 
+    <Button
+        android:id="@+id/letsVolunteer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="240dp"
+        android:background="@drawable/ic_letsvolunteer"
+        android:clickable="true"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/expandBox2"
+        android:focusable="true" />
+
+    <Button
+        android:id="@+id/skip"
+        android:layout_width="22dp"
+        android:layout_height="12dp"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/ic_skip"
+        android:textColor="#350016"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/letsVolunteer" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

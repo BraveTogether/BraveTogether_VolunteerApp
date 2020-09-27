@@ -25,6 +25,7 @@ import java.util.Map;
 
 import LoginFlow.IntroFirstTimeActivity;
 import LoginFlow.LoginActivity;
+import LoginFlow.NotificationActivity;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -119,6 +120,11 @@ public class MainActivity extends AppCompatActivity {
 
     public void goToFilterPage(View view) {
         Intent intent = new Intent(MainActivity.this,FilterActivity.class);
+        startActivity(intent);
+    }
+
+    public void goToNotification(View view) {
+        Intent intent = new Intent(MainActivity.this, NotificationActivity.class);
         startActivity(intent);
     }
 }
