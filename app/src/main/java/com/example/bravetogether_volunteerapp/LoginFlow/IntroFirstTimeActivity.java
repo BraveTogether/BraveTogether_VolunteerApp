@@ -1,4 +1,4 @@
-package com.example.bravetogether_volunteerapp;
+package com.example.bravetogether_volunteerapp.LoginFlow;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager2.widget.ViewPager2;
@@ -6,12 +6,12 @@ import androidx.viewpager2.widget.ViewPager2;
 import android.content.Intent;
 import android.graphics.Paint;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.google.android.material.tabs.TabLayout;
+import com.example.bravetogether_volunteerapp.R;
+import com.example.bravetogether_volunteerapp.adapters.IntroViewPageAdapter;
 
 import java.util.ArrayList;
 
@@ -35,13 +35,15 @@ public class IntroFirstTimeActivity extends AppCompatActivity {
         list.add(2);
         list.add(3);
 
+        IntroViewPageAdapter introViewPageAdapter = new IntroViewPageAdapter(list);
+        viewPager2.setAdapter(introViewPageAdapter);
+
         alreadyHaveAnAccountTextView = findViewById(R.id.alreadyHaveAnAccountTextView);
         alreadyHaveAnAccountTextView.setPaintFlags(alreadyHaveAnAccountTextView.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
         alreadyHaveAnAccountTextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(IntroFirstTimeActivity.this,LoginActivity.class));
-                finish();
+                startActivity(new Intent(IntroFirstTimeActivity.this, LoginActivity.class));
             }
         });
 
@@ -49,7 +51,8 @@ public class IntroFirstTimeActivity extends AppCompatActivity {
         letsStartButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(IntroFirstTimeActivity.this,LoginActivity.class));
+                startActivity(new Intent(IntroFirstTimeActivity.this, RegisterActivity.class));
+                finish();
             }
         });
     }
