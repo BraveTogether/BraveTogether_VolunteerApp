@@ -6,19 +6,19 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Paint;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 import com.android.volley.Request;
-import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
 import com.example.bravetogether_volunteerapp.CreateAccountFirstActivity;
 import com.example.bravetogether_volunteerapp.R;
 import com.example.bravetogether_volunteerapp.VolleySingleton;
@@ -62,6 +62,7 @@ public class RegisterActivity extends AppCompatActivity implements GoogleApiClie
     private static final int SIGN_IN_GOOGLE = 1; //Google request call
     private SharedPreferences mPreferences;
     private Button signInWithEmailButton;
+    private TextView skipNow,gotAnAccount;
 
 
     @Override
@@ -77,6 +78,11 @@ public class RegisterActivity extends AppCompatActivity implements GoogleApiClie
             }
         });
 
+        skipNow = findViewById(R.id.skipNow); //Underline the text at the bottom
+        skipNow.setPaintFlags(skipNow.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
+
+        gotAnAccount = findViewById(R.id.gotAnAccountTextView); //Underline the skip text
+        gotAnAccount.setPaintFlags(gotAnAccount.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
 
 
         callbackManager = CallbackManager.Factory.create();
@@ -216,11 +222,6 @@ public class RegisterActivity extends AppCompatActivity implements GoogleApiClie
     }
 
     @Override
-    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
-        //Implement moving to home page
-    }
-
-    @Override
     protected void onPause(){
         super.onPause();
             String URL = url + "/user/" + email;
@@ -287,5 +288,10 @@ public class RegisterActivity extends AppCompatActivity implements GoogleApiClie
 
     public void goToLoginActivity(View view) {
         startActivity(new Intent(RegisterActivity.this,LoginActivity.class));
+    }
+
+    @Override
+    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
+        Toast.makeText(this, "Connection Failed", Toast.LENGTH_SHORT).show();
     }
 }

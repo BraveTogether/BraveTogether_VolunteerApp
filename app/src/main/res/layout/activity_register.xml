@@ -104,34 +104,29 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <Button
-        android:id="@+id/skipButton"
-        android:layout_width="25dp"
-        android:layout_height="13dp"
-        android:layout_marginStart="167dp"
-        android:layout_marginLeft="167dp"
-        android:layout_marginTop="584dp"
-        android:layout_marginEnd="167dp"
-        android:layout_marginRight="167dp"
-        android:layout_marginBottom="33dp"
-        android:background="@drawable/__1_"
-        android:onClick="skipToHomePage"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
     <TextView
         android:id="@+id/gotAnAccountTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="43dp"
-        android:text="יש לי חשבון קיים"
         android:onClick="goToLoginActivity"
+        android:text="יש לי חשבון קיים"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/connectWithEmail" />
+
+    <TextView
+        android:id="@+id/skipNow"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="70dp"
+        android:text="דלג עכשיו"
+        android:textColor="#0A4459"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/gotAnAccountTextView" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
