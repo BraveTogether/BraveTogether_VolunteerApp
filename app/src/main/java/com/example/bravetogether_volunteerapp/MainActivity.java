@@ -58,4 +58,9 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(MainActivity.this,FilterActivity.class);
         startActivity(intent);
     }
+
+    public void goToNormalRegistration(View view) {
+        Intent intent = new Intent(MainActivity.this,CreateAccountFirstActivity.class);
+        startActivity(intent);
+    }
 }
