@@ -8,7 +8,6 @@ import android.util.Patterns;
 import android.view.View;
 import android.widget.EditText;
 
-import androidx.appcompat.app.AppCompatActivity;
 import android.widget.Button;
 import android.widget.Toast;
 
@@ -35,7 +34,7 @@ public class CreateAccountFirstActivity extends AppCompatActivity {
     EditText mTextPhoneNumber;
     EditText mTextAddress;
     EditText mTextAbout;
-    Button mButtonNext;
+    Button mButtonLetsVolunteer;
     AwesomeValidation awesomeValidation;
     private String url= "http://35.214.78.251:8080";
 
@@ -53,55 +52,65 @@ public class CreateAccountFirstActivity extends AppCompatActivity {
         mTextPhoneNumber = (EditText)findViewById(R.id.PhoneNumber);
         mTextAddress = (EditText)findViewById(R.id.Address);
         mTextAbout = (EditText)findViewById(R.id.About);
-        mButtonNext = (Button)findViewById(R.id.button_next);
+        mButtonLetsVolunteer = (Button)findViewById(R.id.button_lets_volunteer);
 
         // Initialize Validation Style
         awesomeValidation = new AwesomeValidation(ValidationStyle.BASIC);
 
-        // TODO: decide which kind of validation we want: password, names ..
-
         // Validation for private name
         awesomeValidation.addValidation(this, R.id.privateNameEditText,
-                RegexTemplate.NOT_EMPTY, R.string.invalid_name);
+                RegexTemplate.NOT_EMPTY, R.string.invalid_private_name);
         // Validation for family name
         awesomeValidation.addValidation(this, R.id.familyNameEditText,
-                RegexTemplate.NOT_EMPTY, R.string.invalid_name);
+                RegexTemplate.NOT_EMPTY, R.string.invalid_family_name);
         // Validation for email
         awesomeValidation.addValidation(this, R.id.emailEditText,
                 Patterns.EMAIL_ADDRESS, R.string.invalid_email);
-        // Validation for password
+        // Validation for password:
+        // 1. At least one upper case English letter, (?=.*?[A-Z])
+        // 2. At least one lower case English letter, (?=.*?[a-z])
+        // 3. At least one digit, (?=.*?[0-9])
+        // 4. At least one special character, (?=.*?[#?!@$%^&*-])
+        // 5. Minimum eight in length .{8,}
         awesomeValidation.addValidation(this, R.id.passwordEditText,
-                ".{6,}", R.string.invalid_password);
+                "^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$", R.string.invalid_password);
         // Validation for confirm password
         awesomeValidation.addValidation(this, R.id.confirmPasswordEditText,
                 R.id.passwordEditText, R.string.invalid_confirm_passwords);
-        // Validation for phone number //TODO: connect to google maps
+        // Validation for phone number
         awesomeValidation.addValidation(this, R.id.PhoneNumber,
                 "05[0-9]{8}$", R.string.invalid_mobile);
-        // Validation for address
+        // Validation for address //TODO: connect to google maps
         awesomeValidation.addValidation(this, R.id.Address,
                 RegexTemplate.NOT_EMPTY, R.string.invalid_address);
 
-        mButtonNext.setOnClickListener(new View.OnClickListener() {
+        /**
+         * function for calling our REQUEST function
+         * the call will occur only if the validation for all fields is good
+         */
+        mButtonLetsVolunteer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 // check validation
                 if(awesomeValidation.validate()){
-                    // on success
-                    Toast.makeText(getApplicationContext(),
-                            "Form Validate Successfully", Toast.LENGTH_SHORT).show();
-                    registerSocialUser(mTextUserPrivateName.toString(), mTextUserFamilyName.toString(),
+//                    // on success
+//                    Toast.makeText(getApplicationContext(),
+//                            "Form Validate Successfully", Toast.LENGTH_SHORT).show();
+                    registerUser(mTextUserPrivateName.toString(), mTextUserFamilyName.toString(),
                             mTextUserEmail.toString(), mTextPassword.toString(), mTextPhoneNumber.toString(),
                             mTextAddress.toString(), mTextAbout.toString());
                 }else{
                     Toast.makeText(getApplicationContext(),
-                            "Validation Failed", Toast.LENGTH_SHORT).show();
+                            "Validation Failed - Please fill all fields correctly", Toast.LENGTH_SHORT).show();
                 }
             }
         });
     }
 
-    private void registerSocialUser (final String firstName, final String lastName, final String email,
+    /**
+     * function for inserting all data from edit texts into our data base
+     */
+    private void registerUser (final String firstName, final String lastName, final String email,
                                      final String password, final String phoneNumber, final String address, final String about) {
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
                 new Response.Listener<String>() {

@@ -52,21 +52,37 @@
     <string name="createVolunteerHeadline">יצירת התנדבות</string>
     <string name="addPicText">הוסף תמונה</string>
     <string name="media_camera">media_camera</string>
+    <string name="notificationHeadline">התראות</string>
     <string name="createAcount">יצירת חשבון</string>
-    <string name="privateName">שם פרטי</string>
-    <string name="familyName">שם משפחה</string>
-    <string name="email">אימייל</string>
-    <string name="password">סיסמה</string>
-    <string name="passwordVerification">אימות סיסמה</string>
+    <string name="time_headline">זמנים</string>
+    <string name="time_text">תודיע לי על התנדבויות בטווח זמנים מסויים</string>
+    <string name="location_text">תודיע לי על התנדבויות קרובות אליי</string>
+    <string name="location_headline">מיקום</string>
     <string name="nextPage">הבא</string>
-    <string name="invalid_name">Please Enter Valid Name</string>
-    <string name="invalid_mobile">Please enter a valid number</string>
-    <string name="invalid_email">Please enter a valid email</string>
-    <string name="invalid_confirm_passwords">Passwords does not match</string>
-    <string name="Lets_volunteer">יאללה בוא נתנדב</string>
-    <string name="phone">פלאפון</string>
-    <string name="address">כתובת מגורים</string>
-    <string name="about">כמה מילים עליך</string>
-    <string name="invalid_address">Please enter valid address</string>
+
+
+
+    <!-- activity_create_account_first -->
+
+        <!-- Text Edits -->
+        <string name="privateName">שם פרטי</string>
+        <string name="familyName">שם משפחה</string>
+        <string name="password">סיסמה</string>
+        <string name="passwordVerification">אימות סיסמה</string>
+        <string name="email">אימייל</string>
+        <string name="phone">פלאפון</string>
+        <string name="address">כתובת מגורים</string>
+        <string name="about">כמה מילים עליך</string>
+
+        <!-- Validations -->
+        <string name="invalid_private_name">Please enter your private name</string>
+        <string name="invalid_family_name">Please enter your family name</string>
+        <string name="invalid_mobile">Please enter a valid phone number</string>
+        <string name="invalid_email">Please enter a valid email</string>
+        <string name="invalid_confirm_passwords">Passwords don\'t match</string>
+        <string name="invalid_address">Please enter valid address</string>
+
+        <string name="Lets_volunteer">יאללה בוא נתנדב</string>
+
 
 </resources>
