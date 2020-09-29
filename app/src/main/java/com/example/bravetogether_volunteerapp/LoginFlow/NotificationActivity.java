@@ -3,7 +3,6 @@ package com.example.bravetogether_volunteerapp.LoginFlow;
 import android.app.Activity;
 import android.content.Context;
 import android.content.pm.PackageManager;
-import android.media.Image;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
