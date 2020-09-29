@@ -57,5 +57,6 @@
     <string name="time_text">תודיע לי על התנדבויות בטווח זמנים מסויים</string>
     <string name="location_text">תודיע לי על התנדבויות קרובות אליי</string>
     <string name="location_headline">מיקום</string>
+    <string name="loc_acc_text">הרשאה למיקום שלי</string>
 
 </resources>

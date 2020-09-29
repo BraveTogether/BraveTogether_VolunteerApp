@@ -1,4 +1,4 @@
-package LoginFlow;
+package com.example.bravetogether_volunteerapp.LoginFlow;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager2.widget.ViewPager2;

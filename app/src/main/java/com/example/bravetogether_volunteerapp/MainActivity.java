@@ -23,9 +23,9 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.Map;
 
-import LoginFlow.IntroFirstTimeActivity;
-import LoginFlow.LoginActivity;
-import LoginFlow.NotificationActivity;
+import com.example.bravetogether_volunteerapp.LoginFlow.IntroFirstTimeActivity;
+import com.example.bravetogether_volunteerapp.LoginFlow.LoginActivity;
+import com.example.bravetogether_volunteerapp.LoginFlow.NotificationActivity;
 
 public class MainActivity extends AppCompatActivity {
 

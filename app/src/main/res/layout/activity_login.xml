@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#FFF5dc"
-    tools:context="LoginFlow.LoginActivity">
+    tools:context="com.example.bravetogether_volunteerapp.LoginFlow.LoginActivity">
 
     <com.facebook.login.widget.LoginButton
         android:id="@+id/facebook_login_button"

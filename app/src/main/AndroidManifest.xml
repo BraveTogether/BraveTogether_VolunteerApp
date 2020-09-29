@@ -3,6 +3,8 @@
     package="com.example.bravetogether_volunteerapp">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission. ACCESS_COARSE_LOCATION" />
 
     <application
         android:allowBackup="true"
@@ -12,7 +14,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name="LoginFlow.NotificationActivity" />
+        <activity android:name="com.example.bravetogether_volunteerapp.LoginFlow.NotificationActivity" />
         <activity
             android:name=".CreateVolunteerActivity"
             android:exported="true" />
@@ -39,11 +41,11 @@
         <activity android:name=".FilterActivity" />
         <activity android:name=".VolunteerApprovalActivity" />
         <activity android:name=".GeneralActivity" />
-        <activity android:name="LoginFlow.IntroFirstTimeActivity" />
+        <activity android:name="com.example.bravetogether_volunteerapp.LoginFlow.IntroFirstTimeActivity" />
         <activity
-            android:name="LoginFlow.LoginActivity"
+            android:name="com.example.bravetogether_volunteerapp.LoginFlow.LoginActivity"
             android:exported="true" />
-        <activity android:name="LoginFlow.IntroPageActivity" />
+        <activity android:name="com.example.bravetogether_volunteerapp.LoginFlow.IntroPageActivity" />
 
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"
