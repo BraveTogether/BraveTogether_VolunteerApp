@@ -9,7 +9,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.TextView;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
@@ -25,11 +24,6 @@ public class SettingsFragment extends Fragment {
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-
-        View v = inflater.inflate(R.layout.nav_header_main, null); //log.xml is your file.
-        TextView mail = (TextView)(v.findViewById(R.id.textView)); //get a reference to the textview on the nav_header.xml file.
-        //mail.setText(email);
-        mail.setText("noy@test");
 
         View view = inflater.inflate(R.layout.fragment_settings, container, false);
         String sharedPrefFile =
