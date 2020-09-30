@@ -19,6 +19,18 @@
                 android:layout_height="match_parent"
                 tools:context=".CreateAccountFirstActivity">
 
+                <Button
+                    android:id="@+id/backButtonImageView"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_marginTop="44dp"
+                    android:background="@drawable/top_back_arrow_24"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.891"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:ignore="VectorDrawableCompat" />
+
                 <View
                     android:id="@+id/ellipse_"
                     android:layout_width="match_parent"
@@ -49,26 +61,25 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
-                <Button
-                    android:id="@+id/backButtonImageView"
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    android:layout_alignParentEnd="true"
-                    android:textAlignment="viewEnd"
-                    android:gravity="end"
-                    android:layout_gravity="end"
-                    android:layout_alignParentRight="true"
-                    android:layout_marginStart="55dp"
-                    android:layout_marginLeft="55dp"
-                    android:layout_marginTop="16dp"
-                    android:layout_marginEnd="40dp"
-                    android:layout_marginRight="40dp"
-                    android:background="@drawable/top_back_arrow_24"
-                    android:translationZ="1dp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/createAccTextView"
-                    app:layout_constraintTop_toTopOf="parent"
-                    tools:ignore="VectorDrawableCompat" />
+
+                <!--                <Button-->
+<!--                    android:id="@+id/backButtonImageView"-->
+<!--                    android:layout_width="24dp"-->
+<!--                    android:layout_height="24dp"-->
+<!--                    android:layout_alignParentEnd="true"-->
+<!--                    android:layout_alignParentRight="true"-->
+<!--                    android:layout_gravity="end"-->
+<!--                    android:layout_marginTop="132dp"-->
+<!--                    android:background="@drawable/top_back_arrow_24"-->
+<!--                    android:gravity="end"-->
+<!--                    android:textAlignment="viewEnd"-->
+<!--                    android:translationZ="1dp"-->
+<!--                    app:layout_constraintEnd_toEndOf="parent"-->
+<!--                    app:layout_constraintHorizontal_bias="0.914"-->
+<!--                    app:layout_constraintStart_toStartOf="parent"-->
+<!--                    app:layout_constraintTop_toTopOf="parent"-->
+<!--                    tools:ignore="VectorDrawableCompat" />-->
+
 
 
                 <ImageView

@@ -53,7 +53,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void goToProfilePage(View view) {
-        Intent intent = new Intent(MainActivity.this,ProfileActivity.class);
+        Intent intent = new Intent(MainActivity.this,RegularProfileActivity.class);
         startActivity(intent);
     }
 
