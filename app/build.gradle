@@ -1,16 +1,17 @@
 apply plugin: 'com.android.application'
+apply plugin: 'com.google.gms.google-services'
 
 android {
-    signingConfigs {
-        release {
-            storeFile file('C:\\Users\\Alex\\.android\\debug.keystore')
-            storePassword 'android'
-        }
-        debug {
-            storeFile file('C:\\Users\\Alex\\.android\\debug.keystore')
-            storePassword 'android'
-        }
-    }
+//    signingConfigs {
+//        release {
+//            storeFile file('C:\\Users\\Alex\\.android\\debug.keystore')
+//            storePassword 'android'
+//        }
+//        debug {
+//            storeFile file('C:\\Users\\Alex\\.android\\debug.keystore')
+//            storePassword 'android'
+//        }
+//    }
     compileSdkVersion 29
     buildToolsVersion "29.0.3"
 
@@ -52,6 +53,8 @@ dependencies {
     implementation 'com.google.android.libraries.places:places:2.4.0'
     implementation 'com.google.android.material:material:1.2.1'
     implementation 'de.hdodenhof:circleimageview:3.1.0'
+    implementation 'com.google.firebase:firebase-storage:16.0.4'
+    implementation 'com.google.firebase:firebase-auth:16.0.5'
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'

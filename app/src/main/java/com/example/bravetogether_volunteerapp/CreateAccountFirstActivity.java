@@ -18,6 +18,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.basgeekball.awesomevalidation.AwesomeValidation;
 import com.basgeekball.awesomevalidation.ValidationStyle;
 import com.basgeekball.awesomevalidation.utility.RegexTemplate;
+import com.google.firebase.storage.StorageReference;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -37,6 +38,7 @@ public class CreateAccountFirstActivity extends AppCompatActivity {
     Button mButtonLetsVolunteer;
     AwesomeValidation awesomeValidation;
     private String url= "http://35.214.78.251:8080";
+    StorageReference mStorageRef;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
