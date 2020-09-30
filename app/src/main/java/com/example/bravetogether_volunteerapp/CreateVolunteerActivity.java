@@ -1,18 +1,15 @@
 package com.example.bravetogether_volunteerapp;
 
-import androidx.annotation.RequiresApi;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.DialogFragment;
-
 import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Context;
+import android.content.SharedPreferences;
+import android.graphics.Bitmap;
 import android.icu.text.SimpleDateFormat;
 import android.icu.util.Calendar;
 import android.os.Build;
 import android.os.Bundle;
-import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -20,6 +17,9 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.TimePicker;
+
+import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.common.api.Status;
 import com.google.android.gms.maps.model.LatLng;
@@ -29,9 +29,7 @@ import com.google.android.libraries.places.api.model.RectangularBounds;
 import com.google.android.libraries.places.api.net.PlacesClient;
 import com.google.android.libraries.places.widget.AutocompleteSupportFragment;
 import com.google.android.libraries.places.widget.listener.PlaceSelectionListener;
-
-import org.w3c.dom.Text;
-
+import com.google.zxing.qrcode.encoder.QRCode;
 import java.util.Arrays;
 
 
@@ -44,6 +42,14 @@ public class CreateVolunteerActivity extends AppCompatActivity {
     String strDate;
     String strTime;
     Context mcontext = this;
+    static SharedPreferences mPreferences;
+    private final String sharedPrefFile = "com.example.android.BraveTogether_VolunteerApp";
+    static String email = mPreferences.getString("UserEmail", "null");
+
+
+    public void SendQRCode(){
+
+    }
 
 
     @RequiresApi(api = Build.VERSION_CODES.N)

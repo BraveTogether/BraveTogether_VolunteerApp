@@ -14,9 +14,13 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name="com.example.bravetogether_volunteerapp.LoginFlow.NotificationActivity" />
+        <activity android:name=".RegularProfileActivity"></activity>
+        <activity android:name=".LoginFlow.LoginActivity" />
         <activity
             android:name=".CreateVolunteerActivity"
+            android:exported="true" />
+        <activity
+            android:name=".CreateAccountFirstActivity"
             android:exported="true" />
         <activity android:name=".MainActivity">
             <intent-filter>
@@ -26,25 +30,16 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ProfileActivity"
-            android:label="@string/title_activity_profile"
-            android:theme="@style/AppTheme">
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW" />
-
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-        </activity>
-        <activity
             android:name=".data.VolunteeriesListActivity"
             android:exported="true" />
         <activity android:name=".FilterActivity" />
         <activity android:name=".VolunteerApprovalActivity" />
         <activity android:name=".GeneralActivity" />
-        <activity android:name="com.example.bravetogether_volunteerapp.LoginFlow.IntroFirstTimeActivity" />
+        <activity android:name=".LoginFlow.IntroFirstTimeActivity" />
         <activity
-            android:name="com.example.bravetogether_volunteerapp.LoginFlow.LoginActivity"
+            android:name=".LoginFlow.RegisterActivity"
             android:exported="true" />
+        <activity android:name=".LoginFlow.IntroPageActivity" />
         <activity android:name="com.example.bravetogether_volunteerapp.LoginFlow.IntroPageActivity" />
 
         <meta-data
