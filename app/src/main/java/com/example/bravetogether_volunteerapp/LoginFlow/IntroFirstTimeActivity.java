@@ -1,9 +1,11 @@
 package com.example.bravetogether_volunteerapp.LoginFlow;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.preference.PreferenceManager;
 import androidx.viewpager2.widget.ViewPager2;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Paint;
 import android.os.Bundle;
 import android.view.View;
@@ -22,6 +24,8 @@ public class IntroFirstTimeActivity extends AppCompatActivity {
     ArrayList list;
     TextView alreadyHaveAnAccountTextView;
     Button letsStartButton;
+    SharedPreferences.Editor editor;
+    SharedPreferences prefs;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,14 +41,17 @@ public class IntroFirstTimeActivity extends AppCompatActivity {
 
         IntroViewPageAdapter introViewPageAdapter = new IntroViewPageAdapter(list);
         viewPager2.setAdapter(introViewPageAdapter);
+        prefs = PreferenceManager.getDefaultSharedPreferences(this);
 
         alreadyHaveAnAccountTextView = findViewById(R.id.alreadyHaveAnAccountTextView);
         alreadyHaveAnAccountTextView.setPaintFlags(alreadyHaveAnAccountTextView.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
         alreadyHaveAnAccountTextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                editor = prefs.edit();
+                editor.putBoolean("first_time",true);
+                editor.apply();
                 startActivity(new Intent(IntroFirstTimeActivity.this, LoginActivity.class));
-                finish();
             }
         });
 
@@ -52,7 +59,11 @@ public class IntroFirstTimeActivity extends AppCompatActivity {
         letsStartButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(IntroFirstTimeActivity.this,LoginActivity.class));
+                editor = prefs.edit();
+                editor.putBoolean("first_time",true);
+                editor.apply();
+                startActivity(new Intent(IntroFirstTimeActivity.this, RegisterActivity.class));
+                finish();
             }
         });
     }
