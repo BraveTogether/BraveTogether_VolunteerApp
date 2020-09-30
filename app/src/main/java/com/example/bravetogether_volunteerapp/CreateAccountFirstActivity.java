@@ -141,4 +141,7 @@ public class CreateAccountFirstActivity extends AppCompatActivity {
         VolleySingleton.getInstance(this).addToRequestQueue(stringRequest);
     }
 
+    public void addPicture(View view) {
+
+    }
 }
