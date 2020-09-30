@@ -21,6 +21,7 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
+import com.example.bravetogether_volunteerapp.LoginFlow.NotificationActivity;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 
@@ -74,6 +75,11 @@ public class MainActivity extends AppCompatActivity {
 
     public void goToNormalRegistration(View view) {
         Intent intent = new Intent(MainActivity.this,CreateAccountFirstActivity.class);
+        startActivity(intent);
+    }
+
+    public void goToNotification(View view) {
+        Intent intent = new Intent(MainActivity.this, NotificationActivity.class);
         startActivity(intent);
     }
 }
