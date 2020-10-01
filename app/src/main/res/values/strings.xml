@@ -7,7 +7,6 @@
     <string name="action_sign_in_short">Sign in</string>
     <string name="welcome">"Welcome !"</string>
     <string name="invalid_username">Not a valid username</string>
-    <string name="invalid_password">Password must be >5 characters</string>
     <string name="login_failed">"Login failed"</string>
     <string name="facebook_app_id">3786422741385585</string>
     <string name="fb_login_protocol_scheme">fb3786422741385585</string>
@@ -54,7 +53,8 @@
     <string name="location_headline">מיקום</string>
     <string name="nextPage">הבא</string>
 
-
+    <string name="Lets_volunteer">יאללה בוא נתנדב</string>
+    <string name="loc_acc_text">הרשאה למיקום שלי</string>
 
     <!-- activity_create_account_first -->
 
@@ -69,15 +69,12 @@
         <string name="about">כמה מילים עליך</string>
 
         <!-- Validations -->
-        <string name="invalid_private_name">Please enter your private name</string>
-        <string name="invalid_family_name">Please enter your family name</string>
-        <string name="invalid_mobile">Please enter a valid phone number</string>
-        <string name="invalid_email">Please enter a valid email</string>
-        <string name="invalid_confirm_passwords">Passwords don\'t match</string>
-        <string name="invalid_address">Please enter valid address</string>
-
-        <string name="Lets_volunteer">יאללה בוא נתנדב</string>
-
-    <string name="loc_acc_text">הרשאה למיקום שלי</string>
+        <string name="invalid_private_name">הכנס את השם הפרטי שלך</string>
+        <string name="invalid_family_name">הכנס את שם המשפחה שלך</string>
+        <string name="invalid_mobile">הכנס מספר טלפון תקין</string>
+        <string name="invalid_email">הכנס כתובת אימייל תקינה</string>
+        <string name="invalid_password">סיסמא חייבת להכיל לפחות 8 תווים וביניהם: אות אנגלית גדולה, אות אנגלית קטנה, תו מיוחד וספרה</string>
+        <string name="invalid_confirm_passwords">הסיסמאות לא תואמות</string>
+        <string name="invalid_address">בבקשה הכנס כתובת תקינה</string>
 
 </resources>
