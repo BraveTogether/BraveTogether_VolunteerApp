@@ -13,7 +13,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
-        android:usesCleartextTraffic="true">
+        android:usesCleartextTraffic="true"
+        android:name=".app.app">
         <activity android:name=".RegularProfileActivity"></activity>
         <activity android:name=".LoginFlow.NotificationActivity"></activity>
         <activity android:name=".LoginFlow.LoginActivity" />
@@ -41,7 +42,6 @@
             android:name=".LoginFlow.RegisterActivity"
             android:exported="true" />
         <activity android:name=".LoginFlow.IntroPageActivity" />
-        <activity android:name="com.example.bravetogether_volunteerapp.LoginFlow.IntroPageActivity" />
 
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"

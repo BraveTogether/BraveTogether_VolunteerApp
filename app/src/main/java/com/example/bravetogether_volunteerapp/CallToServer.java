@@ -16,13 +16,14 @@ import java.util.Map;
 public class CallToServer {
 
     private final String url = "http://35.214.78.251:8080";
+    private String[] userDetails = new String[5];
 
-    private void getUserDetails (final String email,Context context) {
+    public String[] getUserDetails (final String email,Context context) {
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url + "/users/" + "email",
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        Log.d("Response", response.toString());
+                        Log.d("Response",response);
                     }
                 },
                 new Response.ErrorListener() {
@@ -38,11 +39,6 @@ public class CallToServer {
                 return params;
             }
         };
-        VolleySingleton.getInstance(context).addToRequestQueue(stringRequest);
-        VolleySingleton.getInstance(context).getRequestQueue().addRequestFinishedListener(new RequestQueue.RequestFinishedListener<Object>() {
-            @Override
-            public void onRequestFinished(Request<Object> request) {
-            }
-        });
+        return new String[0];
     }
 }

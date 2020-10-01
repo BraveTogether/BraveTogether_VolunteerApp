@@ -3,9 +3,11 @@ package com.example.bravetogether_volunteerapp.app;
 import android.app.Application;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.telecom.Call;
 
 import androidx.preference.PreferenceManager;
 
+import com.example.bravetogether_volunteerapp.CallToServer;
 import com.example.bravetogether_volunteerapp.LoginFlow.IntroFirstTimeActivity;
 import com.example.bravetogether_volunteerapp.LoginFlow.RegisterActivity;
 import com.example.bravetogether_volunteerapp.MainActivity;
@@ -16,13 +18,12 @@ import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 public class app extends Application {
 
     private String uid;
-    AccessToken accessToken;
-    GoogleSignInAccount acct;
-    SharedPreferences prefs;
+    private AccessToken accessToken;
+    private GoogleSignInAccount acct;
+    private SharedPreferences prefs;
 
     public app(){
         //No context
-
     }
 
     @Override
@@ -32,9 +33,13 @@ public class app extends Application {
     }
 
     public void checkForCurrentUserState(){
-        acct = GoogleSignIn.getLastSignedInAccount(this);
-        accessToken = AccessToken.getCurrentAccessToken();
-        prefs = PreferenceManager.getDefaultSharedPreferences(this);
+
+        { //Getting the saved account if it exists.
+            acct = GoogleSignIn.getLastSignedInAccount(this);
+            accessToken = AccessToken.getCurrentAccessToken();
+            prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        }
+
         if (!prefs.getBoolean("first_time", false)) {
             Intent intent = new Intent(app.this, IntroFirstTimeActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -42,8 +47,12 @@ public class app extends Application {
         } else {
             if (acct != null) {
                 Intent intent = new Intent(app.this, MainActivity.class);
-                uid = acct.getId();
+                uid = acct.getEmail();
+
                 //Implement call to server to check if user signed up or not
+                CallToServer getAccountDetails = new CallToServer();
+                String[] userDetails = getAccountDetails.getUserDetails(uid,this);
+
                 intent.putExtra("uid", uid);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(intent);
