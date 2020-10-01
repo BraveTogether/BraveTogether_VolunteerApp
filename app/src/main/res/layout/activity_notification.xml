@@ -2,9 +2,10 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/constraint_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".LoginFlow.NotificationActivity">
+    tools:context="com.example.bravetogether_volunteerapp.LoginFlow.NotificationActivity">
 
     <View
         android:id="@+id/ellipse_59"
@@ -64,7 +65,24 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/ellipse_59" />
 
+    <View
+        android:id="@+id/expandedBox1"
+        android:layout_width="327dp"
+        android:layout_height="217dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="18dp"
+        android:layout_marginLeft="18dp"
+        android:layout_marginTop="42dp"
+        android:layout_marginEnd="15dp"
+        android:layout_marginRight="15dp"
+        android:background="@drawable/ic_expandedbox"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/ellipse_59" />
+
     <ImageView
+        android:id="@+id/time_icon"
         android:layout_width="20dp"
         android:layout_height="20dp"
         android:layout_marginStart="5dp"
@@ -74,6 +92,7 @@
         android:layout_marginRight="16dp"
         android:layout_marginBottom="85dp"
         android:src="@drawable/time_line"
+        android:elevation="1dp"
         app:layout_constraintBottom_toBottomOf="@+id/expandBox1"
         app:layout_constraintEnd_toEndOf="@+id/expandBox1"
         app:layout_constraintHorizontal_bias="0.818"
@@ -81,7 +100,8 @@
         app:layout_constraintTop_toTopOf="@+id/expandBox1"
         app:layout_constraintVertical_bias="1.0" />
 
-    <ImageView
+    <Button
+        android:id="@+id/expandButton"
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:layout_marginStart="14dp"
@@ -90,16 +110,17 @@
         android:layout_marginEnd="272dp"
         android:layout_marginRight="272dp"
         android:layout_marginBottom="12dp"
-        android:src="@drawable/add_circle"
-        android:clickable="true"
+        android:background="@drawable/add_circle"
         android:onClick="expandTimeBox"
         app:layout_constraintBottom_toBottomOf="@+id/expandBox1"
         app:layout_constraintEnd_toEndOf="@+id/expandBox1"
         app:layout_constraintStart_toStartOf="@+id/expandBox1"
-        app:layout_constraintTop_toTopOf="@+id/expandBox1" />
+        app:layout_constraintTop_toTopOf="@+id/expandBox1"
+        android:elevation="1dp"/>
     
     <TextView
         android:id="@+id/time_headline"
+        android:elevation="1dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
@@ -120,6 +141,7 @@
 
     <TextView
         android:id="@+id/time_text"
+        android:elevation="1dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
@@ -140,6 +162,183 @@
         app:layout_constraintTop_toTopOf="@+id/expandBox1"
         />
 
+
+    <ImageView
+        android:id="@+id/timeTableRect"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_whiterectangle"
+        app:layout_constraintBottom_toBottomOf="@+id/expandedBox1"
+        app:layout_constraintEnd_toEndOf="@+id/expandedBox1"
+        app:layout_constraintStart_toStartOf="@+id/expandedBox1"
+        app:layout_constraintTop_toTopOf="@+id/expandedBox1"
+        android:visibility="gone"/>
+
+<!--    <Button-->
+<!--        android:id="@+id/day1"-->
+<!--        android:layout_width="16dp"-->
+<!--        android:layout_height="30dp"-->
+<!--        android:layout_marginEnd="16dp"-->
+<!--        android:layout_marginRight="16dp"-->
+<!--        android:text="א"-->
+<!--        android:textSize="25sp"-->
+<!--        android:textStyle="bold"-->
+<!--        android:textColor="@color/button_text_color"-->
+<!--        android:background="@drawable/button_background"-->
+<!--        app:layout_constraintBottom_toBottomOf="@+id/timeTableRect"-->
+<!--        app:layout_constraintEnd_toEndOf="@+id/timeTableRect"-->
+<!--        app:layout_constraintTop_toTopOf="@+id/timeTableRect"-->
+<!--        app:layout_constraintVertical_bias="0.441"-->
+<!--        android:visibility="gone"/>-->
+
+
+    <ImageView
+        android:id="@+id/line_24"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:layout_marginEnd="44dp"
+        android:layout_marginRight="44dp"
+        android:background="@drawable/line_24"
+        app:layout_constraintEnd_toEndOf="@+id/timeTableRect"
+        app:layout_constraintTop_toTopOf="@+id/timeTableRect"
+        android:visibility="gone"/>
+
+<!--    <Button-->
+<!--        android:id="@+id/day2"-->
+<!--        android:layout_width="16dp"-->
+<!--        android:layout_height="30dp"-->
+<!--        android:layout_marginEnd="60dp"-->
+<!--        android:layout_marginRight="60dp"-->
+<!--        android:textColor="@color/button_text_color"-->
+<!--        android:background="@drawable/button_background"-->
+<!--        android:text="ב"-->
+<!--        android:textSize="25sp"-->
+<!--        android:textStyle="bold"-->
+<!--        app:layout_constraintBottom_toBottomOf="@+id/timeTableRect"-->
+<!--        app:layout_constraintEnd_toEndOf="@+id/timeTableRect"-->
+<!--        app:layout_constraintTop_toTopOf="@+id/timeTableRect"-->
+<!--        app:layout_constraintVertical_bias="0.441"-->
+<!--        android:visibility="gone"/>-->
+
+    <ImageView
+        android:id="@+id/line_25"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:layout_marginEnd="96dp"
+        android:layout_marginRight="95dp"
+        android:background="@drawable/line_24"
+        app:layout_constraintEnd_toEndOf="@+id/timeTableRect"
+        app:layout_constraintTop_toTopOf="@+id/timeTableRect"
+        android:visibility="gone"/>
+
+<!--    <Button-->
+<!--        android:id="@+id/day3"-->
+<!--        android:layout_width="16dp"-->
+<!--        android:layout_height="30dp"-->
+<!--        android:layout_marginEnd="112dp"-->
+<!--        android:layout_marginRight="112dp"-->
+<!--        android:textColor="@color/button_text_color"-->
+<!--        android:background="@drawable/button_background"-->
+<!--        android:text="ג"-->
+<!--        android:textSize="25sp"-->
+<!--        android:textStyle="bold"-->
+<!--        app:layout_constraintBottom_toBottomOf="@+id/timeTableRect"-->
+<!--        app:layout_constraintEnd_toEndOf="@+id/timeTableRect"-->
+<!--        app:layout_constraintTop_toTopOf="@+id/timeTableRect"-->
+<!--        app:layout_constraintVertical_bias="0.411"-->
+<!--        android:visibility="gone"/>-->
+
+    <ImageView
+        android:id="@+id/line_26"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:layout_marginEnd="140dp"
+        android:layout_marginRight="140dp"
+        android:background="@drawable/line_24"
+        app:layout_constraintEnd_toEndOf="@+id/timeTableRect"
+        app:layout_constraintTop_toTopOf="@+id/timeTableRect"
+        android:visibility="gone"/>
+
+<!--    <Button-->
+<!--        android:id="@+id/day4"-->
+<!--        android:layout_width="16dp"-->
+<!--        android:layout_height="30dp"-->
+<!--        android:layout_marginEnd="152dp"-->
+<!--        android:layout_marginRight="152dp"-->
+<!--        android:textColor="@color/button_text_color"-->
+<!--        android:background="@drawable/button_background"-->
+<!--        android:text="ד"-->
+<!--        android:textSize="25sp"-->
+<!--        android:textStyle="bold"-->
+<!--        android:onClick="weekDayCheck"-->
+
+<!--        app:layout_constraintBottom_toBottomOf="@+id/timeTableRect"-->
+<!--        app:layout_constraintEnd_toEndOf="@+id/timeTableRect"-->
+<!--        app:layout_constraintTop_toTopOf="@+id/timeTableRect"-->
+<!--        app:layout_constraintVertical_bias="0.411"-->
+<!--        android:visibility="gone"/>-->
+
+    <ImageView
+        android:id="@+id/line_27"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:layout_marginEnd="184dp"
+        android:layout_marginRight="184dp"
+        android:background="@drawable/line_24"
+        app:layout_constraintEnd_toEndOf="@+id/timeTableRect"
+        app:layout_constraintTop_toTopOf="@+id/timeTableRect"
+        android:visibility="gone"/>
+
+<!--    <Button-->
+<!--        android:id="@+id/day5"-->
+<!--        android:layout_width="16dp"-->
+<!--        android:layout_height="30dp"-->
+<!--        android:layout_marginEnd="204dp"-->
+<!--        android:layout_marginRight="204dp"-->
+<!--        android:textColor="@color/button_text_color"-->
+<!--        android:background="@drawable/button_background"-->
+<!--        android:text="ה"-->
+<!--        android:textSize="25sp"-->
+<!--        android:textStyle="bold"-->
+<!--        app:layout_constraintBottom_toBottomOf="@+id/timeTableRect"-->
+<!--        app:layout_constraintEnd_toEndOf="@+id/timeTableRect"-->
+<!--        app:layout_constraintTop_toTopOf="@+id/timeTableRect"-->
+<!--        app:layout_constraintVertical_bias="0.411"-->
+<!--        android:visibility="gone"/>-->
+
+    <ImageView
+        android:id="@+id/line_28"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:layout_marginEnd="236dp"
+        android:layout_marginRight="236dp"
+        android:background="@drawable/line_24"
+        app:layout_constraintEnd_toEndOf="@+id/timeTableRect"
+        app:layout_constraintTop_toTopOf="@+id/timeTableRect"
+        android:visibility="gone"/>
+
+<!--    <Button-->
+<!--        android:id="@+id/day6"-->
+<!--        android:layout_width="16dp"-->
+<!--        android:layout_height="30dp"-->
+<!--        android:layout_marginEnd="256dp"-->
+<!--        android:layout_marginRight="256dp"-->
+<!--        android:textColor="@color/button_text_color"-->
+<!--        android:background="@drawable/button_background"-->
+<!--        android:text="ו"-->
+<!--        android:textSize="25sp"-->
+<!--        android:textStyle="bold"-->
+<!--        app:layout_constraintBottom_toBottomOf="@+id/timeTableRect"-->
+<!--        app:layout_constraintEnd_toEndOf="@+id/timeTableRect"-->
+<!--        app:layout_constraintTop_toTopOf="@+id/timeTableRect"-->
+<!--        app:layout_constraintVertical_bias="0.411"-->
+<!--        android:visibility="gone"/>-->
+
     <View
         android:id="@+id/expandBox2"
         android:layout_width="327dp"
@@ -148,14 +347,32 @@
         android:layout_alignParentTop="true"
         android:layout_marginStart="18dp"
         android:layout_marginLeft="18dp"
-        android:layout_marginTop="273dp"
+        android:layout_marginTop="19.39dp"
         android:layout_marginEnd="15dp"
         android:layout_marginRight="15dp"
         android:background="@drawable/expandbox"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.509"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@id/ellipse_59" />
+        app:layout_constraintTop_toBottomOf="@id/expandBox1" />
+
+    <View
+        android:id="@+id/expandedBox2"
+        android:layout_width="327dp"
+        android:layout_height="217dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="18dp"
+        android:layout_marginLeft="18dp"
+        android:layout_marginTop="19.39dp"
+        android:layout_marginEnd="15dp"
+        android:layout_marginRight="15dp"
+        android:background="@drawable/ic_expandedbox"
+        android:elevation="0dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.47"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/expandBox1" />
 
     <TextView
         android:id="@+id/location_headline"
@@ -175,7 +392,8 @@
         app:layout_constraintBottom_toBottomOf="@+id/expandBox2"
         app:layout_constraintEnd_toEndOf="@+id/expandBox2"
         app:layout_constraintStart_toStartOf="@+id/expandBox2"
-        app:layout_constraintTop_toTopOf="@+id/expandBox2"/>
+        app:layout_constraintTop_toTopOf="@+id/expandBox2"
+        android:elevation="1dp"/>
 
     <TextView
         android:id="@+id/location_text"
@@ -197,9 +415,11 @@
         app:layout_constraintEnd_toEndOf="@+id/expandBox2"
         app:layout_constraintStart_toStartOf="@+id/expandBox2"
         app:layout_constraintTop_toTopOf="@+id/expandBox2"
+        android:elevation="1dp"
         />
 
     <ImageView
+        android:id="@+id/location_icon"
         android:layout_width="20dp"
         android:layout_height="20dp"
         android:layout_marginStart="291dp"
@@ -212,6 +432,20 @@
         app:layout_constraintBottom_toBottomOf="@+id/expandBox2"
         app:layout_constraintEnd_toEndOf="@+id/expandBox2"
         app:layout_constraintStart_toStartOf="@+id/expandBox2"
+        app:layout_constraintTop_toTopOf="@+id/expandBox2"
+        android:elevation="1dp"/>
+
+    <TextView
+        android:id="@+id/loc_acc_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="76dp"
+        android:text="@string/loc_acc_text"
+        android:textColor="#001925"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="@+id/expandBox2"
+        app:layout_constraintHorizontal_bias="0.653"
+        app:layout_constraintStart_toEndOf="@+id/switch_button"
         app:layout_constraintTop_toTopOf="@+id/expandBox2" />
 
     <Switch
@@ -228,7 +462,43 @@
         app:layout_constraintStart_toStartOf="@+id/expandBox2"
         app:layout_constraintStart_toEndOf="@+id/expandBox2"
         app:layout_constraintTop_toTopOf="@+id/expandBox2"
-        android:checked="true" />
+        android:checked="false"
+        android:elevation="1dp"/>
 
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/autocomplete_address"
+        android:name="com.google.android.libraries.places.widget.AutocompleteSupportFragment"
+        android:layout_width="320dp"
+        android:layout_height="48dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/textfield_d"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.504"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/expandBox2" />
+
+    <Button
+        android:id="@+id/letsVolunteer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="600dp"
+        android:background="@drawable/ic_letsvolunteer"
+        android:clickable="true"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:focusable="true" />
+
+    <Button
+        android:id="@+id/skip"
+        android:layout_width="22dp"
+        android:layout_height="12dp"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/ic_skip"
+        android:textColor="#350016"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/letsVolunteer" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
