@@ -76,7 +76,7 @@ public class NotificationActivity extends AppCompatActivity {
         expandedLocationBox.setVisibility(View.GONE);
         mConstraintLayout = findViewById(R.id.constraint_layout);
         expandButton = (Button) findViewById(R.id.expandButton);
-
+        expandedLocationBox.setVisibility(View.VISIBLE);
 
         // Place AutoFill
 
