@@ -1,5 +1,6 @@
 package com.example.bravetogether_volunteerapp.LoginFlow;
 
+import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
 import android.content.pm.PackageManager;
@@ -11,6 +12,7 @@ import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.Switch;
+import android.widget.ToggleButton;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
@@ -44,8 +46,10 @@ public class NotificationActivity extends AppCompatActivity {
     private View expandedTimeBox;
     private Activity activity = this;
     private GpsTracker gpsTracker;
-    private Button buttons[] = new Button[6];
-    private ImageView linesViews[] = new ImageView[5];
+    private ToggleButton buttons[] = new ToggleButton[6];
+    private boolean isButtonPres[] = new boolean[6];
+    private ImageView linesAndRectViews[] = new ImageView[6];
+    private boolean checkDays[] = new boolean[6];
 
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
     @Override
@@ -56,15 +60,16 @@ public class NotificationActivity extends AppCompatActivity {
         {
             String buttonID = "day" + String.valueOf(i+1);
             int resID = getResources().getIdentifier(buttonID, "id", getPackageName());
-            buttons[i] = (Button) findViewById(resID);
+            buttons[i] = (ToggleButton) findViewById(resID);
+            if(i<5)
+                buttonID = "line_2" + String.valueOf(i + 4);
+            else
+                buttonID = "timeTableRect";
+            resID = getResources().getIdentifier(buttonID, "id", getPackageName());
+            linesAndRectViews[i] = (ImageView) findViewById(resID);
+            isButtonPres[i] = false;
         }
 
-        for(int i=0;i<5;i++)
-        {
-            String buttonID = "line_2" + String.valueOf(i+4);
-            int resID = getResources().getIdentifier(buttonID, "id", getPackageName());
-            linesViews[i] = (ImageView) findViewById(resID);
-        }
 
         expandedLocationBox = (View) findViewById(R.id.expandedBox2);
         expandedTimeBox = (View) findViewById(R.id.expandedBox1);
@@ -73,10 +78,9 @@ public class NotificationActivity extends AppCompatActivity {
 
 
         expandedTimeBox.setVisibility(View.GONE);
-        expandedLocationBox.setVisibility(View.GONE);
+        expandedLocationBox.setVisibility(View.VISIBLE);
         mConstraintLayout = findViewById(R.id.constraint_layout);
         expandButton = (Button) findViewById(R.id.expandButton);
-        expandedLocationBox.setVisibility(View.VISIBLE);
 
         // Place AutoFill
 
@@ -120,9 +124,9 @@ public class NotificationActivity extends AppCompatActivity {
                     SlideAnimation.slide_up(mcontext, expandedLocationBox);
                     expandedLocationBox.setVisibility(View.GONE);
                     try {
-                        if (ContextCompat.checkSelfPermission(getApplicationContext(), android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED )
+                        if (ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED )
                         {
-                            ActivityCompat.requestPermissions(activity, new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION}, 101);
+                            ActivityCompat.requestPermissions(activity, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 101);
                         }
                         getLocation();
                     } catch (Exception e){
@@ -162,6 +166,13 @@ public class NotificationActivity extends AppCompatActivity {
         mConstraintSet.applyTo(mConstraintLayout);
         /*
          * make every other element visible*/
+        for(int i=0;i<5;i++)
+        {
+            buttons[i].setVisibility(View.VISIBLE);
+            linesAndRectViews[i].setVisibility(View.VISIBLE);
+        }
+        linesAndRectViews[5].setVisibility(Button.VISIBLE);
+        buttons[5].setVisibility(Button.VISIBLE);
     }
 
     public void getLocation(){
@@ -179,5 +190,36 @@ public class NotificationActivity extends AppCompatActivity {
 
 
     public void weekDayCheck(View view) {
+        boolean pressed = ((ToggleButton) view).isChecked();
+        if (pressed)
+        {
+            view.setBackgroundResource(R.drawable.ic_ellipse_73);
+        }
+        else
+        {
+            view.setBackgroundResource(R.color.transparent);
+        }
+        switch (view.getId()) {
+            case R.id.day1:
+                checkDays[0] = !checkDays[0];
+                break;
+            case R.id.day2:
+                checkDays[1] = !checkDays[1];
+                break;
+            case R.id.day3:
+                checkDays[2] = !checkDays[2];
+                break;
+            case R.id.day4:
+                checkDays[3] = !checkDays[3];
+                break;
+            case R.id.day5:
+                checkDays[4] = !checkDays[4];
+                break;
+            case R.id.day6:
+                checkDays[5] = !checkDays[5];
+                break;
+            default:
+                throw new IllegalStateException("Unexpected value: " + view.getId());
+        }
     }
 }
