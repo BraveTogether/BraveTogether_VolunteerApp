@@ -55,7 +55,7 @@ public class CreateVolunteerActivity extends AppCompatActivity {
     private void initQRCode(int credits, String date) {
         // this function creates a QRCode with the relevant data and saves it to the gallery
         // Initializing the QR Encoder with your value to be encoded, type you required and Dimension
-        String data = credits + " " + date;
+        String data = credits + " " + date + " " + address;
         QRGEncoder qrgEncoder = new QRGEncoder(data, null, QRGContents.Type.TEXT, 1000);
         // Getting QR-Code as Bitmap
         Bitmap bitmap = qrgEncoder.getBitmap();

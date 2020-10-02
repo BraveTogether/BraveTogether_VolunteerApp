@@ -2,6 +2,8 @@ package com.example.bravetogether_volunteerapp;
 
 import android.Manifest;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
+import android.location.Location;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -10,6 +12,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
@@ -18,6 +21,10 @@ import com.android.volley.toolbox.StringRequest;
 import com.budiyev.android.codescanner.CodeScanner;
 import com.budiyev.android.codescanner.CodeScannerView;
 import com.budiyev.android.codescanner.DecodeCallback;
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.zxing.Result;
 import com.karumi.dexter.Dexter;
 import com.karumi.dexter.PermissionToken;
@@ -39,19 +46,38 @@ public class Scanner extends AppCompatActivity {
     String sharedPrefFile = "com.example.android.BraveTogether_VolunteerApp";
     static SharedPreferences mPreferences;
     static String lastScanDay, email;
+    static private Location currentLocation;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_scanner);
         scannView = findViewById(R.id.scannerView);
-        codeScanner = new CodeScanner(this,scannView);
+        codeScanner = new CodeScanner(this, scannView);
         resultData = findViewById(R.id.resultsOfQr);
 
 
         mPreferences = getSharedPreferences(sharedPrefFile, MODE_PRIVATE);
         lastScanDay = mPreferences.getString("lastScanDay", "1.1.2019");
         email = mPreferences.getString("UserEmail", "null");
+        FusedLocationProviderClient fusedLocationClient;
+        fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
+
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            requestForCurrentLocation();
+            return;
+        }
+        fusedLocationClient.getLastLocation()
+                .addOnSuccessListener(this, new OnSuccessListener<Location>() {
+                    @Override
+                    public void onSuccess(Location location) {
+                        // Got last known location. In some rare situations this can be null.
+                        if (location != null) {
+                            // Logic to handle location object
+                            currentLocation = location;
+                        }
+                    }
+                });
 
         codeScanner.setDecodeCallback(new DecodeCallback() {
             @Override
@@ -59,11 +85,18 @@ public class Scanner extends AppCompatActivity {
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        String results, date,credits, URL;
+                        String results, date,credits, address, URL;
                         results = result.getText();
                         String[] fields = results.split(" ");
                         credits = fields[0];
                         date = fields[1];
+                        address = fields[2];
+                        //transform the address string of the volunteer into a location object
+                        LatLng addressLat = FilterActivity.getLocationFromAddress(getApplicationContext(),address);
+                        Location addressLoc = new Location("address of volunteer");
+                        addressLoc.setLongitude(addressLat.longitude);
+                        addressLoc.setLatitude(addressLat.latitude);
+
                         Date LastScanned=null, QRDate=null;
                         SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
                         try {
@@ -73,13 +106,18 @@ public class Scanner extends AppCompatActivity {
                             e.printStackTrace();
                         }
 
-                        if ((LastScanned.before(QRDate))){
+                        if (LastScanned.before(QRDate) && currentLocation.distanceTo(addressLoc)<2000){
                             updateCredits(credits);
                             SharedPreferences.Editor preferencesEditor = mPreferences.edit();
                             preferencesEditor.putString("lastScanDay", date);
                         }
                         else{
-                            Toast.makeText(getApplicationContext(), "You have already scanned today", Toast.LENGTH_SHORT).show();
+                            if (LastScanned.before(QRDate)) {
+                                Toast.makeText(getApplicationContext(), "כבר סרקת התנדבות אחת היום", Toast.LENGTH_SHORT).show();
+                            }
+                            else {
+                                Toast.makeText(getApplicationContext(), "אתה רחוק מידי מכתובת ההתנדבות הפיזית", Toast.LENGTH_SHORT).show();
+                            }
                         }
                     }
                 });
@@ -146,5 +184,22 @@ public class Scanner extends AppCompatActivity {
         }).check();
     }
 
+    public void requestForCurrentLocation() {
+        Dexter.withActivity(this).withPermission(Manifest.permission.ACCESS_FINE_LOCATION).withListener(new PermissionListener() {
+            @Override
+            public void onPermissionGranted(PermissionGrantedResponse response) {
+            }
+
+            @Override
+            public void onPermissionDenied(PermissionDeniedResponse response) {
+                Toast.makeText(Scanner.this, "Location Permission is Required.", Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onPermissionRationaleShouldBeShown(PermissionRequest permission, PermissionToken token) {
+                token.continuePermissionRequest();
+            }
+        }).check();
+    }
 
 }
