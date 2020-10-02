@@ -6,21 +6,16 @@ import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
-import android.graphics.Color;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
 import android.icu.text.SimpleDateFormat;
 import android.icu.util.Calendar;
-import android.media.Image;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Environment;
+import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
@@ -35,17 +30,8 @@ import com.google.android.libraries.places.api.model.RectangularBounds;
 import com.google.android.libraries.places.api.net.PlacesClient;
 import com.google.android.libraries.places.widget.AutocompleteSupportFragment;
 import com.google.android.libraries.places.widget.listener.PlaceSelectionListener;
-import com.google.zxing.MultiFormatWriter;
-import com.google.zxing.WriterException;
-import com.google.zxing.common.BitMatrix;
-import com.google.zxing.qrcode.encoder.QRCode;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.util.Arrays;
-import com.google.zxing.BarcodeFormat;
-import com.journeyapps.barcodescanner.BarcodeEncoder;
 
 import androidmads.library.qrgenearator.QRGContents;
 import androidmads.library.qrgenearator.QRGEncoder;
@@ -66,28 +52,17 @@ public class CreateVolunteerActivity extends AppCompatActivity {
     static String email = mPreferences.getString("UserEmail", "null");
 
 
-    private void initQRCode(String volunteer_identifier) {
+    private void initQRCode(int credits, String date) {
+        // this function creates a QRCode with the relevant data and saves it to the gallery
         // Initializing the QR Encoder with your value to be encoded, type you required and Dimension
-        QRGEncoder qrgEncoder = new QRGEncoder(volunteer_identifier, null, QRGContents.Type.TEXT, 1000);
+        String data = credits + " " + date;
+        QRGEncoder qrgEncoder = new QRGEncoder(data, null, QRGContents.Type.TEXT, 1000);
         // Getting QR-Code as Bitmap
         Bitmap bitmap = qrgEncoder.getBitmap();
         // Setting Bitmap to ImageView
         QRGSaver qrgSaver = new QRGSaver();
-        qrgSaver.save(getGalleryPath(), "QRCode".trim(), bitmap, QRGContents.ImageType.IMAGE_JPEG);
-    }
-
-    private static String getGalleryPath() {
-        String photoDir;
-        return photoDir = Environment.getExternalStorageDirectory() + "/" + Environment.DIRECTORY_DCIM + "/";
-    }
-    //MediaStore.Images.Media.insertImage(getContentResolver(), yourBitmap, yourTitle , yourDescription);
-
-
-
-    public void SendQRCode(){
-        MultiFormatWriter multiFormatWriter = new MultiFormatWriter();
-
-
+//      qrgSaver.save(getGalleryPath(), "QRCode".trim(), bitmap, QRGContents.ImageType.IMAGE_JPEG);
+        MediaStore.Images.Media.insertImage(getContentResolver(), bitmap, "mytitle" , "descriptionhello");
     }
 
 
