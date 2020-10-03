@@ -7,7 +7,6 @@ import android.location.Location;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -42,7 +41,6 @@ import java.util.Map;
 public class Scanner extends AppCompatActivity {
     CodeScanner codeScanner;
     CodeScannerView scannView;
-    TextView resultData;
     String sharedPrefFile = "com.example.android.BraveTogether_VolunteerApp";
     static SharedPreferences mPreferences;
     static String lastScanDay, email;
@@ -54,8 +52,6 @@ public class Scanner extends AppCompatActivity {
         setContentView(R.layout.activity_scanner);
         scannView = findViewById(R.id.scannerView);
         codeScanner = new CodeScanner(this, scannView);
-        resultData = findViewById(R.id.resultsOfQr);
-
 
         mPreferences = getSharedPreferences(sharedPrefFile, MODE_PRIVATE);
         lastScanDay = mPreferences.getString("lastScanDay", "1.1.2019");
@@ -91,11 +87,17 @@ public class Scanner extends AppCompatActivity {
                         credits = fields[0];
                         date = fields[1];
                         address = fields[2];
+                        Location addressLoc;
                         //transform the address string of the volunteer into a location object
-                        LatLng addressLat = FilterActivity.getLocationFromAddress(getApplicationContext(),address);
-                        Location addressLoc = new Location("address of volunteer");
-                        addressLoc.setLongitude(addressLat.longitude);
-                        addressLoc.setLatitude(addressLat.latitude);
+                        if (address == null || address== "online"){
+                            addressLoc = currentLocation;
+                        }
+                        else {
+                            LatLng addressLat = FilterActivity.getLocationFromAddress(getApplicationContext(),address);
+                            addressLoc = new Location("address of volunteer");
+                            addressLoc.setLongitude(addressLat.longitude);
+                            addressLoc.setLatitude(addressLat.latitude);
+                        }
 
                         Date LastScanned=null, QRDate=null;
                         SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");

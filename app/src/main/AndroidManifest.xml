@@ -6,7 +6,7 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-    <uses-permission android:name="android.permission.CAMERA"/>
+    <uses-permission android:name="android.permission.CAMERA" />
 
     <application
         android:allowBackup="true"
@@ -16,6 +16,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
+        <activity android:name=".RegisterWhereActivity"></activity>
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -23,11 +24,13 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ConformationsActivity"></activity>
+        <activity android:name=".ConformationsActivity" />
         <activity android:name=".RegularProfileActivity" />
         <activity android:name=".LoginFlow.NotificationActivity" />
         <activity android:name=".LoginFlow.LoginActivity" />
-        <activity android:name=".Scanner" android:exported="true"></activity>
+        <activity
+            android:name=".Scanner"
+            android:exported="true" />
         <activity
             android:name=".CreateVolunteerActivity"
             android:exported="true" />
@@ -67,8 +70,7 @@
         </activity>
         <activity
             android:name=".addToCalendar"
-            android:exported="true">
-        </activity>
+            android:exported="true"></activity>
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"

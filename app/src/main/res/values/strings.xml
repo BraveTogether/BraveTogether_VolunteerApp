@@ -58,23 +58,23 @@
 
     <!-- activity_create_account_first -->
 
-        <!-- Text Edits -->
-        <string name="privateName">שם פרטי</string>
-        <string name="familyName">שם משפחה</string>
-        <string name="password">סיסמה</string>
-        <string name="passwordVerification">אימות סיסמה</string>
-        <string name="email">אימייל</string>
-        <string name="phone">פלאפון</string>
-        <string name="address">כתובת מגורים</string>
-        <string name="about">כמה מילים עליך</string>
+    <!-- Text Edits -->
+    <string name="privateName">שם פרטי</string>
+    <string name="familyName">שם משפחה</string>
+    <string name="password">סיסמה</string>
+    <string name="passwordVerification">אימות סיסמה</string>
+    <string name="email">אימייל</string>
+    <string name="phone">פלאפון</string>
+    <string name="address">כתובת מגורים</string>
+    <string name="about">כמה מילים עליך</string>
 
-        <!-- Validations -->
-        <string name="invalid_private_name">הכנס את השם הפרטי שלך</string>
-        <string name="invalid_family_name">הכנס את שם המשפחה שלך</string>
-        <string name="invalid_mobile">הכנס מספר טלפון תקין</string>
-        <string name="invalid_email">הכנס כתובת אימייל תקינה</string>
-        <string name="invalid_password">סיסמא חייבת להכיל לפחות 8 תווים וביניהם: אות אנגלית גדולה, אות אנגלית קטנה, תו מיוחד וספרה</string>
-        <string name="invalid_confirm_passwords">הסיסמאות לא תואמות</string>
-        <string name="invalid_address">בבקשה הכנס כתובת תקינה</string>
+    <!-- Validations -->
+    <string name="invalid_private_name">הכנס את השם הפרטי שלך</string>
+    <string name="invalid_family_name">הכנס את שם המשפחה שלך</string>
+    <string name="invalid_mobile">הכנס מספר טלפון תקין</string>
+    <string name="invalid_email">הכנס כתובת אימייל תקינה</string>
+    <string name="invalid_password">סיסמא חייבת להכיל לפחות 8 תווים וביניהם: אות אנגלית גדולה, אות אנגלית קטנה, תו מיוחד וספרה</string>
+    <string name="invalid_confirm_passwords">הסיסמאות לא תואמות</string>
+    <string name="invalid_address">בבקשה הכנס כתובת תקינה</string>
 
 </resources>
