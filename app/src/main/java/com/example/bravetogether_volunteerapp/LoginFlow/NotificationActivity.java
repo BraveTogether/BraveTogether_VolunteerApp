@@ -8,11 +8,13 @@ import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Switch;
+import android.widget.TextView;
 import android.widget.ToggleButton;
 
 import androidx.annotation.RequiresApi;
@@ -34,6 +36,7 @@ import com.google.android.libraries.places.api.net.PlacesClient;
 import com.google.android.libraries.places.widget.AutocompleteSupportFragment;
 import com.google.android.libraries.places.widget.listener.PlaceSelectionListener;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 
 public class NotificationActivity extends AppCompatActivity {
@@ -53,6 +56,9 @@ public class NotificationActivity extends AppCompatActivity {
     private boolean isButtonPres[] = new boolean[6];
     private ImageView linesAndRectViews[] = new ImageView[6];
     private boolean checkDays[] = new boolean[6];
+    private ArrayList<String> time_windows_strings;
+    private TextView time_window_text;
+    private String chosen_time;
 
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
     @Override
@@ -79,6 +85,8 @@ public class NotificationActivity extends AppCompatActivity {
         final AutocompleteSupportFragment autocompleteFragment = (AutocompleteSupportFragment)
                 getSupportFragmentManager().findFragmentById(R.id.autocomplete_address);
 
+        autocompleteFragment.setHint("הכנס מיקום ידני");
+//        autocompleteFragment.getView().setTextDirection(View.TEXT_DIRECTION_ANY_RTL);
 
         expandedTimeBox.setVisibility(View.GONE);
         expandedLocationBox.setVisibility(View.VISIBLE);
@@ -86,15 +94,31 @@ public class NotificationActivity extends AppCompatActivity {
         expandButton = (Button) findViewById(R.id.expandButton);
 
         spinner = (Spinner) findViewById(R.id.Timespinner);
-
-//        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
-//                R.array.time_windows, R.layout.time_window_spinner_item);
-//
-//        adapter.setDropDownViewResource(R.layout.time_window_drop_down_item);
-//
-//        spinner.setAdapter(adapter);
-
         spinner.setAdapter(new spinnerAdapter(mcontext));
+        time_window_text = (TextView) findViewById(R.id.time_windows_text);
+
+        String retrieve []= mcontext.getResources().getStringArray(R.array.time_windows_hours);
+        time_windows_strings = new ArrayList<>();
+        for(String re:retrieve)
+        {
+            time_windows_strings.add(re);
+        }
+
+
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
+                chosen_time = time_windows_strings.get(position);
+                time_window_text.setText(chosen_time);
+                time_window_text.setVisibility(View.VISIBLE);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parentView) {
+                // your code here
+            }
+
+        });
 
         // Place AutoFill
 

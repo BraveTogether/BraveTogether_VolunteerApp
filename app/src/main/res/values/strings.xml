@@ -86,4 +86,11 @@
         <item name="evening">ערב</item>
     </string-array>
 
+    <string-array name="time_windows_hours">
+        <item name="morning">08:00-15:00</item>
+        <item name="noon">15:00-18:00</item>
+        <item name="evening">19:00-22:00</item>
+    </string-array>
+
+
 </resources>

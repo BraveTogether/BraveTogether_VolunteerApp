@@ -172,7 +172,7 @@
         app:layout_constraintEnd_toEndOf="@+id/expandedBox1"
         app:layout_constraintStart_toStartOf="@+id/expandedBox1"
         app:layout_constraintTop_toTopOf="@+id/expandedBox1"
-        android:visibility="visible"/>
+        android:visibility="gone"/>
 
     <ToggleButton
         android:id="@+id/day1"
@@ -372,6 +372,21 @@
         app:layout_constraintStart_toStartOf="@+id/expandedBox1"
         app:layout_constraintTop_toBottomOf="@+id/timeTableRect" />
 
+    <TextView
+        android:id="@+id/time_windows_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="60dp"
+        android:layout_marginRight="50dp"
+        android:background="#00000000"
+        android:textColor="#001925"
+        android:textSize="14sp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@+id/expandedBox1"
+        app:layout_constraintEnd_toStartOf="@+id/Timespinner"
+        app:layout_constraintTop_toBottomOf="@+id/timeTableRect"
+        app:layout_constraintVertical_bias="0.403" />
+
     <View
         android:id="@+id/expandBox2"
         android:layout_width="327dp"
@@ -498,19 +513,30 @@
         android:checked="false"
         android:elevation="1dp"/>
 
-    <androidx.fragment.app.FragmentContainerView
-        android:id="@+id/autocomplete_address"
-        android:name="com.google.android.libraries.places.widget.AutocompleteSupportFragment"
+
+    <LinearLayout
+        android:id="@+id/linearlayout01"
         android:layout_width="320dp"
         android:layout_height="48dp"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="16dp"
         android:background="@drawable/textfield_d"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:textDirection="anyRtl"
+        android:gravity="right"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.504"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/expandBox2" />
-
+        app:layout_constraintTop_toBottomOf="@+id/expandBox2">
+        <fragment
+            android:id="@+id/autocomplete_address"
+            android:name="com.google.android.libraries.places.widget.AutocompleteSupportFragment"
+            android:layout_width="320dp"
+            android:layout_height="48dp"
+            android:gravity="right"
+            android:visibility="visible"/>
+    </LinearLayout>
     <Button
         android:id="@+id/letsVolunteer"
         android:layout_width="wrap_content"
