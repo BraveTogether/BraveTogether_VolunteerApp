@@ -33,7 +33,7 @@ public class app extends Application {
         prefs = getSharedPreferences("user",MODE_PRIVATE);
 //        checkForCurrentUserState();
         if(prefs.contains("UID")){ //Checks if there is a user logged in
-            Intent intent = new Intent(this,LoginActivity.class);
+            Intent intent = new Intent(this,RegisterActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(intent);
         }else{
