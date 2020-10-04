@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.Switch;
 import android.widget.ToggleButton;
 
@@ -22,6 +23,7 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import com.example.bravetogether_volunteerapp.R;
+import com.example.bravetogether_volunteerapp.adapters.spinnerAdapter;
 import com.example.bravetogether_volunteerapp.ui.SlideAnimation;
 import com.google.android.gms.common.api.Status;
 import com.google.android.gms.maps.model.LatLng;
@@ -46,6 +48,7 @@ public class NotificationActivity extends AppCompatActivity {
     private View expandedTimeBox;
     private Activity activity = this;
     private GpsTracker gpsTracker;
+    private Spinner spinner;
     private ToggleButton buttons[] = new ToggleButton[6];
     private boolean isButtonPres[] = new boolean[6];
     private ImageView linesAndRectViews[] = new ImageView[6];
@@ -81,6 +84,17 @@ public class NotificationActivity extends AppCompatActivity {
         expandedLocationBox.setVisibility(View.VISIBLE);
         mConstraintLayout = findViewById(R.id.constraint_layout);
         expandButton = (Button) findViewById(R.id.expandButton);
+
+        spinner = (Spinner) findViewById(R.id.Timespinner);
+
+//        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
+//                R.array.time_windows, R.layout.time_window_spinner_item);
+//
+//        adapter.setDropDownViewResource(R.layout.time_window_drop_down_item);
+//
+//        spinner.setAdapter(adapter);
+
+        spinner.setAdapter(new spinnerAdapter(mcontext));
 
         // Place AutoFill
 
@@ -173,6 +187,7 @@ public class NotificationActivity extends AppCompatActivity {
         }
         linesAndRectViews[5].setVisibility(Button.VISIBLE);
         buttons[5].setVisibility(Button.VISIBLE);
+        spinner.setVisibility(View.VISIBLE);
     }
 
     public void getLocation(){

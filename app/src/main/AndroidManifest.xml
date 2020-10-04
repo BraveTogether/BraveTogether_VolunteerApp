@@ -41,7 +41,6 @@
             android:name=".LoginFlow.RegisterActivity"
             android:exported="true" />
         <activity android:name=".LoginFlow.IntroPageActivity" />
-        <activity android:name="com.example.bravetogether_volunteerapp.LoginFlow.IntroPageActivity" />
 
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"

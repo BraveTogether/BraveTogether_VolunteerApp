@@ -80,4 +80,10 @@
 
     <string name="loc_acc_text">הרשאה למיקום שלי</string>
 
+    <string-array name="time_windows">
+        <item name="morning">בוקר</item>
+        <item name="noon">צהריים</item>
+        <item name="evening">ערב</item>
+    </string-array>
+
 </resources>

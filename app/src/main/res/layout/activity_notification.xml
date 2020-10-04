@@ -172,7 +172,7 @@
         app:layout_constraintEnd_toEndOf="@+id/expandedBox1"
         app:layout_constraintStart_toStartOf="@+id/expandedBox1"
         app:layout_constraintTop_toTopOf="@+id/expandedBox1"
-        android:visibility="gone"/>
+        android:visibility="visible"/>
 
     <ToggleButton
         android:id="@+id/day1"
@@ -193,17 +193,6 @@
         app:layout_constraintTop_toTopOf="@+id/timeTableRect"
         app:layout_constraintVertical_bias="0.441" />
 
-<!--    <ImageView-->
-<!--        android:id="@+id/buttonBack1"-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:src="@drawable/ic_ellipse_73"-->
-<!--        app:layout_constraintEnd_toEndOf="@+id/day1"-->
-<!--        app:layout_constraintStart_toStartOf="@+id/day1"-->
-<!--        app:layout_constraintTop_toTopOf="@+id/day1"-->
-<!--        android:visibility="gone"-->
-<!--        android:elevation="0dp"-->
-<!--        />-->
 
     <ImageView
         android:id="@+id/line_24"
@@ -236,17 +225,6 @@
         android:visibility="gone"
         android:onClick="weekDayCheck" />
 
-<!--    <ImageView-->
-<!--        android:id="@+id/buttonBack2"-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:src="@drawable/ic_ellipse_73"-->
-<!--        app:layout_constraintEnd_toEndOf="@+id/day2"-->
-<!--        app:layout_constraintStart_toStartOf="@+id/day2"-->
-<!--        app:layout_constraintTop_toTopOf="@+id/day2"-->
-<!--        android:visibility="gone"-->
-<!--        android:elevation="0dp"-->
-<!--        />-->
 
     <ImageView
         android:id="@+id/line_25"
@@ -279,17 +257,6 @@
         android:visibility="gone"
         android:onClick="weekDayCheck" />
 
-<!--    <ImageView-->
-<!--        android:id="@+id/buttonBack3"-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:src="@drawable/ic_ellipse_73"-->
-<!--        app:layout_constraintEnd_toEndOf="@+id/day3"-->
-<!--        app:layout_constraintStart_toStartOf="@+id/day3"-->
-<!--        app:layout_constraintTop_toTopOf="@+id/day3"-->
-<!--        android:visibility="gone"-->
-<!--        android:elevation="0dp"-->
-<!--        />-->
 
     <ImageView
         android:id="@+id/line_26"
@@ -322,17 +289,6 @@
         app:layout_constraintVertical_bias="0.411"
         android:visibility="gone" />
 
-<!--    <ImageView-->
-<!--        android:id="@+id/buttonBack4"-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:src="@drawable/ic_ellipse_73"-->
-<!--        app:layout_constraintEnd_toEndOf="@+id/day4"-->
-<!--        app:layout_constraintStart_toStartOf="@+id/day4"-->
-<!--        app:layout_constraintTop_toTopOf="@+id/day4"-->
-<!--        android:visibility="gone"-->
-<!--        android:elevation="0dp"-->
-<!--        />-->
 
     <ImageView
         android:id="@+id/line_27"
@@ -365,18 +321,6 @@
         android:visibility="gone"
         android:onClick="weekDayCheck" />
 
-<!--    <ImageView-->
-<!--        android:id="@+id/buttonBack5"-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:src="@drawable/ic_ellipse_73"-->
-<!--        app:layout_constraintEnd_toEndOf="@+id/day5"-->
-<!--        app:layout_constraintStart_toStartOf="@+id/day5"-->
-<!--        app:layout_constraintTop_toTopOf="@+id/day5"-->
-<!--        android:visibility="gone"-->
-<!--        android:elevation="0dp"-->
-
-<!--        />-->
 
     <ImageView
         android:id="@+id/line_28"
@@ -409,17 +353,24 @@
         android:visibility="gone"
         android:onClick="weekDayCheck" />
 
-    <ImageView
-        android:id="@+id/buttonBack6"
+    <Spinner
+        android:id="@+id/Timespinner"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/ic_ellipse_73"
-        app:layout_constraintEnd_toEndOf="@+id/day6"
-        app:layout_constraintStart_toStartOf="@+id/day6"
-        app:layout_constraintTop_toTopOf="@+id/day6"
+        android:layout_marginStart="154dp"
+        android:layout_marginLeft="154dp"
+        android:layout_marginTop="25dp"
+        android:layout_marginEnd="21dp"
+        android:layout_marginRight="21dp"
+        android:layout_marginBottom="26dp"
+        android:spinnerMode="dropdown"
+        android:background="@drawable/ic_dropdown"
+        android:gravity="right"
         android:visibility="gone"
-        android:elevation="0dp"
-        />
+        app:layout_constraintBottom_toBottomOf="@+id/expandedBox1"
+        app:layout_constraintEnd_toEndOf="@+id/expandedBox1"
+        app:layout_constraintStart_toStartOf="@+id/expandedBox1"
+        app:layout_constraintTop_toBottomOf="@+id/timeTableRect" />
 
     <View
         android:id="@+id/expandBox2"
