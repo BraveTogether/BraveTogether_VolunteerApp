@@ -174,22 +174,24 @@
         app:layout_constraintTop_toTopOf="@+id/expandedBox1"
         android:visibility="gone"/>
 
-<!--    <Button-->
-<!--        android:id="@+id/day1"-->
-<!--        android:layout_width="16dp"-->
-<!--        android:layout_height="30dp"-->
-<!--        android:layout_marginEnd="16dp"-->
-<!--        android:layout_marginRight="16dp"-->
-<!--        android:text="א"-->
-<!--        android:textSize="25sp"-->
-<!--        android:textStyle="bold"-->
-<!--        android:textColor="@color/button_text_color"-->
-<!--        android:background="@drawable/button_background"-->
-<!--        app:layout_constraintBottom_toBottomOf="@+id/timeTableRect"-->
-<!--        app:layout_constraintEnd_toEndOf="@+id/timeTableRect"-->
-<!--        app:layout_constraintTop_toTopOf="@+id/timeTableRect"-->
-<!--        app:layout_constraintVertical_bias="0.441"-->
-<!--        android:visibility="gone"/>-->
+    <ToggleButton
+        android:id="@+id/day1"
+        android:layout_width="16dp"
+        android:layout_height="30dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginRight="16dp"
+        android:background="#0000"
+        android:onClick="weekDayCheck"
+        android:textColor="@color/button_text_color"
+        android:textOff="א"
+        android:textOn="א"
+        android:textSize="25sp"
+        android:textStyle="bold"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@+id/timeTableRect"
+        app:layout_constraintEnd_toEndOf="@+id/timeTableRect"
+        app:layout_constraintTop_toTopOf="@+id/timeTableRect"
+        app:layout_constraintVertical_bias="0.441" />
 
 
     <ImageView
@@ -204,22 +206,25 @@
         app:layout_constraintTop_toTopOf="@+id/timeTableRect"
         android:visibility="gone"/>
 
-<!--    <Button-->
-<!--        android:id="@+id/day2"-->
-<!--        android:layout_width="16dp"-->
-<!--        android:layout_height="30dp"-->
-<!--        android:layout_marginEnd="60dp"-->
-<!--        android:layout_marginRight="60dp"-->
-<!--        android:textColor="@color/button_text_color"-->
-<!--        android:background="@drawable/button_background"-->
-<!--        android:text="ב"-->
-<!--        android:textSize="25sp"-->
-<!--        android:textStyle="bold"-->
-<!--        app:layout_constraintBottom_toBottomOf="@+id/timeTableRect"-->
-<!--        app:layout_constraintEnd_toEndOf="@+id/timeTableRect"-->
-<!--        app:layout_constraintTop_toTopOf="@+id/timeTableRect"-->
-<!--        app:layout_constraintVertical_bias="0.441"-->
-<!--        android:visibility="gone"/>-->
+    <ToggleButton
+        android:id="@+id/day2"
+        android:layout_width="16dp"
+        android:layout_height="30dp"
+        android:layout_marginEnd="60dp"
+        android:layout_marginRight="60dp"
+        android:textColor="@color/button_text_color"
+        android:background="#0000"
+        android:textOff="ב"
+        android:textOn="ב"
+        android:textSize="25sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/timeTableRect"
+        app:layout_constraintEnd_toEndOf="@+id/timeTableRect"
+        app:layout_constraintTop_toTopOf="@+id/timeTableRect"
+        app:layout_constraintVertical_bias="0.441"
+        android:visibility="gone"
+        android:onClick="weekDayCheck" />
+
 
     <ImageView
         android:id="@+id/line_25"
@@ -233,22 +238,25 @@
         app:layout_constraintTop_toTopOf="@+id/timeTableRect"
         android:visibility="gone"/>
 
-<!--    <Button-->
-<!--        android:id="@+id/day3"-->
-<!--        android:layout_width="16dp"-->
-<!--        android:layout_height="30dp"-->
-<!--        android:layout_marginEnd="112dp"-->
-<!--        android:layout_marginRight="112dp"-->
-<!--        android:textColor="@color/button_text_color"-->
-<!--        android:background="@drawable/button_background"-->
-<!--        android:text="ג"-->
-<!--        android:textSize="25sp"-->
-<!--        android:textStyle="bold"-->
-<!--        app:layout_constraintBottom_toBottomOf="@+id/timeTableRect"-->
-<!--        app:layout_constraintEnd_toEndOf="@+id/timeTableRect"-->
-<!--        app:layout_constraintTop_toTopOf="@+id/timeTableRect"-->
-<!--        app:layout_constraintVertical_bias="0.411"-->
-<!--        android:visibility="gone"/>-->
+    <ToggleButton
+        android:id="@+id/day3"
+        android:layout_width="16dp"
+        android:layout_height="30dp"
+        android:layout_marginEnd="112dp"
+        android:layout_marginRight="112dp"
+        android:textColor="@color/button_text_color"
+        android:background="#0000"
+        android:textOff="ג"
+        android:textOn="ג"
+        android:textSize="25sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/timeTableRect"
+        app:layout_constraintEnd_toEndOf="@+id/timeTableRect"
+        app:layout_constraintTop_toTopOf="@+id/timeTableRect"
+        app:layout_constraintVertical_bias="0.411"
+        android:visibility="gone"
+        android:onClick="weekDayCheck" />
+
 
     <ImageView
         android:id="@+id/line_26"
@@ -262,24 +270,25 @@
         app:layout_constraintTop_toTopOf="@+id/timeTableRect"
         android:visibility="gone"/>
 
-<!--    <Button-->
-<!--        android:id="@+id/day4"-->
-<!--        android:layout_width="16dp"-->
-<!--        android:layout_height="30dp"-->
-<!--        android:layout_marginEnd="152dp"-->
-<!--        android:layout_marginRight="152dp"-->
-<!--        android:textColor="@color/button_text_color"-->
-<!--        android:background="@drawable/button_background"-->
-<!--        android:text="ד"-->
-<!--        android:textSize="25sp"-->
-<!--        android:textStyle="bold"-->
-<!--        android:onClick="weekDayCheck"-->
+    <ToggleButton
+        android:id="@+id/day4"
+        android:layout_width="16dp"
+        android:layout_height="30dp"
+        android:layout_marginEnd="152dp"
+        android:layout_marginRight="152dp"
+        android:textColor="@color/button_text_color"
+        android:background="#0000"
+        android:textOff="ד"
+        android:textOn="ד"
+        android:textSize="25sp"
+        android:textStyle="bold"
+        android:onClick="weekDayCheck"
+        app:layout_constraintBottom_toBottomOf="@+id/timeTableRect"
+        app:layout_constraintEnd_toEndOf="@+id/timeTableRect"
+        app:layout_constraintTop_toTopOf="@+id/timeTableRect"
+        app:layout_constraintVertical_bias="0.411"
+        android:visibility="gone" />
 
-<!--        app:layout_constraintBottom_toBottomOf="@+id/timeTableRect"-->
-<!--        app:layout_constraintEnd_toEndOf="@+id/timeTableRect"-->
-<!--        app:layout_constraintTop_toTopOf="@+id/timeTableRect"-->
-<!--        app:layout_constraintVertical_bias="0.411"-->
-<!--        android:visibility="gone"/>-->
 
     <ImageView
         android:id="@+id/line_27"
@@ -293,22 +302,25 @@
         app:layout_constraintTop_toTopOf="@+id/timeTableRect"
         android:visibility="gone"/>
 
-<!--    <Button-->
-<!--        android:id="@+id/day5"-->
-<!--        android:layout_width="16dp"-->
-<!--        android:layout_height="30dp"-->
-<!--        android:layout_marginEnd="204dp"-->
-<!--        android:layout_marginRight="204dp"-->
-<!--        android:textColor="@color/button_text_color"-->
-<!--        android:background="@drawable/button_background"-->
-<!--        android:text="ה"-->
-<!--        android:textSize="25sp"-->
-<!--        android:textStyle="bold"-->
-<!--        app:layout_constraintBottom_toBottomOf="@+id/timeTableRect"-->
-<!--        app:layout_constraintEnd_toEndOf="@+id/timeTableRect"-->
-<!--        app:layout_constraintTop_toTopOf="@+id/timeTableRect"-->
-<!--        app:layout_constraintVertical_bias="0.411"-->
-<!--        android:visibility="gone"/>-->
+    <ToggleButton
+        android:id="@+id/day5"
+        android:layout_width="16dp"
+        android:layout_height="30dp"
+        android:layout_marginEnd="204dp"
+        android:layout_marginRight="204dp"
+        android:textColor="@color/button_text_color"
+        android:background="#0000"
+        android:textOff="ה"
+        android:textOn="ה"
+        android:textSize="25sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/timeTableRect"
+        app:layout_constraintEnd_toEndOf="@+id/timeTableRect"
+        app:layout_constraintTop_toTopOf="@+id/timeTableRect"
+        app:layout_constraintVertical_bias="0.411"
+        android:visibility="gone"
+        android:onClick="weekDayCheck" />
+
 
     <ImageView
         android:id="@+id/line_28"
@@ -322,22 +334,58 @@
         app:layout_constraintTop_toTopOf="@+id/timeTableRect"
         android:visibility="gone"/>
 
-<!--    <Button-->
-<!--        android:id="@+id/day6"-->
-<!--        android:layout_width="16dp"-->
-<!--        android:layout_height="30dp"-->
-<!--        android:layout_marginEnd="256dp"-->
-<!--        android:layout_marginRight="256dp"-->
-<!--        android:textColor="@color/button_text_color"-->
-<!--        android:background="@drawable/button_background"-->
-<!--        android:text="ו"-->
-<!--        android:textSize="25sp"-->
-<!--        android:textStyle="bold"-->
-<!--        app:layout_constraintBottom_toBottomOf="@+id/timeTableRect"-->
-<!--        app:layout_constraintEnd_toEndOf="@+id/timeTableRect"-->
-<!--        app:layout_constraintTop_toTopOf="@+id/timeTableRect"-->
-<!--        app:layout_constraintVertical_bias="0.411"-->
-<!--        android:visibility="gone"/>-->
+    <ToggleButton
+        android:id="@+id/day6"
+        android:layout_width="16dp"
+        android:layout_height="30dp"
+        android:layout_marginEnd="256dp"
+        android:layout_marginRight="256dp"
+        android:textColor="@color/button_text_color"
+        android:background="#0000"
+        android:textOff="ו"
+        android:textOn="ו"
+        android:textSize="25sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/timeTableRect"
+        app:layout_constraintEnd_toEndOf="@+id/timeTableRect"
+        app:layout_constraintTop_toTopOf="@+id/timeTableRect"
+        app:layout_constraintVertical_bias="0.411"
+        android:visibility="gone"
+        android:onClick="weekDayCheck" />
+
+    <Spinner
+        android:id="@+id/Timespinner"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="154dp"
+        android:layout_marginLeft="154dp"
+        android:layout_marginTop="25dp"
+        android:layout_marginEnd="21dp"
+        android:layout_marginRight="21dp"
+        android:layout_marginBottom="26dp"
+        android:spinnerMode="dropdown"
+        android:background="@drawable/ic_dropdown"
+        android:gravity="right"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@+id/expandedBox1"
+        app:layout_constraintEnd_toEndOf="@+id/expandedBox1"
+        app:layout_constraintStart_toStartOf="@+id/expandedBox1"
+        app:layout_constraintTop_toBottomOf="@+id/timeTableRect" />
+
+    <TextView
+        android:id="@+id/time_windows_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="60dp"
+        android:layout_marginRight="50dp"
+        android:background="#00000000"
+        android:textColor="#001925"
+        android:textSize="14sp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@+id/expandedBox1"
+        app:layout_constraintEnd_toStartOf="@+id/Timespinner"
+        app:layout_constraintTop_toBottomOf="@+id/timeTableRect"
+        app:layout_constraintVertical_bias="0.403" />
 
     <View
         android:id="@+id/expandBox2"
@@ -465,19 +513,30 @@
         android:checked="false"
         android:elevation="1dp"/>
 
-    <androidx.fragment.app.FragmentContainerView
-        android:id="@+id/autocomplete_address"
-        android:name="com.google.android.libraries.places.widget.AutocompleteSupportFragment"
+
+    <LinearLayout
+        android:id="@+id/linearlayout01"
         android:layout_width="320dp"
         android:layout_height="48dp"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="16dp"
         android:background="@drawable/textfield_d"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:textDirection="anyRtl"
+        android:gravity="right"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.504"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/expandBox2" />
-
+        app:layout_constraintTop_toBottomOf="@+id/expandBox2">
+        <fragment
+            android:id="@+id/autocomplete_address"
+            android:name="com.google.android.libraries.places.widget.AutocompleteSupportFragment"
+            android:layout_width="320dp"
+            android:layout_height="48dp"
+            android:gravity="right"
+            android:visibility="visible"/>
+    </LinearLayout>
     <Button
         android:id="@+id/letsVolunteer"
         android:layout_width="wrap_content"
@@ -500,5 +559,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/letsVolunteer" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

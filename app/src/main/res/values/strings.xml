@@ -77,4 +77,17 @@
     <string name="invalid_confirm_passwords">הסיסמאות לא תואמות</string>
     <string name="invalid_address">בבקשה הכנס כתובת תקינה</string>
 
+    <string-array name="time_windows">
+        <item name="morning">בוקר</item>
+        <item name="noon">צהריים</item>
+        <item name="evening">ערב</item>
+    </string-array>
+
+    <string-array name="time_windows_hours">
+        <item name="morning">08:00-15:00</item>
+        <item name="noon">15:00-18:00</item>
+        <item name="evening">19:00-22:00</item>
+    </string-array>
+
+
 </resources>
