@@ -4,7 +4,6 @@ import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.icu.text.SimpleDateFormat;
 import android.icu.util.Calendar;
@@ -47,9 +46,9 @@ public class CreateVolunteerActivity extends AppCompatActivity {
     String strDate;
     String strTime;
     Context mcontext = this;
-    static SharedPreferences mPreferences;
-    private final String sharedPrefFile = "com.example.android.BraveTogether_VolunteerApp";
-    static String email = mPreferences.getString("UserEmail", "null");
+//    static SharedPreferences mPreferences;
+//    private final String sharedPrefFile = "com.example.android.BraveTogether_VolunteerApp";
+//    static String email = mPreferences.getString("UserEmail", "null");
 
 
     private void initQRCode(int credits, String date) {
