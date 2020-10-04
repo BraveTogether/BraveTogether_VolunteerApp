@@ -1,5 +1,6 @@
 package com.example.bravetogether_volunteerapp;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -15,9 +16,6 @@ import com.example.bravetogether_volunteerapp.LoginFlow.RegisterActivity;
 
 
 public class ProfileHeaderFragment extends Fragment implements View.OnClickListener {
-
-    String sharedPrefFile = "com.example.android.BraveTogether_VolunteerApp";
-    static SharedPreferences mPreferences;
 
     public ProfileHeaderFragment() {
         // Required empty public constructor
@@ -39,7 +37,10 @@ public class ProfileHeaderFragment extends Fragment implements View.OnClickListe
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_profile_header, container, false);
         ((ImageView)v.findViewById(R.id.change_details_image)).setOnClickListener(this);
-        String email = mPreferences.getString("UserEmail", "null");
+        // get preferences file
+        String sharedPrefFile = "com.example.android.BraveTogether_VolunteerApp";
+        SharedPreferences mPreferences = this.getActivity().getSharedPreferences(sharedPrefFile, Context.MODE_PRIVATE);
+        String email = mPreferences.getString("UserEmail", "user@mymail.com");
         String fullName = mPreferences.getString("UserFirstName", "") + " " + mPreferences.getString("UserLastName", "");
         ((TextView)v.findViewById(R.id.FullNameText)).setText(fullName);
         ((TextView)v.findViewById(R.id.EmailText)).setText(email);

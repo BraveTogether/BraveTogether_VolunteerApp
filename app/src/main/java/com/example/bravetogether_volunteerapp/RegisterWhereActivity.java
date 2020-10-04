@@ -45,4 +45,7 @@ public class RegisterWhereActivity extends AppCompatActivity {
         Intent intent = new Intent(this, NotificationActivity.class);
         startActivity(intent);
     }
+
+    public void skip(View view) {
+    }
 }

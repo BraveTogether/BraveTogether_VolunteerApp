@@ -36,15 +36,14 @@
                     android:layout_width="match_parent"
                     android:layout_height="88dp"
                     android:layout_alignParentTop="true"
+                    android:layout_alignParentEnd="true"
                     android:layout_alignParentRight="true"
-                    android:layout_marginTop="4dp"
                     android:background="@drawable/ellipse_59"
                     android:elevation="1dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.0"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    android:layout_alignParentEnd="true" />
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
                     android:id="@+id/createAccTextView"
@@ -62,22 +61,22 @@
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <!--                <Button-->
-<!--                    android:id="@+id/backButtonImageView"-->
-<!--                    android:layout_width="24dp"-->
-<!--                    android:layout_height="24dp"-->
-<!--                    android:layout_alignParentEnd="true"-->
-<!--                    android:layout_alignParentRight="true"-->
-<!--                    android:layout_gravity="end"-->
-<!--                    android:layout_marginTop="132dp"-->
-<!--                    android:background="@drawable/top_back_arrow_24"-->
-<!--                    android:gravity="end"-->
-<!--                    android:textAlignment="viewEnd"-->
-<!--                    android:translationZ="1dp"-->
-<!--                    app:layout_constraintEnd_toEndOf="parent"-->
-<!--                    app:layout_constraintHorizontal_bias="0.914"-->
-<!--                    app:layout_constraintStart_toStartOf="parent"-->
-<!--                    app:layout_constraintTop_toTopOf="parent"-->
-<!--                    tools:ignore="VectorDrawableCompat" />-->
+                <!--                    android:id="@+id/backButtonImageView"-->
+                <!--                    android:layout_width="24dp"-->
+                <!--                    android:layout_height="24dp"-->
+                <!--                    android:layout_alignParentEnd="true"-->
+                <!--                    android:layout_alignParentRight="true"-->
+                <!--                    android:layout_gravity="end"-->
+                <!--                    android:layout_marginTop="132dp"-->
+                <!--                    android:background="@drawable/top_back_arrow_24"-->
+                <!--                    android:gravity="end"-->
+                <!--                    android:textAlignment="viewEnd"-->
+                <!--                    android:translationZ="1dp"-->
+                <!--                    app:layout_constraintEnd_toEndOf="parent"-->
+                <!--                    app:layout_constraintHorizontal_bias="0.914"-->
+                <!--                    app:layout_constraintStart_toStartOf="parent"-->
+                <!--                    app:layout_constraintTop_toTopOf="parent"-->
+                <!--                    tools:ignore="VectorDrawableCompat" />-->
 
                 <ImageView
                     android:id="@+id/profile_image"
@@ -116,15 +115,15 @@
                     android:layout_gravity="center"
                     android:layout_marginTop="28dp"
                     android:background="@drawable/textfield_d"
+                    android:drawableRight="@drawable/profile_user_details"
+                    android:drawablePadding="7dp"
                     android:ems="10"
                     android:hint="@string/privateName"
-                    android:paddingRight="10dp"
                     android:inputType="textPersonName"
+                    android:paddingRight="10dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/profile_image"
-                    android:drawableRight="@drawable/profile_user_details"
-                    android:drawablePadding="7dp"/>
+                    app:layout_constraintTop_toBottomOf="@+id/profile_image" />
 
                 <EditText
                     android:id="@+id/familyNameEditText"
@@ -133,6 +132,8 @@
                     android:layout_gravity="center"
                     android:layout_marginTop="15dp"
                     android:background="@drawable/textfield_d"
+                    android:drawableRight="@drawable/profile_user_details"
+                    android:drawablePadding="7dp"
                     android:ems="10"
                     android:hint="@string/familyName"
                     android:inputType="textPersonName"
@@ -140,9 +141,7 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.505"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/privateNameEditText"
-                    android:drawableRight="@drawable/profile_user_details"
-                    android:drawablePadding="7dp"/>
+                    app:layout_constraintTop_toBottomOf="@+id/privateNameEditText" />
 
                 <EditText
                     android:id="@+id/emailEditText"
@@ -151,17 +150,16 @@
                     android:layout_gravity="center"
                     android:layout_marginTop="15dp"
                     android:background="@drawable/textfield_d"
+                    android:drawableRight="@drawable/email"
+                    android:drawablePadding="7dp"
                     android:ems="10"
                     android:hint="@string/email"
                     android:inputType="textEmailAddress"
-                    android:drawableRight="@drawable/email"
                     android:paddingRight="12dp"
-                    android:drawablePadding="7dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.5"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/familyNameEditText"
-                    />
+                    app:layout_constraintTop_toBottomOf="@+id/familyNameEditText" />
 
                 <EditText
                     android:id="@+id/passwordEditText"
@@ -170,14 +168,14 @@
                     android:layout_gravity="center"
                     android:layout_marginTop="15dp"
                     android:background="@drawable/textfield_d"
+                    android:drawableRight="@drawable/password"
+                    android:drawablePadding="7dp"
                     android:ems="10"
                     android:gravity="right"
                     android:hint="@string/password"
                     android:inputType="textPassword"
                     android:paddingVertical="10dp"
                     android:paddingRight="12dp"
-                    android:drawableRight="@drawable/password"
-                    android:drawablePadding="7dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.5"
                     app:layout_constraintStart_toStartOf="parent"
@@ -190,15 +188,15 @@
                     android:layout_gravity="center"
                     android:layout_marginTop="15dp"
                     android:background="@drawable/textfield_d"
+                    android:drawableRight="@drawable/password"
+                    android:drawablePadding="7dp"
                     android:ellipsize="start"
                     android:ems="10"
                     android:gravity="right"
-                    android:paddingRight="12dp"
                     android:hint="@string/passwordVerification"
                     android:inputType="textPassword"
                     android:paddingVertical="10dp"
-                    android:drawableRight="@drawable/password"
-                    android:drawablePadding="7dp"
+                    android:paddingRight="12dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.5"
                     app:layout_constraintStart_toStartOf="parent"
@@ -210,16 +208,16 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_marginTop="15dp"
-                    android:paddingRight="12dp"
                     android:background="@drawable/textfield_d"
+                    android:drawableRight="@drawable/phone"
+                    android:drawablePadding="7dp"
                     android:ellipsize="start"
                     android:ems="10"
                     android:gravity="right"
                     android:hint="@string/phone"
                     android:inputType="phone"
                     android:paddingVertical="10dp"
-                    android:drawableRight="@drawable/phone"
-                    android:drawablePadding="7dp"
+                    android:paddingRight="12dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/confirmPasswordEditText" />
@@ -231,28 +229,28 @@
                     android:layout_gravity="center"
                     android:layout_marginTop="15dp"
                     android:background="@drawable/textfield_d"
+                    android:drawableRight="@drawable/home"
+                    android:drawablePadding="7dp"
                     android:ellipsize="start"
                     android:ems="10"
                     android:gravity="right"
                     android:hint="@string/address"
                     android:inputType="textPostalAddress"
-                    android:paddingRight="12dp"
                     android:paddingVertical="10dp"
-                    android:drawableRight="@drawable/home"
-                    android:drawablePadding="7dp"
+                    android:paddingRight="12dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.508"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/PhoneNumber" />
 
-<!--                <ImageView-->
-<!--                    android:id="@+id/imageView1"-->
-<!--                    android:layout_width="wrap_content"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:layout_alignParentLeft="true"-->
-<!--                    android:layout_alignParentTop="true"-->
-<!--                    android:src="@drawable/about"-->
-<!--                    android:z/>-->
+                <!--                <ImageView-->
+                <!--                    android:id="@+id/imageView1"-->
+                <!--                    android:layout_width="wrap_content"-->
+                <!--                    android:layout_height="wrap_content"-->
+                <!--                    android:layout_alignParentLeft="true"-->
+                <!--                    android:layout_alignParentTop="true"-->
+                <!--                    android:src="@drawable/about"-->
+                <!--                    android:z/>-->
 
                 <EditText
                     android:id="@+id/About"
@@ -261,16 +259,16 @@
                     android:layout_gravity="center"
                     android:layout_marginTop="15dp"
                     android:background="@drawable/textfield_d"
+                    android:drawableRight="@drawable/about"
+                    android:drawablePadding="7dp"
                     android:ellipsize="start"
                     android:ems="10"
                     android:gravity="right"
                     android:hint="@string/about"
                     android:inputType="text"
-                    android:paddingVertical="10dp"
-                    android:drawableRight="@drawable/about"
                     android:insetTop="-32dp"
+                    android:paddingVertical="10dp"
                     android:paddingRight="12dp"
-                    android:drawablePadding="7dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.51"
                     app:layout_constraintStart_toStartOf="parent"
@@ -292,6 +290,6 @@
                     app:layout_constraintTop_toBottomOf="@+id/About" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
-    </LinearLayout>
+        </LinearLayout>
 </ScrollView>
 
