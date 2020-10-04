@@ -11,19 +11,18 @@ import androidx.annotation.NonNull;
 
 
 import com.example.bravetogether_volunteerapp.R;
-import com.example.bravetogether_volunteerapp.data.volunteerEvent;
-import com.example.bravetogether_volunteerapp.data.volunteerEvent;
+import com.example.bravetogether_volunteerapp.VolunteerEvent;
 
 import java.util.List;
 
-public class ListOfVolunteerEventsAdapter extends ArrayAdapter<volunteerEvent> {
+public class ListOfVolunteerEventsAdapter extends ArrayAdapter<VolunteerEvent> {
 
     Context context;
     int resource;
-    List<volunteerEvent> eventList;
+    List<VolunteerEvent> eventList;
 
     //Builder of thr adapter
-    public ListOfVolunteerEventsAdapter(@NonNull Context context, int resource, @NonNull List<volunteerEvent> eventList) {
+    public ListOfVolunteerEventsAdapter(@NonNull Context context, int resource, @NonNull List<VolunteerEvent> eventList) {
         super(context, resource, eventList);
         this.context = context;
         this.resource = resource;
@@ -33,7 +32,7 @@ public class ListOfVolunteerEventsAdapter extends ArrayAdapter<volunteerEvent> {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         LayoutInflater layoutInflater = LayoutInflater.from(context);
-        View rowInTheTable = layoutInflater.inflate(R.layout.volunteer_list_item, parent,false);
+        View rowInTheTable = layoutInflater.inflate(R.layout.layout_item, parent,false);
 
         TextView eventNameOfOneList = rowInTheTable.findViewById(R.id.textViewEvent);
         TextView eventDescriptionOfOneList = rowInTheTable.findViewById(R.id.textViewDescription);
@@ -42,7 +41,7 @@ public class ListOfVolunteerEventsAdapter extends ArrayAdapter<volunteerEvent> {
         TextView eventDurationOfOneList = rowInTheTable.findViewById(R.id.textViewTime);
         TextView eventCoinsOfOneList = rowInTheTable.findViewById(R.id.textViewCoinsNum);
 
-        volunteerEvent event = eventList.get(position);
+        VolunteerEvent event = eventList.get(position);
 
         eventNameOfOneList.setText(event.getEventName());
         eventDescriptionOfOneList.setText(event.getEventDescription());

@@ -1,6 +1,6 @@
-package com.example.bravetogether_volunteerapp.data;
+package com.example.bravetogether_volunteerapp;
 
-public class volunteerEvent {
+public class VolunteerEvent {
     //for each picture in res->drawable there is a id
     int imageIdClock, imageIdLocation, imageIdDate, imageIdCredit;
     String eventName;
@@ -8,7 +8,7 @@ public class volunteerEvent {
     String eventDescription;
     String numberCredits, duration, location;
 
-    public volunteerEvent(String eventName, String date, String eventDescription, String numberCredits, String duration, String location) {
+    public VolunteerEvent(String eventName, String date, String eventDescription, String numberCredits, String duration, String location) {
         this.eventName = eventName;
         this.date = date;
         this.eventDescription = eventDescription;
