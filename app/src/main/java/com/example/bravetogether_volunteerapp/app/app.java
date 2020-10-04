@@ -13,6 +13,7 @@ import com.example.bravetogether_volunteerapp.LoginFlow.IntroFirstTimeActivity;
 import com.example.bravetogether_volunteerapp.LoginFlow.LoginActivity;
 import com.example.bravetogether_volunteerapp.LoginFlow.RegisterActivity;
 import com.example.bravetogether_volunteerapp.MainActivity;
+import com.example.bravetogether_volunteerapp.home;
 import com.facebook.AccessToken;
 import com.facebook.login.Login;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
@@ -33,51 +34,16 @@ public class app extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+        prefs = getSharedPreferences("user",MODE_PRIVATE);
 //        checkForCurrentUserState();
-        if(prefs.getString("user_details",null) == null){
-            startActivity(new Intent(this,LoginActivity.class));
-        }else{
-            startActivity(new Intent(this,MainActivity.class));
-        }
-    }
-
-    public void checkForCurrentUserState(){
-
-        { //Getting the saved account if it exists.
-            acct = GoogleSignIn.getLastSignedInAccount(this);
-            accessToken = AccessToken.getCurrentAccessToken();
-            prefs = PreferenceManager.getDefaultSharedPreferences(this);
-        }
-
-        if (!prefs.getBoolean("first_time", false)) {
-            Intent intent = new Intent(app.this, IntroFirstTimeActivity.class);
+        if(prefs.contains("UID")){ //Checks if there is a user logged in
+            Intent intent = new Intent(this,LoginActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(intent);
-        } else {
-            if (acct != null) {
-                uid = acct.getId(); //Make a sheilta that takes ID brings UserDetails
-                goToHomeActivity();
-            } else if (accessToken != null) {
-                uid = accessToken.getUserId();
-                goToHomeActivity();
-            } else if (prefs.getString("uid", null) != null) {
-                uid = prefs.getString("uid", null);
-                goToHomeActivity();
-            } else {
-                Intent intent = new Intent(app.this, LoginActivity.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                startActivity(intent);
-            }
+        }else{
+            Intent intent = new Intent(this, home.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(intent);
         }
-    }
-
-    public void goToHomeActivity(){
-        Intent intent = new Intent(app.this, RegisterActivity.class);
-        CallToServer getAccountDetails = new CallToServer();
-        userDetails = getAccountDetails.getUserDetails(uid,this);
-        Log.i("lalala",userDetails);
-        intent.putExtra("user_details",userDetails);
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        startActivity(intent);
     }
 }
