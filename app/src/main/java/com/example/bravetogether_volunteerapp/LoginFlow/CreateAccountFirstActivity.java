@@ -1,7 +1,8 @@
-package com.example.bravetogether_volunteerapp;
+package com.example.bravetogether_volunteerapp.LoginFlow;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.util.Patterns;
@@ -18,6 +19,8 @@ import com.android.volley.toolbox.StringRequest;
 import com.basgeekball.awesomevalidation.AwesomeValidation;
 import com.basgeekball.awesomevalidation.ValidationStyle;
 import com.basgeekball.awesomevalidation.utility.RegexTemplate;
+import com.example.bravetogether_volunteerapp.R;
+import com.example.bravetogether_volunteerapp.VolleySingleton;
 import com.google.firebase.storage.StorageReference;
 //import com.google.firebase.storage.StorageReference;
 
@@ -146,5 +149,10 @@ public class CreateAccountFirstActivity extends AppCompatActivity {
 
     public void addPicture(View view) {
 
+    }
+
+    public void backToLoginScreen(View view) {
+        startActivity(new Intent(CreateAccountFirstActivity.this,LoginActivity.class));
+        finish();
     }
 }

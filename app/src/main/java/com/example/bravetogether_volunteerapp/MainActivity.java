@@ -8,6 +8,7 @@ import android.view.View;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.bravetogether_volunteerapp.LoginFlow.CreateAccountFirstActivity;
 import com.example.bravetogether_volunteerapp.LoginFlow.IntroFirstTimeActivity;
 import com.example.bravetogether_volunteerapp.LoginFlow.NotificationActivity;
 import com.example.bravetogether_volunteerapp.LoginFlow.RegisterActivity;
@@ -49,7 +50,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void goToNormalRegistration(View view) {
-        Intent intent = new Intent(MainActivity.this,CreateAccountFirstActivity.class);
+        Intent intent = new Intent(MainActivity.this, CreateAccountFirstActivity.class);
         startActivity(intent);
     }
 

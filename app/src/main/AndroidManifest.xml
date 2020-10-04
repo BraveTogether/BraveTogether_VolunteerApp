@@ -15,6 +15,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
+        android:name=".app.app"
         android:usesCleartextTraffic="true">
         <activity android:name=".RegisterWhereActivity"></activity>
         <activity android:name=".MainActivity">
@@ -35,7 +36,7 @@
             android:name=".CreateVolunteerActivity"
             android:exported="true" />
         <activity
-            android:name=".CreateAccountFirstActivity"
+            android:name=".LoginFlow.CreateAccountFirstActivity"
             android:exported="true" />
 <!--י-->
 <!--י-->

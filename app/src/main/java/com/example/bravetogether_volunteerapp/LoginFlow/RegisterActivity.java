@@ -19,7 +19,6 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
-import com.example.bravetogether_volunteerapp.CreateAccountFirstActivity;
 import com.example.bravetogether_volunteerapp.R;
 import com.example.bravetogether_volunteerapp.VolleySingleton;
 import com.facebook.AccessToken;
@@ -113,7 +112,7 @@ public class RegisterActivity extends AppCompatActivity implements GoogleApiClie
                                     if (Profile.getCurrentProfile() != null) {                  //add this check because some people don't have profile picture
                                         imageURL = ImageRequest.getProfilePictureUri(Profile.getCurrentProfile().getId(), 400, 400).toString();
                                     }
-                                    Intent intent = new Intent(RegisterActivity.this, com.example.bravetogether_volunteerapp.CreateAccountFirstActivity.class);
+                                    Intent intent = new Intent(RegisterActivity.this, CreateAccountFirstActivity.class);
                                     intent.putExtra("uid",uid);
                                     intent.putExtra("first_name",firstname);
                                     intent.putExtra("last_name",lastname);
