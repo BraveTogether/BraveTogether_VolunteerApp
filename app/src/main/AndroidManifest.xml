@@ -37,8 +37,10 @@
         <activity
             android:name=".CreateAccountFirstActivity"
             android:exported="true" />
+<!--י-->
+<!--י-->
         <activity
-            android:name=".data.VolunteeriesListActivity"
+            android:name=".home"
             android:exported="true" />
         <activity android:name=".FilterActivity" />
         <activity android:name=".VolunteerApprovalActivity" />
