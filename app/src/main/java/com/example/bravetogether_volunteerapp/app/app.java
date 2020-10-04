@@ -21,11 +21,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 
 public class app extends Application {
 
-    private String uid;
-    private AccessToken accessToken;
-    private GoogleSignInAccount acct;
     private SharedPreferences prefs;
-    String userDetails;
 
     public app(){
         //No context
