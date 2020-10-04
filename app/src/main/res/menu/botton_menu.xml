@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:title="Home" android:id="@+id/homeFragment" android:icon="@drawable/ic_home_line"/>
+    <item android:title="Setting" android:id="@+id/settingFragment"  android:icon="@drawable/ic_settings_line"/>
+    <item android:title="Search" android:id="@+id/searchFragment"  android:icon="@drawable/ic_ellipse_62"/>
+    <item android:title="Notifications" android:id="@+id/notificationFragment"  android:icon="@drawable/ic_notification_line"/>
+    <item android:title="Profile" android:id="@+id/profileFragment"  android:icon="@drawable/ic_user_line" />
+</menu>
