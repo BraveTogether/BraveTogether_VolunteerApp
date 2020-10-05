@@ -12,6 +12,8 @@ import android.widget.Toast;
 import com.example.bravetogether_volunteerapp.R;
 import com.example.bravetogether_volunteerapp.home;
 
+import java.security.MessageDigest;
+
 public class LoginActivity extends AppCompatActivity {
 
     EditText email,pass;
@@ -29,9 +31,31 @@ public class LoginActivity extends AppCompatActivity {
         pass = findViewById(R.id.editTextPassword);
         prefs = getSharedPreferences("user",MODE_PRIVATE);
         if(email.getText() == null || pass.getText() == null){
-            Toast.makeText(this, "Please try again", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Please enter an email and a password", Toast.LENGTH_SHORT).show();
         }else{
+            String sha1Password = getSha1Hex(pass.getText().toString());
             //TODO Go to server with email and pass and check for user
+        }
+    }
+
+    public static String getSha1Hex(String clearString) //The code that hashes the password to SHA-1
+    {
+        try
+        {
+            MessageDigest messageDigest = MessageDigest.getInstance("SHA-1");
+            messageDigest.update(clearString.getBytes("UTF-8"));
+            byte[] bytes = messageDigest.digest();
+            StringBuilder buffer = new StringBuilder();
+            for (byte b : bytes)
+            {
+                buffer.append(Integer.toString((b & 0xff) + 0x100, 16).substring(1));
+            }
+            return buffer.toString();
+        }
+        catch (Exception ignored)
+        {
+            ignored.printStackTrace();
+            return null;
         }
     }
 
