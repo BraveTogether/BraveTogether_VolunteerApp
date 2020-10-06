@@ -192,17 +192,15 @@
                 android:layout_centerHorizontal="true"
                 android:layout_centerVertical="true"
                 android:layout_marginStart="263dp"
-                android:layout_marginLeft="263dp"
                 android:layout_marginTop="40dp"
                 android:layout_marginEnd="60dp"
-                android:layout_marginRight="60dp"
                 android:background="@drawable/textfield_d_buttons"
                 android:drawableEnd="@drawable/calender_line"
                 android:drawableRight="@drawable/calender_line"
                 android:padding="10dp"
                 android:text="@string/chooseDate"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintHorizontal_bias="0.54"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/todoeDescrition" />
 
@@ -212,20 +210,149 @@
                 android:layout_height="38dp"
                 android:layout_centerHorizontal="true"
                 android:layout_centerVertical="true"
-                android:layout_marginStart="263dp"
-                android:layout_marginLeft="263dp"
-                android:layout_marginTop="16dp"
-                android:layout_marginEnd="60dp"
-                android:layout_marginRight="60dp"
+                android:layout_marginStart="88dp"
+                android:layout_marginTop="40dp"
+                android:layout_marginEnd="10dp"
                 android:background="@drawable/textfield_d_buttons"
                 android:drawableEnd="@drawable/time_line"
                 android:drawableRight="@drawable/time_line"
                 android:padding="10dp"
                 android:text="@string/pick_time"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintEnd_toStartOf="@+id/btnDate"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/btnDate" />
+                app:layout_constraintTop_toBottomOf="@+id/todoeDescrition" />
+
+            <ImageView
+                android:id="@+id/timeView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/ic_rectangle_72"
+                android:layout_marginTop="90dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/todoeDescrition" />
+
+            <TextView
+                android:id="@+id/dateView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="#0000"
+                android:textSize="13sp"
+                android:textColor="#001925"
+                android:textStyle="bold"
+                android:layout_marginStart="202dp"
+                android:layout_marginTop="13dp"
+                android:layout_marginEnd="20dp"
+                app:layout_constraintEnd_toEndOf="@+id/timeView"
+                app:layout_constraintStart_toStartOf="@+id/timeView"
+                app:layout_constraintTop_toTopOf="@+id/timeView"
+                android:elevation="1dp"/>
+
+
+            <TextView
+                android:id="@+id/hourView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="#0000"
+                android:textSize="13sp"
+                android:textColor="#001925"
+                android:textStyle="bold"
+                android:layout_marginStart="95dp"
+                android:layout_marginTop="13dp"
+                android:layout_marginEnd="153dp"
+                app:layout_constraintEnd_toEndOf="@+id/timeView"
+                app:layout_constraintStart_toStartOf="@+id/timeView"
+                app:layout_constraintTop_toTopOf="@+id/timeView"
+                android:elevation="1dp"/>
+
+            <TextView
+                android:id="@+id/durationView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="#0000"
+                android:textSize="13sp"
+                android:textColor="#001925"
+                android:textStyle="bold"
+                android:layout_marginStart="22dp"
+                android:layout_marginTop="13dp"
+                android:layout_marginEnd="230dp"
+                app:layout_constraintEnd_toEndOf="@+id/timeView"
+                app:layout_constraintStart_toStartOf="@+id/timeView"
+                app:layout_constraintTop_toTopOf="@+id/timeView"
+                android:elevation="1dp"/>
+
+            <ImageView
+                android:id="@+id/numOfVol"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="200dp"
+                android:layout_marginTop="15dp"
+                android:layout_marginEnd="50dp"
+                android:clickable="true"
+                android:focusable="true"
+                android:onClick="volunteerNumber"
+                android:src="@drawable/ic_volnumberfield"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/timeView" />
+
+            <ImageView
+                android:id="@+id/volNumView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/ic_rectangle_72"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/numOfVol" />
+
+            <TextView
+                android:id="@+id/minVolView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="190dp"
+                android:layout_marginTop="13dp"
+                android:layout_marginEnd="50dp"
+                android:background="#0000"
+                android:elevation="1dp"
+                android:textColor="#001925"
+                android:textSize="13sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="@+id/volNumView"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="@+id/volNumView"
+                app:layout_constraintTop_toTopOf="@+id/volNumView" />
+
+            <TextView
+                android:id="@+id/maxVolView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="50dp"
+                android:layout_marginTop="12dp"
+                android:layout_marginEnd="50dp"
+                android:background="#0000"
+                android:elevation="1dp"
+                android:textColor="#001925"
+                android:textSize="13sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="@+id/volNumView"
+                app:layout_constraintHorizontal_bias="0.166"
+                app:layout_constraintStart_toStartOf="@+id/volNumView"
+                app:layout_constraintTop_toTopOf="@+id/volNumView" />
+
+            <ImageView
+                android:id="@+id/sendToConfirm"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:clickable="true"
+                android:onClick="sendToConfirm"
+                android:src="@drawable/ic_sendtoconfirm"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="20dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/volNumView"
+                app:layout_constraintBottom_toBottomOf="parent"/>
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>
