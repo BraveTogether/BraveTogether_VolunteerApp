@@ -9,8 +9,8 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.bravetogether_volunteerapp.CallToServer;
 import com.example.bravetogether_volunteerapp.R;
-import com.example.bravetogether_volunteerapp.home;
 
 import java.security.MessageDigest;
 
@@ -34,7 +34,9 @@ public class LoginActivity extends AppCompatActivity {
             Toast.makeText(this, "Please enter an email and a password", Toast.LENGTH_SHORT).show();
         }else{
             String sha1Password = getSha1Hex(pass.getText().toString());
-            //TODO Go to server with email and pass and check for user
+            CallToServer call = new CallToServer();
+            String userDetails = call.getUserDetails(email.getText().toString(),this);
+            //TODO check if password from user details is the same as password in sha1Password
         }
     }
 
@@ -60,7 +62,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void skipToHomePage(View view) {
-        startActivity(new Intent(LoginActivity.this,home.class));
+        startActivity(new Intent(LoginActivity.this, RegisterWhereActivity.class));
     }
 
     public void forgotPassword(View view) {

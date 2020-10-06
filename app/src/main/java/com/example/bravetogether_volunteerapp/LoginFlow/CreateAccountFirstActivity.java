@@ -29,8 +29,6 @@ import java.util.Map;
 
 public class CreateAccountFirstActivity extends AppCompatActivity {
 
-    // initialize variables
-    Button mButtonAddPicture;
     EditText mTextUserPrivateName;
     EditText mTextUserFamilyName;
     EditText mTextUserEmail;
@@ -42,12 +40,14 @@ public class CreateAccountFirstActivity extends AppCompatActivity {
     Button mButtonLetsVolunteer;
     AwesomeValidation awesomeValidation;
     private String url= "http://35.214.78.251:8080";
-    StorageReference mStorageRef;
+    Intent getIntent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_account_first);
+
+        getIntent = getIntent();
 
         // assign variables
         mTextUserPrivateName = (EditText)findViewById(R.id.privateNameEditText);
@@ -59,6 +59,15 @@ public class CreateAccountFirstActivity extends AppCompatActivity {
         mTextAddress = (EditText)findViewById(R.id.Address);
         mTextAbout = (EditText)findViewById(R.id.About);
         mButtonLetsVolunteer = (Button)findViewById(R.id.button_lets_volunteer);
+
+        if(getIntent.hasExtra("uid")){ //If user signed up with facebook or google
+            mTextUserPrivateName.setText(getIntent.getStringExtra("first_name"));
+            mTextUserFamilyName.setText(getIntent.getStringExtra("last_name"));
+            mTextUserEmail.setText(getIntent.getStringExtra("email"));
+            //TODO find a better solution to hide the password boxes
+            mTextPassword.setAlpha(0);
+            mTextConfirmPassword.setAlpha(0);
+        }
 
         // Initialize Validation Style
         awesomeValidation = new AwesomeValidation(ValidationStyle.BASIC);
@@ -99,12 +108,19 @@ public class CreateAccountFirstActivity extends AppCompatActivity {
             public void onClick(View view) {
                 // check validation
                 if(awesomeValidation.validate()){
-//                    // on success
-//                    Toast.makeText(getApplicationContext(),
-//                            "Form Validate Successfully", Toast.LENGTH_SHORT).show();
-                    registerUser(mTextUserPrivateName.toString(), mTextUserFamilyName.toString(),
-                            mTextUserEmail.toString(), mTextPassword.toString(), mTextPhoneNumber.toString(),
-                            mTextAddress.toString(), mTextAbout.toString());
+                    Intent intent = new Intent(CreateAccountFirstActivity.this, RegisterWhereActivity.class);
+                    intent.putExtra("private_name",mTextUserPrivateName.getText().toString());
+                    intent.putExtra("family_name",mTextUserFamilyName.getText().toString());
+                    intent.putExtra("email",mTextUserEmail.getText().toString());
+                    if(mTextPassword.getAlpha() != 0) {
+                        intent.putExtra("password", mTextPassword.getText().toString());
+                    }else{
+                        intent.putExtra("password","socialMedia");
+                    }
+                    intent.putExtra("phone_number",mTextPhoneNumber.getText().toString());
+                    intent.putExtra("address",mTextAddress.getText().toString());
+                    intent.putExtra("about",mTextAbout.getText().toString());
+                    startActivity(intent);
                 }else{
                     Toast.makeText(getApplicationContext(),
                             "Validation Failed - Please fill all fields correctly", Toast.LENGTH_SHORT).show();

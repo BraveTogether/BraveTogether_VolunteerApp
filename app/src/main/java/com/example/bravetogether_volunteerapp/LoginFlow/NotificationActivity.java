@@ -3,6 +3,7 @@ package com.example.bravetogether_volunteerapp.LoginFlow;
 import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
@@ -26,6 +27,7 @@ import androidx.core.content.ContextCompat;
 
 import com.example.bravetogether_volunteerapp.R;
 import com.example.bravetogether_volunteerapp.adapters.spinnerAdapter;
+import com.example.bravetogether_volunteerapp.home;
 import com.example.bravetogether_volunteerapp.ui.SlideAnimation;
 import com.google.android.gms.common.api.Status;
 import com.google.android.gms.maps.model.LatLng;
@@ -41,14 +43,13 @@ import java.util.Arrays;
 
 public class NotificationActivity extends AppCompatActivity {
 
-    private String apiKey = "AIzaSyA0hReShDEqNU3cdSm9eot1atb8-CKBy0Q";
-    private String address;
+    private final String apiKey = "AIzaSyA0hReShDEqNU3cdSm9eot1atb8-CKBy0Q";
+    private String first_name,family_name,email,password,phone_number,home_address,about,user_desired_location,chosen_time,address;
     private Context mcontext = this;
     private ConstraintLayout mConstraintLayout;
     private ConstraintSet mConstraintSet = new ConstraintSet();
     private Button expandButton;
-    private View expandedLocationBox;
-    private View expandedTimeBox;
+    private View expandedLocationBox,expandedTimeBox;
     private Activity activity = this;
     private GpsTracker gpsTracker;
     private Spinner spinner;
@@ -58,7 +59,6 @@ public class NotificationActivity extends AppCompatActivity {
     private boolean checkDays[] = new boolean[6];
     private ArrayList<String> time_windows_strings;
     private TextView time_window_text;
-    private String chosen_time;
 
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
     @Override
@@ -107,8 +107,8 @@ public class NotificationActivity extends AppCompatActivity {
 
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
-            public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
-                chosen_time = time_windows_strings.get(position);
+            public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) { //Get the days from array "time_windows_hours" with position
+                chosen_time = time_windows_strings.get(position); //This is what I need.
                 time_window_text.setText(chosen_time);
                 time_window_text.setVisibility(View.VISIBLE);
             }
@@ -138,7 +138,7 @@ public class NotificationActivity extends AppCompatActivity {
             @Override
             public void onPlaceSelected(Place place) {
                 // TODO: Get info about the selected place.
-                address = place.getAddress();
+                address = place.getAddress(); //Get the ktovet iadanit
                 Log.i("place", "Place: " + place.getAddress());
             }
 
@@ -166,7 +166,7 @@ public class NotificationActivity extends AppCompatActivity {
                         {
                             ActivityCompat.requestPermissions(activity, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 101);
                         }
-                        getLocation();
+                        getLocation(); // getting the location
                     } catch (Exception e){
                         e.printStackTrace();
                     }
@@ -228,7 +228,7 @@ public class NotificationActivity extends AppCompatActivity {
     }
 
 
-    public void weekDayCheck(View view) {
+    public void weekDayCheck(View view) {  //Get the days from the array
         boolean pressed = ((ToggleButton) view).isChecked();
         if (pressed)
         {
@@ -261,4 +261,29 @@ public class NotificationActivity extends AppCompatActivity {
                 throw new IllegalStateException("Unexpected value: " + view.getId());
         }
     }
+
+    public void letsVolunteer(View view) {
+        Intent intent = new Intent(NotificationActivity.this, home.class);
+        Intent getIntent = getIntent();
+        first_name = getIntent.getStringExtra("first_name");
+        family_name = getIntent.getStringExtra("family_name");
+        email = getIntent.getStringExtra("email");
+        password = getIntent.getStringExtra("password");
+        phone_number = getIntent.getStringExtra("phone_number");
+        home_address = getIntent.getStringExtra("address");
+        about = getIntent.getStringExtra("about");
+        user_desired_location = getIntent.getStringExtra("location");
+        //address variable for the "hatraot le itnadvut krova"
+        //Profile picture -- Work in progress
+        //Account type -- regular volunteer
+        //coins -- 0
+        //checkDays[0-5] get the true values for the volunteering days
+        //chosenTime -- get the volunteering time
+        //"mikum hitnadvut" either getLocation or by GPS coordinates need to check it.
+
+        //TODO take all those fields and get them to the database
+        //TODO put all those fields (or some) in the SharredPreferences
+        //TODO go to home page DONE!!
+    }
+
 }

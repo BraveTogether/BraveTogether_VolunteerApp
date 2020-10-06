@@ -20,7 +20,6 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.example.bravetogether_volunteerapp.R;
-import com.example.bravetogether_volunteerapp.RegisterWhereActivity;
 import com.example.bravetogether_volunteerapp.VolleySingleton;
 import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
