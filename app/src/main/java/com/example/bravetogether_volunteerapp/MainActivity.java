@@ -63,4 +63,9 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(MainActivity.this, Scanner.class);
         startActivity(intent);
     }
+
+    public void goToCreateVolunteer(View view) {
+        Intent intent = new Intent(MainActivity.this, CreateVolunteerActivity.class);
+        startActivity(intent);
+    }
 }

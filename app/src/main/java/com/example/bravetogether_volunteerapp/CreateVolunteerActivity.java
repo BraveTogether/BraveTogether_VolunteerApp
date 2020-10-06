@@ -4,12 +4,15 @@ import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.icu.text.SimpleDateFormat;
 import android.icu.util.Calendar;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.text.InputType;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -19,6 +22,7 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 
 import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.common.api.Status;
@@ -46,6 +50,8 @@ public class CreateVolunteerActivity extends AppCompatActivity {
     String strDate;
     String strTime;
     Context mcontext = this;
+    private int minVolNum;
+    private int maxVolNum;
 //    static SharedPreferences mPreferences;
 //    private final String sharedPrefFile = "com.example.android.BraveTogether_VolunteerApp";
 //    static String email = mPreferences.getString("UserEmail", "null");
@@ -80,6 +86,9 @@ public class CreateVolunteerActivity extends AppCompatActivity {
         Button selectDate = findViewById(R.id.btnDate);
         Button selectTIme = findViewById(R.id.btnTime);
         TextView addPicView = findViewById(R.id.addPicText);
+        final TextView dateView = findViewById(R.id.dateView);
+        final TextView hourView = findViewById(R.id.hourView);
+        final TextView durationView = findViewById(R.id.durationView);
 
         addPicView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -147,6 +156,7 @@ public class CreateVolunteerActivity extends AppCompatActivity {
                                         @SuppressLint("SimpleDateFormat") SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy");
                                         strDate = format.format(calendar.getTime()); // Date for database
                                         Log.d("date", strDate);
+                                        dateView.setText(strDate);
                             }
                         }, cyear, cmonth, cday);
                 datePickerDialog.show();
@@ -169,32 +179,83 @@ public class CreateVolunteerActivity extends AppCompatActivity {
                             @Override
                             public void onTimeSet(TimePicker view, int hourOfDay,
                                                   int minute) {
+                                strTime = new StringBuilder().append(hourOfDay).append(":").append(minute).toString();
+                                hourView.setText(strTime);
                                 strTime = new StringBuilder().append(hourOfDay).append(":").append(minute).append(":")
                                         .append("00").toString();
-//                                 = String.valueOf(hourOfDay) + String.valueOf(hourOfDay);
                                 Log.d("time", strTime);
+
+                                AlertDialog.Builder alert = new AlertDialog.Builder(mcontext);
+                                alert.setTitle("כמה זמן תמשך ההתנדבות");
+                                final EditText input = new EditText(mcontext);
+                                input.setInputType(InputType.TYPE_CLASS_NUMBER);
+                                input.setInputType(InputType.TYPE_NUMBER_FLAG_DECIMAL);
+                                alert.setView(input);
+                                alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int whichButton) {
+                                        String duration = input.getText().toString();
+                                        durationView.setText(new StringBuilder().append(duration).
+                                                append(" שעות").toString());
+                                    }
+                                });
+//                                alert.setNegativeButton(, new DialogInterface.OnClickListener() {
+//                                    public void onClick(DialogInterface dialog, int whichButton) {
+//                                        //Put actions for CANCEL button here, or leave in blank
+//                                    }
+//                                });
+                                alert.show();
                             }
                         }, mHour, mMinute, true);
                 timePickerDialog.show();
-
-//                DatePickerDialog datePickerDialog = new DatePickerDialog(mcontext,
-//                        new DatePickerDialog.OnDateSetListener() {
-//                            @Override
-//                            public void onDateSet(DatePicker datePicker, int year, int month, int day) {
-//                                final Calendar calendar = Calendar.getInstance();
-//                                int hour = calendar.get(Calendar.HOUR_OF_DAY);
-//                                int minute = calendar.get(Calendar.MINUTE);
-//
-//                                @SuppressLint("SimpleDateFormat") SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy");
-//                                strDate = format.format(calendar.getTime()); // Date for database
-//                                Log.d("date", strDate);
-//                            }
-//                        }, 0, 0, 0);
-//                datePickerDialog.show();
             }
         });
 
     }
 
+    public void volunteerNumber(View view) {
+        final TextView minVolView = findViewById(R.id.minVolView);
+        final TextView maxVolView = findViewById(R.id.maxVolView);
+        AlertDialog.Builder alert = new AlertDialog.Builder(mcontext);
+        alert.setTitle("מספר מתנדבים מינימלי");
+        final EditText input = new EditText(mcontext);
+        input.setInputType(InputType.TYPE_CLASS_NUMBER);
+        input.setRawInputType(Configuration.KEYBOARD_12KEY);
+        alert.setView(input);
+        alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+                final String minVol = input.getText().toString();
+                AlertDialog.Builder alert = new AlertDialog.Builder(mcontext);
+                alert.setTitle("מספר מתנדבים מקסימלי");
+                final EditText input = new EditText(mcontext);
+                input.setInputType(InputType.TYPE_CLASS_NUMBER);
+                input.setRawInputType(Configuration.KEYBOARD_12KEY);
+                alert.setView(input);
+                alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int whichButton) {
+                        String maxVol = input.getText().toString();
+                        minVolView.setText(new StringBuilder().append(minVol).
+                                append(" מינימום").toString());
+                        maxVolView.setText(new StringBuilder().append(maxVol).
+                                append(" מקסימום").toString());
+                    }
+                });
+//                                alert.setNegativeButton(, new DialogInterface.OnClickListener() {
+//                                    public void onClick(DialogInterface dialog, int whichButton) {
+//                                        //Put actions for CANCEL button here, or leave in blank
+//                                    }
+//                                });
+                alert.show();
+            }
+        });
+//                                alert.setNegativeButton(, new DialogInterface.OnClickListener() {
+//                                    public void onClick(DialogInterface dialog, int whichButton) {
+//                                        //Put actions for CANCEL button here, or leave in blank
+//                                    }
+//                                });
+        alert.show();
+    }
+
+    public void sendToConfirm(View view) {
+    }
 }
 

@@ -33,16 +33,14 @@
             android:name=".Scanner"
             android:exported="true" />
         <activity
-            android:name=".CreateVolunteerActivity"
-            android:exported="true" />
+            android:name=".CreateVolunteerActivity" />
         <activity
             android:name=".LoginFlow.CreateAccountFirstActivity"
             android:exported="true" />
 <!--י-->
 <!--י-->
         <activity
-            android:name=".home"
-            android:exported="true" />
+            android:name=".home"/>
         <activity android:name=".FilterActivity" />
         <activity android:name=".VolunteerApprovalActivity" />
         <activity android:name=".GeneralActivity" />
