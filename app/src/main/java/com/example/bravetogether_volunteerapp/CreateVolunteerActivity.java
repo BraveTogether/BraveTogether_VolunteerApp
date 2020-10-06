@@ -1,18 +1,15 @@
 package com.example.bravetogether_volunteerapp;
 
-import androidx.annotation.RequiresApi;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.DialogFragment;
-
 import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.icu.text.SimpleDateFormat;
 import android.icu.util.Calendar;
 import android.os.Build;
 import android.os.Bundle;
-import android.text.format.DateFormat;
+import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -20,6 +17,9 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.TimePicker;
+
+import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.common.api.Status;
 import com.google.android.gms.maps.model.LatLng;
@@ -30,9 +30,11 @@ import com.google.android.libraries.places.api.net.PlacesClient;
 import com.google.android.libraries.places.widget.AutocompleteSupportFragment;
 import com.google.android.libraries.places.widget.listener.PlaceSelectionListener;
 
-import org.w3c.dom.Text;
-
 import java.util.Arrays;
+
+import androidmads.library.qrgenearator.QRGContents;
+import androidmads.library.qrgenearator.QRGEncoder;
+import androidmads.library.qrgenearator.QRGSaver;
 
 
 @RequiresApi(api = Build.VERSION_CODES.N)
@@ -44,6 +46,23 @@ public class CreateVolunteerActivity extends AppCompatActivity {
     String strDate;
     String strTime;
     Context mcontext = this;
+//    static SharedPreferences mPreferences;
+//    private final String sharedPrefFile = "com.example.android.BraveTogether_VolunteerApp";
+//    static String email = mPreferences.getString("UserEmail", "null");
+
+
+    private void initQRCode(int credits, String date) {
+        // this function creates a QRCode with the relevant data and saves it to the gallery
+        // Initializing the QR Encoder with your value to be encoded, type you required and Dimension
+        String data = credits + " " + date + " " + address;
+        QRGEncoder qrgEncoder = new QRGEncoder(data, null, QRGContents.Type.TEXT, 1000);
+        // Getting QR-Code as Bitmap
+        Bitmap bitmap = qrgEncoder.getBitmap();
+        // Setting Bitmap to ImageView
+        QRGSaver qrgSaver = new QRGSaver();
+//      qrgSaver.save(getGalleryPath(), "QRCode".trim(), bitmap, QRGContents.ImageType.IMAGE_JPEG);
+        MediaStore.Images.Media.insertImage(getContentResolver(), bitmap, "mytitle" , "descriptionhello");
+    }
 
 
     @RequiresApi(api = Build.VERSION_CODES.N)
@@ -80,7 +99,7 @@ public class CreateVolunteerActivity extends AppCompatActivity {
         AutocompleteSupportFragment autocompleteFragment = (AutocompleteSupportFragment)
                 getSupportFragmentManager().findFragmentById(R.id.autocomplete_address);
 
-//        autocompleteFragment.setHint("כתובת");
+        autocompleteFragment.setHint("כתובת");
         //TODO: change to rtl text direction
         autocompleteFragment.setLocationBias(RectangularBounds.newInstance(
                 new LatLng(29.4533796, 34.2674994),

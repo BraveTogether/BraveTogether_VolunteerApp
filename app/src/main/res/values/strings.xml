@@ -7,16 +7,9 @@
     <string name="action_sign_in_short">Sign in</string>
     <string name="welcome">"Welcome !"</string>
     <string name="invalid_username">Not a valid username</string>
-    <string name="invalid_password">Password must be >5 characters</string>
     <string name="login_failed">"Login failed"</string>
     <string name="facebook_app_id">3786422741385585</string>
     <string name="fb_login_protocol_scheme">fb3786422741385585</string>
-    <string name="title_activity_profile">ProfileActivity</string>
-    <string name="navigation_drawer_open">Open navigation drawer</string>
-    <string name="navigation_drawer_close">Close navigation drawer</string>
-    <string name="nav_header_title">Android Studio</string>
-    <string name="nav_header_subtitle">android.studio@android.com</string>
-    <string name="nav_header_desc">Navigation header</string>
     <string name="action_settings">Settings</string>
 
     <string name="menu_home">Home</string>
@@ -52,13 +45,52 @@
     <string name="createVolunteerHeadline">יצירת התנדבות</string>
     <string name="addPicText">הוסף תמונה</string>
     <string name="media_camera">media_camera</string>
-
-    =======
     <string name="notificationHeadline">התראות</string>
+    <string name="createAcount">יצירת חשבון</string>
     <string name="time_headline">זמנים</string>
     <string name="time_text">תודיע לי על התנדבויות בטווח זמנים מסויים</string>
     <string name="location_text">תודיע לי על התנדבויות קרובות אליי</string>
     <string name="location_headline">מיקום</string>
+    <string name="nextPage">הבא</string>
+
+    <string name="Lets_volunteer">יאללה בוא נתנדב</string>
+    <string name="loc_acc_text">הרשאה למיקום שלי</string>
+
+    <!-- activity_create_account_first -->
+
+    <!-- Text Edits -->
+    <string name="privateName">שם פרטי</string>
+    <string name="familyName">שם משפחה</string>
+    <string name="password">סיסמה</string>
+    <string name="passwordVerification">אימות סיסמה</string>
+    <string name="email">אימייל</string>
+    <string name="phone">פלאפון</string>
+    <string name="address">כתובת מגורים</string>
+    <string name="about">כמה מילים עליך</string>
+
+    <!-- Validations -->
+    <string name="invalid_private_name">הכנס את השם הפרטי שלך</string>
+    <string name="invalid_family_name">הכנס את שם המשפחה שלך</string>
+    <string name="invalid_mobile">הכנס מספר טלפון תקין</string>
+    <string name="invalid_email">הכנס כתובת אימייל תקינה</string>
+    <string name="invalid_password">סיסמא חייבת להכיל לפחות 8 תווים וביניהם: אות אנגלית גדולה, אות אנגלית קטנה, תו מיוחד וספרה</string>
+    <string name="invalid_confirm_passwords">הסיסמאות לא תואמות</string>
+    <string name="invalid_address">בבקשה הכנס כתובת תקינה</string>
+
+    <string-array name="time_windows">
+        <item name="morning">בוקר</item>
+        <item name="noon">צהריים</item>
+        <item name="evening">ערב</item>
+    </string-array>
+
+    <string-array name="time_windows_hours">
+        <item name="morning">08:00-15:00</item>
+        <item name="noon">15:00-18:00</item>
+        <item name="evening">19:00-22:00</item>
+    </string-array>
+
+
+    =======
     <string name="עוד" />
     <string name="todo" />
     <string name="happy_to_see_you_again">happy_to_see_you_again</string>
