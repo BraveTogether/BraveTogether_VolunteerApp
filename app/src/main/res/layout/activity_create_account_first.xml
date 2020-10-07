@@ -25,7 +25,6 @@
                     android:layout_height="24dp"
                     android:layout_marginTop="44dp"
                     android:background="@drawable/top_back_arrow_24"
-                    android:onClick="backToLoginScreen"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.891"
                     app:layout_constraintStart_toStartOf="parent"
@@ -93,6 +92,31 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="@+id/ellipse_" />
 
+                <de.hdodenhof.circleimageview.CircleImageView
+                    xmlns:app="http://schemas.android.com/apk/res-auto"
+                    android:id="@+id/profile_image_2"
+                    android:layout_width="139dp"
+                    android:layout_height="139dp"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="120dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.503"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/ellipse_"/>
+
+                <ImageView
+                    android:id="@+id/uploaded_image"
+                    android:layout_width="139dp"
+                    android:layout_height="139dp"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="120dp"
+                    android:shape="oval"
+                    android:padding="30dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.503"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/ellipse_" />
+
                 <Button
                     android:id="@+id/addImageButtonImageView"
                     android:layout_width="40dp"
@@ -101,7 +125,6 @@
                     android:layout_marginLeft="219dp"
                     android:layout_marginTop="230dp"
                     android:background="@drawable/add_circle_24"
-                    android:onClick="addPicture"
                     android:translationZ="1dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.123"
