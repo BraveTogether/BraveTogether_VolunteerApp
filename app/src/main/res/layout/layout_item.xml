@@ -11,7 +11,7 @@
         android:layout_height="match_parent">
 
         <TextView
-            android:id="@+id/textViewshare"
+            android:id="@+id/textViewDescription"
             android:layout_width="match_parent"
             android:layout_height="24dp"
             android:layout_marginStart="161dp"
@@ -62,7 +62,7 @@
                 app:srcCompat="@drawable/time_line_black" />
 
             <TextView
-                android:id="@+id/textViewDate"
+                android:id="@+id/textViewLocation"
                 android:layout_width="62dp"
                 android:layout_height="17dp"
                 android:gravity="end"

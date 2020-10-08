@@ -36,26 +36,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
-                <TextView
-                    android:id="@+id/TextViewGvorot"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="גבורות" />
-
-                <TextView
-                    android:id="@+id/textViewForNext"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="לתג הבא" />
-
-                <TextView
-                    android:id="@+id/textViewHours"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="שעות התנדבות"
-                    tools:layout_editor_absoluteX="253dp"
-                    tools:layout_editor_absoluteY="252dp" />
-
                 <View
                     android:id="@+id/ellipse_home_page"
                     android:layout_width="match_parent"
@@ -68,6 +48,74 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintVertical_bias="1.0" />
+
+                <TextView
+                    android:id="@+id/textView3"
+                    android:layout_width="245dp"
+                    android:layout_height="18dp"
+                    android:layout_alignTop="@+id/ellipse_home_page"
+                    android:layout_marginStart="91dp"
+                    android:layout_marginLeft="91dp"
+                    android:layout_marginTop="164dp"
+                    android:layout_marginEnd="29dp"
+                    android:layout_marginRight="29dp"
+                    android:layout_marginBottom="62dp"
+                    app:layout_constraintBottom_toBottomOf="@+id/ellipse_home_page"
+                    app:layout_constraintEnd_toEndOf="@+id/ellipse_home_page"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/ellipse_home_page" />
+
+                <TextView
+                    android:id="@+id/userGreetings"
+                    android:layout_width="276dp"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginStart="60dp"
+                    android:layout_marginLeft="60dp"
+                    android:layout_marginTop="68dp"
+                    android:layout_marginEnd="29dp"
+                    android:layout_marginRight="29dp"
+                    android:layout_marginBottom="99dp"
+
+                    android:elevation="1dp"
+                    android:gravity="right|center_vertical"
+                    android:lineSpacingExtra="0sp"
+                    android:text="@string/reply_title"
+                    android:textSize="18sp"
+                    android:visibility="visible"
+                    app:layout_constraintBottom_toBottomOf="@+id/ellipse_home_page"
+                    app:layout_constraintEnd_toEndOf="@+id/ellipse_home_page"
+                    app:layout_constraintStart_toStartOf="@+id/ellipse_home_page"
+                    app:layout_constraintTop_toTopOf="@+id/ellipse_home_page"
+                    tools:visibility="visible" />
+
+                <TextView
+                    android:id="@+id/HappyToSeeYou"
+                    android:layout_width="276dp"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginStart="60dp"
+                    android:layout_marginLeft="60dp"
+                    android:layout_marginTop="1dp"
+                    android:layout_marginEnd="29dp"
+                    android:layout_marginRight="29dp"
+                    android:layout_marginBottom="99dp"
+
+                    android:elevation="1dp"
+                    android:gravity="right|center_vertical"
+                    android:lineSpacingExtra="0sp"
+                    android:text="@string/happy_to_see_you_again"
+                    android:textSize="18sp"
+                    android:visibility="visible"
+                    app:layout_constraintBottom_toBottomOf="@+id/ellipse_home_page"
+                    app:layout_constraintEnd_toEndOf="@+id/ellipse_home_page"
+                    app:layout_constraintHorizontal_bias="0.507"
+                    app:layout_constraintStart_toStartOf="@+id/ellipse_home_page"
+                    app:layout_constraintTop_toTopOf="@id/userGreetings"
+                    app:layout_constraintVertical_bias="0.348"
+                    tools:visibility="visible" />
 
 
             </androidx.constraintlayout.widget.ConstraintLayout>
@@ -136,7 +184,7 @@
                     android:textSize="18sp" />
 
                 <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/Recycler_view_list4"
+                    android:id="@+id/Recycler_view_list3"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/btnMore"

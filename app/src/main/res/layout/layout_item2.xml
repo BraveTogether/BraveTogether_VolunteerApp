@@ -11,7 +11,7 @@
         android:layout_height="match_parent">
 
         <TextView
-            android:id="@+id/textViewshare"
+            android:id="@+id/textViewDescription"
             android:layout_width="195dp"
             android:layout_height="24dp"
             android:layout_marginTop="5dp"
@@ -60,7 +60,7 @@
             app:srcCompat="@drawable/gps_line_black" />
 
         <TextView
-            android:id="@+id/textViewDate"
+            android:id="@+id/textViewLocation"
             android:layout_width="63dp"
             android:layout_height="17dp"
             android:layout_marginTop="8dp"

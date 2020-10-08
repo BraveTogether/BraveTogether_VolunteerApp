@@ -40,7 +40,8 @@
 <!--י-->
 <!--י-->
         <activity
-            android:name=".home"/>
+            android:name=".home"
+            android:exported="true"/>
         <activity android:name=".FilterActivity" />
         <activity android:name=".VolunteerApprovalActivity" />
         <activity android:name=".GeneralActivity" />
