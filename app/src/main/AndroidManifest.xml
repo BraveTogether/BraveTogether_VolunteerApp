@@ -2,7 +2,11 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.bravetogether_volunteerapp">
 
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.CAMERA" />
 
     <application
         android:allowBackup="true"
@@ -11,11 +15,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
+        android:name=".app.app"
         android:usesCleartextTraffic="true">
-        <activity android:name=".ReviewActivity"></activity>
-        <activity
-            android:name=".CreateVolunteerActivity"
-            android:exported="true" />
+        <activity android:name=".RegisterWhereActivity"></activity>
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -23,26 +25,30 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".ConformationsActivity" />
+        <activity android:name=".RegularProfileActivity" />
+        <activity android:name=".LoginFlow.NotificationActivity" />
+        <activity android:name=".LoginFlow.LoginActivity" />
         <activity
-            android:name=".ProfileActivity"
-            android:label="@string/title_activity_profile"
-            android:theme="@style/AppTheme">
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW" />
-
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-        </activity> <!-- <activity -->
-        <!-- android:name=".data.VolunteeriesListActivity" -->
-        <!-- android:exported="true" /> -->
+            android:name=".Scanner"
+            android:exported="true" />
+        <activity
+            android:name=".CreateVolunteerActivity" />
+        <activity
+            android:name=".LoginFlow.CreateAccountFirstActivity"
+            android:exported="true" />
+<!--י-->
+<!--י-->
+        <activity
+            android:name=".home"/>
         <activity android:name=".FilterActivity" />
         <activity android:name=".VolunteerApprovalActivity" />
         <activity android:name=".GeneralActivity" />
-        <activity android:name=".IntroFirstTimeActivity" />
+        <activity android:name=".LoginFlow.IntroFirstTimeActivity" />
         <activity
-            android:name=".LoginActivity"
+            android:name=".LoginFlow.RegisterActivity"
             android:exported="true" />
-        <activity android:name=".IntroPageActivity" />
+        <activity android:name=".LoginFlow.IntroPageActivity" />
 
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"
@@ -58,7 +64,6 @@
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
 
-                <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
 
                 <data android:scheme="@string/fb_login_protocol_scheme" />
@@ -66,13 +71,7 @@
         </activity>
         <activity
             android:name=".addToCalendar"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+            android:exported="true"></activity>
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
