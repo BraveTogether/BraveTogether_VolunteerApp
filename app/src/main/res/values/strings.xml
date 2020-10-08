@@ -95,6 +95,8 @@
     <string name="todo" />
     <string name="happy_to_see_you_again">happy_to_see_you_again</string>
     <string name="stories">stories</string>
+    <string name="title_item_list">Items</string>
+    <string name="title_item_detail">Item Detail</string>
     >>>>>>> Stashed changes
 
 </resources>
