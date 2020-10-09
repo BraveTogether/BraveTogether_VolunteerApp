@@ -1,14 +1,8 @@
 package com.example.bravetogether_volunteerapp;
 
 import android.content.Context;
-import android.util.Log;
 
 import androidx.appcompat.app.AppCompatActivity;
-
-import com.android.volley.Request;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonArrayRequest;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -44,7 +38,7 @@ public class VolunteerList extends AppCompatActivity {
 
 
     static {
-        //  Get the unpublished volunteers from the database
+        /*  Get the unpublished volunteers from the database
         String URL = parentContext.getResources().getString(R.string.apiUrl)+"/volunteers/published/false";
         JsonArrayRequest JsonArrayRequest = new JsonArrayRequest
                 (Request.Method.GET, URL, null, new Response.Listener<JSONArray>() {
@@ -54,7 +48,7 @@ public class VolunteerList extends AppCompatActivity {
                         for (int i = 0; i < response.length(); i++) {
                             try {
                                 Activity = response.getJSONObject(i);
-                                addItem(createVolunteerItem(Activity.getString("uid"),Activity.getString("name"), Activity.getString("about_volunteering"), Activity.getString("credits")));
+                                addItem(createVolunteerItem(Activity.getString("uid"),Activity.getString("name"), Activity.getString("about_volunteering"), Activity.getString("credits"),Activity.getString("duration")));
                             }
                             catch (JSONException e) {
                                 e.printStackTrace();
@@ -68,10 +62,34 @@ public class VolunteerList extends AppCompatActivity {
                     }
                 });
         VolleySingleton.getInstance(parentContext).addToRequestQueue(JsonArrayRequest);
+         */
 
+        //get the list of relevant activities.
+        ArrayList<JSONObject> activitiesList = ItemListActivity.activitiesList;
+        for (int i=0; i<activitiesList.size(); i++)
+        {
+            JSONObject volunteer = (JSONObject) activitiesList.get(i);
+            // add volunteers to the list displayed
+            try {
+                String distance = volunteer.getString("distance_from_user");
+                // parse the distance from user string to meters or kilometers.
+                if (Float.parseFloat(distance)>1000) {
+                    distance = String.valueOf(Float.parseFloat(distance)/1000) + " קמ";
+                }
+                else {
+                    distance = String.valueOf(Float.parseFloat(distance)) + " מ'";
+
+                }
+                addItem(createVolunteerItem(String.valueOf(i) ,volunteer.getString("name"), volunteer.getString("description"), volunteer.getString("credits"), volunteer.getString("duration"), distance));
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
         //statically add volunteers for testings.
-        addItem(createVolunteerItem("1","יום הולדת", "אנחנו רוצים לחגוג יום הולדת לניצול שואה", "10"));
-        addItem(createVolunteerItem("2","צעדה", "אנחנו רוצים לעשות צעדה על מנת להעלות את המודעות", "20"));
+        addItem(createVolunteerItem("1","יום הולדת", "אנחנו רוצים לחגוג יום הולדת לניצול שואה", "10", "30דק","500"));
+        addItem(createVolunteerItem("2","צעדה", "אנחנו רוצים לעשות צעדה על מנת להעלות את המודעות", "20", "1 שעה", "300"));
+        addItem(createVolunteerItem("3","פעילות אחרת", "תיאור של הפעילות תיאור תיאור תיאור", "20", "45דק","1500"));
+
     }
 
     private static void addItem(VolunteerItem item) {
@@ -80,9 +98,9 @@ public class VolunteerList extends AppCompatActivity {
     }
 
     // creates the header
-    private static VolunteerItem createVolunteerItem(String id, String name, String description, String credits) {
+    private static VolunteerItem createVolunteerItem(String id, String name, String description, String credits, String duration, String distance) {
         // create the volunteer object
-        return new VolunteerItem(id, name, makeDetails(name, description, credits));
+        return new VolunteerItem(id, name, duration, distance, makeDetails(name, description, credits));
     }
 
     //creates the description section
@@ -101,11 +119,15 @@ public class VolunteerList extends AppCompatActivity {
         public final String id;
         public final String content;
         public final String details;
+        public final String duration;
+        public final String distance;
 
-        public VolunteerItem(String id, String content, String details) {
+        public VolunteerItem(String id, String content,String duration, String distance, String details) {
             this.id = id;
             this.content = content;
             this.details = details;
+            this.duration = duration;
+            this.distance = distance;
         }
 
         @Override

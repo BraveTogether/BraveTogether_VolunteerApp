@@ -13,6 +13,21 @@ import com.example.bravetogether_volunteerapp.LoginFlow.IntroFirstTimeActivity;
 import com.example.bravetogether_volunteerapp.LoginFlow.NotificationActivity;
 import com.example.bravetogether_volunteerapp.LoginFlow.RegisterActivity;
 
+/**
+ *
+ *     // get the shared preferences file
+ *     private final String sharedPrefFile = "com.example.android.BraveTogether_VolunteerApp";
+ *     private SharedPreferences mPreferences;
+ *     mPreferences = getSharedPreferences(sharedPrefFile, MODE_PRIVATE);
+ *
+ *     //change or create the value of UserEmail
+ *     SharedPreferences.Editor preferencesEditor = mPreferences.edit();
+ *     preferencesEditor.putString("UserEmail", email);
+ *
+ *     // get the value of UserEmail when the default value (if there is no value is noy@mail.gmail)
+ *     String email = mPreferences.getString("UserEmail", "noy@mail.gmail");
+ */
+
 public class MainActivity extends AppCompatActivity {
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)

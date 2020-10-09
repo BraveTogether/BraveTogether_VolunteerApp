@@ -1,14 +1,9 @@
 package com.example.bravetogether_volunteerapp.LoginFlow;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.app.ProgressDialog;
 import android.content.ContentResolver;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.media.Image;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -16,11 +11,13 @@ import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
 import android.webkit.MimeTypeMap;
-import android.widget.EditText;
-
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
@@ -29,7 +26,6 @@ import com.android.volley.toolbox.StringRequest;
 import com.basgeekball.awesomevalidation.AwesomeValidation;
 import com.basgeekball.awesomevalidation.ValidationStyle;
 import com.basgeekball.awesomevalidation.utility.RegexTemplate;
-import com.example.bravetogether_volunteerapp.MainActivity;
 import com.example.bravetogether_volunteerapp.R;
 import com.example.bravetogether_volunteerapp.VolleySingleton;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -38,13 +34,13 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
-//import com.google.firebase.storage.StorageReference;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
+
+//import com.google.firebase.storage.StorageReference;
 
 public class CreateAccountFirstActivity extends AppCompatActivity {
 
@@ -61,7 +57,7 @@ public class CreateAccountFirstActivity extends AppCompatActivity {
     Button mButtonAddPicture;
 
     AwesomeValidation awesomeValidation;
-    private String url= "http://35.214.78.251:8080";
+    private String url= getResources().getString(R.string.apiUrl);
 
     // firebase
     StorageReference mStorageRef;
@@ -74,7 +70,6 @@ public class CreateAccountFirstActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_account_first);
-
         // assign variables
         mTextUserPrivateName = (EditText)findViewById(R.id.privateNameEditText);
         mTextUserFamilyName = (EditText)findViewById(R.id.familyNameEditText);
