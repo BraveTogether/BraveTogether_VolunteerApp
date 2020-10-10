@@ -89,6 +89,7 @@ public class CreateAccountFirstActivity extends AppCompatActivity {
     private final int GALLERY_REQUEST_CODE = 1;
     private final int CAMERA_REQUEST_CODE = 2;
     public static final int CAMERA_PERM_CODE = 101;
+    String mCurrentPhotoPath;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -180,7 +181,7 @@ public class CreateAccountFirstActivity extends AppCompatActivity {
         return alert;
     }
 
-    private void askCameraPermissions() {
+    private void askCameraPermissions() throws IOException {
         if(ContextCompat.checkSelfPermission(this,Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED)
             ActivityCompat.requestPermissions(this,new String[] {Manifest.permission.CAMERA}, CAMERA_PERM_CODE);
         else getPhotoFromCamera();
@@ -190,7 +191,13 @@ public class CreateAccountFirstActivity extends AppCompatActivity {
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         if(requestCode != CAMERA_PERM_CODE)
             Toast.makeText(this, "Camera Permission is Required to Use camera.", Toast.LENGTH_SHORT).show();
-        else if(grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) getPhotoFromCamera();
+        else if(grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+            try {
+                getPhotoFromCamera();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     // Function for choosing the photo to be uploaded to firebase
@@ -198,7 +205,11 @@ public class CreateAccountFirstActivity extends AppCompatActivity {
         AlertDialog.Builder alert = showPhotoSrcDialog();
         alert.setPositiveButton("Take a new picture", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int whichButton) {
-                askCameraPermissions();
+                try {
+                    askCameraPermissions();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
         });
         alert.setNegativeButton("choose a picture from gallery", new DialogInterface.OnClickListener() {
@@ -271,16 +282,44 @@ public class CreateAccountFirstActivity extends AppCompatActivity {
         return uri;
     }
 
-    private void getPhotoFromCamera() {
+    private File createImageFile() throws IOException {
+        // Create an image file name
+        String imageFileName = "JPEG_test";
+        File storageDir = new File(Environment.getExternalStoragePublicDirectory(
+                Environment.DIRECTORY_DCIM), "Camera");
+        File image = File.createTempFile(
+                imageFileName,  /* prefix */
+                ".jpg",         /* suffix */
+                storageDir      /* directory */
+        );
+
+        // Save a file: path for use with ACTION_VIEW intents
+        mCurrentPhotoPath = "file:" + image.getAbsolutePath();
+        return image;
+    }
+
+    private void getPhotoFromCamera() throws IOException {
         Intent m_intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         File file = new File(Environment.getExternalStorageDirectory(), "a directory");
-        Uri uri = Uri.fromFile(file);
-        m_intent.putExtra(MediaStore.EXTRA_OUTPUT, uri);
+        Uri photoURI = FileProvider.getUriForFile(CreateAccountFirstActivity.this, CreateAccountFirstActivity.this.getApplicationContext().getPackageName() + ".provider", createImageFile());
+        m_intent.setDataAndType(photoURI, "text/*");
+        m_intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         // falls here since uri isnt good:
         Log.d("test", "before");
         startActivityForResult(m_intent, CAMERA_REQUEST_CODE);
         Log.d("test", "after");
     }
+
+//    private void getPhotoFromCamera() {
+//        Intent m_intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+//        File file = new File(Environment.getExternalStorageDirectory(), "a directory");
+//        Uri uri = Uri.fromFile(file);
+//        m_intent.putExtra(MediaStore.EXTRA_OUTPUT, uri);
+//        // falls here since uri isnt good:
+//        Log.d("test", "before");
+//        startActivityForResult(m_intent, CAMERA_REQUEST_CODE);
+//        Log.d("test", "after");
+//    }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -302,8 +341,7 @@ public class CreateAccountFirstActivity extends AppCompatActivity {
             }else if(requestCode == CAMERA_REQUEST_CODE){
 
                 showToast("CAMERA_REQUEST_CODE");
-                imgUri = data.getData();
-
+                imgUri = Uri.parse(mCurrentPhotoPath);
                 Bitmap photo = (Bitmap) data.getExtras().get("data");
                 img.setImageBitmap(photo);
                 uploadImg();
