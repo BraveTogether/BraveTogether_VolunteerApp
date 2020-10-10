@@ -65,7 +65,8 @@ public class VolunteerList extends AppCompatActivity {
          */
 
         //get the list of relevant activities.
-        ArrayList<JSONObject> activitiesList = ItemListActivity.activitiesList;
+        //List<JSONObject> activitiesList = ItemListActivity.activitiesList;
+        List<JSONObject> activitiesList = FilterActivity.activities;
         for (int i=0; i<activitiesList.size(); i++)
         {
             JSONObject volunteer = (JSONObject) activitiesList.get(i);
@@ -78,18 +79,13 @@ public class VolunteerList extends AppCompatActivity {
                 }
                 else {
                     distance = String.valueOf(Float.parseFloat(distance)) + " מ'";
-
                 }
-                addItem(createVolunteerItem(String.valueOf(i) ,volunteer.getString("name"), volunteer.getString("description"), volunteer.getString("credits"), volunteer.getString("duration"), distance));
+                String duration = Float.parseFloat(distance) + " דק";
+                addItem(createVolunteerItem(String.valueOf(i) ,volunteer.getString("name"), volunteer.getString("about_volunteering"), volunteer.getString("value_in_coins"), duration, distance));
             } catch (JSONException e) {
                 e.printStackTrace();
             }
         }
-        //statically add volunteers for testings.
-        addItem(createVolunteerItem("1","יום הולדת", "אנחנו רוצים לחגוג יום הולדת לניצול שואה", "10", "30דק","500"));
-        addItem(createVolunteerItem("2","צעדה", "אנחנו רוצים לעשות צעדה על מנת להעלות את המודעות", "20", "1 שעה", "300"));
-        addItem(createVolunteerItem("3","פעילות אחרת", "תיאור של הפעילות תיאור תיאור תיאור", "20", "45דק","1500"));
-
     }
 
     private static void addItem(VolunteerItem item) {

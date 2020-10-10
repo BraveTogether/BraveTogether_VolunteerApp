@@ -15,7 +15,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import org.json.JSONObject;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -34,7 +33,7 @@ public class ItemListActivity extends AppCompatActivity {
      */
     private boolean mTwoPane;
     public static Context parentContext;
-    public static ArrayList<JSONObject> activitiesList;
+    public static List<JSONObject> activitiesList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,8 +45,9 @@ public class ItemListActivity extends AppCompatActivity {
         toolbar.setTitle(getTitle());
 
 
-        Bundle args = getIntent().getBundleExtra("activitiesList");
-        activitiesList = (ArrayList<JSONObject>) args.getSerializable("myList");
+        //Bundle args = getIntent().getBundleExtra("activitiesList");
+        //activitiesList = (List<JSONObject>) args.getSerializable("myList");
+        activitiesList = FilterActivity.activities;
 
         if (findViewById(R.id.item_detail_container) != null) {
             // The detail container view will be present only in the

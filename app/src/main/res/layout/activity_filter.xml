@@ -7,14 +7,24 @@
     android:layout_alignParentTop="false"
     tools:context=".FilterActivity">
 
-    <TextView
+    <View
         android:id="@+id/Sfilters"
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
+        android:layout_height="91dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:background="@drawable/ellipse_59"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/barText"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="#00BCD4"
-        android:gravity="center"
         android:text="סינון חיפוש"
-        android:textAppearance="@style/TextAppearance.AppCompat.Display2"
+        android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+        app:layout_constraintBottom_toBottomOf="@+id/Sfilters"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -141,7 +151,7 @@
         android:layout_height="wrap_content"
         android:background="@drawable/filter_buttons"
         android:onClick="nature"
-        android:tag="true"
+        android:tag="1"
         android:text="להתנדב אונליין"
         app:layout_constraintBottom_toTopOf="@+id/save"
         app:layout_constraintEnd_toEndOf="parent"
@@ -154,7 +164,7 @@
         android:layout_height="wrap_content"
         android:background="@drawable/filter_buttons"
         android:onClick="nature"
-        android:tag="false"
+        android:tag="0"
         android:text="להתנדב במקום"
         app:layout_constraintBottom_toTopOf="@+id/save"
         app:layout_constraintEnd_toStartOf="@+id/online"

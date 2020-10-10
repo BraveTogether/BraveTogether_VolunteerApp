@@ -24,7 +24,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.Serializable;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -35,12 +34,12 @@ import java.util.List;
 public class FilterActivity extends AppCompatActivity {
 
     private static SharedPreferences mPreferences;
-    static int radius, duration;
+    static int radius, duration, nature;
     static Date from, until;
-    static boolean nature;
+    //static boolean nature;
 //    static DateFormat formatter = new SimpleDateFormat("HH:mm");
     static Intent i;
-    public ArrayList<JSONObject> activities = new ArrayList<JSONObject>();
+    public static List<JSONObject> activities = new ArrayList<JSONObject>();
 
 
     // get the user email from the file that holds the user info for the app.
@@ -59,15 +58,19 @@ public class FilterActivity extends AppCompatActivity {
 
     public void radius(View view) {
         view.setSelected(!view.isSelected());
-        radius = Integer.parseInt(view.getTag().toString());
+        if (view.isSelected())
+        {radius = Integer.parseInt(view.getTag().toString());}
     }
     public void duration(View view) {
         view.setSelected(!view.isSelected());
-        duration = Integer.parseInt(view.getTag().toString());
+        if (view.isSelected())
+        {duration = Integer.parseInt(view.getTag().toString());}
     }
     public void nature(View view) {
         view.setSelected(!view.isSelected());
-        nature = Boolean.parseBoolean(view.getTag().toString());
+        if (view.isSelected())
+        {//nature = Boolean.parseBoolean(view.getTag().toString());
+            nature = Integer.parseInt(view.getTag().toString()); }
     }
 
     public static LatLng getLocationFromAddress(Context context, String strAddress)
@@ -125,20 +128,19 @@ public class FilterActivity extends AppCompatActivity {
             from = formatter.parse(FromTime);
             until = formatter.parse(UntilTime);
 
-            String email = mPreferences.getString("UserEmail", "null");
-            //get all volunteers
-            String URL = getResources().getString(R.string.apiUrl) + "/volunteers/confirmed/true";
+            //String email = mPreferences.getString("UserEmail", "null");
+            //get all the confirmed volunteers (1=true)
+            String URL = getResources().getString(R.string.apiUrl) + "volunteers/confirmed/1";
             JsonArrayRequest JsonArrayRequest = new JsonArrayRequest
                     (Request.Method.GET, URL, null, new Response.Listener<JSONArray>() {
                         JSONObject Activity;
-
                         @Override
                         public void onResponse(JSONArray response) {
                             // get the user address from the shared preference file
                             DateFormat formatter = new SimpleDateFormat("HH:mm");
-                            String UserAddress = mPreferences.getString("UserAddress", "null");
-
-                            if (UserAddress == null) {
+                            //String UserAddress = mPreferences.getString("UserAddress", "null");
+                            String UserAddress = "hatikva 27 ramat hasharon";
+                            if (UserAddress == "null") {
                                 String message = "לפני שתוכל לחפש עלייך להזין את כתובתך בדף ההגדרות";
                                 Toast.makeText(FilterActivity.this, message, Toast.LENGTH_LONG).show();
                             } else {
@@ -146,24 +148,34 @@ public class FilterActivity extends AppCompatActivity {
                                 for (int i = 0; i < response.length(); i++) {
                                     try {
                                         Activity = response.getJSONObject(i);
+                                        int online=Activity.getInt("online"); // 1 equals true
                                         Date activity_start = formatter.parse(Activity.get("start_time").toString());
-                                        //calculate the distance between the user and the volunteer.
-                                        float dist = getDistance(Activity.get("address").toString(), UserAddress);
+                                        natureofactivity = (nature == online);
+                                        float dist=0;
+                                        if (natureofactivity && online==0)
+                                        {
+                                            //calculate the distance between the user and the volunteer.
+                                            dist = getDistance(Activity.get("address").toString(), UserAddress);
+                                        }
                                         distance = dist < radius;
                                         dur = Activity.getInt("duration") <= duration;
 
                                         // getTime returns epoch so 3600000 represents the milliseconds in one hour
                                         times = (activity_start.getTime() >= from.getTime()) && (activity_start.getTime() + 3600000 * duration <= until.getTime());
-
-                                        natureofactivity = (nature == (Activity.getBoolean("online")));
                                         if (distance && dur && natureofactivity && times) {
                                             // add the distance from user to the volunteer data being forwarded to the next activity
                                             Activity.put("distance_from_user", String.valueOf(dist));
-                                            activities.add(Activity);
+                                            activities.add((JSONObject)Activity);
+                                            //Log.e("Activity", activities.toString());
                                         }
                                     } catch (JSONException | ParseException e) {
                                         e.printStackTrace();
                                     }
+                                    Intent intent = new Intent(getApplicationContext(), ItemListActivity.class);
+                                    //Bundle args = new Bundle();
+                                    //args.putSerializable("myList", (Serializable) activities);
+                                    //intent.putExtra("activitiesList", args);
+                                    startActivity(intent);
                                 }
                             }
                         }
@@ -171,18 +183,15 @@ public class FilterActivity extends AppCompatActivity {
 
                         @Override
                         public void onErrorResponse(VolleyError error) {
-                            Log.e("Response", "there was an error!!! :(");
+                            Log.e("message", "Failed with error msg:\t" + error.getMessage());
+                            Log.e("stacktrace", "Error StackTrace: \t" + error.getStackTrace());
+                            Log.e("Response", "there was an error in the filter activity!!! :(");
                         }
                     });
-// Access the RequestQueue through your singleton class.
+            // Access the RequestQueue through your singleton class.
             VolleySingleton.getInstance(this).addToRequestQueue(JsonArrayRequest);
-            Intent intent = new Intent(this, ItemListActivity.class);
-            Bundle args = new Bundle();
-            args.putSerializable("myList", (Serializable) activities);
-            intent.putExtra("activitiesList", args);
-            startActivity(intent);
         }
-        catch(NullPointerException | IllegalStateException | ParseException exception)
+        catch(NullPointerException | ParseException exception)
         {
             if (FromTime == "" || UntilTime=="") {
                 Toast.makeText(FilterActivity.this, "יש להכניס חלון זמנים", Toast.LENGTH_LONG).show();
