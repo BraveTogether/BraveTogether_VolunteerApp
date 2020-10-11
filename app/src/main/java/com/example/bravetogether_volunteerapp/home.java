@@ -2,7 +2,6 @@ package com.example.bravetogether_volunteerapp;
 
 import android.os.Bundle;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -62,7 +61,7 @@ public class home extends AppCompatActivity {
         storiesList.add(new VoluntteeriesStory("עזרה בקניות","13/14/15","גיל הזהב"));
         storiesList.add(new VoluntteeriesStory("עזרה בקניות","13/14/15","גיל הזהב"));
         VoluntteeirisStoryAdapter adapter2 = (VoluntteeirisStoryAdapter) new VoluntteeirisStoryAdapter(this,storiesList);
-        my_recycler_view2 = (RecyclerView) findViewById(R.id.Recycler_view_list3);
+        my_recycler_view2 = (RecyclerView) findViewById(R.id.rcNearVolunteer);
         my_recycler_view2.setAdapter(adapter2);
         my_recycler_view2.setHasFixedSize(true);
         my_recycler_view2.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL, false));
