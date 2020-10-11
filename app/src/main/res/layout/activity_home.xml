@@ -184,7 +184,7 @@
                     android:textSize="18sp" />
 
                 <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/Recycler_view_list3"
+                    android:id="@+id/rcNearVolunteer"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/btnMore"

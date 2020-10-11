@@ -83,4 +83,8 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(MainActivity.this, CreateVolunteerActivity.class);
         startActivity(intent);
     }
+
+    public void goProfileFragment(View view){
+        getSupportFragmentManager().beginTransaction().add(R.id.fragment_test,new ProfileFragment2(),null).commit();
+    }
 }
