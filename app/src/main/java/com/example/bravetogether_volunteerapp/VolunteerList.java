@@ -64,15 +64,17 @@ public class VolunteerList extends AppCompatActivity {
             // add volunteers to the list displayed
             try {
                 String distance = volunteer.getString("distance_from_user");
+                int dist = (int)Float.parseFloat(distance);
                 // parse the distance from user string to meters or kilometers.
                 if (Float.parseFloat(distance)>1000) {
-                    distance = String.valueOf(Float.parseFloat(distance)/1000) + " קמ";
+                    dist = dist/1000;
+                    distance = String.valueOf(dist) + " קמ";
                 }
                 else {
-                    distance = String.valueOf(distance) + " מ'";
+                    distance =  dist + " מ'";
                 }
                 String duration = volunteer.getString("duration") + " דק";
-                addItem(createVolunteerItem(String.valueOf(i) ,volunteer.getString("name"), volunteer.getString("about_volunteering"), volunteer.getString("value_in_coins"), duration, distance));
+                addItem(createVolunteerItem(String.valueOf(i) ,volunteer.getString("name"), volunteer.getString("about_volunteering"), volunteer.getString("value_in_coins"), duration, distance, volunteer.getString("address")));
             } catch (JSONException e) {
                 e.printStackTrace();
             }
@@ -88,15 +90,17 @@ public class VolunteerList extends AppCompatActivity {
             // add volunteers to the list displayed
             try {
                 String distance = volunteer.getString("distance_from_user");
+                int dist = (int)Float.parseFloat(distance);
                 // parse the distance from user string to meters or kilometers.
                 if (Float.parseFloat(distance)>1000) {
-                    distance = String.valueOf(Float.parseFloat(distance)/1000) + " קמ";
+                    dist = dist/1000;
+                    distance = String.valueOf(dist) + " קמ";
                 }
                 else {
-                    distance = String.valueOf(distance) + " מ'";
+                    distance =  dist + " מ'";
                 }
                 String duration = volunteer.getString("duration") + " דק";
-                addItem(createVolunteerItem(String.valueOf(i) ,volunteer.getString("name"), volunteer.getString("about_volunteering"), volunteer.getString("value_in_coins"), duration, distance));
+                addItem(createVolunteerItem(String.valueOf(i) ,volunteer.getString("name"), volunteer.getString("about_volunteering"), volunteer.getString("value_in_coins"), duration, distance, volunteer.getString("address")));
             } catch (JSONException e) {
                 e.printStackTrace();
             }
@@ -109,17 +113,18 @@ public class VolunteerList extends AppCompatActivity {
     }
 
     // creates the header
-    private static VolunteerItem createVolunteerItem(String id, String name, String description, String credits, String duration, String distance) {
+    private static VolunteerItem createVolunteerItem(String id, String name, String description, String credits, String duration, String distance, String address) {
         // create the volunteer object
-        return new VolunteerItem(id, name, duration, distance, makeDetails(name, description, credits));
+        return new VolunteerItem(id, name, duration, distance, makeDetails(description, credits, duration, address));
     }
 
     //creates the description section
-    private static String makeDetails(String name, String description, String credits) {
+    private static String makeDetails(String description, String credits, String duration, String address) {
         StringBuilder builder = new StringBuilder();
-        builder.append("פרטים לגבי התנדבות: " + name +"\n");
-        builder.append("תיאור: " + description +"\n");
+        builder.append(description +"\n\n");
+        builder.append("כתובת: " + address +"\n");
         builder.append("קרדיטים: " + credits +"\n");
+        builder.append("משך ההתנדבות: " + duration +"\n");
         return builder.toString();
     }
 

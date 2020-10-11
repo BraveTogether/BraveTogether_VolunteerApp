@@ -162,18 +162,18 @@ public class FilterActivity extends AppCompatActivity {
                                         Activity = response.getJSONObject(i);
                                         int online=Activity.getInt("online"); // 1 equals true
                                         Date activity_start = formatter.parse(Activity.get("start_time").toString());
-                                        natureofactivity = (nature == online);
+                                        natureofactivity = nature == online || nature ==-1; //-1 means user entered he wishes to volunteer both online or not
                                         float dist=0;
-                                        if (natureofactivity && online==0)
+
+                                        // getTime returns epoch so 3600000 represents the milliseconds in one hour
+                                        times = (activity_start.getTime() >= from.getTime()) && (activity_start.getTime() + 3600000 * duration <= until.getTime());
+                                        if (natureofactivity && online==0 && times)
                                         {
                                             //calculate the distance between the user and the volunteer.
                                             dist = getDistance(Activity.get("address").toString(), UserAddress);
                                         }
                                         distance = dist < (radius*1000);
                                         dur = Activity.getInt("duration") <= duration;
-
-                                        // getTime returns epoch so 3600000 represents the milliseconds in one hour
-                                        times = (activity_start.getTime() >= from.getTime()) && (activity_start.getTime() + 3600000 * duration <= until.getTime());
                                         if (distance && dur && natureofactivity && times) {
                                             // add the distance from user to the volunteer data being forwarded to the next activity
                                             Activity.put("distance_from_user", String.valueOf(dist));
