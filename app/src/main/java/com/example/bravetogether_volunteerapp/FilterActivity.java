@@ -39,7 +39,7 @@ public class FilterActivity extends AppCompatActivity {
     //static boolean nature;
 //    static DateFormat formatter = new SimpleDateFormat("HH:mm");
     static Intent i;
-    public static List<JSONObject> activities = new ArrayList<JSONObject>();
+    public static List<JSONObject> activities;
 
 
     // get the user email from the file that holds the user info for the app.
@@ -57,20 +57,31 @@ public class FilterActivity extends AppCompatActivity {
     }
 
     public void radius(View view) {
-        view.setSelected(!view.isSelected());
-        if (view.isSelected())
-        {radius = Integer.parseInt(view.getTag().toString());}
+        findViewById(R.id.km_option10).setSelected(false);
+        findViewById(R.id.km_option15).setSelected(false);
+        findViewById(R.id.km_option20).setSelected(false);
+        findViewById(R.id.km_option_unlimited).setSelected(false);
+        view.setSelected(true);
+        radius = Integer.parseInt(view.getTag().toString());
     }
     public void duration(View view) {
-        view.setSelected(!view.isSelected());
-        if (view.isSelected())
-        {duration = Integer.parseInt(view.getTag().toString());}
+        findViewById(R.id.m30).setSelected(false);
+        findViewById(R.id.h1).setSelected(false);
+        findViewById(R.id.h2).setSelected(false);
+        findViewById(R.id.unlimited_time).setSelected(false);
+        view.setSelected(true);
+        duration = Integer.parseInt(view.getTag().toString());
     }
     public void nature(View view) {
         view.setSelected(!view.isSelected());
         if (view.isSelected())
-        {//nature = Boolean.parseBoolean(view.getTag().toString());
-            nature = Integer.parseInt(view.getTag().toString()); }
+        {
+            nature = Integer.parseInt(view.getTag().toString());
+        }
+        if (findViewById(R.id.online).isSelected() && findViewById(R.id.inplace).isSelected())
+        {
+            nature = -1;
+        }
     }
 
     public static LatLng getLocationFromAddress(Context context, String strAddress)
@@ -136,6 +147,7 @@ public class FilterActivity extends AppCompatActivity {
                         JSONObject Activity;
                         @Override
                         public void onResponse(JSONArray response) {
+                            activities = new ArrayList<JSONObject>();
                             // get the user address from the shared preference file
                             DateFormat formatter = new SimpleDateFormat("HH:mm");
                             //String UserAddress = mPreferences.getString("UserAddress", "null");
@@ -157,7 +169,7 @@ public class FilterActivity extends AppCompatActivity {
                                             //calculate the distance between the user and the volunteer.
                                             dist = getDistance(Activity.get("address").toString(), UserAddress);
                                         }
-                                        distance = dist < radius;
+                                        distance = dist < (radius*1000);
                                         dur = Activity.getInt("duration") <= duration;
 
                                         // getTime returns epoch so 3600000 represents the milliseconds in one hour
@@ -171,12 +183,14 @@ public class FilterActivity extends AppCompatActivity {
                                     } catch (JSONException | ParseException e) {
                                         e.printStackTrace();
                                     }
-                                    Intent intent = new Intent(getApplicationContext(), ItemListActivity.class);
+                                    //Intent intent = new Intent(getApplicationContext(), ItemListActivity.class);
                                     //Bundle args = new Bundle();
                                     //args.putSerializable("myList", (Serializable) activities);
                                     //intent.putExtra("activitiesList", args);
-                                    startActivity(intent);
+                                    //startActivity(intent);
                                 }
+                                Intent intent = new Intent(getApplicationContext(), ItemListActivity.class);
+                                startActivity(intent);
                             }
                         }
                     }, new Response.ErrorListener() {
