@@ -36,7 +36,7 @@ public class PhotoUploader extends AppCompatActivity{
     }
 
     // Function for creating the intent that choose the photo to be uploaded to firebase
-    void chooseImg(){
+    public void chooseImg(){
         Intent intent = new Intent();
         intent.setType("image/*");
         intent.setAction(Intent.ACTION_GET_CONTENT);

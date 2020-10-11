@@ -68,6 +68,7 @@ public class CreateVolunteerActivity extends AppCompatActivity {
     private SharedPreferences mPreferences;
     private ToggleButton toggleButton;
     PhotoUploader photoUploader;
+    Button mButtonAddPicture;
     String manager;
     String name;
     String about_place;
@@ -109,19 +110,24 @@ public class CreateVolunteerActivity extends AppCompatActivity {
         about_volunteering = tdescriptEditText.getText().toString(); // about the volunteer itself
         Button selectDate = findViewById(R.id.btnDate);
         Button selectTIme = findViewById(R.id.btnTime);
-        TextView addPicView = findViewById(R.id.addPicText);
+//        TextView addPicView = findViewById(R.id.addPicText);
+        mButtonAddPicture = (Button)findViewById(R.id.addImageButtonImageView);
         final TextView dateView = findViewById(R.id.dateView);
         final TextView hourView = findViewById(R.id.hourView);
         final TextView durationView = findViewById(R.id.durationView);
         mPreferences = getSharedPreferences(sharedPrefFile, MODE_PRIVATE);
         manager = "8"; //mPreferences.getString("uid", "-1");
-        addPicView.setOnClickListener(new View.OnClickListener() {
+        mButtonAddPicture.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-                //TODO: add pictures
+            public void onClick(View v) {
+                photoUploader = new PhotoUploader(CreateVolunteerActivity.this, R.id.profile_image_2);
+                photoUploader.chooseImg();
             }
         });
         toggleButton = (ToggleButton) findViewById(R.id.online_button);
+
+
+
 
         //AutoComplete Place text
 
