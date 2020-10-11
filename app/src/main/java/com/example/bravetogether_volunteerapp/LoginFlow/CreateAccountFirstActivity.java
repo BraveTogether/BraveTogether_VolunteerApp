@@ -1,24 +1,14 @@
 package com.example.bravetogether_volunteerapp.LoginFlow;
 
-import android.app.ProgressDialog;
-import android.content.ContentResolver;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.net.Uri;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
-import android.webkit.MimeTypeMap;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.Toast;
-
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -28,19 +18,8 @@ import com.basgeekball.awesomevalidation.ValidationStyle;
 import com.basgeekball.awesomevalidation.utility.RegexTemplate;
 import com.example.bravetogether_volunteerapp.R;
 import com.example.bravetogether_volunteerapp.VolleySingleton;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.OnProgressListener;
-import com.google.firebase.storage.StorageReference;
-import com.google.firebase.storage.UploadTask;
-
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.UUID;
-
-//import com.google.firebase.storage.StorageReference;
 
 public class CreateAccountFirstActivity extends AppCompatActivity {
 
@@ -55,16 +34,9 @@ public class CreateAccountFirstActivity extends AppCompatActivity {
     EditText mTextAbout;
     Button mButtonLetsVolunteer;
     Button mButtonAddPicture;
-
     AwesomeValidation awesomeValidation;
-    private String url= getResources().getString(R.string.apiUrl);
-
-    // firebase
-    StorageReference mStorageRef;
-    FirebaseStorage storage;
-    public Uri imgUri;
-    ImageView img;
-    private final int PICK_IMAGE_REQUEST = 71;
+    private String url;
+    PhotoUploader photoUploader;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,7 +53,7 @@ public class CreateAccountFirstActivity extends AppCompatActivity {
         mTextAbout = (EditText)findViewById(R.id.About);
         mButtonAddPicture = (Button)findViewById(R.id.addImageButtonImageView);
         mButtonLetsVolunteer = (Button)findViewById(R.id.button_lets_volunteer);
-        img = (ImageView) findViewById(R.id.profile_image_2);
+        url = getString(R.string.apiUrl);
 
         // Initialize Validation Style
         awesomeValidation = new AwesomeValidation(ValidationStyle.BASIC);
@@ -120,9 +92,6 @@ public class CreateAccountFirstActivity extends AppCompatActivity {
             public void onClick(View view) {
                 // check validation
                 if(awesomeValidation.validate()){
-//                    // on success
-//                    Toast.makeText(getApplicationContext(),
-//                            "Form Validate Successfully", Toast.LENGTH_SHORT).show();
                     registerUser(mTextUserPrivateName.toString(), mTextUserFamilyName.toString(),
                             mTextUserEmail.toString(), mTextPassword.toString(), mTextPhoneNumber.toString(),
                             mTextAddress.toString(), mTextAbout.toString());
@@ -133,116 +102,26 @@ public class CreateAccountFirstActivity extends AppCompatActivity {
             }
         });
 
-        // Firebase
-        storage = FirebaseStorage.getInstance();
-        mStorageRef = storage.getReference();
-//        mStorageRef = FirebaseStorage.getInstance().getReference("Images");
         mButtonAddPicture.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                chooseImg();
+                photoUploader = new PhotoUploader(CreateAccountFirstActivity.this, R.id.profile_image_2);
+                photoUploader.chooseImg();
             }
         });
-
-    }
-
-    // ------------------------------- Firebase ------------------------------- //
-
-    // Function for choosing the photo to be uploaded to firebase
-    private void chooseImg(){
-        Intent intent = new Intent();
-        intent.setType("image/*");
-        intent.setAction(Intent.ACTION_GET_CONTENT);
-//        startActivityForResult(intent, 1);
-        startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE_REQUEST);
-    }
-
-    // Function for uploading the chosen photo to be uploaded to firebase
-//    private void uploadImg(){
-//        StorageReference Ref = mStorageRef.child(System.currentTimeMillis() + "." + getExtension(imgUri));
-//
-//        Uri file = Uri.fromFile(new File("path/to/images/rivers.jpg"));
-//        StorageReference riversRef = Ref.child("images/rivers.jpg");
-//
-//        riversRef.putFile(file)
-//                .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-//                    @Override
-//                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-//                        // Get a URL to the uploaded content
-//                        //Uri downloadUrl = taskSnapshot.getDownloadUrl();
-//                        Toast.makeText(CreateAccountFirstActivity.this, "Image Uploaded Successfully", Toast.LENGTH_LONG).show();
-//                    }
-//                })
-//                .addOnFailureListener(new OnFailureListener() {
-//                    @Override
-//                    public void onFailure(@NonNull Exception exception) {
-//                        // Handle unsuccessful uploads
-//                        // ...
-//                    }
-//                });
-//
-//    }
-
-    private void uploadImg() {
-        if(imgUri != null) {
-            final ProgressDialog progressDialog = new ProgressDialog(this);
-            progressDialog.setTitle("Uploading...");
-            progressDialog.show();
-
-            StorageReference ref = mStorageRef.child("images/"+ UUID.randomUUID().toString());
-            ref.putFile(imgUri)
-                    .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                        @Override
-                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                            progressDialog.dismiss();
-                            Toast.makeText(CreateAccountFirstActivity.this, "Uploaded", Toast.LENGTH_SHORT).show();
-                        }
-                    })
-                    .addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception e) {
-                            progressDialog.dismiss();
-                            Toast.makeText(CreateAccountFirstActivity.this, "Failed " + e.getMessage(), Toast.LENGTH_SHORT).show();
-                        }
-                    })
-                    .addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
-                        @Override
-                        public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
-                            double progress = (100.0 * taskSnapshot.getBytesTransferred()/taskSnapshot
-                                    .getTotalByteCount());
-                            progressDialog.setMessage("Uploaded "+(int)progress+"%");
-                        }
-                    });
-        }
-    }
-
-    private String getExtension(Uri uri){
-        ContentResolver cr = getContentResolver();
-        MimeTypeMap mimeTypeMap = MimeTypeMap.getSingleton();
-        return mimeTypeMap.getExtensionFromMimeType(cr.getType(uri));
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null) {
-            imgUri = data.getData();
-            try {
-                Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), imgUri);
-                img.setImageBitmap(bitmap);
-                uploadImg();
-            }
-            catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
+        photoUploader.setAndUploadImg(requestCode, resultCode, data);
     }
 
     // ------------------------------- Data Base ------------------------------- //
 
     // Function for inserting all data from edit texts into our data base
     private void registerUser (final String firstName, final String lastName, final String email,
-                                     final String password, final String phoneNumber, final String address, final String about) {
+                               final String password, final String phoneNumber, final String address, final String about) {
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
                 new Response.Listener<String>() {
                     @Override
@@ -271,20 +150,4 @@ public class CreateAccountFirstActivity extends AppCompatActivity {
         };
         VolleySingleton.getInstance(this).addToRequestQueue(stringRequest);
     }
-
-
-
-
-
-
-
-
-//    public void addPicture(View view) {
-//
-//    }
-//
-//    public void backToLoginScreen(View view) {
-//        startActivity(new Intent(CreateAccountFirstActivity.this,LoginActivity.class));
-//        finish();
-//    }
 }

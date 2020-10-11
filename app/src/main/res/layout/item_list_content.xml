@@ -42,7 +42,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="1dp"
-                android:text="hello"
                 android:textAppearance="@style/TextAppearance.AppCompat.Body1"
                 android:textSize="20sp" />
 
@@ -50,14 +49,12 @@
                 android:id="@+id/duration"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="wassap"
                 android:padding="1dp" />
 
             <TextView
                 android:id="@+id/distance"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="yes"
                 android:padding="1dp" />
 
         </LinearLayout>
