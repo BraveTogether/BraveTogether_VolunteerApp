@@ -10,7 +10,6 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.RecyclerView;
 
 import org.json.JSONObject;
@@ -39,10 +38,9 @@ public class ItemListActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_item_list);
-
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        toolbar.setTitle(getTitle());
+        //Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        //setSupportActionBar(toolbar);
+        //toolbar.setTitle("תוצאות חיפוש");
 
 
         //Bundle args = getIntent().getBundleExtra("activitiesList");
@@ -62,8 +60,10 @@ public class ItemListActivity extends AppCompatActivity {
         setupRecyclerView((RecyclerView) recyclerView);
     }
 
-    private void setupRecyclerView(@NonNull RecyclerView recyclerView) {
+    private void setupRecyclerView(@NonNull final RecyclerView recyclerView) {
         parentContext = this;
+        //update the list
+        VolunteerList.update();
         recyclerView.setAdapter(new SimpleItemRecyclerViewAdapter(this, VolunteerList.ITEMS, mTwoPane));
     }
 
