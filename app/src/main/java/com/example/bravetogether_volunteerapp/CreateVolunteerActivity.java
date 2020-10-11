@@ -5,6 +5,8 @@ import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.icu.text.SimpleDateFormat;
@@ -25,6 +27,10 @@ import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
 import com.google.android.gms.common.api.Status;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.libraries.places.api.Places;
@@ -35,6 +41,8 @@ import com.google.android.libraries.places.widget.AutocompleteSupportFragment;
 import com.google.android.libraries.places.widget.listener.PlaceSelectionListener;
 
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 
 import androidmads.library.qrgenearator.QRGContents;
 import androidmads.library.qrgenearator.QRGEncoder;
@@ -45,15 +53,26 @@ import androidmads.library.qrgenearator.QRGSaver;
 public class CreateVolunteerActivity extends AppCompatActivity {
 
     private String apiKey = "AIzaSyA0hReShDEqNU3cdSm9eot1atb8-CKBy0Q";
+    private String url;
     private String address;
 //    private DatePicker datepicker = (DatePicker) findViewById(R.id.datePicker);
     String strDate;
-    String strTime;
+    String start_time;
     Context mcontext = this;
     private int minVolNum;
     private int maxVolNum;
-
-
+    private final String sharedPrefFile = "com.example.android.BraveTogether_VolunteerApp";
+    private SharedPreferences mPreferences;
+    String manager;
+    String name;
+    String about_place;
+    String about_volunteering;
+    String duration;
+    String min_volunteer;
+    String max_volunteers;
+    String value_in_coins;
+    String picture;
+    String online;
 
     private void initQRCode(int credits, String date) {
         // this function creates a QRCode with the relevant data and saves it to the gallery
@@ -74,19 +93,23 @@ public class CreateVolunteerActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_volunteer);
+        url = getResources().getString(R.string.apiUrl);
 
         EditText nameTextView = (EditText) findViewById(R.id.volunteerName);
         EditText pdescriptEditText = (EditText) findViewById(R.id.placeDescrition);
         EditText tdescriptEditText = (EditText) findViewById(R.id.todoeDescrition);
-        String Name = nameTextView.getText().toString();
-        String placeDescrition = pdescriptEditText.getText().toString(); // about the place
-        String todoDesctiptiontodoDesctiption = tdescriptEditText.getText().toString(); // about the volunteer itself
+        EditText valueInCoinsEditText = (EditText) findViewById(R.id.valueInCoins);
+        name = nameTextView.getText().toString();
+        about_place = pdescriptEditText.getText().toString(); // about the place
+        about_volunteering = tdescriptEditText.getText().toString(); // about the volunteer itself
         Button selectDate = findViewById(R.id.btnDate);
         Button selectTIme = findViewById(R.id.btnTime);
         TextView addPicView = findViewById(R.id.addPicText);
         final TextView dateView = findViewById(R.id.dateView);
         final TextView hourView = findViewById(R.id.hourView);
         final TextView durationView = findViewById(R.id.durationView);
+        mPreferences = getSharedPreferences(sharedPrefFile, MODE_PRIVATE);
+        manager = "8"; //mPreferences.getString("uid", "-1");
 
         addPicView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -103,7 +126,7 @@ public class CreateVolunteerActivity extends AppCompatActivity {
         PlacesClient placesClient = Places.createClient(this);
 
         // Initialize the AutocompleteSupportFragment.
-        AutocompleteSupportFragment autocompleteFragment = (AutocompleteSupportFragment)
+        final AutocompleteSupportFragment autocompleteFragment = (AutocompleteSupportFragment)
                 getSupportFragmentManager().findFragmentById(R.id.autocomplete_address);
 
         autocompleteFragment.setHint("כתובת");
@@ -121,6 +144,7 @@ public class CreateVolunteerActivity extends AppCompatActivity {
             public void onPlaceSelected(Place place) {
                 // TODO: Get info about the selected place.
                 address = place.getAddress();
+                autocompleteFragment.setText(address);
                 Log.i("place", "Place: " + place.getAddress());
             }
 
@@ -177,11 +201,11 @@ public class CreateVolunteerActivity extends AppCompatActivity {
                             @Override
                             public void onTimeSet(TimePicker view, int hourOfDay,
                                                   int minute) {
-                                strTime = new StringBuilder().append(hourOfDay).append(":").append(minute).toString();
-                                hourView.setText(strTime);
-                                strTime = new StringBuilder().append(hourOfDay).append(":").append(minute).append(":")
+                                start_time = new StringBuilder().append(hourOfDay).append(":").append(minute).toString();
+                                hourView.setText(start_time);
+                                start_time = new StringBuilder().append(hourOfDay).append(":").append(minute).append(":")
                                         .append("00").toString();
-                                Log.d("time", strTime);
+                                Log.d("time", start_time);
 
                                 AlertDialog.Builder alert = new AlertDialog.Builder(mcontext);
                                 alert.setTitle("כמה זמן תמשך ההתנדבות");
@@ -191,7 +215,7 @@ public class CreateVolunteerActivity extends AppCompatActivity {
                                 alert.setView(input);
                                 alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                                     public void onClick(DialogInterface dialog, int whichButton) {
-                                        String duration = input.getText().toString();
+                                        duration = input.getText().toString();
                                         durationView.setText(new StringBuilder().append(duration).
                                                 append(" שעות").toString());
                                     }
@@ -208,6 +232,9 @@ public class CreateVolunteerActivity extends AppCompatActivity {
             }
         });
 
+        value_in_coins = valueInCoinsEditText.getText().toString();
+
+
     }
 
     public void volunteerNumber(View view) {
@@ -221,7 +248,7 @@ public class CreateVolunteerActivity extends AppCompatActivity {
         alert.setView(input);
         alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int whichButton) {
-                final String minVol = input.getText().toString();
+                min_volunteer = input.getText().toString();
                 AlertDialog.Builder alert = new AlertDialog.Builder(mcontext);
                 alert.setTitle("מספר מתנדבים מקסימלי");
                 final EditText input = new EditText(mcontext);
@@ -230,10 +257,10 @@ public class CreateVolunteerActivity extends AppCompatActivity {
                 alert.setView(input);
                 alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int whichButton) {
-                        String maxVol = input.getText().toString();
-                        minVolView.setText(new StringBuilder().append(minVol).
+                        max_volunteers = input.getText().toString();
+                        minVolView.setText(new StringBuilder().append(min_volunteer).
                                 append(" מינימום").toString());
-                        maxVolView.setText(new StringBuilder().append(maxVol).
+                        maxVolView.setText(new StringBuilder().append(max_volunteers).
                                 append(" מקסימום").toString());
                     }
                 });
@@ -254,6 +281,40 @@ public class CreateVolunteerActivity extends AppCompatActivity {
     }
 
     public void sendToConfirm(View view) {
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, url + "volunteers/events/",
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        Log.d("Response", response.toString());
+                        Intent intent = new Intent(mcontext, MainActivity.class);
+                        startActivity(intent);
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Log.d("error.response", error.getMessage());
+                    }
+                }) {
+            @Override
+            protected Map<String, String> getParams(){
+                Map<String, String> params = new HashMap<>();
+                params.put("name", name);
+                params.put("manager", manager);
+                params.put("picture", picture);
+                params.put("address", address);
+                params.put("online", online);
+                params.put("start_time", start_time);
+                params.put("duration", duration);
+                params.put("about_place", about_place);
+                params.put("about_volunteering", about_volunteering);
+                params.put("min_volunteer", min_volunteer);
+                params.put("max_volunteers", max_volunteers);
+                params.put("value_in_coins", value_in_coins);
+                return params;
+            }
+        };
+        VolleySingleton.getInstance(this).addToRequestQueue(stringRequest);
     }
 }
 

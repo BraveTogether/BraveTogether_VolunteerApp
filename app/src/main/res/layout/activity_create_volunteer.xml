@@ -291,7 +291,7 @@
                 android:clickable="true"
                 android:focusable="true"
                 android:onClick="volunteerNumber"
-                android:src="@drawable/ic_volnumberfield"
+                app:srcCompat="@drawable/ic_volnumberfield"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/timeView" />
@@ -340,18 +340,31 @@
                 app:layout_constraintStart_toStartOf="@+id/volNumView"
                 app:layout_constraintTop_toTopOf="@+id/volNumView" />
 
+
+            <EditText
+                android:id="@+id/valueInCoins"
+                android:layout_width="204dp"
+                android:layout_height="38dp"
+                android:layout_marginTop="12dp"
+                android:background="@drawable/textfield_d"
+                android:hint="מה השווי של ההתנדבות"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.887"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/volNumView" />
+
             <ImageView
                 android:id="@+id/sendToConfirm"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:clickable="true"
                 android:onClick="sendToConfirm"
-                android:src="@drawable/ic_sendtoconfirm"
+                app:srcCompat="@drawable/ic_sendtoconfirm"
                 android:layout_marginTop="20dp"
                 android:layout_marginBottom="20dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/volNumView"
+                app:layout_constraintTop_toBottomOf="@+id/valueInCoins"
                 app:layout_constraintBottom_toBottomOf="parent"/>
 
 
