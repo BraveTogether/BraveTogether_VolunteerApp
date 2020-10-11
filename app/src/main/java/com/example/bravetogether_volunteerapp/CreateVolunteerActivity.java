@@ -18,10 +18,12 @@ import android.text.InputType;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.TimePicker;
+import android.widget.ToggleButton;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AlertDialog;
@@ -63,6 +65,7 @@ public class CreateVolunteerActivity extends AppCompatActivity {
     private int maxVolNum;
     private final String sharedPrefFile = "com.example.android.BraveTogether_VolunteerApp";
     private SharedPreferences mPreferences;
+    private ToggleButton toggleButton;
     String manager;
     String name;
     String about_place;
@@ -72,7 +75,7 @@ public class CreateVolunteerActivity extends AppCompatActivity {
     String max_volunteers;
     String value_in_coins;
     String picture;
-    String online;
+    String online = "0";
 
     private void initQRCode(int credits, String date) {
         // this function creates a QRCode with the relevant data and saves it to the gallery
@@ -110,15 +113,13 @@ public class CreateVolunteerActivity extends AppCompatActivity {
         final TextView durationView = findViewById(R.id.durationView);
         mPreferences = getSharedPreferences(sharedPrefFile, MODE_PRIVATE);
         manager = "8"; //mPreferences.getString("uid", "-1");
-
         addPicView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 //TODO: add pictures
             }
         });
-
-
+        toggleButton = (ToggleButton) findViewById(R.id.online_button);
 
         //AutoComplete Place text
 
@@ -155,6 +156,18 @@ public class CreateVolunteerActivity extends AppCompatActivity {
                 Log.i("place.error", "An error occurred: " + status);
             }
         });
+
+        //check and change if the toggleButton is checked
+        toggleButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
+                if (isChecked)
+                    online = "1";
+                else
+                    online = "0";
+            }
+        });
+
 
 
         //Date Picker
@@ -234,8 +247,8 @@ public class CreateVolunteerActivity extends AppCompatActivity {
 
         value_in_coins = valueInCoinsEditText.getText().toString();
 
-
     }
+
 
     public void volunteerNumber(View view) {
         final TextView minVolView = findViewById(R.id.minVolView);

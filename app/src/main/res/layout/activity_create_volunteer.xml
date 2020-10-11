@@ -226,8 +226,8 @@
                 android:id="@+id/timeView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@drawable/ic_rectangle_72"
                 android:layout_marginTop="90dp"
+                android:background="@drawable/ic_rectangle_72"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/todoeDescrition" />
@@ -236,50 +236,50 @@
                 android:id="@+id/dateView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="#0000"
-                android:textSize="13sp"
-                android:textColor="#001925"
-                android:textStyle="bold"
                 android:layout_marginStart="202dp"
                 android:layout_marginTop="13dp"
                 android:layout_marginEnd="20dp"
+                android:background="#0000"
+                android:elevation="1dp"
+                android:textColor="#001925"
+                android:textSize="13sp"
+                android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="@+id/timeView"
                 app:layout_constraintStart_toStartOf="@+id/timeView"
-                app:layout_constraintTop_toTopOf="@+id/timeView"
-                android:elevation="1dp"/>
+                app:layout_constraintTop_toTopOf="@+id/timeView" />
 
 
             <TextView
                 android:id="@+id/hourView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="#0000"
-                android:textSize="13sp"
-                android:textColor="#001925"
-                android:textStyle="bold"
                 android:layout_marginStart="95dp"
                 android:layout_marginTop="13dp"
                 android:layout_marginEnd="153dp"
+                android:background="#0000"
+                android:elevation="1dp"
+                android:textColor="#001925"
+                android:textSize="13sp"
+                android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="@+id/timeView"
                 app:layout_constraintStart_toStartOf="@+id/timeView"
-                app:layout_constraintTop_toTopOf="@+id/timeView"
-                android:elevation="1dp"/>
+                app:layout_constraintTop_toTopOf="@+id/timeView" />
 
             <TextView
                 android:id="@+id/durationView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="#0000"
-                android:textSize="13sp"
-                android:textColor="#001925"
-                android:textStyle="bold"
                 android:layout_marginStart="22dp"
                 android:layout_marginTop="13dp"
                 android:layout_marginEnd="230dp"
+                android:background="#0000"
+                android:elevation="1dp"
+                android:textColor="#001925"
+                android:textSize="13sp"
+                android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="@+id/timeView"
                 app:layout_constraintStart_toStartOf="@+id/timeView"
-                app:layout_constraintTop_toTopOf="@+id/timeView"
-                android:elevation="1dp"/>
+                app:layout_constraintTop_toTopOf="@+id/timeView" />
 
             <ImageView
                 android:id="@+id/numOfVol"
@@ -291,10 +291,10 @@
                 android:clickable="true"
                 android:focusable="true"
                 android:onClick="volunteerNumber"
-                app:srcCompat="@drawable/ic_volnumberfield"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/timeView" />
+                app:layout_constraintTop_toBottomOf="@+id/timeView"
+                app:srcCompat="@drawable/ic_volnumberfield" />
 
             <ImageView
                 android:id="@+id/volNumView"
@@ -345,11 +345,11 @@
                 android:id="@+id/valueInCoins"
                 android:layout_width="204dp"
                 android:layout_height="38dp"
-                android:layout_marginTop="12dp"
+                android:layout_marginTop="8dp"
                 android:background="@drawable/textfield_d"
                 android:hint="מה השווי של ההתנדבות"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.887"
+                app:layout_constraintHorizontal_bias="0.797"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/volNumView" />
 
@@ -357,15 +357,28 @@
                 android:id="@+id/sendToConfirm"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:clickable="true"
-                android:onClick="sendToConfirm"
-                app:srcCompat="@drawable/ic_sendtoconfirm"
                 android:layout_marginTop="20dp"
                 android:layout_marginBottom="20dp"
+                android:clickable="true"
+                android:onClick="sendToConfirm"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/valueInCoins"
-                app:layout_constraintBottom_toBottomOf="parent"/>
+                app:srcCompat="@drawable/ic_sendtoconfirm" />
+
+            <ToggleButton
+                android:id="@+id/online_button"
+                android:layout_width="87dp"
+                android:layout_height="39dp"
+                android:layout_marginTop="4dp"
+                android:text="ToggleButton"
+                android:textOff="online"
+                android:textOn="online"
+                app:layout_constraintEnd_toStartOf="@+id/valueInCoins"
+                app:layout_constraintHorizontal_bias="0.358"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/volNumView" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>
