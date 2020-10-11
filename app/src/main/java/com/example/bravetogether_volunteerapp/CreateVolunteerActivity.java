@@ -33,6 +33,7 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
+import com.example.bravetogether_volunteerapp.LoginFlow.PhotoUploader;
 import com.google.android.gms.common.api.Status;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.libraries.places.api.Places;
@@ -66,6 +67,7 @@ public class CreateVolunteerActivity extends AppCompatActivity {
     private final String sharedPrefFile = "com.example.android.BraveTogether_VolunteerApp";
     private SharedPreferences mPreferences;
     private ToggleButton toggleButton;
+    PhotoUploader photoUploader;
     String manager;
     String name;
     String about_place;

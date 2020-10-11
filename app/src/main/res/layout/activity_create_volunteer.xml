@@ -62,41 +62,92 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/ellipse_59" />
 
-
             <ImageView
-                android:layout_width="73dp"
-                android:layout_height="73dp"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentTop="true"
-                android:layout_marginBottom="52dp"
-                android:contentDescription="@string/media_camera"
-                android:src="@drawable/camera_fill"
-                app:layout_constraintBottom_toBottomOf="@+id/vector"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent" />
-
-            <TextView
-                android:id="@+id/addPicText"
-                android:layout_width="163dp"
-                android:layout_height="22dp"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentTop="true"
-                android:layout_marginStart="99dp"
-                android:layout_marginLeft="99dp"
-                android:layout_marginTop="121dp"
-                android:layout_marginEnd="99dp"
-                android:layout_marginRight="99dp"
-                android:layout_marginBottom="22dp"
-                android:clickable="true"
-                android:focusable="true"
-                android:gravity="center_horizontal|center_vertical"
-                android:text="@string/addPicText"
-                android:textAppearance="@style/addPicTextAppearance"
-                app:layout_constraintBottom_toBottomOf="@+id/vector"
+                android:id="@+id/profile_image"
+                android:layout_width="139dp"
+                android:layout_height="139dp"
+                android:layout_gravity="center"
+                android:background="@drawable/circle"
+                android:padding="30dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/createNewVolunteerHeadline"
-                app:layout_constraintVertical_bias="1.0" />
+                app:layout_constraintTop_toTopOf="@+id/ellipse_59"
+                app:srcCompat="@drawable/ic_menu_camera" />
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:id="@+id/profile_image_2"
+                android:layout_width="139dp"
+                android:layout_height="139dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="120dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.503"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/ellipse_"/>
+
+            <ImageView
+                android:id="@+id/uploaded_image"
+                android:layout_width="139dp"
+                android:layout_height="139dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="120dp"
+                android:shape="oval"
+                android:padding="30dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.503"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/ellipse_" />
+
+
+            <!--            <ImageView-->
+<!--                android:layout_width="73dp"-->
+<!--                android:layout_height="73dp"-->
+<!--                android:layout_alignParentLeft="true"-->
+<!--                android:layout_alignParentTop="true"-->
+<!--                android:layout_marginBottom="52dp"-->
+<!--                android:contentDescription="@string/media_camera"-->
+<!--                android:src="@drawable/camera_fill"-->
+<!--                app:layout_constraintBottom_toBottomOf="@+id/vector"-->
+<!--                app:layout_constraintEnd_toEndOf="parent"-->
+<!--                app:layout_constraintStart_toStartOf="parent" />-->
+
+<!--            <TextView-->
+<!--                android:id="@+id/addPicText"-->
+<!--                android:layout_width="163dp"-->
+<!--                android:layout_height="22dp"-->
+<!--                android:layout_alignParentLeft="true"-->
+<!--                android:layout_alignParentTop="true"-->
+<!--                android:layout_marginStart="99dp"-->
+<!--                android:layout_marginLeft="99dp"-->
+<!--                android:layout_marginTop="121dp"-->
+<!--                android:layout_marginEnd="99dp"-->
+<!--                android:layout_marginRight="99dp"-->
+<!--                android:layout_marginBottom="22dp"-->
+<!--                android:clickable="true"-->
+<!--                android:focusable="true"-->
+<!--                android:gravity="center_horizontal|center_vertical"-->
+<!--                android:text="@string/addPicText"-->
+<!--                android:textAppearance="@style/addPicTextAppearance"-->
+<!--                app:layout_constraintBottom_toBottomOf="@+id/vector"-->
+<!--                app:layout_constraintEnd_toEndOf="parent"-->
+<!--                app:layout_constraintStart_toStartOf="parent"-->
+<!--                app:layout_constraintTop_toBottomOf="@+id/createNewVolunteerHeadline"-->
+<!--                app:layout_constraintVertical_bias="1.0" />-->
+
+            <Button
+                android:id="@+id/addImageButtonImageView"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginStart="219dp"
+                android:layout_marginTop="188dp"
+                android:background="@drawable/add_circle_24"
+                android:translationZ="1dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.157"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:ignore="VectorDrawableCompat" />
 
             <EditText
                 android:id="@+id/volunteerName"
