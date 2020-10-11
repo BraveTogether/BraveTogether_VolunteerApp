@@ -3,24 +3,10 @@
     package="com.example.bravetogether_volunteerapp">
 
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.CAMERA" />
-    <uses-feature android:name="android.hardware.camera" />
-    <uses-feature
-        android:name="android.hardware.camera.any"
-        android:required="true" />
-    <uses-feature
-        android:name="android.hardware.camera.autofocus"
-        android:required="false" />
-
-    <queries>
-        <intent>
-            <action android:name="android.media.action.IMAGE_CAPTURE" />
-        </intent>
-    </queries>
 
     <application
         android:allowBackup="true"
@@ -30,17 +16,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <provider
-            android:name="androidx.core.content.FileProvider"
-            android:authorities="${applicationId}.provider"
-            android:exported="false"
-            android:grantUriPermissions="true">
-            <meta-data
-                android:name="android.support.FILE_PROVIDER_PATHS"
-                android:resource="@xml/provider_paths" />
-        </provider>
 
-        <activity android:name=".RegisterWhereActivity"></activity>
         <activity android:name=".LoginFlow.CreateAccountFirstActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -55,15 +31,11 @@
         <activity
             android:name=".Scanner"
             android:exported="true" />
+        <activity android:name=".CreateVolunteerActivity" />
         <activity
-            android:name=".CreateVolunteerActivity" />
-<!--        <activity-->
-<!--            android:name=".LoginFlow.CreateAccountFirstActivity"-->
-<!--            android:exported="true" />-->
-
-        <activity
-            android:name=".home"/>
-        <activity android:name=".FilterActivity" />
+            android:name=".home"
+            android:exported="true" />
+        <activity android:name=".FilterActivity" android:exported="true"/>
         <activity android:name=".VolunteerApprovalActivity" />
         <activity android:name=".GeneralActivity" />
         <activity android:name=".LoginFlow.IntroFirstTimeActivity" />
@@ -93,7 +65,7 @@
         </activity>
         <activity
             android:name=".addToCalendar"
-            android:exported="true"></activity>
+            android:exported="true" />
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
