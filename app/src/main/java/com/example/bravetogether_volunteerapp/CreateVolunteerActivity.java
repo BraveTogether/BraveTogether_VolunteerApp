@@ -52,9 +52,7 @@ public class CreateVolunteerActivity extends AppCompatActivity {
     Context mcontext = this;
     private int minVolNum;
     private int maxVolNum;
-//    static SharedPreferences mPreferences;
-//    private final String sharedPrefFile = "com.example.android.BraveTogether_VolunteerApp";
-//    static String email = mPreferences.getString("UserEmail", "null");
+
 
 
     private void initQRCode(int credits, String date) {
