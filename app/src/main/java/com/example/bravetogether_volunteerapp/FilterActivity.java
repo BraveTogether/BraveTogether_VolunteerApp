@@ -1,4 +1,5 @@
 package com.example.bravetogether_volunteerapp;
+
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -33,11 +34,13 @@ import java.util.List;
 public class FilterActivity extends AppCompatActivity {
 
     private static SharedPreferences mPreferences;
-    static int radius, duration;
+    static int radius, duration, nature;
     static Date from, until;
-    static boolean nature;
-    static DateFormat formatter = new SimpleDateFormat("HH:mm");
+    //static boolean nature;
+//    static DateFormat formatter = new SimpleDateFormat("HH:mm");
     static Intent i;
+    public static List<JSONObject> activities;
+
 
     // get the user email from the file that holds the user info for the app.
     @Override
@@ -54,16 +57,31 @@ public class FilterActivity extends AppCompatActivity {
     }
 
     public void radius(View view) {
-        view.setSelected(!view.isSelected());
+        findViewById(R.id.km_option10).setSelected(false);
+        findViewById(R.id.km_option15).setSelected(false);
+        findViewById(R.id.km_option20).setSelected(false);
+        findViewById(R.id.km_option_unlimited).setSelected(false);
+        view.setSelected(true);
         radius = Integer.parseInt(view.getTag().toString());
     }
     public void duration(View view) {
-        view.setSelected(!view.isSelected());
+        findViewById(R.id.m30).setSelected(false);
+        findViewById(R.id.h1).setSelected(false);
+        findViewById(R.id.h2).setSelected(false);
+        findViewById(R.id.unlimited_time).setSelected(false);
+        view.setSelected(true);
         duration = Integer.parseInt(view.getTag().toString());
     }
     public void nature(View view) {
         view.setSelected(!view.isSelected());
-        nature = Boolean.parseBoolean(view.getTag().toString());
+        if (view.isSelected())
+        {
+            nature = Integer.parseInt(view.getTag().toString());
+        }
+        if (findViewById(R.id.online).isSelected() && findViewById(R.id.inplace).isSelected())
+        {
+            nature = -1;
+        }
     }
 
     public static LatLng getLocationFromAddress(Context context, String strAddress)
@@ -112,78 +130,92 @@ public class FilterActivity extends AppCompatActivity {
 
     public void Search(View view) throws ParseException {
         // get time and create date objects
-        String FromTime = ((EditText)findViewById(R.id.from)).getText().toString();
-        String UntilTime = ((EditText)findViewById(R.id.until)).getText().toString();
-        from = formatter.parse(FromTime);
-        until = formatter.parse(UntilTime);
+        String FromTime="", UntilTime="";
+        try {
+            FromTime = ((EditText)findViewById(R.id.from)).getText().toString();
+            UntilTime = ((EditText)findViewById(R.id.until)).getText().toString();
 
-        String email = mPreferences.getString("UserEmail", "null");
-        // send GET request for user information to get address
-        String URL = getResources().getString(R.string.apiUrl)+"/user/"+email;
-        JsonArrayRequest JsonArrayRequest = new JsonArrayRequest
-                (Request.Method.GET, URL, null, new Response.Listener<JSONArray>() {
-                    JSONObject Activity;
-                    @Override
-                    public void onResponse(JSONArray response) {
-                        // get the user address from the shared preference file
-                        String UserAddress = mPreferences.getString("UserAddress", "null");
+            DateFormat formatter = new SimpleDateFormat("HH:mm");
+            from = formatter.parse(FromTime);
+            until = formatter.parse(UntilTime);
 
-                        if (UserAddress == null) {
-                            String message= "לפני שתוכל לחפש עלייך להזין את כתובתך בדף ההגדרות";
-                            Toast.makeText(FilterActivity.this, message, Toast.LENGTH_LONG).show();
-                        }
-                        else {
-                            ArrayList<JSONObject> activities = new ArrayList<JSONObject>();
-                            boolean dur, distance, times, natureofactivity;
-                            for (int i = 0; i < response.length(); i++) {
-                                try {
-                                    Activity = response.getJSONObject(i);
-                                    Date activity_start =  formatter.parse(Activity.get("start_time").toString());
-                                    distance = getDistance(Activity.get("address").toString(), UserAddress) < radius;
-                                    dur = Activity.getInt("duration") <= duration;
+            //String email = mPreferences.getString("UserEmail", "null");
+            //get all the confirmed volunteers (1=true)
+            String URL = getResources().getString(R.string.apiUrl) + "volunteers/confirmed/1";
+            JsonArrayRequest JsonArrayRequest = new JsonArrayRequest
+                    (Request.Method.GET, URL, null, new Response.Listener<JSONArray>() {
+                        JSONObject Activity;
+                        @Override
+                        public void onResponse(JSONArray response) {
+                            activities = new ArrayList<JSONObject>();
+                            // get the user address from the shared preference file
+                            DateFormat formatter = new SimpleDateFormat("HH:mm");
+                            //String UserAddress = mPreferences.getString("UserAddress", "null");
+                            String UserAddress = "hatikva 27 ramat hasharon";
+                            if (UserAddress == "null") {
+                                String message = "לפני שתוכל לחפש עלייך להזין את כתובתך בדף ההגדרות";
+                                Toast.makeText(FilterActivity.this, message, Toast.LENGTH_LONG).show();
+                            } else {
+                                boolean dur, distance, times, natureofactivity;
+                                for (int i = 0; i < response.length(); i++) {
+                                    try {
+                                        Activity = response.getJSONObject(i);
+                                        int online=Activity.getInt("online"); // 1 equals true
+                                        Date activity_start = formatter.parse(Activity.get("start_time").toString());
+                                        natureofactivity = (nature == online);
+                                        float dist=0;
+                                        if (natureofactivity && online==0)
+                                        {
+                                            //calculate the distance between the user and the volunteer.
+                                            dist = getDistance(Activity.get("address").toString(), UserAddress);
+                                        }
+                                        distance = dist < (radius*1000);
+                                        dur = Activity.getInt("duration") <= duration;
 
-                                    // getTime returns epoch so 3600000 represents the milliseconds in one hour
-                                    times = (activity_start.getTime() >= from.getTime()) && (activity_start.getTime() + 3600000*duration <= until.getTime());
-
-                                    natureofactivity = (nature == (Activity.getBoolean("online")));
-                                    if (distance && dur && natureofactivity && times) {
-                                        activities.add(response.getJSONObject(i));
+                                        // getTime returns epoch so 3600000 represents the milliseconds in one hour
+                                        times = (activity_start.getTime() >= from.getTime()) && (activity_start.getTime() + 3600000 * duration <= until.getTime());
+                                        if (distance && dur && natureofactivity && times) {
+                                            // add the distance from user to the volunteer data being forwarded to the next activity
+                                            Activity.put("distance_from_user", String.valueOf(dist));
+                                            activities.add((JSONObject)Activity);
+                                            //Log.e("Activity", activities.toString());
+                                        }
+                                    } catch (JSONException | ParseException e) {
+                                        e.printStackTrace();
                                     }
-                                } catch (JSONException | ParseException e) {
-                                    e.printStackTrace();
+                                    //Intent intent = new Intent(getApplicationContext(), ItemListActivity.class);
+                                    //Bundle args = new Bundle();
+                                    //args.putSerializable("myList", (Serializable) activities);
+                                    //intent.putExtra("activitiesList", args);
+                                    //startActivity(intent);
                                 }
+                                Intent intent = new Intent(getApplicationContext(), ItemListActivity.class);
+                                startActivity(intent);
                             }
                         }
-                    }
-                }, new Response.ErrorListener() {
+                    }, new Response.ErrorListener() {
 
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        Log.e("Response", "there was an error!!! :(");
-                    }
-                });
-// Access the RequestQueue through your singleton class.
-        VolleySingleton.getInstance(this).addToRequestQueue(JsonArrayRequest);
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+                            Log.e("message", "Failed with error msg:\t" + error.getMessage());
+                            Log.e("stacktrace", "Error StackTrace: \t" + error.getStackTrace());
+                            Log.e("Response", "there was an error in the filter activity!!! :(");
+                        }
+                    });
+            // Access the RequestQueue through your singleton class.
+            VolleySingleton.getInstance(this).addToRequestQueue(JsonArrayRequest);
+        }
+        catch(NullPointerException | ParseException exception)
+        {
+            if (FromTime == "" || UntilTime=="") {
+                Toast.makeText(FilterActivity.this, "יש להכניס חלון זמנים", Toast.LENGTH_LONG).show();
+            }
+            else{
+                Toast.makeText(FilterActivity.this, "יש להכניס חלון זמנים במבנה כזה 12:00", Toast.LENGTH_LONG).show();
+            }
+        }
     }
 
     public void Save(View view) {
-
     }
-
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
