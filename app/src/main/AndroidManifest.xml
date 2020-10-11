@@ -16,11 +16,15 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".ResultsActivity" android:exported="true">
-        </activity>
+        <activity android:name=".Thanks"></activity>
+        <activity
+            android:name=".ResultsActivity"
+            android:exported="true"></activity>
         <activity android:name=".RegisterWhereActivity" />
         <activity android:name=".ItemDetailActivity" />
-        <activity android:name=".ItemListActivity" android:exported="true" />
+        <activity
+            android:name=".ItemListActivity"
+            android:exported="true" />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -43,7 +47,9 @@
         <activity
             android:name=".home"
             android:exported="true" />
-        <activity android:name=".FilterActivity" android:exported="true"/>
+        <activity
+            android:name=".FilterActivity"
+            android:exported="true" />
         <activity android:name=".VolunteerApprovalActivity" />
         <activity android:name=".GeneralActivity" />
         <activity android:name=".LoginFlow.IntroFirstTimeActivity" />
