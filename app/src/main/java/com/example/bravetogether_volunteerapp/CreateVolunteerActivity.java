@@ -34,9 +34,11 @@ import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.StringRequest;
 import com.basgeekball.awesomevalidation.AwesomeValidation;
 import com.basgeekball.awesomevalidation.ValidationStyle;
@@ -56,12 +58,15 @@ import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.text.ParseException;
 import java.util.Arrays;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.Objects;
 import java.util.UUID;
 
 import androidmads.library.qrgenearator.QRGContents;
@@ -435,6 +440,7 @@ public class CreateVolunteerActivity extends AppCompatActivity {
         about_volunteering = tdescriptEditText.getText().toString(); // about the volunteer itself
         value_in_coins = valueInCoinsEditText.getText().toString();
 
+
         if (your_date_is_outdated) {
             AlertDialog.Builder alert = new AlertDialog.Builder(mcontext);
             final TextView tv = new TextView(mcontext);
@@ -451,6 +457,27 @@ public class CreateVolunteerActivity extends AppCompatActivity {
         }
         else if (awesomeValidation.validate())
         {
+            JSONObject jsonBody = new JSONObject();
+            try{
+                    jsonBody.put("name", name);
+                    jsonBody.put("manager", manager);
+                    jsonBody.put("picture", picture);
+                    jsonBody.put("address", address);
+                    jsonBody.put("online", online);
+                    jsonBody.put("duration", duration);
+                    jsonBody.put("about_place", about_place);
+                    jsonBody.put("about_volunteering", about_volunteering);
+                    jsonBody.put("min_volunteer", min_volunteer);
+                    jsonBody.put("max_volunteers", max_volunteers);
+                    jsonBody.put("value_in_coins", value_in_coins);
+                    jsonBody.put("start_time", start_time);
+            }
+            catch (JSONException e){
+
+            }
+
+            final String requestBody = jsonBody.toString();
+
             StringRequest stringRequest = new StringRequest(Request.Method.POST, url + "volunteers/events/",
                     new Response.Listener<String>() {
                         @Override
@@ -463,28 +490,47 @@ public class CreateVolunteerActivity extends AppCompatActivity {
                     new Response.ErrorListener() {
                         @Override
                         public void onErrorResponse(VolleyError error) {
-//                            Log.d("error.response", error.getMessage());
+                            try {
+                                Log.d("error.response", Objects.requireNonNull(error.getMessage()));
+                            }
+                            catch (NullPointerException e)
+                            {
+                                Log.d("error.null", "error is null");
+                            }
                         }
                     }) {
                 @Override
-                protected Map<String, String> getParams() {
-                    Map<String, String> params = new HashMap<>();
-                    params.put("name", name);
-                    params.put("manager", manager);
-                    params.put("picture", picture);
-                    params.put("address", address);
-                    params.put("online", online);
-                    params.put("duration", duration);
-                    params.put("about_place", about_place);
-                    params.put("about_volunteering", about_volunteering);
-                    params.put("min_volunteer", min_volunteer);
-                    params.put("max_volunteers", max_volunteers);
-                    params.put("value_in_coins", value_in_coins);
-                    params.put("start_time", start_time);
-                    return params;
+                public byte[] getBody() throws AuthFailureError {
+                    try {
+                        return requestBody == null ? null : requestBody.getBytes("utf-8");
+                    } catch (UnsupportedEncodingException uee) {
+                        VolleyLog.wtf("Unsupported Encoding while trying to get the bytes of %s using %s", requestBody, "utf-8");
+                        return null;
+                    }
                 }
+                @Override
+                public String getBodyContentType() {
+                    return "application/json";
+                }
+//                @Override
+//                protected Map<String, String> getParams() {
+//                    Map<String, String> params = new HashMap<>();
+//                    params.put("name", name);
+//                    params.put("manager", manager);
+//                    params.put("picture", picture);
+//                    params.put("address", address);
+//                    params.put("online", online);
+//                    params.put("duration", duration);
+//                    params.put("about_place", about_place);
+//                    params.put("about_volunteering", about_volunteering);
+//                    params.put("min_volunteer", min_volunteer);
+//                    params.put("max_volunteers", max_volunteers);
+//                    params.put("value_in_coins", value_in_coins);
+//                    params.put("start_time", start_time);
+//                    return params;
+//                }
             };
-            VolleySingleton.getInstance(this).addToRequestQueue(stringRequest);
+            VolleySingleton.getInstance(CreateVolunteerActivity.this).addToRequestQueue(stringRequest);
         }
         else {
             Toast.makeText(getApplicationContext(),
