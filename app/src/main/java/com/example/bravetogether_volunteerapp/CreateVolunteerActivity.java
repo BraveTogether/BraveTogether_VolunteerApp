@@ -456,7 +456,7 @@ public class CreateVolunteerActivity extends AppCompatActivity {
                         @Override
                         public void onResponse(String response) {
                             Log.d("Response", response.toString());
-                            Intent intent = new Intent(mcontext, MainActivity.class);
+                            Intent intent = new Intent(mcontext, Thanks.class);
                             startActivity(intent);
                         }
                     },
