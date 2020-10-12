@@ -2,6 +2,7 @@ package com.example.bravetogether_volunteerapp;
 
 import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
+import android.app.ProgressDialog;
 import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -11,6 +12,7 @@ import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.icu.text.SimpleDateFormat;
 import android.icu.util.Calendar;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -21,11 +23,13 @@ import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 import android.widget.ToggleButton;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -37,11 +41,19 @@ import com.android.volley.toolbox.StringRequest;
 import com.basgeekball.awesomevalidation.AwesomeValidation;
 import com.basgeekball.awesomevalidation.ValidationStyle;
 import com.basgeekball.awesomevalidation.utility.RegexTemplate;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.OnProgressListener;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
+import java.io.IOException;
 import java.text.ParseException;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 
 import androidmads.library.qrgenearator.QRGContents;
 import androidmads.library.qrgenearator.QRGEncoder;
@@ -74,8 +86,14 @@ public class CreateVolunteerActivity extends AppCompatActivity {
     String min_volunteer = "-1";
     String max_volunteers = "100000000";
     String value_in_coins;
-    String picture;
+    String picture = null;
     String online = "0";
+
+    // Firebase
+    StorageReference mStorageRef;
+    Uri imgUri;
+    ImageView img;
+    private final int PICK_IMAGE_REQUEST = 71;
 
     private void initQRCode(int credits, String date) {
         // this function creates a QRCode with the relevant data and saves it to the gallery
@@ -116,11 +134,15 @@ public class CreateVolunteerActivity extends AppCompatActivity {
         manager = "8"; //mPreferences.getString("uid", "-1");
         toggleButton = (ToggleButton) findViewById(R.id.online_button);
 
+        // Firebase
+        mStorageRef = FirebaseStorage.getInstance().getReference();
+        img = (ImageView) findViewById(R.id.profile_image_2);
+
 
         mButtonAddPicture.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                chooseImg();
             }
         });
 
@@ -335,6 +357,69 @@ public class CreateVolunteerActivity extends AppCompatActivity {
 //                                });
         alert.show();
     }
+
+    // ------------------------------- Photo Uploading ------------------------------- //
+
+    // Function for creating the intent that choose the photo to be uploaded to firebase
+    void chooseImg(){
+        Intent intent = new Intent();
+        intent.setType("image/*");
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+        startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE_REQUEST);
+    }
+
+    // uploading the image to firebase
+    private void uploadImg() {
+        if(imgUri != null) {
+            picture = imgUri.toString();
+            final ProgressDialog progressDialog = new ProgressDialog(this);
+            progressDialog.setTitle("Uploading...");
+            progressDialog.show();
+
+            StorageReference ref = mStorageRef.child("images/"+ UUID.randomUUID().toString());
+            ref.putFile(imgUri)
+                    .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                        @Override
+                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                            progressDialog.dismiss();
+                            Toast.makeText(CreateVolunteerActivity.this, "Uploaded", Toast.LENGTH_SHORT).show();
+                        }
+                    })
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            progressDialog.dismiss();
+                            Toast.makeText(CreateVolunteerActivity.this, "Failed " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                        }
+                    })
+                    .addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
+                        @Override
+                        public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
+                            double progress = (100.0 * taskSnapshot.getBytesTransferred()/taskSnapshot
+                                    .getTotalByteCount());
+                            progressDialog.setMessage("Uploaded "+(int)progress+"%");
+                        }
+                    });
+        }
+    }
+
+    // setting the chosen picture inside the imageView and calling uploadImg method
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null) {
+            imgUri = data.getData();
+            try {
+                Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), imgUri);
+                img.setImageBitmap(bitmap);
+                uploadImg();
+            }
+            catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
 
     public void sendToConfirm(View view) {
         if (your_date_is_outdated) {
