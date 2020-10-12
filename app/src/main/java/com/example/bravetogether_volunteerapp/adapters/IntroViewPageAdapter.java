@@ -44,7 +44,7 @@ public class IntroViewPageAdapter extends RecyclerView.Adapter<IntroViewPageAdap
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            description = itemView.findViewById(R.id.descriptionTextView);
+            //description = itemView.findViewById(R.id.descriptionTextView);
             image = itemView.findViewById(R.id.introImage);
             firstCircle = itemView.findViewById(R.id.first_dot);
             secondCircle = itemView.findViewById(R.id.second_dot);
