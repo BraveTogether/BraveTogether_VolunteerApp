@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="290dp"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_marginRight="15dp"
+    android:background="@drawable/review_rounded_background">
+
+    <TableLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="7dp"
+        android:layout_marginTop="5dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        >
+
+        <TableRow
+            android:gravity="right"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="2dp"
+            android:clipToPadding="false">
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="45dp"
+                android:layout_height="45dp"
+                app:cardCornerRadius="30dp">
+                <ImageView
+                    android:id="@+id/reviewItemUserPictureImageView"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/avatar"/>
+            </androidx.cardview.widget.CardView>
+
+            <TextView
+                android:id="@+id/reviewItemUserNameTextView"
+                android:layout_width="185dp"
+                android:maxLines="1"
+                android:ellipsize="end"
+                android:textSize="15dp"
+                android:textDirection="rtl"
+                android:text="שליו כהן"
+                android:layout_gravity="center_vertical"
+                android:layout_marginRight="7dp"/>
+
+
+        </TableRow>
+
+
+        <TextView
+            android:id="@+id/reviewItemTitleTextView"
+            android:layout_width="wrap_content"
+            android:textSize="20dp"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:textStyle="bold"
+            android:textDirection="rtl"
+            android:layout_column="1"
+            android:textColor="@color/quantum_greyblack1000"
+            android:text="השעה שלה אני מחכה תמיד"/>
+
+
+        <TextView
+            android:id="@+id/reviewItemReviewTextView"
+            android:layout_width="250dp"
+            android:layout_height="90dp"
+            android:textSize="15dp"
+            android:maxLines="4"
+            android:textDirection="rtl"
+            android:ellipsize="end"
+            android:textColor="@color/quantum_greyblack1000"
+            android:text="ביקורת ביקורת ביקורת ביקורת ביקורת ביקורת ביקורת ביקורת ביקורת ביקורת ביקורת ביקורת ביקורת ביקורת ביקורת ה ביקורת ביקורת ביקורת ביקורת ביקורת "/>
+
+        <TableRow
+            android:gravity="right"
+            android:layout_width="wrap_content"
+            android:paddingTop="3dp">
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_margin="3dp"
+                android:layout_gravity="center_vertical"
+                android:src="@drawable/black_location_pin" />
+            <TextView
+                android:id="@+id/reviewItemLocationTextView"
+                android:layout_width="wrap_content"
+                android:maxLines="1"
+                android:ellipsize="end"
+                android:textSize="15dp"
+                android:textDirection="rtl"
+                android:text="מרכז הגיל השלישי"
+                android:layout_gravity="center_vertical"
+                android:layout_marginRight="7dp"/>
+
+        </TableRow>
+
+    </TableLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
