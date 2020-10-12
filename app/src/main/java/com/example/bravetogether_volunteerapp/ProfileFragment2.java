@@ -34,7 +34,7 @@ public class ProfileFragment2 extends Fragment {
                              @Nullable Bundle savedInstanceState) {
         ProfileView = inflater.inflate(R.layout.fragment_profile2, container, false);
         setUserDate();
-    //check
+    //checkk
         return ProfileView;
     }
 

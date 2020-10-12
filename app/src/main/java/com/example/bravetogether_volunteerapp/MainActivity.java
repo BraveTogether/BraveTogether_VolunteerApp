@@ -87,5 +87,5 @@ public class MainActivity extends AppCompatActivity {
     public void goProfileFragment(View view){
         getSupportFragmentManager().beginTransaction().add(R.id.fragment_test,new ProfileFragment2(),null).commit();
     }
-    //check
+    //checkk
 }
