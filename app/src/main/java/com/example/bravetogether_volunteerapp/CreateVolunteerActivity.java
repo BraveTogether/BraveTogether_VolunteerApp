@@ -96,6 +96,10 @@ public class CreateVolunteerActivity extends AppCompatActivity {
     String value_in_coins;
     String picture = "NULL";
     String online = "0";
+    EditText nameTextView;
+    EditText pdescriptEditText;
+    EditText tdescriptEditText;
+    EditText valueInCoinsEditText;
 
     // Firebase
     StorageReference mStorageRef;
@@ -124,13 +128,11 @@ public class CreateVolunteerActivity extends AppCompatActivity {
         setContentView(R.layout.activity_create_volunteer);
         url = getString(R.string.apiUrl);
 
-        EditText nameTextView = (EditText) findViewById(R.id.volunteerName);
-        EditText pdescriptEditText = (EditText) findViewById(R.id.placeDescrition);
-        EditText tdescriptEditText = (EditText) findViewById(R.id.todoeDescrition);
-        EditText valueInCoinsEditText = (EditText) findViewById(R.id.valueInCoins);
-        name = nameTextView.getText().toString();
-        about_place = pdescriptEditText.getText().toString(); // about the place
-        about_volunteering = tdescriptEditText.getText().toString(); // about the volunteer itself
+        nameTextView = (EditText) findViewById(R.id.volunteerName);
+        pdescriptEditText = (EditText) findViewById(R.id.placeDescrition);
+        tdescriptEditText = (EditText) findViewById(R.id.todoeDescrition);
+        valueInCoinsEditText = (EditText) findViewById(R.id.valueInCoins);
+
         Button selectDate = findViewById(R.id.btnDate);
         Button selectTIme = findViewById(R.id.btnTime);
 //        TextView addPicView = findViewById(R.id.addPicText);
@@ -317,7 +319,6 @@ public class CreateVolunteerActivity extends AppCompatActivity {
             }
         });
 
-        value_in_coins = valueInCoinsEditText.getText().toString();
 
     }
 
@@ -429,6 +430,11 @@ public class CreateVolunteerActivity extends AppCompatActivity {
 
 
     public void sendToConfirm(View view) {
+        name = nameTextView.getText().toString();
+        about_place = pdescriptEditText.getText().toString(); // about the place
+        about_volunteering = tdescriptEditText.getText().toString(); // about the volunteer itself
+        value_in_coins = valueInCoinsEditText.getText().toString();
+
         if (your_date_is_outdated) {
             AlertDialog.Builder alert = new AlertDialog.Builder(mcontext);
             final TextView tv = new TextView(mcontext);
