@@ -41,8 +41,16 @@ import com.android.volley.toolbox.StringRequest;
 import com.basgeekball.awesomevalidation.AwesomeValidation;
 import com.basgeekball.awesomevalidation.ValidationStyle;
 import com.basgeekball.awesomevalidation.utility.RegexTemplate;
+import com.google.android.gms.common.api.Status;
+import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.libraries.places.api.Places;
+import com.google.android.libraries.places.api.model.Place;
+import com.google.android.libraries.places.api.model.RectangularBounds;
+import com.google.android.libraries.places.api.net.PlacesClient;
+import com.google.android.libraries.places.widget.AutocompleteSupportFragment;
+import com.google.android.libraries.places.widget.listener.PlaceSelectionListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
@@ -50,6 +58,7 @@ import com.google.firebase.storage.UploadTask;
 
 import java.io.IOException;
 import java.text.ParseException;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -66,7 +75,6 @@ public class CreateVolunteerActivity extends AppCompatActivity {
     private String apiKey = "AIzaSyA0hReShDEqNU3cdSm9eot1atb8-CKBy0Q";
     private String url;
     private String address;
-//    private DatePicker datepicker = (DatePicker) findViewById(R.id.datePicker);
     String strDate;
     String start_time;
     Context mcontext = this;
@@ -86,7 +94,7 @@ public class CreateVolunteerActivity extends AppCompatActivity {
     String min_volunteer = "-1";
     String max_volunteers = "100000000";
     String value_in_coins;
-    String picture = null;
+    String picture = "NULL";
     String online = "0";
 
     // Firebase
@@ -114,7 +122,7 @@ public class CreateVolunteerActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_volunteer);
-        url = getResources().getString(R.string.apiUrl);
+        url = getString(R.string.apiUrl);
 
         EditText nameTextView = (EditText) findViewById(R.id.volunteerName);
         EditText pdescriptEditText = (EditText) findViewById(R.id.placeDescrition);
@@ -168,46 +176,46 @@ public class CreateVolunteerActivity extends AppCompatActivity {
 
         //AutoComplete Place text
 
-//        Places.initialize(getApplicationContext(), apiKey); //Initialize SDK
-//        PlacesClient placesClient = Places.createClient(this);
-//
-//        // Initialize the AutocompleteSupportFragment.
-//        final AutocompleteSupportFragment autocompleteFragment = (AutocompleteSupportFragment)
-//                getSupportFragmentManager().findFragmentById(R.id.autocomplete_address);
-//
-////        autocompleteFragment.setHint("כתובת");
-//
-//        final EditText etPlace = (EditText) autocompleteFragment.getView().findViewById(R.id.places_autocomplete_search_input);
-//        etPlace.setVisibility(View.VISIBLE);
-//        etPlace.setTextDirection(View.TEXT_DIRECTION_ANY_RTL);
-//        etPlace.setBackgroundResource(R.drawable.textfield_d);
-//        etPlace.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.map_pin_line, 0);
-//        etPlace.setHint("כתובת");
-//        //TODO: change to rtl text direction
-//        autocompleteFragment.setLocationBias(RectangularBounds.newInstance(
-//                new LatLng(29.4533796, 34.2674994),
-//                new LatLng(33.3356317, 35.8950234)));
-//
-//        // Specify the types of place data to return.
-//        autocompleteFragment.setPlaceFields(Arrays.asList(Place.Field.ADDRESS));
-//
-//        // Set up a PlaceSelectionListener to handle the response.
-//        autocompleteFragment.setOnPlaceSelectedListener(new PlaceSelectionListener() {
-//            @Override
-//            public void onPlaceSelected(Place place) {
-//                // TODO: Get info about the selected place.
-//                address = place.getAddress();
-//                etPlace.setText(address);
-//                Log.i("place", "Place: " + place.getAddress());
-//            }
-//
-//
-//            @Override
-//            public void onError(Status status) {
-//                // TODO: Handle the error.
-//                Log.i("place.error", "An error occurred: " + status);
-//            }
-//        });
+        Places.initialize(getApplicationContext(), apiKey); //Initialize SDK
+        PlacesClient placesClient = Places.createClient(this);
+
+        // Initialize the AutocompleteSupportFragment.
+        final AutocompleteSupportFragment autocompleteFragment = (AutocompleteSupportFragment)
+                getSupportFragmentManager().findFragmentById(R.id.autocomplete_address);
+
+//        autocompleteFragment.setHint("כתובת");
+
+        final EditText etPlace = (EditText) autocompleteFragment.getView().findViewById(R.id.places_autocomplete_search_input);
+        etPlace.setVisibility(View.VISIBLE);
+        etPlace.setTextDirection(View.TEXT_DIRECTION_ANY_RTL);
+        etPlace.setBackgroundResource(R.drawable.textfield_d);
+        etPlace.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.map_pin_line, 0);
+        etPlace.setHint("כתובת");
+        //TODO: change to rtl text direction
+        autocompleteFragment.setLocationBias(RectangularBounds.newInstance(
+                new LatLng(29.4533796, 34.2674994),
+                new LatLng(33.3356317, 35.8950234)));
+
+        // Specify the types of place data to return.
+        autocompleteFragment.setPlaceFields(Arrays.asList(Place.Field.ADDRESS));
+
+        // Set up a PlaceSelectionListener to handle the response.
+        autocompleteFragment.setOnPlaceSelectedListener(new PlaceSelectionListener() {
+            @Override
+            public void onPlaceSelected(Place place) {
+                // TODO: Get info about the selected place.
+                address = place.getAddress();
+                etPlace.setText(address);
+                Log.i("place", "Place: " + place.getAddress());
+            }
+
+
+            @Override
+            public void onError(Status status) {
+                // TODO: Handle the error.
+                Log.i("place.error", "An error occurred: " + status);
+            }
+        });
 
         //check and change if the toggleButton is checked
         toggleButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -281,8 +289,7 @@ public class CreateVolunteerActivity extends AppCompatActivity {
                                                   int minute) {
                                 start_time = new StringBuilder().append(hourOfDay).append(":").append(minute).toString();
                                 hourView.setText(start_time);
-                                start_time = new StringBuilder().append(hourOfDay).append(":").append(minute).append(":")
-                                        .append("00").toString();
+                                start_time = new StringBuilder().append(hourOfDay).append(minute).append("00").toString();
                                 Log.d("time", start_time);
 
                                 AlertDialog.Builder alert = new AlertDialog.Builder(mcontext);
@@ -427,12 +434,14 @@ public class CreateVolunteerActivity extends AppCompatActivity {
             final TextView tv = new TextView(mcontext);
             tv.setText("התאריך שבחרת לא תקין");
             alert.setView(tv);
+            alert.show();
         }
         else if (min_volunteer.equals("-1")){
             AlertDialog.Builder alert = new AlertDialog.Builder(mcontext);
             final TextView tv = new TextView(mcontext);
             tv.setText("בחר מינימום מתנדבים");
             alert.setView(tv);
+            alert.show();
         }
         else if (awesomeValidation.validate())
         {
@@ -448,7 +457,7 @@ public class CreateVolunteerActivity extends AppCompatActivity {
                     new Response.ErrorListener() {
                         @Override
                         public void onErrorResponse(VolleyError error) {
-                            Log.d("error.response", error.getMessage());
+//                            Log.d("error.response", error.getMessage());
                         }
                     }) {
                 @Override
@@ -459,13 +468,13 @@ public class CreateVolunteerActivity extends AppCompatActivity {
                     params.put("picture", picture);
                     params.put("address", address);
                     params.put("online", online);
-                    params.put("start_time", start_time);
                     params.put("duration", duration);
                     params.put("about_place", about_place);
                     params.put("about_volunteering", about_volunteering);
                     params.put("min_volunteer", min_volunteer);
                     params.put("max_volunteers", max_volunteers);
                     params.put("value_in_coins", value_in_coins);
+                    params.put("start_time", start_time);
                     return params;
                 }
             };
