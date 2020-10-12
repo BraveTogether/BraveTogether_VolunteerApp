@@ -77,6 +77,11 @@
     <string name="invalid_confirm_passwords">הסיסמאות לא תואמות</string>
     <string name="invalid_address">בבקשה הכנס כתובת תקינה</string>
 
+    <string name="invalid_volunteer_name">הכנס את שם ההתנדבות</string>
+    <string name="invalid_value_in_coins">הכנס את השווי בגבורות</string>
+    <string name="invalid_about_volunteer">הכנס מידע על ההתנדבות</string>
+
+
     <string-array name="time_windows">
         <item name="morning">בוקר</item>
         <item name="noon">צהריים</item>

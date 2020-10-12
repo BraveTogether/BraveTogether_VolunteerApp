@@ -71,7 +71,7 @@
                 android:padding="30dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/ellipse_59"
+                app:layout_constraintTop_toBottomOf="@+id/ellipse_59"
                 app:srcCompat="@drawable/ic_menu_camera" />
 
             <de.hdodenhof.circleimageview.CircleImageView
@@ -80,24 +80,24 @@
                 android:layout_width="139dp"
                 android:layout_height="139dp"
                 android:layout_gravity="center"
-                android:layout_marginTop="120dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.503"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/ellipse_"/>
+                app:layout_constraintTop_toBottomOf="@+id/ellipse_59"
+                />
 
             <ImageView
                 android:id="@+id/uploaded_image"
                 android:layout_width="139dp"
                 android:layout_height="139dp"
                 android:layout_gravity="center"
-                android:layout_marginTop="120dp"
                 android:shape="oval"
                 android:padding="30dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.503"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/ellipse_" />
+                app:layout_constraintTop_toBottomOf="@+id/ellipse_59"
+                />
 
 
             <!--            <ImageView-->
@@ -176,18 +176,42 @@
                 app:layout_constraintTop_toBottomOf="@+id/vector" />
 
 
-            <fragment
-                android:id="@+id/autocomplete_address"
-                android:name="com.google.android.libraries.places.widget.AutocompleteSupportFragment"
-                android:layout_width="320dp"
-                android:layout_height="48dp"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="16dp"
-                android:background="@drawable/textfield_d"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.504"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/volunteerName" />
+<!--            <fragment-->
+<!--                android:id="@+id/autocomplete_address"-->
+<!--                android:name="com.example.bravetogether_volunteerapp.adapters.CustomPlaceAutoCompleteFragment"-->
+<!--                android:layout_width="320dp"-->
+<!--                android:layout_height="48dp"-->
+<!--                android:layout_centerHorizontal="true"-->
+<!--                android:layout_marginTop="16dp"-->
+<!--                android:background="#0000"-->
+<!--                app:layout_constraintEnd_toEndOf="parent"-->
+<!--                app:layout_constraintHorizontal_bias="0.504"-->
+<!--                app:layout_constraintStart_toStartOf="parent"-->
+<!--                app:layout_constraintTop_toBottomOf="@+id/volunteerName" />-->
+                <fragment
+                    android:id="@+id/autocomplete_address"
+                    android:name="com.google.android.libraries.places.widget.AutocompleteSupportFragment"
+                    android:layout_width="320dp"
+                    android:layout_height="48dp"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="16dp"
+                    android:background="#0000"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.504"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/volunteerName" />
+
+<!--            <EditText-->
+<!--                android:id="@+id/autocomplete_address_EditText"-->
+<!--                android:layout_width="320dp"-->
+<!--                android:layout_height="48dp"-->
+<!--                android:layout_centerHorizontal="true"-->
+<!--                android:layout_marginTop="16dp"-->
+<!--                android:background="@drawable/textfield_d"-->
+<!--                app:layout_constraintEnd_toEndOf="parent"-->
+<!--                app:layout_constraintHorizontal_bias="0.504"-->
+<!--                app:layout_constraintStart_toStartOf="parent"-->
+<!--                app:layout_constraintTop_toBottomOf="@+id/volunteerName" />-->
 
 
             <EditText
