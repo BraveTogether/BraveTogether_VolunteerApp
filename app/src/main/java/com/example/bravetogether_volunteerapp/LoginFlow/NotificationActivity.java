@@ -4,9 +4,11 @@ import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.telecom.Call;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -24,8 +26,15 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.constraintlayout.widget.ConstraintSet;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.preference.PreferenceManager;
 
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.example.bravetogether_volunteerapp.CallToServer;
 import com.example.bravetogether_volunteerapp.R;
+import com.example.bravetogether_volunteerapp.VolleySingleton;
 import com.example.bravetogether_volunteerapp.adapters.spinnerAdapter;
 import com.example.bravetogether_volunteerapp.home;
 import com.example.bravetogether_volunteerapp.ui.SlideAnimation;
@@ -38,13 +47,17 @@ import com.google.android.libraries.places.api.net.PlacesClient;
 import com.google.android.libraries.places.widget.AutocompleteSupportFragment;
 import com.google.android.libraries.places.widget.listener.PlaceSelectionListener;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 public class NotificationActivity extends AppCompatActivity {
 
     private final String apiKey = "AIzaSyA0hReShDEqNU3cdSm9eot1atb8-CKBy0Q";
-    private String first_name,family_name,email,password,phone_number,home_address,about,user_desired_location,chosen_time,address;
+    private String first_name,family_name,email,password,phone_number,home_address,about,user_desired_location,chosen_time,address,profilePictureUrl;
     private Context mcontext = this;
     private ConstraintLayout mConstraintLayout;
     private ConstraintSet mConstraintSet = new ConstraintSet();
@@ -59,12 +72,17 @@ public class NotificationActivity extends AppCompatActivity {
     private boolean checkDays[] = new boolean[6];
     private ArrayList<String> time_windows_strings;
     private TextView time_window_text;
+    double latitude,longitude;
+    CallToServer cts;
 
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_notification);
+
+        cts = new CallToServer();
+
         for(int i=0;i<6;i++)
         {
             String buttonID = "day" + String.valueOf(i+1);
@@ -108,7 +126,7 @@ public class NotificationActivity extends AppCompatActivity {
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) { //Get the days from array "time_windows_hours" with position
-                chosen_time = time_windows_strings.get(position); //This is what I need.
+                chosen_time = time_windows_strings.get(position);
                 time_window_text.setText(chosen_time);
                 time_window_text.setVisibility(View.VISIBLE);
             }
@@ -217,8 +235,8 @@ public class NotificationActivity extends AppCompatActivity {
     public void getLocation(){
         gpsTracker = new GpsTracker(mcontext);
         if(gpsTracker.canGetLocation()){
-            double latitude = gpsTracker.getLatitude();
-            double longitude = gpsTracker.getLongitude();
+            latitude = gpsTracker.getLatitude();
+            longitude = gpsTracker.getLongitude();
             Log.d("latitude", "latitude: " + String.valueOf(latitude));
             Log.d("longitude", "longitude: " + String.valueOf(longitude));
 
@@ -265,21 +283,34 @@ public class NotificationActivity extends AppCompatActivity {
     public void letsVolunteer(View view) {
         Intent intent = new Intent(NotificationActivity.this, home.class);
         Intent getIntent = getIntent();
-        first_name = getIntent.getStringExtra("first_name");
-        family_name = getIntent.getStringExtra("family_name");
-        email = getIntent.getStringExtra("email");
-        password = getIntent.getStringExtra("password");
-        phone_number = getIntent.getStringExtra("phone_number");
-        home_address = getIntent.getStringExtra("address");
-        about = getIntent.getStringExtra("about");
+        {
+            first_name = getIntent.getStringExtra("first_name");
+            family_name = getIntent.getStringExtra("family_name");
+            email = getIntent.getStringExtra("email");
+            password = getIntent.getStringExtra("password");
+        }
+        { //Write to user profile
+            phone_number = getIntent.getStringExtra("phone_number"); //Phone number
+            home_address = getIntent.getStringExtra("address"); // address
+            about = getIntent.getStringExtra("about"); //About
+            profilePictureUrl = ""; // Get the profile picture URL from intent
+        }
+        cts.registerUser(this,email,password,first_name,family_name,phone_number,home_address,about,"1",profilePictureUrl);
+
+
         user_desired_location = getIntent.getStringExtra("location");
-        //address variable for the "hatraot le itnadvut krova"
-        //Profile picture -- Work in progress
-        //Account type -- regular volunteer
-        //coins -- 0
-        //checkDays[0-5] get the true values for the volunteering days
-        //chosenTime -- get the volunteering time
-        //"mikum hitnadvut" either getLocation or by GPS coordinates need to check it.
+
+        //**Get the true values from check days
+        if(chosen_time == null){
+            //Write null to database
+        }else{
+            //write chosen_time to database
+        }
+        if(String.valueOf(latitude).equals("")){
+            //need to get the user input location
+        }else{
+            //send the latitude and longitude
+        }
 
         //TODO take all those fields and get them to the database
         //TODO put all those fields (or some) in the SharredPreferences

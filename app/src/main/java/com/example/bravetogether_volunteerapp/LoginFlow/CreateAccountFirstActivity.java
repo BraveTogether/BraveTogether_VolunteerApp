@@ -106,7 +106,6 @@ public class CreateAccountFirstActivity extends AppCompatActivity {
         mButtonLetsVolunteer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // check validation
                 if(awesomeValidation.validate()){
                     Intent intent = new Intent(CreateAccountFirstActivity.this, RegisterWhereActivity.class);
                     intent.putExtra("private_name",mTextUserPrivateName.getText().toString());

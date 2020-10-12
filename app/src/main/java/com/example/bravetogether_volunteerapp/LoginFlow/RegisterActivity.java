@@ -191,33 +191,6 @@ public class RegisterActivity extends AppCompatActivity implements GoogleApiClie
 
         }
     }
-    private void registerSocialUser (final String uid, final String firstname, final String lastname, final String email, final String imageURL) {
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, url + "/users",
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        Log.d("Response", response.toString());
-                    }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        Log.d("error.response", error.getMessage());
-                    }
-                }) {
-            @Override
-            protected Map<String, String> getParams(){
-                Map<String, String> params = new HashMap<>();
-                params.put("uid", uid);
-                params.put("firstname", firstname);
-                params.put("lastname", lastname);
-                params.put("email", email);
-//                params.put("profile_picture", imageURL);
-                return params;
-            }
-        };
-        VolleySingleton.getInstance(this).addToRequestQueue(stringRequest);
-    }
 
     public void skipToHomePage(View view) {
         startActivity(new Intent(RegisterActivity.this, RegisterWhereActivity.class));
@@ -226,43 +199,6 @@ public class RegisterActivity extends AppCompatActivity implements GoogleApiClie
     @Override
     protected void onPause(){
         super.onPause();
-            String URL = url + "/user/" + email;
-            JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
-                    (Request.Method.GET, URL, null, new Response.Listener<JSONObject>() {
-
-                        @Override
-                        public void onResponse(JSONObject response) {
-                            // fill the preferences file with data regarding the current user
-                            String address=null, fname=null, lname=null, phone=null;
-                            try {
-                                //required details
-                                fname = response.getString("first_name");
-                                lname = response.getString("last_name");
-                            } catch (JSONException e) {
-                                e.printStackTrace();
-                            }
-                            try {
-                                //non required details
-                                address = response.getString("address");
-                                phone = response.getString("phone_number");
-                            } catch (JSONException e) {
-                                e.printStackTrace();
-                            }
-                            SharedPreferences.Editor preferencesEditor = mPreferences.edit();
-                            preferencesEditor.putString("UserEmail", email);
-                            preferencesEditor.putString("UserFirstName", fname);
-                            preferencesEditor.putString("UserLastName", lname);
-                            preferencesEditor.putString("UserAddress", address);
-                            preferencesEditor.putString("UserPhoneNumber", phone);
-                            preferencesEditor.apply();
-                        }
-                    }, new Response.ErrorListener() {
-
-                        @Override
-                        public void onErrorResponse(VolleyError error) { }
-                    });
-            // Access the RequestQueue through your singleton class.
-            VolleySingleton.getInstance(this).addToRequestQueue(jsonObjectRequest);
     }
 
 

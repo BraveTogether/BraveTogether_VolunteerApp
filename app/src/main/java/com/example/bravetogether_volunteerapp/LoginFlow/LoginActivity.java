@@ -34,8 +34,6 @@ public class LoginActivity extends AppCompatActivity {
             Toast.makeText(this, "Please enter an email and a password", Toast.LENGTH_SHORT).show();
         }else{
             String sha1Password = getSha1Hex(pass.getText().toString());
-            CallToServer call = new CallToServer();
-            String userDetails = call.getUserDetails(email.getText().toString(),this);
             //TODO check if password from user details is the same as password in sha1Password
         }
     }

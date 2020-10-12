@@ -44,13 +44,14 @@ public class RegisterWhereActivity extends AppCompatActivity {
     public void goToNotification(View view) {
         intent = new Intent(this, NotificationActivity.class);
         getIntent = getIntent();
-        intent.putExtra("private_name",getIntent.getStringExtra("first_name"));
+        intent.putExtra("first_name",getIntent.getStringExtra("private_name"));
         intent.putExtra("family_name",getIntent.getStringExtra("family_name"));
         intent.putExtra("email",getIntent.getStringExtra("email"));
         intent.putExtra("password",getIntent.getStringExtra("password"));
         intent.putExtra("phone_number",getIntent.getStringExtra("phone_number"));
-        intent.putExtra("adress",getIntent.getStringExtra("address"));
+        intent.putExtra("address",getIntent.getStringExtra("address"));
         intent.putExtra("about",getIntent.getStringExtra("about"));
+        if(location == null) {location = "both";}
         intent.putExtra("user_desired_location",location);
         startActivity(intent);
     }
