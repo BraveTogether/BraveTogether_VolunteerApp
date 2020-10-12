@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    tools:context=".home">
+
+    //Menu button
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/BottomNavigationViewHome"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/ic_nevigation_bar"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:menu="@menu/botton_menu" />
+
+    <ScrollView
+        android:id="@+id/scrollView2"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:showDividers="middle">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+                <View
+                    android:id="@+id/ellipse_home_page"
+                    android:layout_width="match_parent"
+                    android:layout_height="365dp"
+                    android:background="@drawable/ic_ellipse_home_page"
+                    android:elevation="1dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="0.0" />
+
+                <View
+                    android:id="@+id/vector"
+                    android:layout_width="match_parent"
+                    android:layout_height="613dp"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginTop="64dp"
+                    android:background="@drawable/ellipse_60"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/ellipse_home_page" />
+
+                <TextView
+                    android:id="@+id/textViewUserName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:elevation="1dp"
+                    android:fontFamily="@font/rubik"
+                    android:text="User Name"
+                    android:textSize="25dp"
+                    android:textColor="#000000"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/imageViewProfile" />
+
+
+                <ImageView
+                    android:id="@+id/imageViewProfile"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="122dp"
+                    android:layout_marginTop="33dp"
+                    android:layout_marginEnd="122dp"
+                    android:layout_marginBottom="159dp"
+                    android:contentDescription="TODO"
+                    android:elevation="1dp"
+                    app:layout_constraintBottom_toBottomOf="@+id/ellipse_home_page"
+                    app:layout_constraintEnd_toEndOf="@+id/ellipse_home_page"
+                    app:layout_constraintHorizontal_bias="0.487"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/ellipse_home_page"
+                    app:layout_constraintVertical_bias="0.0"
+                    tools:srcCompat="@tools:sample/avatars" />
+
+
+
+                <TableLayout
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    android:id="@+id/tableLayout"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:showDividers="middle"
+                    app:layout_constraintTop_toBottomOf="@id/textViewUserName">
+
+                    <TableRow
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+
+                        <TextView android:id="@+id/gvorot_Num"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:elevation="1dp"
+                            android:fontFamily="@font/rubik"
+                            android:text="User Name"
+                            android:textColor="#001925"
+                            android:textSize="25dp" />
+                    </TableRow>
+                </TableLayout>
+
+
+                <TextView
+                    android:id="@+id/my_tags"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="140dp"
+                    android:layout_marginEnd="170dp"
+                    android:elevation="1dp"
+                    android:fontFamily="@font/rubik"
+                    android:text="התגים שלי"
+                    android:textColor="#000000"
+                    android:textSize="16dp"
+                    app:layout_constraintEnd_toEndOf="@+id/vector"
+                    app:layout_constraintTop_toBottomOf="@+id/tableLayout" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="20dp"
+                android:padding="2dp">
+
+
+                <TextView
+                    android:id="@+id/TextViewClose"
+                    android:layout_width="wrap_content"
+                    android:layout_height="36dp"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentEnd="true"
+
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="197dp"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginBottom="-3dp"
+                    android:fontFamily="@font/rubik_bold"
+                    android:text="התנדבויות קרובות"
+                    android:textColor="#000000"
+                    android:textSize="20sp" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/Recycler_view_list3"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginTop="5dp"
+                    android:orientation="vertical" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="20dp"
+                android:padding="2dp">
+
+
+                <TextView
+                    android:id="@+id/TextView1"
+                    android:layout_width="205dp"
+                    android:layout_height="37dp"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentEnd="true"
+
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="174dp"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginBottom="-3dp"
+                    android:fontFamily="@font/rubik_bold"
+                    android:text="התנדבויות שלי"
+                    android:textColor="#000000"
+                    android:textSize="20sp" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/Recycler_view_list4"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginTop="5dp"
+                    android:orientation="vertical" />
+            </RelativeLayout>
+
+
+        </LinearLayout>
+    </ScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

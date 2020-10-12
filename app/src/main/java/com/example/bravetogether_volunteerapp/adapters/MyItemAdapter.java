@@ -39,7 +39,7 @@ public class MyItemAdapter extends RecyclerView.Adapter<MyItemAdapter.MyViewHold
         VolunteerEvent event = eventList.get(position);
 
         //holder.eventNameOfOneList.setText(event.getEventName());
-       holder.eventDescriptionOfOneList.setText(event.getEventDescription());
+        holder.eventDescriptionOfOneList.setText(event.getEventDescription());
         holder.eventLocationOfOneList.setText(event.getLocation());
         holder.eventDateOfOneList.setText(event.getDate());
         holder.eventDurationOfOneList.setText(event.getDuration());

@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "665620884283",
+    "firebase_url": "https://bravetogethervolunteerapp.firebaseio.com",
+    "project_id": "bravetogethervolunteerapp",
+    "storage_bucket": "bravetogethervolunteerapp.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:665620884283:android:09bec201c3cd0e5e24e51e",
+        "android_client_info": {
+          "package_name": "com.example.bravetogether_volunteerapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "665620884283-uegs8lgcuvidf3fci5hi018ahi9qdb7g.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.bravetogether_volunteerapp",
+            "certificate_hash": "8d883d4dcde2bfa49d0283811af9fe71a6b1506b"
+          }
+        },
+        {
+          "client_id": "665620884283-csm9es04k8elkm5isrrsb757cgq5d8r1.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBd2MiVDzEgPkHUQX_u-bFal0Y7S15Tqgs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "665620884283-csm9es04k8elkm5isrrsb757cgq5d8r1.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

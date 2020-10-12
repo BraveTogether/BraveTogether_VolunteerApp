@@ -16,11 +16,6 @@
         android:label="fragment_home"
         tools:layout="@layout/fragment_home" />
     <fragment
-        android:id="@+id/profileFragment"
-        android:name="com.example.bravetogether_volunteerapp.ProfileFragment"
-        android:label="fragment_profile"
-        tools:layout="@layout/fragment_profile" />
-    <fragment
         android:id="@+id/settingFragment"
         android:name="com.example.bravetogether_volunteerapp.SettingFragment"
         android:label="fragment_setting"
@@ -30,4 +25,9 @@
         android:name="com.example.bravetogether_volunteerapp.NotificationFragment"
         android:label="fragment_notification"
         tools:layout="@layout/fragment_notification" />
+    <fragment
+        android:id="@+id/profileFragment2"
+        android:name="com.example.bravetogether_volunteerapp.ProfileFragment2"
+        android:label="fragment_profile2"
+        tools:layout="@layout/fragment_profile2" />
 </navigation>
