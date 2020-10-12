@@ -50,7 +50,7 @@
                     app:layout_constraintVertical_bias="1.0" />
 
                 <TextView
-                    android:id="@+id/textView3"
+                    android:id="@+id/skipNowTextView"
                     android:layout_width="245dp"
                     android:layout_height="18dp"
                     android:layout_alignTop="@+id/ellipse_home_page"
