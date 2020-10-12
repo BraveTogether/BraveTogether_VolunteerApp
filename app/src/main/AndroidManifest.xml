@@ -18,6 +18,8 @@
         android:usesCleartextTraffic="true">
         <activity android:name=".writeDBtest" android:exported="true"/>
         <activity android:name=".Thanks" />
+        <activity android:name=".LoginFlow.RegisterWhereActivity"></activity>
+        <activity android:name=".Thanks"></activity>
         <activity
             android:name=".ResultsActivity"
             android:exported="true" />
