@@ -42,7 +42,7 @@
                     tools:targetApi="lollipop" />
 
                 <ImageView
-                    android:id="@+id/imageViewProfilePic"
+                    android:id="@+id/imageViewProfile"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="122dp"
@@ -168,7 +168,7 @@
                     app:layout_constraintBottom_toTopOf="@+id/linearLayout"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/imageViewProfilePic" />
+                    app:layout_constraintTop_toBottomOf="@+id/imageViewProfile" />
 
 
             </androidx.constraintlayout.widget.ConstraintLayout>
@@ -198,7 +198,7 @@
                     android:textSize="20sp" />
 
                 <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/rcNearVolunteer"
+                    android:id="@+id/Recycler_view_list3"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
@@ -230,7 +230,7 @@
                     android:textSize="20sp" />
 
                 <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/rcVolunteerHistory"
+                    android:id="@+id/Recycler_view_list4"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
