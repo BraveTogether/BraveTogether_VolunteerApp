@@ -27,7 +27,7 @@ public class profileTagAdapter extends  RecyclerView.Adapter<profileTagAdapter.V
     private ArrayList<Integer> mTagImage;
     private Context mContext;
 
-    public void profile_tags_adapter(Context context, ArrayList<String> tagName, ArrayList<String> tagDetails, ArrayList<Integer> tagImage)   {
+    public profileTagAdapter(Context context, ArrayList<String> tagName, ArrayList<String> tagDetails, ArrayList<Integer> tagImage)   {
         mContext = context;
         mTagDetails = tagDetails;
         mTagImage = tagImage;
