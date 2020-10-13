@@ -15,6 +15,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
+import java.util.ArrayList;
+
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class ProfileFragment2 extends Fragment {
@@ -48,10 +50,28 @@ public class ProfileFragment2 extends Fragment {
         mVolunteerHours = (TextView) ProfileView.findViewById(R.id.txtHours);
         mCoins = (TextView) ProfileView.findViewById(R.id.txtCoins);
         mProcess = (TextView) ProfileView.findViewById(R.id.txtProcess);
-        // TODO:: poll user data and set variables
+        // TODO:: poll user data from server and set variables
     }
 
+    private void setVolunteerHistory(){
+        // TODO:: poll volunteer history from server.
 
+    }
+
+    private void setNearVoluteer(){
+        // TODO:: check user location and define near location (what is the radius)
+        // TODO:: poll near volunteer from server.
+
+    }
+
+    // Dummy function for test ** need to delete **
+    private ArrayList<VolunteerEvent> CreateDummyList(){
+        ArrayList<VolunteerEvent> dummyList =  new ArrayList<>();
+        dummyList.add(new VolunteerEvent("עזרה בקניות","13/14/15","גיל הזהב", "120" ,"3" , "300"));
+        dummyList.add(new VolunteerEvent("עזרה בקניות","13/14/15","גיל הזהב", "120" ,"3" , "300"));
+        dummyList.add(new VolunteerEvent("עזרה בקניות","13/14/15","גיל הזהב", "120" ,"3" , "300"));
+        return dummyList;
+    }
 
 
 }
