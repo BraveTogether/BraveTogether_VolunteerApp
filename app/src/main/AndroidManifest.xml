@@ -17,12 +17,10 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
         <activity android:name=".Thanks" />
-        <activity android:name=".LoginFlow.RegisterWhereActivity"></activity>
-        <activity android:name=".Thanks"></activity>
+        <activity android:name=".LoginFlow.RegisterWhereActivity" />
         <activity
             android:name=".ResultsActivity"
             android:exported="true" />
-        <activity android:name=".RegisterWhereActivity" />
         <activity android:name=".ItemDetailActivity" />
         <activity
             android:name=".ItemListActivity"
