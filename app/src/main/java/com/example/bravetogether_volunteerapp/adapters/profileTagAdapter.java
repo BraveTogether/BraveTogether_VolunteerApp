@@ -1,8 +1,6 @@
 package com.example.bravetogether_volunteerapp.adapters;
 
 import android.content.Context;
-import android.media.Image;
-import android.nfc.Tag;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,7 +19,7 @@ import com.example.bravetogether_volunteerapp.R;
 import java.util.ArrayList;
 
 
-public class profile_tags_adapter extends  RecyclerView.Adapter<profile_tags_adapter.ViewHolder> {
+public class profileTagAdapter extends  RecyclerView.Adapter<profileTagAdapter.ViewHolder> {
     //For Debug
     private static final String TAG = "profile_tags_adapter";
     private ArrayList<String> mTagName;
@@ -29,7 +27,7 @@ public class profile_tags_adapter extends  RecyclerView.Adapter<profile_tags_ada
     private ArrayList<Integer> mTagImage;
     private Context mContext;
 
-    public profile_tags_adapter( Context context, ArrayList<String> tagName, ArrayList<String> tagDetails, ArrayList<Integer> tagImage)   {
+    public void profile_tags_adapter(Context context, ArrayList<String> tagName, ArrayList<String> tagDetails, ArrayList<Integer> tagImage)   {
         mContext = context;
         mTagDetails = tagDetails;
         mTagImage = tagImage;
