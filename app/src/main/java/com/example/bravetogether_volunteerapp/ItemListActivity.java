@@ -1,20 +1,35 @@
 package com.example.bravetogether_volunteerapp;
 
+import android.app.ProgressDialog;
+import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.storage.FileDownloadTask;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import org.json.JSONObject;
 
+import java.io.File;
 import java.util.List;
 
 /**
@@ -34,14 +49,19 @@ public class ItemListActivity extends AppCompatActivity {
     private boolean mTwoPane;
     public static Context parentContext;
     public static List<JSONObject> activitiesList;
+    static ContentResolver content;
+    static String filePath;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_item_list);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        toolbar.setTitle(getTitle());
+        ContentResolver content = getContentResolver();
+        Uri imageURI = Uri.parse("gs://bravetogethervolunteerapp.appspot.com/images/8bd91a65-85d9-412f-a299-26a4cd633194");
+        filePath = retrieveImg(imageURI).getPath();
+        //Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        //setSupportActionBar(toolbar);
+        //toolbar.setTitle("תוצאות חיפוש");
 
 
         //Bundle args = getIntent().getBundleExtra("activitiesList");
@@ -59,6 +79,46 @@ public class ItemListActivity extends AppCompatActivity {
         View recyclerView = findViewById(R.id.item_list);
         assert recyclerView != null;
         setupRecyclerView((RecyclerView) recyclerView);
+    }
+
+
+
+
+    private ProgressDialog showProgress(){
+        ProgressDialog  pd = new ProgressDialog(this);
+        pd.setMessage("Downloading... Please Wait");
+        pd.setIndeterminate(true);
+        pd.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        pd.show();
+        return pd;
+    }
+
+    final File rootPath = new File(Environment.getExternalStorageDirectory(), "Brave-Together");
+    private File retrieveImg(Uri uri){
+        final ProgressDialog  pd = showProgress();
+        if (!rootPath.exists()) {
+            rootPath.mkdirs();
+        }
+        final File localFile = new File(rootPath, "braveTogether.jpg");
+
+        StorageReference storageRef = FirebaseStorage.getInstance().getReferenceFromUrl(uri.toString());
+        storageRef.getFile(localFile).addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
+            @Override
+            public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
+                Log.e("firebase ", ";local tem file created  created " + localFile.toString());
+                if (localFile.canRead()){
+                    pd.dismiss();
+                }
+                Toast.makeText(getApplicationContext(), "Download Completed", Toast.LENGTH_SHORT).show();
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception exception) {
+                Log.e("firebase ", ";local tem file not created  created " + exception.toString());
+                Toast.makeText(getApplicationContext(), "Download Incompleted", Toast.LENGTH_LONG).show();
+            }
+        });
+        return localFile;
     }
 
     private void setupRecyclerView(@NonNull final RecyclerView recyclerView) {
@@ -111,15 +171,22 @@ public class ItemListActivity extends AppCompatActivity {
             return new ViewHolder(view);
         }
 
+
         @Override
         public void onBindViewHolder(final ViewHolder holder, int position) {
             //holder.mIdView.setText(mValues.get(position).id);
             holder.mContentView.setText(mValues.get(position).content);
             holder.mDuration.setText(mValues.get(position).duration);
             holder.mDistance.setText(mValues.get(position).distance);
+            //Uri imageURI = Uri.parse(mValues.get(position).URI);
+            //    final File rootPath = new File(Environment.getExternalStorageDirectory(), "Brave-Together");
 
+            Bitmap bitmap = BitmapFactory.decodeFile(filePath);
+
+            holder.mPhoto.setImageBitmap(bitmap);
             holder.itemView.setTag(mValues.get(position));
             holder.itemView.setOnClickListener(mOnClickListener);
+            holder.mPhoto.setImageBitmap(bitmap);
         }
 
         @Override
@@ -132,6 +199,7 @@ public class ItemListActivity extends AppCompatActivity {
             final TextView mContentView;
             final TextView mDuration;
             final TextView mDistance;
+            final ImageView mPhoto;
 
             ViewHolder(View view) {
                 super(view);
@@ -139,6 +207,7 @@ public class ItemListActivity extends AppCompatActivity {
                 mContentView = (TextView) view.findViewById(R.id.content);
                 mDuration = (TextView) view.findViewById(R.id.duration);
                 mDistance = (TextView) view.findViewById(R.id.distance);
+                mPhoto = (ImageView) view.findViewById(R.id.image);
             }
         }
     }

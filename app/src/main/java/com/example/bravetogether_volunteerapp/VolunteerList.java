@@ -64,15 +64,17 @@ public class VolunteerList extends AppCompatActivity {
             // add volunteers to the list displayed
             try {
                 String distance = volunteer.getString("distance_from_user");
+                int dist = (int)Float.parseFloat(distance);
                 // parse the distance from user string to meters or kilometers.
                 if (Float.parseFloat(distance)>1000) {
-                    distance = String.valueOf(Float.parseFloat(distance)/1000) + " קמ";
+                    dist = dist/1000;
+                    distance = String.valueOf(dist) + " קמ";
                 }
                 else {
-                    distance = String.valueOf(distance) + " מ'";
+                    distance =  dist + " מ'";
                 }
                 String duration = volunteer.getString("duration") + " דק";
-                addItem(createVolunteerItem(String.valueOf(i) ,volunteer.getString("name"), volunteer.getString("about_volunteering"), volunteer.getString("value_in_coins"), duration, distance));
+                addItem(createVolunteerItem(String.valueOf(i) ,volunteer.getString("name"), volunteer.getString("about_volunteering"), volunteer.getString("value_in_coins"), duration, distance, volunteer.getString("picture"), volunteer.getString("address")));
             } catch (JSONException e) {
                 e.printStackTrace();
             }
@@ -88,20 +90,24 @@ public class VolunteerList extends AppCompatActivity {
             // add volunteers to the list displayed
             try {
                 String distance = volunteer.getString("distance_from_user");
+                int dist = (int)Float.parseFloat(distance);
                 // parse the distance from user string to meters or kilometers.
                 if (Float.parseFloat(distance)>1000) {
-                    distance = String.valueOf(Float.parseFloat(distance)/1000) + " קמ";
+                    dist = dist/1000;
+                    distance = String.valueOf(dist) + " קמ";
                 }
                 else {
-                    distance = String.valueOf(distance) + " מ'";
+                    distance =  dist + " מ'";
                 }
                 String duration = volunteer.getString("duration") + " דק";
-                addItem(createVolunteerItem(String.valueOf(i) ,volunteer.getString("name"), volunteer.getString("about_volunteering"), volunteer.getString("value_in_coins"), duration, distance));
+                addItem(createVolunteerItem(String.valueOf(i) ,volunteer.getString("name"), volunteer.getString("about_volunteering"), volunteer.getString("value_in_coins"), duration, distance, volunteer.getString("picture"), volunteer.getString("address")));
             } catch (JSONException e) {
                 e.printStackTrace();
             }
         }
     }
+    //                Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), imgUri);
+    //                img.setImageBitmap(bitmap);
 
     private static void addItem(VolunteerItem item) {
         ITEMS.add(item);
@@ -109,17 +115,18 @@ public class VolunteerList extends AppCompatActivity {
     }
 
     // creates the header
-    private static VolunteerItem createVolunteerItem(String id, String name, String description, String credits, String duration, String distance) {
+    private static VolunteerItem createVolunteerItem(String id, String name, String description, String credits, String duration, String distance, String URI ,String address) {
         // create the volunteer object
-        return new VolunteerItem(id, name, duration, distance, makeDetails(name, description, credits));
+        return new VolunteerItem(id, name, duration, distance, URI, makeDetails(description, credits, duration, address));
     }
 
     //creates the description section
-    private static String makeDetails(String name, String description, String credits) {
+    private static String makeDetails(String description, String credits, String duration, String address) {
         StringBuilder builder = new StringBuilder();
-        builder.append("פרטים לגבי התנדבות: " + name +"\n");
-        builder.append("תיאור: " + description +"\n");
+        builder.append(description +"\n\n");
+        builder.append("כתובת: " + address +"\n");
         builder.append("קרדיטים: " + credits +"\n");
+        builder.append("משך ההתנדבות: " + duration +"\n");
         return builder.toString();
     }
 
@@ -132,24 +139,17 @@ public class VolunteerList extends AppCompatActivity {
         public String details;
         public String duration;
         public String distance;
+        public String URI;
 
-        public VolunteerItem(String id, String content,String duration, String distance, String details) {
+        public VolunteerItem(String id, String content,String duration, String distance, String URI ,String details) {
             this.id = id;
             this.content = content;
             this.details = details;
             this.duration = duration;
             this.distance = distance;
+            this.URI = URI;
         }
 
-   /*     public void setItem(String id, String content, String duration, String distance, String details){
-            this.id = id;
-            this.content = content;
-            this.details = details;
-            this.duration = duration;
-            this.distance = distance;
-        }
-
-    */
         @Override
         public String toString() {
             return content;

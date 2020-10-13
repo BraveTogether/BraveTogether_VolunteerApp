@@ -86,7 +86,7 @@
                     android:layout_marginTop="120dp"
                     android:background="@drawable/circle"
                     android:padding="30dp"
-                    android:src="@drawable/ic_menu_camera"
+                    app:srcCompat="@drawable/ic_menu_camera"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.503"
                     app:layout_constraintStart_toStartOf="parent"
@@ -246,26 +246,26 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/confirmPasswordEditText" />
 
-                <EditText
-                    android:id="@+id/Address"
-                    android:layout_width="325dp"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginTop="15dp"
-                    android:background="@drawable/textfield_d"
-                    android:drawableRight="@drawable/home"
-                    android:drawablePadding="7dp"
-                    android:ellipsize="start"
-                    android:ems="10"
-                    android:gravity="right"
-                    android:hint="@string/address"
-                    android:inputType="textPostalAddress"
-                    android:paddingVertical="10dp"
-                    android:paddingRight="12dp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.508"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/PhoneNumber" />
+<!--                <EditText-->
+<!--                    android:id="@+id/Address"-->
+<!--                    android:layout_width="325dp"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_gravity="center"-->
+<!--                    android:layout_marginTop="15dp"-->
+<!--                    android:background="@drawable/textfield_d"-->
+<!--                    android:drawableRight="@drawable/home"-->
+<!--                    android:drawablePadding="7dp"-->
+<!--                    android:ellipsize="start"-->
+<!--                    android:ems="10"-->
+<!--                    android:gravity="right"-->
+<!--                    android:hint="@string/address"-->
+<!--                    android:inputType="textPostalAddress"-->
+<!--                    android:paddingVertical="10dp"-->
+<!--                    android:paddingRight="12dp"-->
+<!--                    app:layout_constraintEnd_toEndOf="parent"-->
+<!--                    app:layout_constraintHorizontal_bias="0.508"-->
+<!--                    app:layout_constraintStart_toStartOf="parent"-->
+<!--                    app:layout_constraintTop_toBottomOf="@+id/PhoneNumber" />-->
 
                 <!--                <ImageView-->
                 <!--                    android:id="@+id/imageView1"-->
@@ -275,6 +275,31 @@
                 <!--                    android:layout_alignParentTop="true"-->
                 <!--                    android:src="@drawable/about"-->
                 <!--                    android:z/>-->
+
+
+<!--                    android:layout_gravity="center"-->
+<!--                    android:layout_marginTop="15dp"-->
+<!--                    android:background="@drawable/textfield_d"-->
+<!--                    android:drawableRight="@drawable/home"-->
+<!--                    android:drawablePadding="7dp"-->
+<!--                    android:ellipsize="start"-->
+<!--                    android:ems="10"-->
+<!--                    android:hint="@string/address"-->
+<!--                    android:inputType="textPostalAddress"-->
+<!--                    android:paddingVertical="10dp"-->
+<!--                    android:paddingRight="12dp"-->
+                <fragment
+                    app:layout_constraintTop_toBottomOf="@+id/PhoneNumber"
+                    android:id="@+id/Address"
+                    android:name="com.google.android.libraries.places.widget.AutocompleteSupportFragment"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="right"
+                    android:visibility="visible"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.483"
+                    app:layout_constraintStart_toStartOf="parent"
+                    tools:layout_editor_absoluteY="650dp" />
 
                 <EditText
                     android:id="@+id/About"

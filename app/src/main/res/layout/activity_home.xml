@@ -50,7 +50,7 @@
                     app:layout_constraintVertical_bias="1.0" />
 
                 <TextView
-                    android:id="@+id/textView3"
+                    android:id="@+id/skipNowTextView"
                     android:layout_width="245dp"
                     android:layout_height="18dp"
                     android:layout_alignTop="@+id/ellipse_home_page"
@@ -184,7 +184,7 @@
                     android:textSize="18sp" />
 
                 <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/Recycler_view_list3"
+                    android:id="@+id/rcNearVolunteer"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/btnMore"
