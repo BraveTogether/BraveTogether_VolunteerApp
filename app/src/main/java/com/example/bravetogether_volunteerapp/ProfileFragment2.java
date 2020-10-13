@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.bravetogether_volunteerapp.adapters.profileTagAdapter;
@@ -16,7 +17,7 @@ import com.example.bravetogether_volunteerapp.adapters.profileTagAdapter;
 import java.util.ArrayList;
 
 
-public class ProfileFragment2 extends Fragment,  {
+public class ProfileFragment2 extends Fragment  {
 
     private ArrayList<String> mTagName = new ArrayList<>();
     private ArrayList<String> mTagDetails = new ArrayList<>();
@@ -36,7 +37,9 @@ public class ProfileFragment2 extends Fragment,  {
         mTagDetails.add("30 שעות התנדבות");
         mTagImage.add(getResources().getIdentifier("@drawable/component400",null,"com.example.bravetogether_volunteerapp" ));
         RecyclerView recyclerView = v.findViewById(R.id.my_recycler_view);
-        profileTagAdapter profileTagAdapter = new profileTagAdapter(this, mTagName, mTagDetails, mTagImage);
+        profileTagAdapter profileTagAdapter = new profileTagAdapter(this.getContext(), mTagName, mTagDetails, mTagImage);
+        recyclerView.setAdapter(profileTagAdapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
         return v;
     }
 
