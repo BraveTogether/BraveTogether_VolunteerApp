@@ -1,5 +1,7 @@
 package com.example.bravetogether_volunteerapp;
 
+import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -13,6 +15,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.bravetogether_volunteerapp.adapters.ProfileFragmentEventAdapter;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.util.ArrayList;
@@ -53,19 +56,29 @@ public class ProfileFragment2 extends Fragment {
         // TODO:: poll user data from server and set variables
     }
 
-    private void setVolunteerHistory(){
+    private void setVolunteerHistory(Context context){
         // TODO:: poll volunteer history from server.
 
     }
 
-    private void setNearVoluteer(){
+    private void setNearVoluteer(Context context){
         // TODO:: check user location and define near location (what is the radius)
         // TODO:: poll near volunteer from server.
+        ArrayList<VolunteerEvent> list = createDummyList(); // need to change to correct list.
+        rcNearVolunteers = ProfileView.findViewById(R.id.rcNearVolunteer);
+        ProfileFragmentEventAdapter adapter = new ProfileFragmentEventAdapter(context,list);
+
 
     }
 
-    // Dummy function for test ** need to delete **
-    private ArrayList<VolunteerEvent> CreateDummyList(){
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        setNearVoluteer(context);
+    }
+
+    // Dummy function for test ** need to be deleted **
+    private ArrayList<VolunteerEvent> createDummyList(){
         ArrayList<VolunteerEvent> dummyList =  new ArrayList<>();
         dummyList.add(new VolunteerEvent("עזרה בקניות","13/14/15","גיל הזהב", "120" ,"3" , "300"));
         dummyList.add(new VolunteerEvent("עזרה בקניות","13/14/15","גיל הזהב", "120" ,"3" , "300"));
