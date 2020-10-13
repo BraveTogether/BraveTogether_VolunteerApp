@@ -5,7 +5,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -24,13 +23,11 @@ public class profileTagAdapter extends  RecyclerView.Adapter<profileTagAdapter.V
     private static final String TAG = "profile_tags_adapter";
     private ArrayList<String> mTagName;
     private ArrayList<String> mTagDetails;
-    private ArrayList<Integer> mTagImage;
     private Context mContext;
 
-    public profileTagAdapter(Context context, ArrayList<String> tagName, ArrayList<String> tagDetails, ArrayList<Integer> tagImage)   {
+    public profileTagAdapter(Context context, ArrayList<String> tagName, ArrayList<String> tagDetails)   {
         mContext = context;
         mTagDetails = tagDetails;
-        mTagImage = tagImage;
         mTagName = tagName;
     }
 
@@ -44,25 +41,23 @@ public class profileTagAdapter extends  RecyclerView.Adapter<profileTagAdapter.V
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Log.d(TAG, "onBindViewHolder: called");
-        holder.tagImage.setImageResource(mTagImage.get(position));
         holder.tagName.setText(mTagName.get(position));
         holder.tagDetails.setText(mTagDetails.get(position));
     }
 
     @Override
     public int getItemCount() {
-        return mTagImage.size();
+        return mTagDetails.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder{
-        ImageView tagImage;
         TextView tagName;
         TextView tagDetails;
         RelativeLayout taglayout;
         LinearLayout tagLinearLayout;
+
         public ViewHolder(View itemView) {
             super(itemView);
-            tagImage = itemView.findViewById(R.id.tagImage);
             tagName = itemView.findViewById(R.id.tagName);
             tagDetails = itemView.findViewById(R.id.tagDetails);
             taglayout = itemView.findViewById(R.id.taglayout);
