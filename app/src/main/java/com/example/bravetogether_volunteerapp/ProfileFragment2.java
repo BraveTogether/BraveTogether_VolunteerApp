@@ -3,7 +3,6 @@ package com.example.bravetogether_volunteerapp;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -18,22 +17,20 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.bravetogether_volunteerapp.adapters.ProfileFragmentEventAdapter;
-import com.example.bravetogether_volunteerapp.adapters.profileTagAdapter;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.util.ArrayList;
+
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class ProfileFragment2 extends Fragment {
 
     // Variables:
-    private CircleImageView mProfileImage;
-    private TextView mUserName, mVolunteerHours, mCoins, mProcess;
-    private View ProfileView;
-    private RecyclerView rcTags,rcNearVolunteers,rcVolunteerHistory;
-    private Context context;
-    private ArrayList<String> mTagName = new ArrayList<>();
-    private ArrayList<String> mTagDetails = new ArrayList<>();
+   private CircleImageView mProfileImage;
+   private TextView mUserName, mVolunteerHours, mCoins, mProcess;
+   private  View ProfileView;
+   private RecyclerView rcTags,rcNearVolunteers,rcVolunteerHistory;
+   private Context context;
     public ProfileFragment2(){}
 
     @Nullable
@@ -41,14 +38,10 @@ public class ProfileFragment2 extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater,
                              @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        Log.d("ProfileFragment2", "onBindViewHolder: called");
         ProfileView = inflater.inflate(R.layout.fragment_profile2, container, false);
         setUserDate();
         setNearVoluteer();
         setVolunteerHistory();
-        profileTagAdapter p = new profileTagAdapter(context, mTagName, mTagDetails);
-        rcTags = ProfileView.findViewById(R.id.rcTags);
-        setRecyclerViewSetting(rcTags,p);
         return ProfileView;
     }
 
@@ -92,14 +85,11 @@ public class ProfileFragment2 extends Fragment {
     // Dummy function for test ** need to be deleted **
     private ArrayList<VolunteerEvent> createDummyList(){
         ArrayList<VolunteerEvent> dummyList =  new ArrayList<>();
-        mTagDetails.add("30 שעות התנדבות");
-        mTagName.add("אות גבורה");
         dummyList.add(new VolunteerEvent("עזרה בקניות","13/14/15","גיל הזהב", "120" ,"3" , "300"));
         dummyList.add(new VolunteerEvent("עזרה בקניות","13/14/15","גיל הזהב", "120" ,"3" , "300"));
         dummyList.add(new VolunteerEvent("עזרה בקניות","13/14/15","גיל הזהב", "120" ,"3" , "300"));
         return dummyList;
     }
-
 
     private void setRecyclerViewSetting(RecyclerView view, RecyclerView.Adapter adapter){
         view.setHasFixedSize(true);
