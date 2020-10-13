@@ -13,6 +13,7 @@ import android.widget.TextView;
 import androidx.fragment.app.Fragment;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.bravetogether_volunteerapp.adapters.ProfileFragmentEventAdapter;
@@ -29,7 +30,7 @@ public class ProfileFragment2 extends Fragment {
    private TextView mUserName, mVolunteerHours, mCoins, mProcess;
    private  View ProfileView;
    private RecyclerView rcTags,rcNearVolunteers,rcVolunteerHistory;
-
+   private Context context;
     public ProfileFragment2(){}
 
     @Nullable
@@ -39,7 +40,8 @@ public class ProfileFragment2 extends Fragment {
                              @Nullable Bundle savedInstanceState) {
         ProfileView = inflater.inflate(R.layout.fragment_profile2, container, false);
         setUserDate();
-    //checkk
+        setNearVoluteer();
+        setVolunteerHistory();
         return ProfileView;
     }
 
@@ -56,25 +58,28 @@ public class ProfileFragment2 extends Fragment {
         // TODO:: poll user data from server and set variables
     }
 
-    private void setVolunteerHistory(Context context){
+    private void setVolunteerHistory(){
         // TODO:: poll volunteer history from server.
+        ArrayList<VolunteerEvent> list = createDummyList(); // need to change to correct list.
+        rcVolunteerHistory = ProfileView.findViewById(R.id.rcVolunteerHistory);
+        ProfileFragmentEventAdapter adapter = new ProfileFragmentEventAdapter(context,list);
+        setRecyclerViewSetting(rcVolunteerHistory,adapter);
 
     }
 
-    private void setNearVoluteer(Context context){
+    private void setNearVoluteer(){
         // TODO:: check user location and define near location (what is the radius)
         // TODO:: poll near volunteer from server.
         ArrayList<VolunteerEvent> list = createDummyList(); // need to change to correct list.
         rcNearVolunteers = ProfileView.findViewById(R.id.rcNearVolunteer);
         ProfileFragmentEventAdapter adapter = new ProfileFragmentEventAdapter(context,list);
-
-
+        setRecyclerViewSetting(rcNearVolunteers,adapter);
     }
 
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
-        setNearVoluteer(context);
+        this.context = context;
     }
 
     // Dummy function for test ** need to be deleted **
@@ -86,5 +91,11 @@ public class ProfileFragment2 extends Fragment {
         return dummyList;
     }
 
+    private void setRecyclerViewSetting(RecyclerView view, RecyclerView.Adapter adapter){
+        view.setHasFixedSize(true);
+        view.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL,false ));
+        view.setAdapter(adapter);
+        view.setNestedScrollingEnabled(false);
+    }
 
 }
