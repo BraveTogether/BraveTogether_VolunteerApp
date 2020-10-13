@@ -1,6 +1,7 @@
 package com.example.bravetogether_volunteerapp.adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,7 +35,7 @@ public class ProfileFragmentEventAdapter extends RecyclerView.Adapter<ProfileFra
     }
 
     @Override
-    public void onBindViewHolder(@NonNull EventHolder holder, int position) {
+    public void onBindViewHolder(@NonNull EventHolder holder, final int position) {
         VolunteerEvent event = eventList.get(position);
         // TODO:: need to make sure that list holds start time and address
         String details = event.getLocation()+"|"+event.getDate()+"|"+event.getDuration();
@@ -42,7 +43,21 @@ public class ProfileFragmentEventAdapter extends RecyclerView.Adapter<ProfileFra
         holder.credits.setText(event.getNumberCredits());
         holder.details.setText(details);
         holder.headline.setText(event.getEventName());
-        // TODO:: need to understand how to add images
+        //  TODO:: need to understand how to add images
+
+        //  TODO:: finish share button action
+        holder.share.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent shareIntent = new Intent(Intent.ACTION_SEND);
+                shareIntent.setType("text/plain");
+                String shareUrl = "http://www.WE_NEED_EVENT_URL.org/"+position; // TODO:: check what are we sharing.
+                shareIntent.putExtra(Intent.EXTRA_TEXT,shareUrl);
+                context.startActivity(Intent.createChooser(shareIntent,"UNKNOWN FOR NOW"));
+            }
+        });
+
+        //  TODO:: handle onclick for view.
     }
 
     @Override
@@ -63,7 +78,6 @@ public class ProfileFragmentEventAdapter extends RecyclerView.Adapter<ProfileFra
             Vpic = (ImageView) itemView.findViewById(R.id.mVolnteerPic);
             Cpic = (ImageView) itemView.findViewById(R.id.mCoinPic);
             share = (ImageView) itemView.findViewById(R.id.mShare);
-            //  TODO:: share button action
 
         }
     }
