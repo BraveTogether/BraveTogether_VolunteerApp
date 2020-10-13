@@ -78,33 +78,31 @@ import androidmads.library.qrgenearator.QRGSaver;
 public class CreateVolunteerActivity extends AppCompatActivity {
 
     private String apiKey = "AIzaSyA0hReShDEqNU3cdSm9eot1atb8-CKBy0Q";
-    private String url;
-    private String address;
     String strDate;
-    String start_time;
     Context mcontext = this;
     private int minVolNum;
     private int maxVolNum;
     private final String sharedPrefFile = "com.example.android.BraveTogether_VolunteerApp";
     private SharedPreferences mPreferences;
     private ToggleButton toggleButton;
+    private Button sendToConfirm;
     AwesomeValidation awesomeValidation;
     boolean your_date_is_outdated = true;
     Button mButtonAddPicture;
-    String manager;
-    String name;
-    String about_place;
-    String about_volunteering;
-    String duration;
-    String min_volunteer = "-1";
-    String max_volunteers = "100000000";
-    String value_in_coins;
-    String picture = "NULL";
-    String online = "0";
+    private int manager = 8;
+    private String name = "test msg";
+    private String picture = "someurl";
+    private String address = "add";
+    private int online = 0;
+    private int duration = 0;
+    private String about_place = "place";
+    private String about_volunteering = "volunteering";
+    private int min_volunteer = 2;
+    private int max_volunteers = 5;
+    private String start_time = "080000";
     EditText nameTextView;
     EditText pdescriptEditText;
     EditText tdescriptEditText;
-    EditText valueInCoinsEditText;
 
     // Firebase
     StorageReference mStorageRef;
@@ -131,12 +129,10 @@ public class CreateVolunteerActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_volunteer);
-        url = getString(R.string.apiUrl);
 
         nameTextView = (EditText) findViewById(R.id.volunteerName);
         pdescriptEditText = (EditText) findViewById(R.id.placeDescrition);
         tdescriptEditText = (EditText) findViewById(R.id.todoeDescrition);
-        valueInCoinsEditText = (EditText) findViewById(R.id.valueInCoins);
 
         Button selectDate = findViewById(R.id.btnDate);
         Button selectTIme = findViewById(R.id.btnTime);
@@ -146,7 +142,7 @@ public class CreateVolunteerActivity extends AppCompatActivity {
         final TextView hourView = findViewById(R.id.hourView);
         final TextView durationView = findViewById(R.id.durationView);
         mPreferences = getSharedPreferences(sharedPrefFile, MODE_PRIVATE);
-        manager = "8"; //mPreferences.getString("uid", "-1");
+        manager = 8; //mPreferences.getString("uid", "-1");
         toggleButton = (ToggleButton) findViewById(R.id.online_button);
 
         // Firebase
@@ -172,13 +168,10 @@ public class CreateVolunteerActivity extends AppCompatActivity {
 //        awesomeValidation.addValidation(this, R.id.familyNameEditText,
 //                RegexTemplate.NOT_EMPTY, R.string.invalid_family_name);
 
-        // Validation for value in coins
-        awesomeValidation.addValidation(this, R.id.valueInCoins,
-                RegexTemplate.NOT_EMPTY, R.string.invalid_value_in_coins);
 
         // Validation for about volunteer
-        awesomeValidation.addValidation(this, R.id.todoeDescrition,
-                RegexTemplate.NOT_EMPTY, R.string.invalid_about_volunteer);
+//        awesomeValidation.addValidation(this, R.id.todoeDescrition,
+//                RegexTemplate.NOT_EMPTY, R.string.invalid_about_volunteer);
 
 
         //AutoComplete Place text
@@ -229,9 +222,9 @@ public class CreateVolunteerActivity extends AppCompatActivity {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
                 if (isChecked)
-                    online = "1";
+                    online = 1;
                 else
-                    online = "0";
+                    online = 0;
             }
         });
 
@@ -307,7 +300,7 @@ public class CreateVolunteerActivity extends AppCompatActivity {
                                 alert.setView(input);
                                 alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                                     public void onClick(DialogInterface dialog, int whichButton) {
-                                        duration = input.getText().toString();
+                                        duration = Integer.parseInt(input.getText().toString());
                                         durationView.setText(new StringBuilder().append(duration).
                                                 append(" שעות").toString());
                                     }
@@ -321,6 +314,81 @@ public class CreateVolunteerActivity extends AppCompatActivity {
                             }
                         }, mHour, mMinute, true);
                 timePickerDialog.show();
+            }
+        });
+
+        sendToConfirm = (Button) findViewById(R.id.sendToConfirm);
+        sendToConfirm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String url = getString(R.string.apiUrl);
+
+                JSONObject jsonBody = new JSONObject();
+                try{
+                    jsonBody.put("name", name);
+                    jsonBody.put("manager", manager);
+                    jsonBody.put("picture", picture);
+                    jsonBody.put("address", address);
+                    jsonBody.put("online", online);
+                    jsonBody.put("duration", duration);
+                    jsonBody.put("about_place", about_place);
+                    jsonBody.put("about_volunteering", about_volunteering);
+                    jsonBody.put("min_volunteer", min_volunteer);
+                    jsonBody.put("max_volunteers", max_volunteers);
+                    jsonBody.put("start_time", start_time);
+                }
+                catch (JSONException e){
+
+                }
+
+                final String requestBody = jsonBody.toString();
+
+                StringRequest stringRequest = new StringRequest(Request.Method.POST, url + "volunteers/events/",
+                        new Response.Listener<String>() {
+                            @Override
+                            public void onResponse(String response) {
+                                String id = null;
+                                JSONObject jsonObject;
+                                try {
+                                    jsonObject = new JSONObject(response);
+                                    id = jsonObject.optString("insertId");
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+                                int i = Integer.parseInt(id);
+                                Log.d("Response", id + " " + String.valueOf(i));
+                                Intent intent = new Intent(mcontext, Thanks.class);
+                                startActivity(intent);
+                            }
+                        },
+                        new Response.ErrorListener() {
+                            @Override
+                            public void onErrorResponse(VolleyError error) {
+                                try {
+                                    Log.d("error.response", Objects.requireNonNull(error.getMessage()));
+                                }
+                                catch (NullPointerException e)
+                                {
+                                    Log.d("error.null", "error is null");
+                                }
+                            }
+                        }) {
+                    @Override
+                    public byte[] getBody() throws AuthFailureError {
+                        try {
+                            return requestBody == null ? null : requestBody.getBytes("utf-8");
+                        } catch (UnsupportedEncodingException uee) {
+                            VolleyLog.wtf("Unsupported Encoding while trying to get the bytes of %s using %s", requestBody, "utf-8");
+                            return null;
+                        }
+                    }
+                    @Override
+                    public String getBodyContentType() {
+                        return "application/json";
+                    }
+                };
+                VolleySingleton.getInstance(CreateVolunteerActivity.this).addToRequestQueue(stringRequest);
+
             }
         });
 
@@ -339,7 +407,7 @@ public class CreateVolunteerActivity extends AppCompatActivity {
         alert.setView(input);
         alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int whichButton) {
-                min_volunteer = input.getText().toString();
+                min_volunteer = Integer.parseInt(input.getText().toString());
                 AlertDialog.Builder alert = new AlertDialog.Builder(mcontext);
                 alert.setTitle("מספר מתנדבים מקסימלי");
                 final EditText input = new EditText(mcontext);
@@ -348,7 +416,7 @@ public class CreateVolunteerActivity extends AppCompatActivity {
                 alert.setView(input);
                 alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int whichButton) {
-                        max_volunteers = input.getText().toString();
+                        max_volunteers = Integer.parseInt(input.getText().toString());
                         minVolView.setText(new StringBuilder().append(min_volunteer).
                                 append(" מינימום").toString());
                         maxVolView.setText(new StringBuilder().append(max_volunteers).
@@ -433,109 +501,5 @@ public class CreateVolunteerActivity extends AppCompatActivity {
         }
     }
 
-
-    public void sendToConfirm(View view) {
-        name = nameTextView.getText().toString();
-        about_place = pdescriptEditText.getText().toString(); // about the place
-        about_volunteering = tdescriptEditText.getText().toString(); // about the volunteer itself
-        value_in_coins = valueInCoinsEditText.getText().toString();
-
-
-        if (your_date_is_outdated) {
-            AlertDialog.Builder alert = new AlertDialog.Builder(mcontext);
-            final TextView tv = new TextView(mcontext);
-            tv.setText("התאריך שבחרת לא תקין");
-            alert.setView(tv);
-            alert.show();
-        }
-        else if (min_volunteer.equals("-1")){
-            AlertDialog.Builder alert = new AlertDialog.Builder(mcontext);
-            final TextView tv = new TextView(mcontext);
-            tv.setText("בחר מינימום מתנדבים");
-            alert.setView(tv);
-            alert.show();
-        }
-        else if (awesomeValidation.validate())
-        {
-            JSONObject jsonBody = new JSONObject();
-            try{
-                    jsonBody.put("name", name);
-                    jsonBody.put("manager", manager);
-                    jsonBody.put("picture", picture);
-                    jsonBody.put("address", address);
-                    jsonBody.put("online", online);
-                    jsonBody.put("duration", duration);
-                    jsonBody.put("about_place", about_place);
-                    jsonBody.put("about_volunteering", about_volunteering);
-                    jsonBody.put("min_volunteer", min_volunteer);
-                    jsonBody.put("max_volunteers", max_volunteers);
-                    jsonBody.put("value_in_coins", value_in_coins);
-                    jsonBody.put("start_time", start_time);
-            }
-            catch (JSONException e){
-
-            }
-
-            final String requestBody = jsonBody.toString();
-
-            StringRequest stringRequest = new StringRequest(Request.Method.POST, url + "volunteers/events/",
-                    new Response.Listener<String>() {
-                        @Override
-                        public void onResponse(String response) {
-                            Log.d("Response", response.toString());
-                            Intent intent = new Intent(mcontext, Thanks.class);
-                            startActivity(intent);
-                        }
-                    },
-                    new Response.ErrorListener() {
-                        @Override
-                        public void onErrorResponse(VolleyError error) {
-                            try {
-                                Log.d("error.response", Objects.requireNonNull(error.getMessage()));
-                            }
-                            catch (NullPointerException e)
-                            {
-                                Log.d("error.null", "error is null");
-                            }
-                        }
-                    }) {
-                @Override
-                public byte[] getBody() throws AuthFailureError {
-                    try {
-                        return requestBody == null ? null : requestBody.getBytes("utf-8");
-                    } catch (UnsupportedEncodingException uee) {
-                        VolleyLog.wtf("Unsupported Encoding while trying to get the bytes of %s using %s", requestBody, "utf-8");
-                        return null;
-                    }
-                }
-                @Override
-                public String getBodyContentType() {
-                    return "application/json";
-                }
-//                @Override
-//                protected Map<String, String> getParams() {
-//                    Map<String, String> params = new HashMap<>();
-//                    params.put("name", name);
-//                    params.put("manager", manager);
-//                    params.put("picture", picture);
-//                    params.put("address", address);
-//                    params.put("online", online);
-//                    params.put("duration", duration);
-//                    params.put("about_place", about_place);
-//                    params.put("about_volunteering", about_volunteering);
-//                    params.put("min_volunteer", min_volunteer);
-//                    params.put("max_volunteers", max_volunteers);
-//                    params.put("value_in_coins", value_in_coins);
-//                    params.put("start_time", start_time);
-//                    return params;
-//                }
-            };
-            VolleySingleton.getInstance(CreateVolunteerActivity.this).addToRequestQueue(stringRequest);
-        }
-        else {
-            Toast.makeText(getApplicationContext(),
-                    "Validation Failed - Please fill all fields correctly", Toast.LENGTH_SHORT).show();
-        }
-    }
 }
 
