@@ -6,10 +6,10 @@
     android:id="@+id/taglayout">
 
     <LinearLayout
+        android:id="@+id/tagLinearLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:id="@+id/tagLinearLayout">
+        android:orientation="vertical">
 
         <ImageView
             android:id="@+id/tagImage"
@@ -23,6 +23,7 @@
             android:layout_height="wrap_content"
             android:text="אות הגבורה"
             android:textAlignment="center"
+            android:textColor="#5C95E3"
             android:textStyle="bold" />
 
         <TextView
@@ -30,7 +31,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="30 שעות התנדבות"
-            android:textAlignment="center" />
+            android:textAlignment="center"
+            android:textColor="#5C95E3" />
 
     </LinearLayout>
 </RelativeLayout>
