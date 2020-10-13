@@ -103,6 +103,7 @@ public class CreateVolunteerActivity extends AppCompatActivity {
     EditText nameEditText;
     EditText pdescriptEditText;
     EditText tdescriptEditText;
+    String url;
 
     // Firebase
     StorageReference mStorageRef;
@@ -144,6 +145,7 @@ public class CreateVolunteerActivity extends AppCompatActivity {
         mPreferences = getSharedPreferences(sharedPrefFile, MODE_PRIVATE);
         manager = 8; //mPreferences.getString("uid", "-1");
         toggleButton = (ToggleButton) findViewById(R.id.online_button);
+        url = getString(R.string.apiUrl);
 
         // Firebase
         mStorageRef = FirebaseStorage.getInstance().getReference();
@@ -249,7 +251,7 @@ public class CreateVolunteerActivity extends AppCompatActivity {
                                         calendar.set(year, month, day);
 
 
-                                        @SuppressLint("SimpleDateFormat") SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+                                        @SuppressLint("SimpleDateFormat") SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
                                         strDate = format.format(calendar.getTime()); // Date for database
                                         Date parsed_date = null;
                                         try {
@@ -324,8 +326,6 @@ public class CreateVolunteerActivity extends AppCompatActivity {
                 name = nameEditText.getText().toString();
                 about_place = pdescriptEditText.getText().toString();
                 about_volunteering = tdescriptEditText.getText().toString();
-                String url = getString(R.string.apiUrl);
-
                 if (your_date_is_outdated) {
                     AlertDialog.Builder alert = new AlertDialog.Builder(mcontext);
                     final TextView tv = new TextView(mcontext);
@@ -364,18 +364,17 @@ public class CreateVolunteerActivity extends AppCompatActivity {
                             new Response.Listener<String>() {
                                 @Override
                                 public void onResponse(String response) {
-                                    String id = null;
+                                    String strID = null;
                                     JSONObject jsonObject;
                                     try {
                                         jsonObject = new JSONObject(response);
-                                        id = jsonObject.optString("insertId");
+                                        strID = jsonObject.optString("insertId");
                                     } catch (JSONException e) {
                                         e.printStackTrace();
                                     }
-                                    int i = Integer.parseInt(id);
-                                    Log.d("Response", id + " " + String.valueOf(i));
-                                    Intent intent = new Intent(mcontext, Thanks.class);
-                                    startActivity(intent);
+                                    int id = Integer.parseInt(strID);
+                                    Log.d("Response", strID);
+                                    writeDateToDB(id, strDate);
                                 }
                             },
                             new Response.ErrorListener() {
@@ -515,6 +514,64 @@ public class CreateVolunteerActivity extends AppCompatActivity {
                 e.printStackTrace();
             }
         }
+    }
+
+    protected void writeDateToDB(int vid, String date)
+    {
+        JSONObject jsonBody = new JSONObject();
+        try {
+            jsonBody.put("vid", vid);
+            jsonBody.put("date", date);
+        } catch (JSONException e) {
+
+        }
+
+        final String requestBody = jsonBody.toString();
+
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, url + "volunteers/events/dates",
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+//                        String strID = null;
+//                        JSONObject jsonObject;
+//                        try {
+//                            jsonObject = new JSONObject(response);
+//                            strID = jsonObject.optString("insertId");
+//                        } catch (JSONException e) {
+//                            e.printStackTrace();
+//                        }
+//                        int id = Integer.parseInt(strID);
+                        Log.d("Response", response.toString());
+                        Intent intent = new Intent(mcontext, Thanks.class);
+                        startActivity(intent);
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        try {
+                            Log.d("error.response", Objects.requireNonNull(error.getMessage()));
+                        } catch (NullPointerException e) {
+                            Log.d("error.null", "error is null");
+                        }
+                    }
+                }) {
+            @Override
+            public byte[] getBody() throws AuthFailureError {
+                try {
+                    return requestBody == null ? null : requestBody.getBytes("utf-8");
+                } catch (UnsupportedEncodingException uee) {
+                    VolleyLog.wtf("Unsupported Encoding while trying to get the bytes of %s using %s", requestBody, "utf-8");
+                    return null;
+                }
+            }
+
+            @Override
+            public String getBodyContentType() {
+                return "application/json";
+            }
+        };
+        VolleySingleton.getInstance(CreateVolunteerActivity.this).addToRequestQueue(stringRequest);
     }
 
 }
