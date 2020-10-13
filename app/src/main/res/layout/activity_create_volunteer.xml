@@ -404,32 +404,30 @@
                 app:layout_constraintTop_toTopOf="@+id/volNumView" />
 
 
-            <EditText
-                android:id="@+id/valueInCoins"
-                android:layout_width="204dp"
-                android:layout_height="38dp"
-                android:layout_marginTop="8dp"
-                android:background="@drawable/textfield_d"
-                android:hint="מה השווי של ההתנדבות"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.797"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/volNumView"
-                android:inputType="number"/>
+<!--            <EditText-->
+<!--                android:id="@+id/valueInCoins"-->
+<!--                android:layout_width="204dp"-->
+<!--                android:layout_height="38dp"-->
+<!--                android:layout_marginTop="8dp"-->
+<!--                android:background="@drawable/textfield_d"-->
+<!--                android:hint="מה השווי של ההתנדבות"-->
+<!--                app:layout_constraintEnd_toEndOf="parent"-->
+<!--                app:layout_constraintHorizontal_bias="0.797"-->
+<!--                app:layout_constraintStart_toStartOf="parent"-->
+<!--                app:layout_constraintTop_toBottomOf="@+id/volNumView"-->
+<!--                android:inputType="number"/>-->
 
-            <ImageView
+            <Button
                 android:id="@+id/sendToConfirm"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="50dp"
                 android:layout_marginBottom="20dp"
-                android:clickable="true"
-                android:onClick="sendToConfirm"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/valueInCoins"
-                app:srcCompat="@drawable/ic_sendtoconfirm" />
+                app:layout_constraintTop_toBottomOf="@+id/volNumView"
+                android:background="@drawable/ic_sendtoconfirm" />
 
             <ToggleButton
                 android:id="@+id/online_button"
@@ -439,8 +437,7 @@
                 android:text="ToggleButton"
                 android:textOff="online"
                 android:textOn="online"
-                app:layout_constraintEnd_toStartOf="@+id/valueInCoins"
-                app:layout_constraintHorizontal_bias="0.358"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/volNumView" />
 
