@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.util.Patterns;
@@ -33,14 +34,19 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.libraries.places.api.Places;
 import com.google.android.libraries.places.api.model.Place;
 import com.google.android.libraries.places.api.model.RectangularBounds;
+import com.google.android.libraries.places.api.model.TypeFilter;
 import com.google.android.libraries.places.api.net.PlacesClient;
 import com.google.android.libraries.places.widget.AutocompleteSupportFragment;
 import com.google.android.libraries.places.widget.listener.PlaceSelectionListener;
+import com.google.firebase.storage.FileDownloadTask;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
+import org.jetbrains.annotations.NotNull;
+
+import java.io.File;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -61,8 +67,8 @@ public class CreateAccountFirstActivity extends AppCompatActivity {
     Button mButtonAddPicture;
     AwesomeValidation awesomeValidation;
     private String url;
-    private String address;
-    private String apiKey = "AIzaSyA0hReShDEqNU3cdSm9eot1atb8-CKBy0Q";
+    String address = null;
+    AutocompleteSupportFragment autocompleteFragment;
 
     // Firebase
     StorageReference mStorageRef;
@@ -143,35 +149,71 @@ public class CreateAccountFirstActivity extends AppCompatActivity {
             }
         });
 
-        // Address AutoFill
-        final AutocompleteSupportFragment autocompleteFragment = (AutocompleteSupportFragment)
-                getSupportFragmentManager().findFragmentById(R.id.Address);
+        // Address AutoFill 2
+//        // Initialize the AutocompleteSupportFragment.
+//        autocompleteFragment = (AutocompleteSupportFragment)
+//                getSupportFragmentManager().findFragmentById(R.id.Address);
+//
+//        autocompleteFragment.setTypeFilter(TypeFilter.ADDRESS);
+//
+//        if (!Places.isInitialized()) {
+//            String apiKey = "AIzaSyA0hReShDEqNU3cdSm9eot1atb8-CKBy0Q";
+//            Places.initialize(getApplicationContext(), apiKey);
+//        }
+//        PlacesClient placesClient = Places.createClient(this);
+//
+//        autocompleteFragment.setLocationBias(RectangularBounds.newInstance(
+//                new LatLng(29.4533796, 34.2674994),
+//                new LatLng(33.3356317, 35.8950234)));
+//        autocompleteFragment.setCountries("IN");
+//
+//        // Specify the types of place data to return.
+//        autocompleteFragment.setPlaceFields(Arrays.asList(Place.Field.ID, Place.Field.NAME));
+//
+//        // Set up a PlaceSelectionListener to handle the response.
+//        autocompleteFragment.setOnPlaceSelectedListener(new PlaceSelectionListener() {
+//            @Override
+//            public void onPlaceSelected(@NotNull Place place) {
+//                // TODO: Get info about the selected place.
+//                Log.i("TAG", "Place: " + place.getName() + ", " + place.getId());
+//            }
+//
+//            @Override
+//            public void onError(@NotNull Status status) {
+//                // TODO: Handle the error.
+//                Log.i("TAG", "An error occurred: " + status);
+//            }
+//        });
 
-        Places.initialize(getApplicationContext(), apiKey); //Initialize SDK
-        PlacesClient placesClient = Places.createClient(this);
-
-        autocompleteFragment.setLocationBias(RectangularBounds.newInstance(
-                new LatLng(29.4533796, 34.2674994),
-                new LatLng(33.3356317, 35.8950234)));
-
-        // Specify the types of place data to return.
-        autocompleteFragment.setPlaceFields(Arrays.asList(Place.Field.ADDRESS));
-
-        // Set up a PlaceSelectionListener to handle the response.
-        autocompleteFragment.setOnPlaceSelectedListener(new PlaceSelectionListener() {
-            @Override
-            public void onPlaceSelected(Place place) {
-                // TODO: Get info about the selected place.
-                address = place.getAddress();
-                Log.i("place", "Place: " + place.getAddress());
-            }
-
-            @Override
-            public void onError(Status status) {
-                // TODO: Handle the error.
-                Log.i("place.error", "An error occurred: " + status);
-            }
-        });
+//        // Address AutoFill
+//        final AutocompleteSupportFragment autocompleteFragment = (AutocompleteSupportFragment)
+//                getSupportFragmentManager().findFragmentById(R.id.Address);
+//
+//        Places.initialize(getApplicationContext(), apiKey); //Initialize SDK
+//        PlacesClient placesClient = Places.createClient(this);
+//
+//        autocompleteFragment.setLocationBias(RectangularBounds.newInstance(
+//                new LatLng(29.4533796, 34.2674994),
+//                new LatLng(33.3356317, 35.8950234)));
+//
+//        // Specify the types of place data to return.
+//        autocompleteFragment.setPlaceFields(Arrays.asList(Place.Field.ADDRESS));
+//
+//        // Set up a PlaceSelectionListener to handle the response.
+//        autocompleteFragment.setOnPlaceSelectedListener(new PlaceSelectionListener() {
+//            @Override
+//            public void onPlaceSelected(Place place) {
+//                // TODO: Get info about the selected place.
+//                address = place.getAddress();
+//                Log.i("place", "Place: " + place.getAddress());
+//            }
+//
+//            @Override
+//            public void onError(Status status) {
+//                // TODO: Handle the error.
+//                Log.i("place.error", "An error occurred: " + status);
+//            }
+//        });
     }
 
     // ------------------------------- Photo Uploading ------------------------------- //
@@ -183,6 +225,45 @@ public class CreateAccountFirstActivity extends AppCompatActivity {
         intent.setAction(Intent.ACTION_GET_CONTENT);
         startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE_REQUEST);
     }
+
+//    // ----------------------------------- Retrieve Image ----------------------------------- //
+//
+//    final File rootPath = new File(Environment.getExternalStorageDirectory(), "Brave-Together");
+//
+//    private ProgressDialog showProgress(){
+//        ProgressDialog  pd = new ProgressDialog(this);
+//        pd.setMessage("Downloading... Please Wait");
+//        pd.setIndeterminate(true);
+//        pd.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+//        pd.show();
+//        return pd;
+//    }
+//
+//    private void retrieveImg(Uri uri){
+//        final ProgressDialog  pd = showProgress();
+//        if (!rootPath.exists()) {
+//            rootPath.mkdirs();
+//        }
+//        final File localFile = new File(rootPath, "braveTogether.jpg");
+//
+//        StorageReference storageRef = FirebaseStorage.getInstance().getReferenceFromUrl(uri.toString());
+//        storageRef.getFile(localFile).addOnSuccessListener(new OnSuccessListener <FileDownloadTask.TaskSnapshot>() {
+//            @Override
+//            public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
+//                Log.e("firebase ", ";local tem file created  created " + localFile.toString());
+//                if (localFile.canRead()){
+//                    pd.dismiss();
+//                }
+//                Toast.makeText(getApplicationContext(), "Download Completed", Toast.LENGTH_SHORT).show();
+//            }
+//        }).addOnFailureListener(new OnFailureListener() {
+//            @Override
+//            public void onFailure(@NonNull Exception exception) {
+//                Log.e("firebase ", ";local tem file not created  created " + exception.toString());
+//                Toast.makeText(getApplicationContext(), "Download Incompleted", Toast.LENGTH_LONG).show();
+//            }
+//        });
+//    }
 
     // uploading the image to firebase
     private void uploadImg() {
