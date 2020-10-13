@@ -40,7 +40,7 @@ public class ProfileFragment2 extends Fragment {
                              @Nullable Bundle savedInstanceState) {
         ProfileView = inflater.inflate(R.layout.fragment_profile2, container, false);
         setUserDate();
-        setNearVoluמteer();
+        setNearVolunteer();
         setVolunteerHistory();
         return ProfileView;
     }
@@ -67,7 +67,7 @@ public class ProfileFragment2 extends Fragment {
 
     }
 
-    private void setNearVoluמteer(){
+    private void setNearVolunteer(){
         // TODO:: check user location and define near location (what is the radius)
         // TODO:: poll near volunteer from server.
         ArrayList<VolunteerEvent> list = createDummyList(); // need to change to correct list.
