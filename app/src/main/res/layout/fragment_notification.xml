@@ -11,29 +11,36 @@
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:gravity="right"
+        android:layout_marginTop="40dp"
     >
     <TextView
+    android:layout_marginEnd="40dp"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:gravity="center"
     android:text="רדיוס חיפוש התנדבות"
     android:textColor="#001925"
     android:textSize="18sp"
     ></TextView>
+
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:gravity="center"
+        >
         <TextView
             android:layout_width="91dp"
             android:layout_height="28dp"
             android:background="@drawable/textfield_d_buttons"
             android:gravity="center"
             android:text="ללא הגבלה"
+            android:layout_marginEnd="10dp"
             android:textColor="#001925"
             android:textSize="14sp"></TextView>
         <TextView
             android:layout_width="91dp"
             android:layout_height="28dp"
+            android:layout_marginEnd="10dp"
             android:background="@drawable/textfield_d_buttons"
             android:gravity="center"
             android:text="20 קמ"
@@ -42,6 +49,7 @@
         <TextView
             android:layout_width="91dp"
             android:layout_height="28dp"
+            android:layout_marginEnd="10dp"
             android:background="@drawable/textfield_d_buttons"
             android:gravity="center"
             android:text="15 קמ"
@@ -50,9 +58,10 @@
         <TextView
             android:layout_width="91dp"
             android:layout_height="28dp"
+
             android:background="@drawable/textfield_d_buttons"
             android:gravity="center"
-            android:text="ערוך התראה"
+            android:text="10 קמ"
             android:textColor="#001925"
             android:textSize="14sp"></TextView>
     </LinearLayout>
@@ -61,89 +70,178 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:text="רדיוס חיפוש התנדבות"
+        android:layout_marginTop="20dp"
+        android:text="משך זמן התנדבות עד-"
         android:textColor="#001925"
         android:textSize="18sp"
+        android:layout_marginEnd="40dp"
         ></TextView>
+
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_marginTop="20dp"
+        >
+
         <TextView
             android:layout_width="91dp"
             android:layout_height="28dp"
             android:background="@drawable/textfield_d_buttons"
             android:gravity="center"
-            android:text="ערוך התראה"
+            android:text="ללא הגבלה"
+            android:layout_marginEnd="10dp"
             android:textColor="#001925"
             android:textSize="14sp"></TextView>
+
         <TextView
             android:layout_width="91dp"
             android:layout_height="28dp"
             android:background="@drawable/textfield_d_buttons"
             android:gravity="center"
-            android:text="ערוך התראה"
+            android:text="2 שעות"
+            android:layout_marginEnd="10dp"
             android:textColor="#001925"
             android:textSize="14sp"></TextView>
+
         <TextView
             android:layout_width="91dp"
             android:layout_height="28dp"
+            android:layout_marginEnd="10dp"
             android:background="@drawable/textfield_d_buttons"
             android:gravity="center"
-            android:text="ערוך התראה"
+            android:text="1 שעות"
             android:textColor="#001925"
             android:textSize="14sp"></TextView>
+
         <TextView
             android:layout_width="91dp"
             android:layout_height="28dp"
+
             android:background="@drawable/textfield_d_buttons"
             android:gravity="center"
-            android:text="ערוך התראה"
+            android:text="30 דק'"
             android:textColor="#001925"
             android:textSize="14sp"></TextView>
+
     </LinearLayout>
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:text="רדיוס חיפוש התנדבות"
+        android:text="זמנים במהלך היום"
         android:textColor="#001925"
         android:textSize="18sp"
+        android:layout_marginEnd="40dp"
+        android:layout_marginTop="20dp"
         ></TextView>
+
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:gravity="center">
+
         <TextView
             android:layout_width="91dp"
             android:layout_height="28dp"
             android:background="@drawable/textfield_d_buttons"
             android:gravity="center"
-            android:text="ערוך התראה"
+            android:layout_marginEnd="10dp"
+            android:text="ערב"
             android:textColor="#001925"
             android:textSize="14sp"></TextView>
+
         <TextView
             android:layout_width="91dp"
             android:layout_height="28dp"
+            android:layout_marginEnd="10dp"
             android:background="@drawable/textfield_d_buttons"
             android:gravity="center"
-            android:text="ערוך התראה"
+            android:text="אחר הצהריים"
             android:textColor="#001925"
             android:textSize="14sp"></TextView>
+
         <TextView
             android:layout_width="91dp"
             android:layout_height="28dp"
+            android:layout_marginEnd="10dp"
             android:background="@drawable/textfield_d_buttons"
             android:gravity="center"
-            android:text="ערוך התראה"
+            android:text="צהריים"
             android:textColor="#001925"
             android:textSize="14sp"></TextView>
+
         <TextView
             android:layout_width="91dp"
             android:layout_height="28dp"
             android:background="@drawable/textfield_d_buttons"
             android:gravity="center"
-            android:text="ערוך התראה"
+            android:text="בוקר"
+            android:textColor="#001925"
+            android:textSize="14sp"></TextView>
+
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="91dp"
+        android:layout_height="28dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="10dp"
+        android:background="@drawable/textfield_d_buttons"
+        android:gravity="center"
+        android:text="ללא הגבלה"
+        android:textColor="#001925"
+        android:textSize="14sp"></TextView>
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:gravity="center"
+        android:text="אופי התנדבות"
+        android:textColor="#001925"
+        android:textSize="18sp"
+        android:layout_marginEnd="40dp"
+        ></TextView>
+
+    <LinearLayout
+        android:layout_marginTop="20dp"
+        android:layout_gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="right">
+
+        <TextView
+            android:layout_width="91dp"
+            android:layout_height="28dp"
+            android:background="@drawable/textfield_d_buttons"
+            android:gravity="center"
+            android:text="התנדבות פיזית"
+            android:textColor="#001925"
+            android:layout_marginEnd="10dp"
+            android:textSize="14sp"></TextView>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="28dp"
+            android:layout_marginEnd="10dp"
+            android:background="@drawable/textfield_d_buttons"
+            android:gravity="center"
+            android:text="התנדבות אונליין"
             android:textColor="#001925"
             android:textSize="14sp"></TextView>
     </LinearLayout>
+
+    <Button
+        android:id="@+id/sendToConfirm"
+        android:layout_width="100dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="100dp"
+        android:layout_gravity="center"
+        android:background="@drawable/little" />
+
 </LinearLayout>
 </FrameLayout>
