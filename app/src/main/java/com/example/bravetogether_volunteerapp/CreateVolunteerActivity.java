@@ -90,19 +90,20 @@ public class CreateVolunteerActivity extends AppCompatActivity {
     boolean your_date_is_outdated = true;
     Button mButtonAddPicture;
     private int manager = 8;
-    private String name = "test msg";
-    private String picture = "someurl";
-    private String address = "add";
+    String name = "faf";
+    private String picture = "picurl";
+    private String address = "adddd";
     private int online = 0;
     private int duration = 0;
     private String about_place = "place";
     private String about_volunteering = "volunteering";
-    private int min_volunteer = 2;
-    private int max_volunteers = 5;
+    private int min_volunteer = -1;
+    private int max_volunteers = 10000;
     private String start_time = "080000";
-    EditText nameTextView;
+    EditText nameEditText;
     EditText pdescriptEditText;
     EditText tdescriptEditText;
+    String url;
 
     // Firebase
     StorageReference mStorageRef;
@@ -130,7 +131,7 @@ public class CreateVolunteerActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_volunteer);
 
-        nameTextView = (EditText) findViewById(R.id.volunteerName);
+        nameEditText = (EditText) findViewById(R.id.volunteerName);
         pdescriptEditText = (EditText) findViewById(R.id.placeDescrition);
         tdescriptEditText = (EditText) findViewById(R.id.todoeDescrition);
 
@@ -144,6 +145,7 @@ public class CreateVolunteerActivity extends AppCompatActivity {
         mPreferences = getSharedPreferences(sharedPrefFile, MODE_PRIVATE);
         manager = 8; //mPreferences.getString("uid", "-1");
         toggleButton = (ToggleButton) findViewById(R.id.online_button);
+        url = getString(R.string.apiUrl);
 
         // Firebase
         mStorageRef = FirebaseStorage.getInstance().getReference();
@@ -164,14 +166,14 @@ public class CreateVolunteerActivity extends AppCompatActivity {
         // Validation for volunteer name
         awesomeValidation.addValidation(this, R.id.volunteerName,
                 RegexTemplate.NOT_EMPTY, R.string.invalid_volunteer_name);
-//        // Validation for address
-//        awesomeValidation.addValidation(this, R.id.familyNameEditText,
-//                RegexTemplate.NOT_EMPTY, R.string.invalid_family_name);
+        // Validation for address
+        awesomeValidation.addValidation(this, R.id.familyNameEditText,
+                RegexTemplate.NOT_EMPTY, R.string.invalid_family_name);
 
 
-        // Validation for about volunteer
-//        awesomeValidation.addValidation(this, R.id.todoeDescrition,
-//                RegexTemplate.NOT_EMPTY, R.string.invalid_about_volunteer);
+//         Validation for about volunteer
+        awesomeValidation.addValidation(this, R.id.todoeDescrition,
+                RegexTemplate.NOT_EMPTY, R.string.invalid_about_volunteer);
 
 
         //AutoComplete Place text
@@ -249,7 +251,7 @@ public class CreateVolunteerActivity extends AppCompatActivity {
                                         calendar.set(year, month, day);
 
 
-                                        @SuppressLint("SimpleDateFormat") SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+                                        @SuppressLint("SimpleDateFormat") SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
                                         strDate = format.format(calendar.getTime()); // Date for database
                                         Date parsed_date = null;
                                         try {
@@ -321,74 +323,87 @@ public class CreateVolunteerActivity extends AppCompatActivity {
         sendToConfirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String url = getString(R.string.apiUrl);
-
-                JSONObject jsonBody = new JSONObject();
-                try{
-                    jsonBody.put("name", name);
-                    jsonBody.put("manager", manager);
-                    jsonBody.put("picture", picture);
-                    jsonBody.put("address", address);
-                    jsonBody.put("online", online);
-                    jsonBody.put("duration", duration);
-                    jsonBody.put("about_place", about_place);
-                    jsonBody.put("about_volunteering", about_volunteering);
-                    jsonBody.put("min_volunteer", min_volunteer);
-                    jsonBody.put("max_volunteers", max_volunteers);
-                    jsonBody.put("start_time", start_time);
+                name = nameEditText.getText().toString();
+                about_place = pdescriptEditText.getText().toString();
+                about_volunteering = tdescriptEditText.getText().toString();
+                if (your_date_is_outdated) {
+                    AlertDialog.Builder alert = new AlertDialog.Builder(mcontext);
+                    final TextView tv = new TextView(mcontext);
+                    tv.setText("התאריך שבחרת לא תקין");
+                    alert.setView(tv);
+                    alert.show();
                 }
-                catch (JSONException e){
-
+                else if (min_volunteer == -1){
+                    AlertDialog.Builder alert = new AlertDialog.Builder(mcontext);
+                    final TextView tv = new TextView(mcontext);
+                    tv.setText("בחר מינימום מתנדבים");
+                    alert.setView(tv);
+                    alert.show();
                 }
+                else if(awesomeValidation.validate()) {
+                    JSONObject jsonBody = new JSONObject();
+                    try {
+                        jsonBody.put("name", name);
+                        jsonBody.put("manager", manager);
+                        jsonBody.put("picture", picture);
+                        jsonBody.put("address", address);
+                        jsonBody.put("online", online);
+                        jsonBody.put("duration", duration);
+                        jsonBody.put("about_place", about_place);
+                        jsonBody.put("about_volunteering", about_volunteering);
+                        jsonBody.put("min_volunteer", min_volunteer);
+                        jsonBody.put("max_volunteers", max_volunteers);
+                        jsonBody.put("start_time", start_time);
+                    } catch (JSONException e) {
 
-                final String requestBody = jsonBody.toString();
+                    }
 
-                StringRequest stringRequest = new StringRequest(Request.Method.POST, url + "volunteers/events/",
-                        new Response.Listener<String>() {
-                            @Override
-                            public void onResponse(String response) {
-                                String id = null;
-                                JSONObject jsonObject;
-                                try {
-                                    jsonObject = new JSONObject(response);
-                                    id = jsonObject.optString("insertId");
-                                } catch (JSONException e) {
-                                    e.printStackTrace();
+                    final String requestBody = jsonBody.toString();
+
+                    StringRequest stringRequest = new StringRequest(Request.Method.POST, url + "volunteers/events/",
+                            new Response.Listener<String>() {
+                                @Override
+                                public void onResponse(String response) {
+                                    String strID = null;
+                                    JSONObject jsonObject;
+                                    try {
+                                        jsonObject = new JSONObject(response);
+                                        strID = jsonObject.optString("insertId");
+                                    } catch (JSONException e) {
+                                        e.printStackTrace();
+                                    }
+                                    int id = Integer.parseInt(strID);
+                                    Log.d("Response", strID);
+                                    writeDateToDB(id, strDate);
                                 }
-                                int i = Integer.parseInt(id);
-                                Log.d("Response", id + " " + String.valueOf(i));
-                                Intent intent = new Intent(mcontext, Thanks.class);
-                                startActivity(intent);
+                            },
+                            new Response.ErrorListener() {
+                                @Override
+                                public void onErrorResponse(VolleyError error) {
+                                    try {
+                                        Log.d("error.response", Objects.requireNonNull(error.getMessage()));
+                                    } catch (NullPointerException e) {
+                                        Log.d("error.null", "error is null");
+                                    }
+                                }
+                            }) {
+                        @Override
+                        public byte[] getBody() throws AuthFailureError {
+                            try {
+                                return requestBody == null ? null : requestBody.getBytes("utf-8");
+                            } catch (UnsupportedEncodingException uee) {
+                                VolleyLog.wtf("Unsupported Encoding while trying to get the bytes of %s using %s", requestBody, "utf-8");
+                                return null;
                             }
-                        },
-                        new Response.ErrorListener() {
-                            @Override
-                            public void onErrorResponse(VolleyError error) {
-                                try {
-                                    Log.d("error.response", Objects.requireNonNull(error.getMessage()));
-                                }
-                                catch (NullPointerException e)
-                                {
-                                    Log.d("error.null", "error is null");
-                                }
-                            }
-                        }) {
-                    @Override
-                    public byte[] getBody() throws AuthFailureError {
-                        try {
-                            return requestBody == null ? null : requestBody.getBytes("utf-8");
-                        } catch (UnsupportedEncodingException uee) {
-                            VolleyLog.wtf("Unsupported Encoding while trying to get the bytes of %s using %s", requestBody, "utf-8");
-                            return null;
                         }
-                    }
-                    @Override
-                    public String getBodyContentType() {
-                        return "application/json";
-                    }
-                };
-                VolleySingleton.getInstance(CreateVolunteerActivity.this).addToRequestQueue(stringRequest);
 
+                        @Override
+                        public String getBodyContentType() {
+                            return "application/json";
+                        }
+                    };
+                    VolleySingleton.getInstance(CreateVolunteerActivity.this).addToRequestQueue(stringRequest);
+                }
             }
         });
 
@@ -499,6 +514,64 @@ public class CreateVolunteerActivity extends AppCompatActivity {
                 e.printStackTrace();
             }
         }
+    }
+
+    protected void writeDateToDB(int vid, String date)
+    {
+        JSONObject jsonBody = new JSONObject();
+        try {
+            jsonBody.put("vid", vid);
+            jsonBody.put("date", date);
+        } catch (JSONException e) {
+
+        }
+
+        final String requestBody = jsonBody.toString();
+
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, url + "volunteers/events/dates",
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+//                        String strID = null;
+//                        JSONObject jsonObject;
+//                        try {
+//                            jsonObject = new JSONObject(response);
+//                            strID = jsonObject.optString("insertId");
+//                        } catch (JSONException e) {
+//                            e.printStackTrace();
+//                        }
+//                        int id = Integer.parseInt(strID);
+                        Log.d("Response", response.toString());
+                        Intent intent = new Intent(mcontext, Thanks.class);
+                        startActivity(intent);
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        try {
+                            Log.d("error.response", Objects.requireNonNull(error.getMessage()));
+                        } catch (NullPointerException e) {
+                            Log.d("error.null", "error is null");
+                        }
+                    }
+                }) {
+            @Override
+            public byte[] getBody() throws AuthFailureError {
+                try {
+                    return requestBody == null ? null : requestBody.getBytes("utf-8");
+                } catch (UnsupportedEncodingException uee) {
+                    VolleyLog.wtf("Unsupported Encoding while trying to get the bytes of %s using %s", requestBody, "utf-8");
+                    return null;
+                }
+            }
+
+            @Override
+            public String getBodyContentType() {
+                return "application/json";
+            }
+        };
+        VolleySingleton.getInstance(CreateVolunteerActivity.this).addToRequestQueue(stringRequest);
     }
 
 }

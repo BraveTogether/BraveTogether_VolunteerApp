@@ -1,32 +1,35 @@
 package com.example.bravetogether_volunteerapp.adapters;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
+import android.nfc.Tag;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.bravetogether_volunteerapp.ProfileFragment2;
 import com.example.bravetogether_volunteerapp.R;
 
 import java.util.ArrayList;
 
 public class Tags_ProfileFragment_Adapter extends RecyclerView.Adapter<Tags_ProfileFragment_Adapter.TagViewHolder> {
     // ----------- Variables -------------
-    private ArrayList<String> tagsNames;
-    private ArrayList<String> tagsDetails;
-    private ArrayList<String> tagsImages; //need to check how to set those pictures for now using url.
+    private ArrayList<ProfileFragment2.TagObject> tags;
     private Context context;
+    // ----------- For Debug -------------
+    private static final String TAG = "Tags_ProfileFragment_Adapter";
 
-    public Tags_ProfileFragment_Adapter (Context context, ArrayList<String> names, ArrayList<String> details, ArrayList<String> imgs){
+    public Tags_ProfileFragment_Adapter (Context context,ArrayList<ProfileFragment2.TagObject> tags ){
         this.context = context;
-        tagsDetails = details;
-        tagsImages = imgs;
-        tagsNames = names;
+        this.tags = tags;
     }
 
     @NonNull
@@ -37,15 +40,18 @@ public class Tags_ProfileFragment_Adapter extends RecyclerView.Adapter<Tags_Prof
         return holder;
     }
 
+    @SuppressLint("LongLogTag")
     @Override
     public void onBindViewHolder(@NonNull TagViewHolder holder, int position) {
-         //image handler by using url
-        
+        Log.d(TAG, "onBindViewHolder: called");
+        holder.tagDetails.setText(tags.get(position).getTagDetails());
+        holder.tagName.setText(tags.get(position).getTagName());
+        //holder.tagImage.setImageResource(tagsImages.get(position));--> waits for DB
     }
 
     @Override
     public int getItemCount() {
-        return 0;
+        return (tags != null)? tags.size():0;
     }
 
     public class TagViewHolder extends RecyclerView.ViewHolder{
@@ -55,11 +61,10 @@ public class Tags_ProfileFragment_Adapter extends RecyclerView.Adapter<Tags_Prof
         RelativeLayout parentlayout ;
         public TagViewHolder(@NonNull View itemView) {
             super(itemView);
-            tagImage = (ImageView) itemView.findViewById(R.id.tagImage);
+           // tagImage = (ImageView) itemView.findViewById(R.id.tagImage); --> waits for DB
             tagName = (TextView) itemView.findViewById(R.id.tagName);
             tagDetails = (TextView) itemView.findViewById(R.id.tagDetails);
             parentlayout = (RelativeLayout) itemView.findViewById(R.id.taglayout); // check if needed -> just in case ov clicking the item
-
         }
     }
 }
