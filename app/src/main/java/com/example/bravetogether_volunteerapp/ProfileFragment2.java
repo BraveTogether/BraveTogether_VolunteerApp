@@ -26,7 +26,7 @@ public class ProfileFragment2 extends Fragment {
    private CircleImageView mProfileImage;
    private TextView mUserName, mVolunteerHours, mCoins, mProcess;
    private  View ProfileView;
-   private RecyclerView rcTags,rcNearVolunteers,rcVolunteerHistory;
+   private RecyclerView rcTags,rcNearVolunteers, rcMyVolunteer;
    private Context context;
 
     public ProfileFragment2(){}
@@ -39,7 +39,7 @@ public class ProfileFragment2 extends Fragment {
         ProfileView = inflater.inflate(R.layout.fragment_profile2, container, false);
         setUserDate();
         setNearVolunteer();
-        setVolunteerHistory();
+        setMyVolunteers();
         setTags();
         return ProfileView;
     }
@@ -63,13 +63,12 @@ public class ProfileFragment2 extends Fragment {
     }
 
     // RecyclerView handlers -- Horizontal scrolling --
-    private void setVolunteerHistory(){
+    private void setMyVolunteers(){
         // TODO:: poll volunteer history from server.
         ArrayList<VolunteerEvent> list = createDummyEventList(); // need to change to correct list.
-        rcVolunteerHistory = ProfileView.findViewById(R.id.rcVolunteerHistory);
+        rcMyVolunteer = ProfileView.findViewById(R.id.rcMyVolunteers);
         ProfileFragmentEventAdapter adapter = new ProfileFragmentEventAdapter(context,list);
-        setRecyclerViewSetting(rcVolunteerHistory,adapter);
-
+        setRecyclerViewSetting(rcMyVolunteer,adapter);
     }
 
     private void setNearVolunteer(){

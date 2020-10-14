@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.bravetogether_volunteerapp.R;
 import com.example.bravetogether_volunteerapp.VolunteerEvent;
+import com.example.bravetogether_volunteerapp.interfaces.ItemClickListener;
 
 import java.util.List;
 
@@ -36,7 +37,7 @@ public class ProfileFragmentEventAdapter extends RecyclerView.Adapter<ProfileFra
 
     @Override
     public void onBindViewHolder(@NonNull EventHolder holder, final int position) {
-        VolunteerEvent event = eventList.get(position);
+        final VolunteerEvent event = eventList.get(position);
         // TODO:: need to make sure that list holds start time and address
         String details = event.getLocation()+"|"+event.getDate()+"|"+event.getDuration();
         //set textviews:
@@ -57,7 +58,17 @@ public class ProfileFragmentEventAdapter extends RecyclerView.Adapter<ProfileFra
             }
         });
 
-        //  TODO:: handle onclick for view.
+        holder.Vpic.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                directToEventPage(event);
+            }
+        });
+
+    }
+
+    private void directToEventPage(VolunteerEvent event){
+        // TODO:: complete method
     }
 
     @Override
@@ -69,6 +80,12 @@ public class ProfileFragmentEventAdapter extends RecyclerView.Adapter<ProfileFra
         TextView details,credits,headline;
         ImageView Vpic,Cpic,share;
         RelativeLayout parent;
+        ItemClickListener onclicklistener;
+
+        public void SetOnclickListener( ItemClickListener onclicklistener){
+            this.onclicklistener = onclicklistener;
+        }
+
         public EventHolder(@NonNull View itemView) {
             super(itemView);
             parent = (RelativeLayout) itemView.findViewById(R.id.parent);
