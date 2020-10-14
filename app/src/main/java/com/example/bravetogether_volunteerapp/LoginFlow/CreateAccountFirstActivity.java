@@ -1,10 +1,14 @@
 package com.example.bravetogether_volunteerapp.LoginFlow;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.icu.text.SimpleDateFormat;
+import android.icu.util.Calendar;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
@@ -14,9 +18,12 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.android.volley.AuthFailureError;
@@ -62,6 +69,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.UUID;
 
+@RequiresApi(api = Build.VERSION_CODES.N)
 public class CreateAccountFirstActivity extends AppCompatActivity {
 
     // initialize variables
@@ -71,13 +79,19 @@ public class CreateAccountFirstActivity extends AppCompatActivity {
     EditText mTextPassword;
     EditText mTextConfirmPassword;
     EditText mTextPhoneNumber;
+    EditText mTextAddress;
     EditText mTextAbout;
     Button mButtonLetsVolunteer;
     Button mButtonAddPicture;
     AwesomeValidation awesomeValidation;
+
+    // DB
+    String strDate;
     private String url;
-    String address = null;
-    AutocompleteSupportFragment autocompleteFragment;
+
+    // Auto Complete Address
+//    AutocompleteSupportFragment autocompleteFragment;
+    //String address;
 
     // Firebase
     StorageReference mStorageRef;
@@ -89,6 +103,7 @@ public class CreateAccountFirstActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_account_first);
+
         // assign variables
         mTextUserPrivateName = (EditText)findViewById(R.id.privateNameEditText);
         mTextUserFamilyName = (EditText)findViewById(R.id.familyNameEditText);
@@ -96,10 +111,12 @@ public class CreateAccountFirstActivity extends AppCompatActivity {
         mTextPassword = (EditText)findViewById(R.id.passwordEditText);
         mTextConfirmPassword = (EditText)findViewById(R.id.confirmPasswordEditText);
         mTextPhoneNumber = (EditText)findViewById(R.id.PhoneNumber);
+        mTextAddress = (EditText)findViewById(R.id.Address);
         mTextAbout = (EditText)findViewById(R.id.About);
         mButtonAddPicture = (Button)findViewById(R.id.addImageButtonImageView);
         mButtonLetsVolunteer = (Button)findViewById(R.id.button_lets_volunteer);
         url = getString(R.string.apiUrl);
+
         // Firebase
         mStorageRef = FirebaseStorage.getInstance().getReference();
         img = (ImageView) findViewById(R.id.profile_image_2);
@@ -133,23 +150,6 @@ public class CreateAccountFirstActivity extends AppCompatActivity {
         // Validation for address //TODO: connect to google maps
         awesomeValidation.addValidation(this, R.id.Address,
                 RegexTemplate.NOT_EMPTY, R.string.invalid_address);
-
-        // Function for calling our REQUEST function
-        // The call will occur only if the validation for all fields is good
-        mButtonLetsVolunteer.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                // check validation
-                if(awesomeValidation.validate()){
-                    registerUser(mTextUserPrivateName.toString(), mTextUserFamilyName.toString(),
-                            mTextUserEmail.toString(), mTextPassword.toString(), mTextPhoneNumber.toString(),
-                             mTextAbout.toString());
-                }else{
-                    Toast.makeText(getApplicationContext(),
-                            "Validation Failed - Please fill all fields correctly", Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
 
         mButtonAddPicture.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -224,6 +224,90 @@ public class CreateAccountFirstActivity extends AppCompatActivity {
 //            }
 //        });
 
+        // ------------------------------- Data Base ------------------------------- //
+
+        // Calling our REQUEST function
+        // The call will occur only if the validation for all fields is good
+        mButtonLetsVolunteer.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String firstName = mTextUserPrivateName.getText().toString();
+                String lastName = mTextUserFamilyName.getText().toString();
+                String email = mTextUserEmail.getText().toString();
+                String password = mTextPassword.getText().toString();
+                String phoneNumber = mTextPhoneNumber.getText().toString();
+                String address = mTextAddress.getText().toString();
+                String about = mTextAbout.getText().toString();
+
+                if(awesomeValidation.validate()) {
+                    JSONObject jsonBody = new JSONObject();
+                    try {
+                        jsonBody.put("firstname", firstName);
+                        jsonBody.put("lastname", lastName);
+                        jsonBody.put("email", email);
+                        jsonBody.put("password", password);
+                        jsonBody.put("phonenumber", phoneNumber);
+                        jsonBody.put("address", address);
+                        jsonBody.put("about", about);
+                    } catch (JSONException e) {
+                        Log.d("JSONException", "JSONException occured wehn trying to put inside jsonBody");
+                    }
+
+                    final String requestBody = jsonBody.toString();
+
+                    StringRequest stringRequest = new StringRequest(Request.Method.POST, url + "volunteers/events/",
+                            new Response.Listener<String>() {
+                                @Override
+                                public void onResponse(String response) {
+                                    String strID = null;
+                                    JSONObject jsonObject;
+                                    try {
+                                        jsonObject = new JSONObject(response);
+                                        strID = jsonObject.optString("insertId");
+                                    } catch (JSONException e) {
+                                        e.printStackTrace();
+                                    }
+                                    int id = Integer.parseInt(strID);
+                                    Log.d("Response", strID);
+                                    Calendar calendar = Calendar.getInstance();
+                                    @SuppressLint("SimpleDateFormat")
+                                    SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+                                    strDate = format.format(calendar.getTime());
+                                    writeDateToDB(id, strDate);
+                                }
+                            },
+                            new Response.ErrorListener() {
+                                @Override
+                                public void onErrorResponse(VolleyError error) {
+                                    try {
+                                        Log.d("error.response", Objects.requireNonNull(error.getMessage()));
+                                    } catch (NullPointerException e) {
+                                        Log.d("error.null", "error is null");
+                                    }
+                                }
+                            }) {
+                        @Override
+                        public byte[] getBody() throws AuthFailureError {
+                            try {
+                                return requestBody == null ? null : requestBody.getBytes("utf-8");
+                            } catch (UnsupportedEncodingException uee) {
+                                VolleyLog.wtf("Unsupported Encoding while trying to get the bytes of %s using %s", requestBody, "utf-8");
+                                return null;
+                            }
+                        }
+
+                        @Override
+                        public String getBodyContentType() {
+                            return "application/json";
+                        }
+                    };
+                    VolleySingleton.getInstance(CreateAccountFirstActivity.this).addToRequestQueue(stringRequest);
+                } else{
+                    Toast.makeText(getApplicationContext(),
+                            "Validation Failed - Please fill all fields correctly", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
     }
 
     // ------------------------------- Photo Uploading ------------------------------- //
@@ -328,35 +412,51 @@ public class CreateAccountFirstActivity extends AppCompatActivity {
 
     // ------------------------------- Data Base ------------------------------- //
 
-    // Function for inserting all data from edit texts into our data base
-    private void registerUser (final String firstName, final String lastName, final String email,
-                               final String password, final String phoneNumber, final String about) {
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
+    protected void writeDateToDB(int vid, String date) {
+        JSONObject jsonBody = new JSONObject();
+        try {
+            jsonBody.put("vid", vid);
+            jsonBody.put("date", date);
+        } catch (JSONException e) {
+
+        }
+
+        final String requestBody = jsonBody.toString();
+
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, url + "volunteers/events/dates",
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
                         Log.d("Response", response.toString());
+                        Intent intent = new Intent(CreateAccountFirstActivity.this, Thanks.class);
+                        startActivity(intent);
                     }
                 },
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        Log.d("error.response", error.getMessage());
+                        try {
+                            Log.d("error.response", Objects.requireNonNull(error.getMessage()));
+                        } catch (NullPointerException e) {
+                            Log.d("error.null", "error is null");
+                        }
                     }
                 }) {
             @Override
-            protected Map<String, String> getParams(){
-                Map<String, String> params = new HashMap<>();
-                params.put("firstname", firstName);
-                params.put("lastname", lastName);
-                params.put("email", email);
-                params.put("password", password);
-                params.put("phonenumber", phoneNumber);
-                params.put("address", address);
-                params.put("about", about);
-                return params;
+            public byte[] getBody() throws AuthFailureError {
+                try {
+                    return requestBody == null ? null : requestBody.getBytes("utf-8");
+                } catch (UnsupportedEncodingException uee) {
+                    VolleyLog.wtf("Unsupported Encoding while trying to get the bytes of %s using %s", requestBody, "utf-8");
+                    return null;
+                }
+            }
+
+            @Override
+            public String getBodyContentType() {
+                return "application/json";
             }
         };
-        VolleySingleton.getInstance(this).addToRequestQueue(stringRequest);
+        VolleySingleton.getInstance(CreateAccountFirstActivity.this).addToRequestQueue(stringRequest);
     }
 }
