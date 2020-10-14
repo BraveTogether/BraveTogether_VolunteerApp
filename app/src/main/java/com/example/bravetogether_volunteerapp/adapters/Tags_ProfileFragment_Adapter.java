@@ -15,24 +15,21 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.bravetogether_volunteerapp.ProfileFragment2;
 import com.example.bravetogether_volunteerapp.R;
 
 import java.util.ArrayList;
 
 public class Tags_ProfileFragment_Adapter extends RecyclerView.Adapter<Tags_ProfileFragment_Adapter.TagViewHolder> {
     // ----------- Variables -------------
-    private ArrayList<String> tagsNames;
-    private ArrayList<String> tagsDetails;
-    //private ArrayList<Integer> tagsImages; //The Integer represent the Img resource.Checked but waits for DB
+    private ArrayList<ProfileFragment2.TagObject> tags;
     private Context context;
     // ----------- For Debug -------------
     private static final String TAG = "Tags_ProfileFragment_Adapter";
 
-    public Tags_ProfileFragment_Adapter (Context context, ArrayList<String> names, ArrayList<String> details){
+    public Tags_ProfileFragment_Adapter (Context context,ArrayList<ProfileFragment2.TagObject> tags ){
         this.context = context;
-        tagsDetails = details;
-        //tagsImages = imgs; --> waits for DB
-        tagsNames = names;
+        this.tags = tags;
     }
 
     @NonNull
@@ -47,14 +44,14 @@ public class Tags_ProfileFragment_Adapter extends RecyclerView.Adapter<Tags_Prof
     @Override
     public void onBindViewHolder(@NonNull TagViewHolder holder, int position) {
         Log.d(TAG, "onBindViewHolder: called");
-        holder.tagDetails.setText(tagsDetails.get(position));
-        holder.tagName.setText(tagsNames.get(position));
+        holder.tagDetails.setText(tags.get(position).getTagDetails());
+        holder.tagName.setText(tags.get(position).getTagName());
         //holder.tagImage.setImageResource(tagsImages.get(position));--> waits for DB
     }
 
     @Override
     public int getItemCount() {
-        return tagsNames.size();
+        return (tags != null)? tags.size():0;
     }
 
     public class TagViewHolder extends RecyclerView.ViewHolder{

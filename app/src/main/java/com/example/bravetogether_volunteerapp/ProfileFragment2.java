@@ -29,21 +29,6 @@ public class ProfileFragment2 extends Fragment {
    private RecyclerView rcTags,rcNearVolunteers,rcVolunteerHistory;
    private Context context;
 
-    // ----------- check -------------
-    private ArrayList<String> tagsNames = new ArrayList<>();
-    private ArrayList<String> tagsDetails = new ArrayList<>();
-    private ArrayList<Integer> tagsImages = new ArrayList<>();
-    private void fill_arrays(){
-        tagsNames.add("אות גבורה");
-        tagsNames.add("אות גבורה");
-        tagsDetails.add("30 שעות התנדבות");
-        tagsDetails.add("30 שעות התנדבות");
-        tagsImages.add(getResources().getIdentifier("drawable/star_big_off", null,"com.example.bravetogether_volunteerapp" ));
-        tagsImages.add(getResources().getIdentifier("drawable/star_big_off", null,"com.example.bravetogether_volunteerapp" ));
-
-    }
-    // ----------- Add for checking -------------
-
     public ProfileFragment2(){}
 
     @Nullable
@@ -53,19 +38,18 @@ public class ProfileFragment2 extends Fragment {
                              @Nullable Bundle savedInstanceState) {
         ProfileView = inflater.inflate(R.layout.fragment_profile2, container, false);
         setUserDate();
-        setNearVoluteer();
+        setNearVolunteer();
         setVolunteerHistory();
-        // ----------- Add for checking -------------
-        fill_arrays();
-        rcTags = ProfileView.findViewById(R.id.rcTags);
-        Tags_ProfileFragment_Adapter adapter = new Tags_ProfileFragment_Adapter(this.context, tagsNames, tagsDetails);
-        setRecyclerViewSetting(rcTags, adapter);
-        // ----------- Add for checking -------------
-
+        setTags();
         return ProfileView;
     }
 
 
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        this.context = context;
+    }
 
     // Access to DB to get user data
     private void setUserDate(){
@@ -78,37 +62,30 @@ public class ProfileFragment2 extends Fragment {
         // TODO:: poll user data from server and set variables
     }
 
+    // RecyclerView handlers -- Horizontal scrolling --
     private void setVolunteerHistory(){
         // TODO:: poll volunteer history from server.
-        ArrayList<VolunteerEvent> list = createDummyList(); // need to change to correct list.
+        ArrayList<VolunteerEvent> list = createDummyEventList(); // need to change to correct list.
         rcVolunteerHistory = ProfileView.findViewById(R.id.rcVolunteerHistory);
         ProfileFragmentEventAdapter adapter = new ProfileFragmentEventAdapter(context,list);
         setRecyclerViewSetting(rcVolunteerHistory,adapter);
 
     }
 
-    private void setNearVoluteer(){
+    private void setNearVolunteer(){
         // TODO:: check user location and define near location (what is the radius)
         // TODO:: poll near volunteer from server.
-        ArrayList<VolunteerEvent> list = createDummyList(); // need to change to correct list.
+        ArrayList<VolunteerEvent> list = createDummyEventList(); // need to change to correct list.
         rcNearVolunteers = ProfileView.findViewById(R.id.rcNearVolunteer);
         ProfileFragmentEventAdapter adapter = new ProfileFragmentEventAdapter(context,list);
         setRecyclerViewSetting(rcNearVolunteers,adapter);
     }
 
-    @Override
-    public void onAttach(@NonNull Context context) {
-        super.onAttach(context);
-        this.context = context;
-    }
-
-    // Dummy function for test ** need to be deleted **
-    private ArrayList<VolunteerEvent> createDummyList(){
-        ArrayList<VolunteerEvent> dummyList =  new ArrayList<>();
-        dummyList.add(new VolunteerEvent("עזרה בקניות","13/14/15","גיל הזהב", "120" ,"3" , "300"));
-        dummyList.add(new VolunteerEvent("עזרה בקניות","13/14/15","גיל הזהב", "120" ,"3" , "300"));
-        dummyList.add(new VolunteerEvent("עזרה בקניות","13/14/15","גיל הזהב", "120" ,"3" , "300"));
-        return dummyList;
+    private void setTags(){
+        ArrayList<TagObject> list = createDummyTagList(); //need to change to correct list
+        rcTags = ProfileView.findViewById(R.id.rcTags);
+        Tags_ProfileFragment_Adapter adapter = new Tags_ProfileFragment_Adapter(context, list);
+        setRecyclerViewSetting(rcTags,adapter);
     }
 
     private void setRecyclerViewSetting(RecyclerView view, RecyclerView.Adapter adapter){
@@ -116,6 +93,50 @@ public class ProfileFragment2 extends Fragment {
         view.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL,false ));
         view.setAdapter(adapter);
         view.setNestedScrollingEnabled(false);
+    }
+
+
+
+    public class TagObject{
+        private String tagName;
+        private String tagDetails;
+        private String tagImgUrl;
+
+        public  TagObject(String name, String details, String imgUrl){
+            this.tagName = name;
+            this.tagDetails = details;
+            this.tagImgUrl = imgUrl;
+        }
+
+        public String getTagDetails() {
+            return tagDetails;
+        }
+
+        public String getTagImgUrl() {
+            return tagImgUrl;
+        }
+
+        public String getTagName() {
+            return tagName;
+        }
+    }
+
+    // TODO:: Delete dummy functios
+    // Dummy function for test ** need to be deleted **
+    private ArrayList<VolunteerEvent> createDummyEventList(){
+        ArrayList<VolunteerEvent> dummyList =  new ArrayList<>();
+        dummyList.add(new VolunteerEvent("עזרה בקניות","13/14/15","גיל הזהב", "120" ,"3" , "300"));
+        dummyList.add(new VolunteerEvent("עזרה בקניות","13/14/15","גיל הזהב", "120" ,"3" , "300"));
+        dummyList.add(new VolunteerEvent("עזרה בקניות","13/14/15","גיל הזהב", "120" ,"3" , "300"));
+        return dummyList;
+    }
+
+    private  ArrayList<TagObject> createDummyTagList(){
+        ArrayList<TagObject> list = new ArrayList<>();
+        for(int i = 0; i < 3 ; i++){
+            list.add(new TagObject("אות הגבורה","30 שעות התנדבות", ""));
+        }
+        return list;
     }
 
 }
