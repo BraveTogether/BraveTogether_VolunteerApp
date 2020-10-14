@@ -17,7 +17,7 @@ public class RegularProfileActivity extends AppCompatActivity {
         final String sharedPrefFile = "com.example.android.BraveTogether_VolunteerApp";
         SharedPreferences mPreferences = getSharedPreferences(sharedPrefFile, MODE_PRIVATE);
 
-        String UserType = mPreferences.getString("UserAccessType", "user");
+        String UserType = mPreferences.getString("UserAccessType", "manager");
 
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
 
@@ -34,7 +34,7 @@ public class RegularProfileActivity extends AppCompatActivity {
             case "editor":
                 ft.replace(R.id.body, new EditorFragment());
             break;
-            case "VolunteerManager":
+            case "volunteerManager":
                 ft.replace(R.id.body, new VolunteerManagerFragment());
             break;
         }
