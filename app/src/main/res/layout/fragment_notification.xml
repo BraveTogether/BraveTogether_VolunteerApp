@@ -6,9 +6,144 @@
     tools:context=".NotificationFragment">
 
     <!-- TODO: Update blank fragment layout -->
-    <TextView
+<LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:orientation="vertical"
+        android:gravity="right"
+    >
+    <TextView
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:gravity="center"
+    android:text="רדיוס חיפוש התנדבות"
+    android:textColor="#001925"
+    android:textSize="18sp"
+    ></TextView>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:layout_width="91dp"
+            android:layout_height="28dp"
+            android:background="@drawable/textfield_d_buttons"
+            android:gravity="center"
+            android:text="ללא הגבלה"
+            android:textColor="#001925"
+            android:textSize="14sp"></TextView>
+        <TextView
+            android:layout_width="91dp"
+            android:layout_height="28dp"
+            android:background="@drawable/textfield_d_buttons"
+            android:gravity="center"
+            android:text="20 קמ"
+            android:textColor="#001925"
+            android:textSize="14sp"></TextView>
+        <TextView
+            android:layout_width="91dp"
+            android:layout_height="28dp"
+            android:background="@drawable/textfield_d_buttons"
+            android:gravity="center"
+            android:text="15 קמ"
+            android:textColor="#001925"
+            android:textSize="14sp"></TextView>
+        <TextView
+            android:layout_width="91dp"
+            android:layout_height="28dp"
+            android:background="@drawable/textfield_d_buttons"
+            android:gravity="center"
+            android:text="ערוך התראה"
+            android:textColor="#001925"
+            android:textSize="14sp"></TextView>
+    </LinearLayout>
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="רדיוס חיפוש התנדבות"
+        android:textColor="#001925"
+        android:textSize="18sp"
+        ></TextView>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:layout_width="91dp"
+            android:layout_height="28dp"
+            android:background="@drawable/textfield_d_buttons"
+            android:gravity="center"
+            android:text="ערוך התראה"
+            android:textColor="#001925"
+            android:textSize="14sp"></TextView>
+        <TextView
+            android:layout_width="91dp"
+            android:layout_height="28dp"
+            android:background="@drawable/textfield_d_buttons"
+            android:gravity="center"
+            android:text="ערוך התראה"
+            android:textColor="#001925"
+            android:textSize="14sp"></TextView>
+        <TextView
+            android:layout_width="91dp"
+            android:layout_height="28dp"
+            android:background="@drawable/textfield_d_buttons"
+            android:gravity="center"
+            android:text="ערוך התראה"
+            android:textColor="#001925"
+            android:textSize="14sp"></TextView>
+        <TextView
+            android:layout_width="91dp"
+            android:layout_height="28dp"
+            android:background="@drawable/textfield_d_buttons"
+            android:gravity="center"
+            android:text="ערוך התראה"
+            android:textColor="#001925"
+            android:textSize="14sp"></TextView>
+    </LinearLayout>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="רדיוס חיפוש התנדבות"
+        android:textColor="#001925"
+        android:textSize="18sp"
+        ></TextView>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:layout_width="91dp"
+            android:layout_height="28dp"
+            android:background="@drawable/textfield_d_buttons"
+            android:gravity="center"
+            android:text="ערוך התראה"
+            android:textColor="#001925"
+            android:textSize="14sp"></TextView>
+        <TextView
+            android:layout_width="91dp"
+            android:layout_height="28dp"
+            android:background="@drawable/textfield_d_buttons"
+            android:gravity="center"
+            android:text="ערוך התראה"
+            android:textColor="#001925"
+            android:textSize="14sp"></TextView>
+        <TextView
+            android:layout_width="91dp"
+            android:layout_height="28dp"
+            android:background="@drawable/textfield_d_buttons"
+            android:gravity="center"
+            android:text="ערוך התראה"
+            android:textColor="#001925"
+            android:textSize="14sp"></TextView>
+        <TextView
+            android:layout_width="91dp"
+            android:layout_height="28dp"
+            android:background="@drawable/textfield_d_buttons"
+            android:gravity="center"
+            android:text="ערוך התראה"
+            android:textColor="#001925"
+            android:textSize="14sp"></TextView>
+    </LinearLayout>
+</LinearLayout>
 </FrameLayout>
