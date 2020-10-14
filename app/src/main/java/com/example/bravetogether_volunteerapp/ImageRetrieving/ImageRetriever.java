@@ -17,7 +17,8 @@ import java.io.File;
 
 /*
 Put the following code at the beginning of your onCreate function
-Notice that you have to replace imageViewName with your image view variable
+NOTICE: YOUR_DESIRED_IMAGE_NAME has to be unique among all the activities that use this class
+Otherwise the photos will override each other
  */
 
 //            final ImageRetriever imageRetriever = new ImageRetriever();
@@ -31,15 +32,20 @@ Notice that you have to replace imageViewName with your image view variable
 //            Permissions.check(this/*context*/, permissions, rationale, options, new PermissionHandler() {
 //    @Override
 //    public void onGranted() {
-//            Uri imageURI = Uri.parse("gs://bravetogethervolunteerapp.appspot.com/images/8bd91a65-85d9-412f-a299-26a4cd633194");
-//            filePath = imageRetriever.retrieveImg(imageURI, TestRetrieveImgFromFirebase.this).getPath();
+//            Uri imageURI = Uri.parse(PUT YOUR URI HERE);
+//            filePath = imageRetriever.retrieveImg(imageURI, YOUR_ACTIVITY_NAME.this, YOUR_DESIRED_IMAGE_NAME).getPath();
 //            }
 //    @Override
 //    public void onDenied(Context context, ArrayList<String> deniedPermissions) {
 //            Toast.makeText(TestRetrieveImgFromFirebase.this, "Please allow the the app to access your storage in order to show your profile picture", Toast.LENGTH_SHORT).show();
 //            }
 //            });
-//
+
+/*
+This code make the file you have downloaded from Firebase to be presented in your imageView
+Notice that you have to replace imageViewName with your image view variable
+ */
+
 //            Bitmap bitmap = BitmapFactory.decodeFile(filePath);
 //            imageViewName.setImageBitmap(bitmap);
 
@@ -57,13 +63,13 @@ public class ImageRetriever {
 
     final File rootPath = new File(Environment.getExternalStorageDirectory(), "Brave-Together");
 
-    public File retrieveImg(Uri uri, final Activity activity){
+    public File retrieveImg(Uri uri, final Activity activity, String imgName){
         final ProgressDialog pd = showProgress(activity);
         if (!rootPath.exists()) {
             rootPath.mkdirs();
         }
         //TODO: change img name if we don't want to override previous pictures
-        final File localFile = new File(rootPath, "braveTogether.jpg");
+        final File localFile = new File(rootPath, imgName + ".jpg");
 
         StorageReference storageRef = FirebaseStorage.getInstance().getReferenceFromUrl(uri.toString());
         storageRef.getFile(localFile).addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
