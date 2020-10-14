@@ -37,6 +37,7 @@ public class RegularUserFragment extends Fragment {
 
         String sharedPrefFile = "com.example.android.BraveTogether_VolunteerApp";
         SharedPreferences mPreferences = this.getActivity().getSharedPreferences(sharedPrefFile, Context.MODE_PRIVATE);
+
         //Set the Values form SharedPref to the text
         String distance, duration, type, hours;
         distance = mPreferences.getString("UserDistance", "10");
