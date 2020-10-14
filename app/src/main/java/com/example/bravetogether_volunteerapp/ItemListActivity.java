@@ -1,5 +1,6 @@
 package com.example.bravetogether_volunteerapp;
 
+import android.Manifest;
 import android.app.ProgressDialog;
 import android.content.ContentResolver;
 import android.content.Context;
@@ -21,15 +22,19 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.bravetogether_volunteerapp.LoginFlow.TestRetrieveImgFromFirebase;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.storage.FileDownloadTask;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+import com.nabinbhandari.android.permissions.PermissionHandler;
+import com.nabinbhandari.android.permissions.Permissions;
 
 import org.json.JSONObject;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -57,8 +62,26 @@ public class ItemListActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_item_list);
         ContentResolver content = getContentResolver();
-        Uri imageURI = Uri.parse("gs://bravetogethervolunteerapp.appspot.com/images/8bd91a65-85d9-412f-a299-26a4cd633194");
-        filePath = retrieveImg(imageURI).getPath();
+
+        String[] permissions = {Manifest.permission.WRITE_EXTERNAL_STORAGE};
+        String rationale = "Please provide storage permission so that you can load your profile picture";
+        Permissions.Options options = new Permissions.Options()
+                .setRationaleDialogTitle("Info")
+                .setSettingsDialogTitle("Warning");
+
+        Permissions.check(this/*context*/, permissions, rationale, options, new PermissionHandler() {
+            @Override
+            public void onGranted() {
+                Uri imageURI = Uri.parse("gs://bravetogethervolunteerapp.appspot.com/images/8bd91a65-85d9-412f-a299-26a4cd633194");
+                filePath = retrieveImg(imageURI).getPath();
+            }
+
+            @Override
+            public void onDenied(Context context, ArrayList<String> deniedPermissions) {
+                Toast.makeText(ItemListActivity.this, "Please allow the the app to access your storage in order to show your profile picture", Toast.LENGTH_SHORT).show();
+            }
+        });
+
         //Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         //setSupportActionBar(toolbar);
         //toolbar.setTitle("תוצאות חיפוש");
@@ -80,9 +103,6 @@ public class ItemListActivity extends AppCompatActivity {
         assert recyclerView != null;
         setupRecyclerView((RecyclerView) recyclerView);
     }
-
-
-
 
     private ProgressDialog showProgress(){
         ProgressDialog  pd = new ProgressDialog(this);

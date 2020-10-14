@@ -1,6 +1,7 @@
 package com.example.bravetogether_volunteerapp;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,6 +11,7 @@ import android.widget.TextView;
 import androidx.fragment.app.Fragment;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.preference.PreferenceManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -29,6 +31,12 @@ public class ProfileFragment2 extends Fragment {
    private RecyclerView rcTags,rcNearVolunteers, rcMyVolunteer;
    private Context context;
 
+   // DB and sharedPrefFile:
+   //private final String url = getResources().getString(R.string.apiUrl);
+   //private final String sharedPrefFile = "com.example.android.BraveTogether_VolunteerApp";
+   private SharedPreferences mPreferences;
+
+
     public ProfileFragment2(){}
 
     @Nullable
@@ -37,6 +45,7 @@ public class ProfileFragment2 extends Fragment {
                              @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         ProfileView = inflater.inflate(R.layout.fragment_profile2, container, false);
+        mPreferences = PreferenceManager.getDefaultSharedPreferences(context);
         setUserDate();
         setNearVolunteer();
         setMyVolunteers();
@@ -51,7 +60,7 @@ public class ProfileFragment2 extends Fragment {
         this.context = context;
     }
 
-    // Access to DB to get user data
+    // Access to DB / SharedFile to get user data
     private void setUserDate(){
         // init variables
         mProfileImage = (CircleImageView) ProfileView.findViewById(R.id.imageViewProfilePic);
@@ -59,13 +68,33 @@ public class ProfileFragment2 extends Fragment {
         mVolunteerHours = (TextView) ProfileView.findViewById(R.id.txtHours);
         mCoins = (TextView) ProfileView.findViewById(R.id.txtCoins);
         mProcess = (TextView) ProfileView.findViewById(R.id.txtProcess);
-        // TODO:: poll user data from server and set variables
+        //
+        //  TODO:: check keys and types correctness.
+        //
+        // Set user name, if username is not in the shared file user name is פלוני אלמוני
+        String username = mPreferences.getString("first_name", "פלוני") +
+                          " " + mPreferences.getString("last_name","אלמוני");
+        mUserName.setText(username);
+        //  Set volunteer hours if not in shared file display -1.
+        mVolunteerHours.setText(mPreferences.getInt("volunteer_hours",-1)+"");
+        //  Set Coins if not in shared file display -1.
+        mCoins.setText(mPreferences.getInt("credits",-1)+"");
+        //  Set process if not in shared file display -1%.
+        mProcess.setText(mPreferences.getInt("process",-1)+"%");
+
+        // TODO:: handle profile image.
+//        Picasso.with(Profile.this)
+//                .load(Image)
+//                .placeholder(R.drawable.icon_user)
+//                .into(ProfileImage);
+
     }
+
 
     // RecyclerView handlers -- Horizontal scrolling --
     private void setMyVolunteers(){
         // TODO:: poll volunteer history from server.
-        ArrayList<VolunteerEvent> list = createDummyEventList(); // need to change to correct list.
+        ArrayList<ProfileEventObject> list = createDummyEventList(); // need to change to correct list.
         rcMyVolunteer = ProfileView.findViewById(R.id.rcMyVolunteers);
         ProfileFragmentEventAdapter adapter = new ProfileFragmentEventAdapter(context,list);
         setRecyclerViewSetting(rcMyVolunteer,adapter);
@@ -74,7 +103,7 @@ public class ProfileFragment2 extends Fragment {
     private void setNearVolunteer(){
         // TODO:: check user location and define near location (what is the radius)
         // TODO:: poll near volunteer from server.
-        ArrayList<VolunteerEvent> list = createDummyEventList(); // need to change to correct list.
+        ArrayList<ProfileEventObject> list = createDummyEventList(); // need to change to correct list.
         rcNearVolunteers = ProfileView.findViewById(R.id.rcNearVolunteer);
         ProfileFragmentEventAdapter adapter = new ProfileFragmentEventAdapter(context,list);
         setRecyclerViewSetting(rcNearVolunteers,adapter);
@@ -95,6 +124,53 @@ public class ProfileFragment2 extends Fragment {
     }
 
 
+    public  class ProfileEventObject{
+        private String headline;
+        private String date;
+        private String start_time;
+        private String location;
+        private String imgUrl;
+        private String credits;
+        private long uid;       // need to check how uid is saved.
+
+        public ProfileEventObject(long uid,String headline, String date, String start_time, String location,String credits, String imgUrl) {
+            this.headline = headline;
+            this.date = date;
+            this.start_time = start_time;
+            this.location = location;
+            this.imgUrl = imgUrl;
+            this.uid = uid;
+            this.credits=credits;
+        }
+
+        public String getCredits() {
+            return credits;
+        }
+
+        public String getHeadline() {
+            return headline;
+        }
+
+        public String getDate() {
+            return date;
+        }
+
+        public String getStart_time() {
+            return start_time;
+        }
+
+        public String getLocation() {
+            return location;
+        }
+
+        public String getImgUrl() {
+            return imgUrl;
+        }
+
+        public long getUid() {
+            return uid;
+        }
+    }
 
     public class TagObject{
         private String tagName;
@@ -122,11 +198,14 @@ public class ProfileFragment2 extends Fragment {
 
     // TODO:: Delete dummy functios
     // Dummy function for test ** need to be deleted **
-    private ArrayList<VolunteerEvent> createDummyEventList(){
-        ArrayList<VolunteerEvent> dummyList =  new ArrayList<>();
-        dummyList.add(new VolunteerEvent("עזרה בקניות","13/14/15","גיל הזהב", "120" ,"3" , "300"));
-        dummyList.add(new VolunteerEvent("עזרה בקניות","13/14/15","גיל הזהב", "120" ,"3" , "300"));
-        dummyList.add(new VolunteerEvent("עזרה בקניות","13/14/15","גיל הזהב", "120" ,"3" , "300"));
+    private ArrayList<ProfileEventObject> createDummyEventList(){
+        ArrayList<ProfileEventObject> dummyList =  new ArrayList<>();
+        dummyList.add(new ProfileEventObject(1,"עזרה בקניות","16.6.2020","17:30",
+                                            "הורקנוס 7, תל אביב","300","" ));
+        dummyList.add(new ProfileEventObject(2,"עזרה בקניות","16.6.2020","17:30",
+                                    "הורקנוס 7, תל אביב","300","" ));
+        dummyList.add(new ProfileEventObject(3,"עזרה בקניות","16.6.2020","17:30",
+                                             "הורקנוס 7, תל אביב","300","" ));
         return dummyList;
     }
 
