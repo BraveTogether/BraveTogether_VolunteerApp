@@ -18,14 +18,19 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.StringRequest;
 import com.basgeekball.awesomevalidation.AwesomeValidation;
 import com.basgeekball.awesomevalidation.ValidationStyle;
 import com.basgeekball.awesomevalidation.utility.RegexTemplate;
+import com.example.bravetogether_volunteerapp.CreateVolunteerActivity;
 import com.example.bravetogether_volunteerapp.R;
+import com.example.bravetogether_volunteerapp.Thanks;
 import com.example.bravetogether_volunteerapp.VolleySingleton;
 import com.google.android.gms.common.api.Status;
 import com.google.android.gms.maps.model.LatLng;
@@ -45,12 +50,16 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
 import org.jetbrains.annotations.NotNull;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 import java.util.UUID;
 
 public class CreateAccountFirstActivity extends AppCompatActivity {
@@ -149,7 +158,7 @@ public class CreateAccountFirstActivity extends AppCompatActivity {
             }
         });
 
-        // Address AutoFill 2
+// ------------------------------- Address Auto Complete 2 ------------------------------- //
 //        // Initialize the AutocompleteSupportFragment.
 //        autocompleteFragment = (AutocompleteSupportFragment)
 //                getSupportFragmentManager().findFragmentById(R.id.Address);
@@ -185,7 +194,7 @@ public class CreateAccountFirstActivity extends AppCompatActivity {
 //            }
 //        });
 
-//        // Address AutoFill
+// ------------------------------- Address Auto Complete 2 ------------------------------- //
 //        final AutocompleteSupportFragment autocompleteFragment = (AutocompleteSupportFragment)
 //                getSupportFragmentManager().findFragmentById(R.id.Address);
 //
@@ -214,6 +223,7 @@ public class CreateAccountFirstActivity extends AppCompatActivity {
 //                Log.i("place.error", "An error occurred: " + status);
 //            }
 //        });
+
     }
 
     // ------------------------------- Photo Uploading ------------------------------- //
@@ -226,7 +236,7 @@ public class CreateAccountFirstActivity extends AppCompatActivity {
         startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE_REQUEST);
     }
 
-//    // ----------------------------------- Retrieve Image ----------------------------------- //
+// ----------------------------------- Retrieve Image from Firebase ----------------------------------- //
 //
 //    final File rootPath = new File(Environment.getExternalStorageDirectory(), "Brave-Together");
 //
@@ -299,7 +309,7 @@ public class CreateAccountFirstActivity extends AppCompatActivity {
         }
     }
 
-    // setting the chosen picture inside the imageView and calling uploadImg method
+    // Setting the chosen picture inside the imageView and calling uploadImg method
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
