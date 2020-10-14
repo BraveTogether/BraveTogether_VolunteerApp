@@ -17,10 +17,10 @@ import java.io.File;
 
 /*
 Put the following code at the beginning of your onCreate function
-Notice that you have to replace imageViewName with you image view variable
+Notice that you have to replace imageViewName with your image view variable
  */
 
-//    final ImageRetriever imageRetriever = new ImageRetriever();
+//            final ImageRetriever imageRetriever = new ImageRetriever();
 //
 //            String[] permissions = {Manifest.permission.WRITE_EXTERNAL_STORAGE};
 //            String rationale = "Please provide storage permission so that you can load your profile picture";
@@ -43,7 +43,7 @@ Notice that you have to replace imageViewName with you image view variable
 //            Bitmap bitmap = BitmapFactory.decodeFile(filePath);
 //            imageViewName.setImageBitmap(bitmap);
 
-
+// ------------------------------------ ImageRetriever Class (Don't change it) ------------------------------------ //
 
 public class ImageRetriever {
     private ProgressDialog showProgress(Activity activity){
