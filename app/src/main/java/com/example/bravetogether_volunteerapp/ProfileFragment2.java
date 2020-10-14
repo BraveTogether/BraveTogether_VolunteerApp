@@ -60,7 +60,7 @@ public class ProfileFragment2 extends Fragment {
         this.context = context;
     }
 
-    // Access to DB to get user data
+    // Access to DB / SharedFile to get user data
     private void setUserDate(){
         // init variables
         mProfileImage = (CircleImageView) ProfileView.findViewById(R.id.imageViewProfilePic);
@@ -94,7 +94,7 @@ public class ProfileFragment2 extends Fragment {
     // RecyclerView handlers -- Horizontal scrolling --
     private void setMyVolunteers(){
         // TODO:: poll volunteer history from server.
-        ArrayList<VolunteerEvent> list = createDummyEventList(); // need to change to correct list.
+        ArrayList<ProfileEventObject> list = createDummyEventList(); // need to change to correct list.
         rcMyVolunteer = ProfileView.findViewById(R.id.rcMyVolunteers);
         ProfileFragmentEventAdapter adapter = new ProfileFragmentEventAdapter(context,list);
         setRecyclerViewSetting(rcMyVolunteer,adapter);
@@ -103,7 +103,7 @@ public class ProfileFragment2 extends Fragment {
     private void setNearVolunteer(){
         // TODO:: check user location and define near location (what is the radius)
         // TODO:: poll near volunteer from server.
-        ArrayList<VolunteerEvent> list = createDummyEventList(); // need to change to correct list.
+        ArrayList<ProfileEventObject> list = createDummyEventList(); // need to change to correct list.
         rcNearVolunteers = ProfileView.findViewById(R.id.rcNearVolunteer);
         ProfileFragmentEventAdapter adapter = new ProfileFragmentEventAdapter(context,list);
         setRecyclerViewSetting(rcNearVolunteers,adapter);
@@ -124,6 +124,53 @@ public class ProfileFragment2 extends Fragment {
     }
 
 
+    public  class ProfileEventObject{
+        private String headline;
+        private String date;
+        private String start_time;
+        private String location;
+        private String imgUrl;
+        private String credits;
+        private long uid;       // need to check how uid is saved.
+
+        public ProfileEventObject(long uid,String headline, String date, String start_time, String location,String credits, String imgUrl) {
+            this.headline = headline;
+            this.date = date;
+            this.start_time = start_time;
+            this.location = location;
+            this.imgUrl = imgUrl;
+            this.uid = uid;
+            this.credits=credits;
+        }
+
+        public String getCredits() {
+            return credits;
+        }
+
+        public String getHeadline() {
+            return headline;
+        }
+
+        public String getDate() {
+            return date;
+        }
+
+        public String getStart_time() {
+            return start_time;
+        }
+
+        public String getLocation() {
+            return location;
+        }
+
+        public String getImgUrl() {
+            return imgUrl;
+        }
+
+        public long getUid() {
+            return uid;
+        }
+    }
 
     public class TagObject{
         private String tagName;
@@ -151,11 +198,14 @@ public class ProfileFragment2 extends Fragment {
 
     // TODO:: Delete dummy functios
     // Dummy function for test ** need to be deleted **
-    private ArrayList<VolunteerEvent> createDummyEventList(){
-        ArrayList<VolunteerEvent> dummyList =  new ArrayList<>();
-        dummyList.add(new VolunteerEvent("עזרה בקניות","13/14/15","גיל הזהב", "120" ,"3" , "300"));
-        dummyList.add(new VolunteerEvent("עזרה בקניות","13/14/15","גיל הזהב", "120" ,"3" , "300"));
-        dummyList.add(new VolunteerEvent("עזרה בקניות","13/14/15","גיל הזהב", "120" ,"3" , "300"));
+    private ArrayList<ProfileEventObject> createDummyEventList(){
+        ArrayList<ProfileEventObject> dummyList =  new ArrayList<>();
+        dummyList.add(new ProfileEventObject(1,"עזרה בקניות","16.6.2020","17:30",
+                                            "הורקנוס 7, תל אביב","300","" ));
+        dummyList.add(new ProfileEventObject(2,"עזרה בקניות","16.6.2020","17:30",
+                                    "הורקנוס 7, תל אביב","300","" ));
+        dummyList.add(new ProfileEventObject(3,"עזרה בקניות","16.6.2020","17:30",
+                                             "הורקנוס 7, תל אביב","300","" ));
         return dummyList;
     }
 
