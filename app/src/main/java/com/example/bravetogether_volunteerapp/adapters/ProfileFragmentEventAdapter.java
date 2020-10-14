@@ -13,6 +13,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.bravetogether_volunteerapp.ProfileFragment2;
 import com.example.bravetogether_volunteerapp.R;
 import com.example.bravetogether_volunteerapp.VolunteerEvent;
 import com.example.bravetogether_volunteerapp.interfaces.ItemClickListener;
@@ -21,8 +22,8 @@ import java.util.List;
 
 public class ProfileFragmentEventAdapter extends RecyclerView.Adapter<ProfileFragmentEventAdapter.EventHolder> {
     Context context;
-    List<VolunteerEvent> eventList;
-    public ProfileFragmentEventAdapter(Context context, List<VolunteerEvent> list){
+    List<ProfileFragment2.ProfileEventObject> eventList;
+    public ProfileFragmentEventAdapter(Context context, List<ProfileFragment2.ProfileEventObject> list){
         this.context = context;
         this.eventList = list;
     }
@@ -37,13 +38,13 @@ public class ProfileFragmentEventAdapter extends RecyclerView.Adapter<ProfileFra
 
     @Override
     public void onBindViewHolder(@NonNull EventHolder holder, final int position) {
-        final VolunteerEvent event = eventList.get(position);
+        final ProfileFragment2.ProfileEventObject event = eventList.get(position);
         // TODO:: need to make sure that list holds start time and address
-        String details = event.getLocation()+"|"+event.getDate()+"|"+event.getDuration();
+        String details = event.getLocation()+" | "+event.getDate()+" | "+event.getStart_time();
         //set textviews:
-        holder.credits.setText(event.getNumberCredits());
+        holder.credits.setText(event.getCredits());
         holder.details.setText(details);
-        holder.headline.setText(event.getEventName());
+        holder.headline.setText(event.getHeadline());
         //  TODO:: need to understand how to add images
 
         //  TODO:: finish share button action
@@ -67,7 +68,7 @@ public class ProfileFragmentEventAdapter extends RecyclerView.Adapter<ProfileFra
 
     }
 
-    private void directToEventPage(VolunteerEvent event){
+    private void directToEventPage(ProfileFragment2.ProfileEventObject event){
         // TODO:: complete method
     }
 
