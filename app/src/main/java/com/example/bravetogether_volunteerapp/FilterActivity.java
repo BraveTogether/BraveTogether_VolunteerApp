@@ -9,6 +9,7 @@ import android.location.Location;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -51,9 +52,42 @@ public class FilterActivity extends AppCompatActivity {
         String sharedPrefFile = "com.example.android.BraveTogether_VolunteerApp";
         mPreferences = getSharedPreferences(sharedPrefFile, MODE_PRIVATE);
 
-
-        /// make sure to change MainActivity to the activity you wish to forward the data to.
-        i = new Intent(FilterActivity.this, MainActivity.class);
+        String UserUntil = mPreferences.getString("UserFilterAvailabilityEnd", null);
+        String UserStart = mPreferences.getString("UserFilterAvailabilityStart", null);
+        if (UserUntil !=null && UserStart!=null)
+        {
+            ((EditText)findViewById(R.id.until)).setText(UserUntil);
+            ((EditText)findViewById(R.id.from)).setText(UserStart);
+            switch (mPreferences.getString("UserFilterRadius", null))
+            {
+                case("10"):
+                    radius(findViewById(R.id.km_option10));
+                    break;
+                case("15"):
+                    radius(findViewById(R.id.km_option15));
+                    break;
+                case("20"):
+                    radius(findViewById(R.id.km_option20));
+                    break;
+                default:
+                    radius(findViewById(R.id.km_option_unlimited));
+            }
+            switch (mPreferences.getString("UserFilterDuration", null))
+            {
+                case("30"):
+                    duration(findViewById(R.id.m30));
+                    break;
+                case("60"):
+                    duration(findViewById(R.id.h1));
+                    break;
+                case("120"):
+                    duration(findViewById(R.id.h2));
+                    break;
+                default:
+                    duration(findViewById(R.id.unlimited_time));
+            }
+        }
+        Toast.makeText(FilterActivity.this, UserStart, Toast.LENGTH_LONG).show();
     }
 
     public void radius(View view) {
@@ -217,5 +251,20 @@ public class FilterActivity extends AppCompatActivity {
     }
 
     public void Save(View view) {
+        SharedPreferences.Editor preferencesEditor = mPreferences.edit();
+        if (((CheckBox) view).isChecked()){
+            preferencesEditor.putString("UserFilterRadius", String.valueOf(radius));
+            preferencesEditor.putString("UserFilterDuration", String.valueOf(duration));
+            preferencesEditor.putString("UserFilterAvailabilityStart", ((EditText)findViewById(R.id.from)).getText().toString());
+            preferencesEditor.putString("UserFilterAvailabilityEnd", ((EditText)findViewById(R.id.until)).getText().toString());
+            preferencesEditor.apply();
+        }
+        else{
+            preferencesEditor.remove("UserFilterRadius");
+            preferencesEditor.remove("UserFilterDuration");
+            preferencesEditor.remove("UserFilterAvailabilityStart");
+            preferencesEditor.remove("UserFilterAvailabilityEnd");
+            preferencesEditor.apply();
+        }
     }
 }
