@@ -1,13 +1,10 @@
 package com.example.bravetogether_volunteerapp;
 
-import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
@@ -17,7 +14,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.bravetogether_volunteerapp.adapters.ProfileFragmentEventAdapter;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.example.bravetogether_volunteerapp.adapters.Tags_ProfileFragment_Adapter;
 
 import java.util.ArrayList;
 
@@ -31,6 +28,22 @@ public class ProfileFragment2 extends Fragment {
    private  View ProfileView;
    private RecyclerView rcTags,rcNearVolunteers,rcVolunteerHistory;
    private Context context;
+
+    // ----------- check -------------
+    private ArrayList<String> tagsNames = new ArrayList<>();
+    private ArrayList<String> tagsDetails = new ArrayList<>();
+    private ArrayList<Integer> tagsImages = new ArrayList<>();
+    private void fill_arrays(){
+        tagsNames.add("אות גבורה");
+        tagsNames.add("אות גבורה");
+        tagsDetails.add("30 שעות התנדבות");
+        tagsDetails.add("30 שעות התנדבות");
+        tagsImages.add(getResources().getIdentifier("drawable/star_big_off", null,"com.example.bravetogether_volunteerapp" ));
+        tagsImages.add(getResources().getIdentifier("drawable/star_big_off", null,"com.example.bravetogether_volunteerapp" ));
+
+    }
+    // ----------- Add for checking -------------
+
     public ProfileFragment2(){}
 
     @Nullable
@@ -42,6 +55,13 @@ public class ProfileFragment2 extends Fragment {
         setUserDate();
         setNearVoluteer();
         setVolunteerHistory();
+        // ----------- Add for checking -------------
+        fill_arrays();
+        rcTags = ProfileView.findViewById(R.id.rcTags);
+        Tags_ProfileFragment_Adapter adapter = new Tags_ProfileFragment_Adapter(this.context, tagsNames, tagsDetails);
+        setRecyclerViewSetting(rcTags, adapter);
+        // ----------- Add for checking -------------
+
         return ProfileView;
     }
 
