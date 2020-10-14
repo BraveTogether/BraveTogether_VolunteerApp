@@ -151,7 +151,7 @@
                     android:textSize="18sp" />
 
                 <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/rcVolunteerHistory"
+                    android:id="@+id/rcMyVolunteers"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/btnMore"

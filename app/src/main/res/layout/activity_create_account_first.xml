@@ -60,24 +60,6 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
-                <!--                <Button-->
-                <!--                    android:id="@+id/backButtonImageView"-->
-                <!--                    android:layout_width="24dp"-->
-                <!--                    android:layout_height="24dp"-->
-                <!--                    android:layout_alignParentEnd="true"-->
-                <!--                    android:layout_alignParentRight="true"-->
-                <!--                    android:layout_gravity="end"-->
-                <!--                    android:layout_marginTop="132dp"-->
-                <!--                    android:background="@drawable/top_back_arrow_24"-->
-                <!--                    android:gravity="end"-->
-                <!--                    android:textAlignment="viewEnd"-->
-                <!--                    android:translationZ="1dp"-->
-                <!--                    app:layout_constraintEnd_toEndOf="parent"-->
-                <!--                    app:layout_constraintHorizontal_bias="0.914"-->
-                <!--                    app:layout_constraintStart_toStartOf="parent"-->
-                <!--                    app:layout_constraintTop_toTopOf="parent"-->
-                <!--                    tools:ignore="VectorDrawableCompat" />-->
-
                 <ImageView
                     android:id="@+id/profile_image"
                     android:layout_width="139dp"
@@ -246,60 +228,41 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/confirmPasswordEditText" />
 
-<!--                <EditText-->
-<!--                    android:id="@+id/Address"-->
-<!--                    android:layout_width="325dp"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:layout_gravity="center"-->
-<!--                    android:layout_marginTop="15dp"-->
-<!--                    android:background="@drawable/textfield_d"-->
-<!--                    android:drawableRight="@drawable/home"-->
-<!--                    android:drawablePadding="7dp"-->
-<!--                    android:ellipsize="start"-->
-<!--                    android:ems="10"-->
-<!--                    android:gravity="right"-->
-<!--                    android:hint="@string/address"-->
-<!--                    android:inputType="textPostalAddress"-->
-<!--                    android:paddingVertical="10dp"-->
-<!--                    android:paddingRight="12dp"-->
-<!--                    app:layout_constraintEnd_toEndOf="parent"-->
-<!--                    app:layout_constraintHorizontal_bias="0.508"-->
-<!--                    app:layout_constraintStart_toStartOf="parent"-->
-<!--                    app:layout_constraintTop_toBottomOf="@+id/PhoneNumber" />-->
-
-                <!--                <ImageView-->
-                <!--                    android:id="@+id/imageView1"-->
-                <!--                    android:layout_width="wrap_content"-->
-                <!--                    android:layout_height="wrap_content"-->
-                <!--                    android:layout_alignParentLeft="true"-->
-                <!--                    android:layout_alignParentTop="true"-->
-                <!--                    android:src="@drawable/about"-->
-                <!--                    android:z/>-->
-
-
-<!--                    android:layout_gravity="center"-->
-<!--                    android:layout_marginTop="15dp"-->
-<!--                    android:background="@drawable/textfield_d"-->
-<!--                    android:drawableRight="@drawable/home"-->
-<!--                    android:drawablePadding="7dp"-->
-<!--                    android:ellipsize="start"-->
-<!--                    android:ems="10"-->
-<!--                    android:hint="@string/address"-->
-<!--                    android:inputType="textPostalAddress"-->
-<!--                    android:paddingVertical="10dp"-->
-<!--                    android:paddingRight="12dp"-->
-                <fragment
-                    app:layout_constraintTop_toBottomOf="@+id/PhoneNumber"
+                <EditText
                     android:id="@+id/Address"
-                    android:name="com.google.android.libraries.places.widget.AutocompleteSupportFragment"
-                    android:layout_width="match_parent"
+                    android:layout_width="325dp"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="15dp"
+                    android:background="@drawable/textfield_d"
+                    android:drawableRight="@drawable/home"
+                    android:drawablePadding="7dp"
+                    android:ellipsize="start"
+                    android:ems="10"
                     android:gravity="right"
-                    android:visibility="visible"
+                    android:hint="@string/address"
+                    android:inputType="textPostalAddress"
+                    android:paddingVertical="10dp"
+                    android:paddingRight="12dp"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.483"
+                    app:layout_constraintHorizontal_bias="0.508"
                     app:layout_constraintStart_toStartOf="parent"
-                    tools:layout_editor_absoluteY="650dp" />
+                    app:layout_constraintTop_toBottomOf="@+id/PhoneNumber" />
+
+                    <!--                auto complete address        -->
+
+<!--                <fragment-->
+<!--                    app:layout_constraintTop_toBottomOf="@+id/PhoneNumber"-->
+<!--                    android:id="@+id/Address"-->
+<!--                    android:name="com.google.android.libraries.places.widget.AutocompleteSupportFragment"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:gravity="right"-->
+<!--                    android:visibility="visible"-->
+<!--                    app:layout_constraintEnd_toEndOf="parent"-->
+<!--                    app:layout_constraintHorizontal_bias="0.483"-->
+<!--                    app:layout_constraintStart_toStartOf="parent"-->
+<!--                    tools:layout_editor_absoluteY="650dp" />-->
 
                 <EditText
                     android:id="@+id/About"
