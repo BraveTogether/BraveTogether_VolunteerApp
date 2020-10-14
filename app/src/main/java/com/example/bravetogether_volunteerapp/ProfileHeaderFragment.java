@@ -42,8 +42,8 @@ public class ProfileHeaderFragment extends Fragment implements View.OnClickListe
         String sharedPrefFile = "com.example.android.BraveTogether_VolunteerApp";
         SharedPreferences mPreferences = this.getActivity().getSharedPreferences(sharedPrefFile, Context.MODE_PRIVATE);
         //TODO: check if all the mPreferences names are correct
-        String email = mPreferences.getString("UserEmail", "user@mymail.com");
-        String fullName = mPreferences.getString("UserFirstName", "ישראל") + " " + mPreferences.getString("UserLastName", "ישראלי");
+        String email = mPreferences.getString("email", "user@mymail.com");
+        String fullName = mPreferences.getString("first_name", "ישראל") + " " + mPreferences.getString("last_name", "ישראלי");
         String phoneNum = mPreferences.getString("UserPhoneNumber", "0547777777");
         String bio = mPreferences.getString("UserPhoneNumber", "כאן המשתמש כותב את הפרטים על עצמו");
         String userType = mPreferences.getString("UserType", "סוג פרופיל");

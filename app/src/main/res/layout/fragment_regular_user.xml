@@ -129,6 +129,7 @@
                 android:text="ערוך התראה"
                 android:textColor="#001925"
                 android:textSize="14sp"
+                android:id="@+id/editNotification"
                 app:layout_constraintEnd_toEndOf="@+id/notificationBar"
                 app:layout_constraintTop_toTopOf="@+id/notificationBar"></TextView>
 

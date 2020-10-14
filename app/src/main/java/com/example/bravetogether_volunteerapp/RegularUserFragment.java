@@ -1,9 +1,11 @@
 package com.example.bravetogether_volunteerapp;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,8 +15,10 @@ import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
 
+import com.example.bravetogether_volunteerapp.LoginFlow.RegisterActivity;
 
-public class RegularUserFragment extends Fragment {
+
+public class RegularUserFragment extends Fragment implements View.OnClickListener {
     public RegularUserFragment() {
         // Required empty public constructor
     }
@@ -56,6 +60,7 @@ public class RegularUserFragment extends Fragment {
 
         //Checks if the switch is on and change the text color
         Switch s = v.findViewById(R.id.switch_button);
+        v.findViewById(R.id.editNotification).setOnClickListener(this);
         s.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -71,9 +76,21 @@ public class RegularUserFragment extends Fragment {
                     hoursText.setTextColor(Color.parseColor("#8C96A2"));
                     durationText.setTextColor(Color.parseColor("#8C96A2"));
                 }
-
             }
         });
         return v;
+    }
+
+
+    /**
+     * Called when a view has been clicked.
+     *
+     * @param v The view that was clicked.
+     */
+    @Override
+    public void onClick(View v) {
+        Log.d("RegularUserFragment" , "clicked");
+        Intent intent = new Intent(getContext(), EditNotificationDetails.class);
+        startActivity(intent);
     }
 }
