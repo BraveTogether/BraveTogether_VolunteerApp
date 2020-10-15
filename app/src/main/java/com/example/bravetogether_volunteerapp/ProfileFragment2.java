@@ -9,6 +9,9 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -48,9 +51,12 @@ public class ProfileFragment2 extends Fragment {
    private  View ProfileView;
    private RecyclerView rcTags,rcNearVolunteers, rcMyVolunteer;
    private Context context;
+   private SeekBar sbRadius;
+   private TextView txtRadius;
+   private int radius;
 
 
-   // DB and sharedPrefFile:
+    // DB and sharedPrefFile:
    //private final String url = getResources().getString(R.string.apiUrl);
    //private final String sharedPrefFile = "com.example.android.BraveTogether_VolunteerApp";
    private SharedPreferences mPreferences;
@@ -64,9 +70,10 @@ public class ProfileFragment2 extends Fragment {
                              @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         ProfileView = inflater.inflate(R.layout.fragment_profile2, container, false);
+        radius = 10;    // init search radius to be 10KM
         setUserDate();
         setTags();
-        setNearEvents(100);
+        setNearEvents();
         setMyVolunteers();
 
 
@@ -124,9 +131,10 @@ public class ProfileFragment2 extends Fragment {
     private void setNearVolunteer(ArrayList<ProfileEventObject> list){
         // TODO:: check user location and define near location (what is the radius)
         // TODO:: poll near volunteer from server.
-
-        System.out.println("************* "+list.size()+" **********");
-
+        if( list.size() == 0){
+            nearEventsTryAgain();
+            return;
+        }
         rcNearVolunteers = ProfileView.findViewById(R.id.rcNearVolunteer);
         ProfileFragmentEventAdapter adapter = new ProfileFragmentEventAdapter(context,list);
         setRecyclerViewSetting(rcNearVolunteers,adapter);
@@ -146,7 +154,42 @@ public class ProfileFragment2 extends Fragment {
         view.setNestedScrollingEnabled(false);
     }
 
+    private void nearEventsTryAgain(){
+        final LinearLayout layout = (LinearLayout) ProfileView.findViewById(R.id.LLnotFound);
+        layout.setVisibility(View.VISIBLE);
+        ImageView tryAgian = (ImageView) ProfileView.findViewById(R.id.btnTryAgain);
+        sbRadius = (SeekBar) ProfileView.findViewById(R.id.chooseRadius);
+        sbRadius.setProgress(radius);
+        txtRadius = (TextView) ProfileView.findViewById(R.id.txtRadius);
+        txtRadius.setText(sbRadius.getProgress() + " קילומטר " );
+        sbRadius.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                    radius = progress;
+                    txtRadius.setText(seekBar.getProgress() + " קילומטר " );
 
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+                    return;
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+                txtRadius.setText(seekBar.getProgress() + " קילומטר " );
+                radius = seekBar.getProgress();
+            }
+        });
+       tryAgian.setOnClickListener(new View.OnClickListener() {
+           @Override
+           public void onClick(View v) {
+               layout.setVisibility(View.INVISIBLE);
+               setNearEvents();
+           }
+       });
+
+    }
 
     // copied from FillterActivity if function become static we can delete this.
     public float getDistance(String address1, String address2) {
@@ -168,7 +211,7 @@ public class ProfileFragment2 extends Fragment {
     }
 
     // modified Search method from FillterActivity -  set dbNearEvent list with all the near event.
-    private ArrayList<ProfileEventObject> setNearEvents(final int radius){
+    private ArrayList<ProfileEventObject> setNearEvents(){
         String url =  getResources().getString(R.string.apiUrl) + "volunteers/confirmed/1";
 //        final String userAddress = mPreferences.getString("userAddress",
 //                "Remez 8, Tel Aviv, Israel");  // default address may need to change.
@@ -201,6 +244,8 @@ public class ProfileFragment2 extends Fragment {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         Log.d("PF2_setNearEvent","Error::"+error.getMessage());
+                        setNearVolunteer(result); // need to be deleted;
+
                     }
                 });
         VolleySingleton.getInstance(context).addToRequestQueue(JsonArrayRequest);
