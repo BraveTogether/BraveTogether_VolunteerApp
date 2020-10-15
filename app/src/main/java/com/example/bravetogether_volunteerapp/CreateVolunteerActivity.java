@@ -94,7 +94,7 @@ public class CreateVolunteerActivity extends AppCompatActivity {
     private String picture = "picurl";
     private String address = "adddd";
     private int online = 0;
-    private int duration = 0;
+    private double duration = 0;
     private String about_place = "place";
     private String about_volunteering = "volunteering";
     private int min_volunteer = -1;
@@ -143,7 +143,7 @@ public class CreateVolunteerActivity extends AppCompatActivity {
         final TextView hourView = findViewById(R.id.hourView);
         final TextView durationView = findViewById(R.id.durationView);
         mPreferences = getSharedPreferences(sharedPrefFile, MODE_PRIVATE);
-        manager = 8; //mPreferences.getString("uid", "-1");
+        manager = 8; //mPreferences.getString("uid", "-1"); TODO: replace hardcoded id!!!
         toggleButton = (ToggleButton) findViewById(R.id.online_button);
         url = getString(R.string.apiUrl);
 
@@ -252,6 +252,8 @@ public class CreateVolunteerActivity extends AppCompatActivity {
 
 
                                         @SuppressLint("SimpleDateFormat") SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+                                        @SuppressLint("SimpleDateFormat") SimpleDateFormat formatToShow = new SimpleDateFormat("dd/MM/yyyy");
+                                        String dateToShow = formatToShow.format(calendar.getTime());
                                         strDate = format.format(calendar.getTime()); // Date for database
                                         Date parsed_date = null;
                                         try {
@@ -265,8 +267,8 @@ public class CreateVolunteerActivity extends AppCompatActivity {
                                         } catch (ParseException e) {
                                             e.printStackTrace();
                                         }
-                                        Log.d("date", strDate);
-                                        dateView.setText(strDate);
+                                        Log.d("date", dateToShow);
+                                        dateView.setText(dateToShow);
                             }
                         }, cyear, cmonth, cday);
                 datePickerDialog.show();
