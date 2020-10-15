@@ -76,7 +76,7 @@
                 />
 
             <ImageView
-                android:id="@+id/uploaded_image"
+                android:id="@+id/uploaded_image_approve_activity"
                 android:layout_width="139dp"
                 android:layout_height="139dp"
                 android:layout_gravity="center"

@@ -300,7 +300,6 @@ public class CreateVolunteerActivity extends AppCompatActivity {
                                 alert.setTitle("כמה זמן תמשך ההתנדבות");
                                 final EditText input = new EditText(mcontext);
                                 input.setInputType(InputType.TYPE_CLASS_NUMBER);
-//                                input.setInputType(InputType.TYPE_NUMBER_FLAG_DECIMAL);
                                 alert.setView(input);
                                 alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                                     public void onClick(DialogInterface dialog, int whichButton) {
