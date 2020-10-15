@@ -207,4 +207,11 @@ public class EditNotificationDetails extends AppCompatActivity {
         }
     }
 
+
+    //TODO need to edit the profile on the DB
+    public void submitEdit(View view){
+        Intent intent = new Intent(this, RegularProfileActivity.class);
+        startActivity(intent);
+    }
+
 }
