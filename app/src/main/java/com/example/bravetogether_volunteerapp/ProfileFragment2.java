@@ -65,9 +65,11 @@ public class ProfileFragment2 extends Fragment {
                              @Nullable Bundle savedInstanceState) {
         ProfileView = inflater.inflate(R.layout.fragment_profile2, container, false);
         setUserDate();
-        setNearVolunteer();
-        setMyVolunteers();
         setTags();
+        setNearEvents(100);
+        setMyVolunteers();
+
+
         return ProfileView;
     }
 
@@ -119,10 +121,10 @@ public class ProfileFragment2 extends Fragment {
         setRecyclerViewSetting(rcMyVolunteer,adapter);
     }
 
-    private void setNearVolunteer(){
+    private void setNearVolunteer(ArrayList<ProfileEventObject> list){
         // TODO:: check user location and define near location (what is the radius)
         // TODO:: poll near volunteer from server.
-        ArrayList<ProfileEventObject> list = setNearEvents(100); // need to change to correct list.
+
         System.out.println("************* "+list.size()+" **********");
 
         rcNearVolunteers = ProfileView.findViewById(R.id.rcNearVolunteer);
@@ -193,6 +195,7 @@ public class ProfileFragment2 extends Fragment {
                                 e.printStackTrace();
                             }
                         }
+                        setNearVolunteer(result);
                     }
                 }, new Response.ErrorListener() {
                     @Override
