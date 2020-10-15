@@ -74,72 +74,6 @@
                 android:textSize="14sp"></TextView>
         </LinearLayout>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:layout_marginTop="20dp"
-            android:text="משך זמן התנדבות עד-"
-            android:textColor="#001925"
-            android:textSize="18sp"
-            android:layout_marginEnd="40dp"
-            ></TextView>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:layout_marginTop="20dp"
-            >
-
-            <TextView
-                android:layout_width="91dp"
-                android:layout_height="28dp"
-                android:background="@drawable/textfield_d_buttons"
-                android:gravity="center"
-                android:onClick="setDurationTime"
-                android:id="@+id/durationUnlimited"
-                android:text="ללא הגבלה"
-                android:layout_marginEnd="10dp"
-                android:textColor="#001925"
-                android:textSize="14sp"></TextView>
-
-            <TextView
-                android:layout_width="91dp"
-                android:layout_height="28dp"
-                android:background="@drawable/textfield_d_buttons"
-                android:gravity="center"
-                android:text="2 שעות"
-                android:onClick="setDurationTime"
-                android:id="@+id/duration2"
-                android:layout_marginEnd="10dp"
-                android:textColor="#001925"
-                android:textSize="14sp"></TextView>
-
-            <TextView
-                android:layout_width="91dp"
-                android:layout_height="28dp"
-                android:layout_marginEnd="10dp"
-                android:background="@drawable/textfield_d_buttons"
-                android:gravity="center"
-                android:id="@+id/duration1"
-                android:onClick="setDurationTime"
-                android:text="1 שעות"
-                android:textColor="#001925"
-                android:textSize="14sp"></TextView>
-
-            <TextView
-                android:layout_width="91dp"
-                android:layout_height="28dp"
-                android:id="@+id/duration30m"
-                android:onClick="setDurationTime"
-                android:background="@drawable/textfield_d_buttons"
-                android:gravity="center"
-                android:text="30 דק'"
-                android:textColor="#001925"
-                android:textSize="14sp"></TextView>
-
-        </LinearLayout>
 
         <TextView
             android:layout_width="wrap_content"
@@ -161,6 +95,18 @@
             <TextView
                 android:layout_width="91dp"
                 android:layout_height="28dp"
+                android:onClick="setTimesOfVolunteer"
+                android:background="@drawable/textfield_d_buttons"
+                android:gravity="center"
+                android:text="ללא הגבלה"
+                android:layout_marginEnd="10dp"
+                android:id="@+id/timesUnlimited"
+                android:textColor="#001925"
+                android:textSize="14sp"></TextView>
+
+            <TextView
+                android:layout_width="91dp"
+                android:layout_height="28dp"
                 android:background="@drawable/textfield_d_buttons"
                 android:gravity="center"
                 android:id="@+id/timesEvening"
@@ -170,17 +116,6 @@
                 android:textColor="#001925"
                 android:textSize="14sp"></TextView>
 
-            <TextView
-                android:layout_width="91dp"
-                android:layout_height="28dp"
-                android:layout_marginEnd="10dp"
-                android:background="@drawable/textfield_d_buttons"
-                android:gravity="center"
-                android:id="@+id/timesAfterNoon"
-                android:text="אחר הצהריים"
-                android:onClick="setTimesOfVolunteer"
-                android:textColor="#001925"
-                android:textSize="14sp"></TextView>
 
             <TextView
                 android:layout_width="91dp"
@@ -205,20 +140,8 @@
                 android:textColor="#001925"
                 android:textSize="14sp"></TextView>
 
-        </LinearLayout>
 
-        <TextView
-            android:layout_width="91dp"
-            android:layout_height="28dp"
-            android:onClick="setTimesOfVolunteer"
-            android:layout_marginTop="10dp"
-            android:layout_marginEnd="10dp"
-            android:background="@drawable/textfield_d_buttons"
-            android:gravity="center"
-            android:text="ללא הגבלה"
-            android:id="@+id/timesUnlimited"
-            android:textColor="#001925"
-            android:textSize="14sp"></TextView>
+        </LinearLayout>
 
 
         <TextView
@@ -252,7 +175,7 @@
                 android:textSize="14sp"></TextView>
 
             <TextView
-                android:layout_width="wrap_content"
+                android:layout_width="110dp"
                 android:layout_height="28dp"
                 android:onClick="setTypeOfVolunteer"
                 android:layout_marginEnd="10dp"

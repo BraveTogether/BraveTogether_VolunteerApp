@@ -21,13 +21,11 @@ public class EditNotificationDetails extends AppCompatActivity {
     //in the onCreate function the variable updated from the shared preferences file
     //TODO check what type of variable the DB holds
     private String distanceRadius;
-    private String durationTime;
     private String timesOfVolunteer;
     private String typeOfVolunteer;
 
     //ArrayList the holds all the button for easy iteration.
     ArrayList<TextView> buttonsDistanceRadius = new ArrayList<>();
-    ArrayList<TextView> buttonsDurationTime = new ArrayList<>();
     ArrayList<TextView> buttonsTimesOfVolunteer = new ArrayList<>();
     ArrayList<TextView> buttonsTypeOfVolunteer = new ArrayList<>();
 
@@ -40,7 +38,6 @@ public class EditNotificationDetails extends AppCompatActivity {
        SharedPreferences mPreferences = this.getSharedPreferences(sharedPrefFile, Context.MODE_PRIVATE);
         //TODO: check if all the mPreferences names are correct
         distanceRadius = mPreferences.getString("notification_address", "10");
-        durationTime = mPreferences.getString("duration", "2h");
         timesOfVolunteer = mPreferences.getString("times", "morning");
         typeOfVolunteer = mPreferences.getString("type", "online");
         //TODO: check if all the mPreferences names are correct
@@ -52,14 +49,8 @@ public class EditNotificationDetails extends AppCompatActivity {
         buttonsDistanceRadius.add((TextView)this.findViewById(R.id.distanceUnlimited));
 
 
-        buttonsDurationTime.add((TextView)this.findViewById(R.id.duration30m));
-        buttonsDurationTime.add((TextView)this.findViewById(R.id.duration1));
-        buttonsDurationTime.add((TextView)this.findViewById(R.id.duration2));
-        buttonsDurationTime.add((TextView)this.findViewById(R.id.durationUnlimited));
-
         buttonsTimesOfVolunteer.add((TextView)this.findViewById(R.id.timesMorning));
         buttonsTimesOfVolunteer.add((TextView)this.findViewById(R.id.timesNoon));
-        buttonsTimesOfVolunteer.add((TextView)this.findViewById(R.id.timesAfterNoon));
         buttonsTimesOfVolunteer.add((TextView)this.findViewById(R.id.timesEvening));
         buttonsTimesOfVolunteer.add((TextView)this.findViewById(R.id.timesUnlimited));
 
@@ -67,7 +58,6 @@ public class EditNotificationDetails extends AppCompatActivity {
         buttonsTypeOfVolunteer.add((TextView)this.findViewById(R.id.typePhysical));
 
         setDistanceRadius(null);
-        setDurationTime(null);
         setTimesOfVolunteer(null);
         setTypeOfVolunteer(null);
     }
@@ -112,42 +102,9 @@ public class EditNotificationDetails extends AppCompatActivity {
     }
 
 
-    public void setDurationTime(View view){
-        int position = 0;
-        String [] s = {"30m", "1h", "2h", "unlimited"};
-        if (view != null) {
-            for (View v : buttonsDurationTime) {
-                if (v.getId() == view.getId()) {
-                    v.setBackgroundResource(R.drawable.buttonblueinside);
-                    durationTime = s[position];
-                }
-                else
-                    v.setBackgroundResource(R.drawable.textfield_d_buttons);
-                position++;
-            }
-        }
-        else {
-            switch (durationTime) {
-                case "30m":
-                    buttonsDurationTime.get(0).setBackgroundResource(R.drawable.buttonblueinside);
-                    break;
-                case "1h":
-                    buttonsDurationTime.get(1).setBackgroundResource(R.drawable.buttonblueinside);
-                    break;
-                case "2h":
-                    buttonsDurationTime.get(2).setBackgroundResource(R.drawable.buttonblueinside);
-                    break;
-                case "unlimited":
-                    buttonsDurationTime.get(3).setBackgroundResource(R.drawable.buttonblueinside);
-                    break;
-            }
-        }
-    }
-
-
     public void setTimesOfVolunteer(View view){
         int position = 0;
-        String [] s = {"morning", "noon", "afterNoon", "evening" ,  "unlimited"};
+        String [] s = {"morning", "noon", "evening" ,  "unlimited"};
         if (view != null) {
             for (View v : buttonsTimesOfVolunteer) {
                 if (v.getId() == view.getId()) {
@@ -167,14 +124,11 @@ public class EditNotificationDetails extends AppCompatActivity {
                 case "noon":
                     buttonsTimesOfVolunteer.get(1).setBackgroundResource(R.drawable.buttonblueinside);
                     break;
-                case "afterNoon":
+                case "evening":
                     buttonsTimesOfVolunteer.get(2).setBackgroundResource(R.drawable.buttonblueinside);
                     break;
-                case "evening":
-                    buttonsTimesOfVolunteer.get(3).setBackgroundResource(R.drawable.buttonblueinside);
-                    break;
                 case "Unlimited":
-                    buttonsTimesOfVolunteer.get(4).setBackgroundResource(R.drawable.buttonblueinside);
+                    buttonsTimesOfVolunteer.get(3).setBackgroundResource(R.drawable.buttonblueinside);
                     break;
             }
         }
