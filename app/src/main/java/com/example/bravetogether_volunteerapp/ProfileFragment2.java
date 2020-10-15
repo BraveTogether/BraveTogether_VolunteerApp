@@ -48,8 +48,7 @@ public class ProfileFragment2 extends Fragment {
    private  View ProfileView;
    private RecyclerView rcTags,rcNearVolunteers, rcMyVolunteer;
    private Context context;
-   private List<JSONObject> dbNearEvents;
-   private final int radius = 10; // in KM
+
 
    // DB and sharedPrefFile:
    //private final String url = getResources().getString(R.string.apiUrl);
@@ -78,8 +77,6 @@ public class ProfileFragment2 extends Fragment {
         super.onAttach(context);
         this.context = context;
         mPreferences = PreferenceManager.getDefaultSharedPreferences(context);
-        setNearEvents();
-
     }
 
     // Access to DB / SharedFile to get user data
@@ -125,7 +122,9 @@ public class ProfileFragment2 extends Fragment {
     private void setNearVolunteer(){
         // TODO:: check user location and define near location (what is the radius)
         // TODO:: poll near volunteer from server.
-        ArrayList<ProfileEventObject> list = getNearVolunteerlist(); // need to change to correct list.
+        ArrayList<ProfileEventObject> list = setNearEvents(100); // need to change to correct list.
+        System.out.println("************* "+list.size()+" **********");
+
         rcNearVolunteers = ProfileView.findViewById(R.id.rcNearVolunteer);
         ProfileFragmentEventAdapter adapter = new ProfileFragmentEventAdapter(context,list);
         setRecyclerViewSetting(rcNearVolunteers,adapter);
@@ -145,13 +144,7 @@ public class ProfileFragment2 extends Fragment {
         view.setNestedScrollingEnabled(false);
     }
 
-    private ArrayList<ProfileEventObject> getNearVolunteerlist(){
-        ArrayList<ProfileEventObject> list = new ArrayList<>();
-        for (JSONObject event : dbNearEvents){
-            list.add(new ProfileEventObject(event));
-        }
-        return list;
-    }
+
 
     // copied from FillterActivity if function become static we can delete this.
     public float getDistance(String address1, String address2) {
@@ -171,56 +164,47 @@ public class ProfileFragment2 extends Fragment {
 
         return locationA.distanceTo(locationB);
     }
-    // modified Search method from FillterActivity -  set dbNearEvent list with all the near event.
-    private void setNearEvents(){
-        final String userAddress = mPreferences.getString("userAddress",
-                "Remez 8, Tel Aviv, Israel");  // default address may need to change.
-        try{
-            String URL = getResources().getString(R.string.apiUrl) + "volunteers/confirmed/1";
-            JsonArrayRequest JsonArrayRequest = new JsonArrayRequest
-                    (Request.Method.GET, URL, null, new Response.Listener<JSONArray>() {
-                        JSONObject Activity;
-                        @Override
-                        public void onResponse(JSONArray response) {
-                            dbNearEvents = new ArrayList<JSONObject>();
-                            boolean distance;
-                                for (int i = 0; i < response.length(); i++) {
-                                    try {
-                                        Activity = response.getJSONObject(i);
-                                        int online=Activity.getInt("online"); // 1 equals true
-                                        float dist=0;
-                                        if (online==0 )
-                                        {
-                                            //calculate the distance between the user and the volunteer.
-                                            dist = getDistance(Activity.get("address").toString(), userAddress);
-                                        }
-                                        distance = dist < (radius*1000);
-                                        if (distance ) {
-                                            // add the distance from user to the volunteer data being forwarded to the next activity
-                                            Activity.put("distance_from_user", String.valueOf(dist));
-                                            dbNearEvents.add((JSONObject)Activity);
-                                            //Log.e("Activity", activities.toString());
-                                        }
-                                    } catch (Exception e) {
-                                        e.printStackTrace();
-                                    }
-                                }
-                            Intent intent = new Intent(context, ProfileFragment2.class);
-                            startActivity(intent);
-                        }
-                    }, new Response.ErrorListener() {
 
-                        @Override
-                        public void onErrorResponse(VolleyError error) {
-                            Log.e("message", "Failed with error msg:\t" + error.getMessage());
-                            Log.e("stacktrace", "Error StackTrace: \t" + error.getStackTrace());
-                            Log.e("Response", "there was an error in setNearEvents :(");
+    // modified Search method from FillterActivity -  set dbNearEvent list with all the near event.
+    private ArrayList<ProfileEventObject> setNearEvents(final int radius){
+        String url =  getResources().getString(R.string.apiUrl) + "volunteers/confirmed/1";
+//        final String userAddress = mPreferences.getString("userAddress",
+//                "Remez 8, Tel Aviv, Israel");  // default address may need to change.
+        final String userAddress = "hatikva 27 ramat hasharon";
+        final ArrayList<ProfileEventObject> result = new ArrayList<>();
+        JsonArrayRequest JsonArrayRequest = new JsonArrayRequest
+                (Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
+                    JSONObject jsonEvent;
+
+                    @Override
+                    public void onResponse(JSONArray response) {
+                        Log.d("PF2_setNearEvent","OnResponse_Start");
+                        for(int i = 0; i < response.length(); i++){
+                            try {
+                                jsonEvent = response.getJSONObject(i);
+                                System.out.println("***"+jsonEvent.getString("name")+"***");
+                                int online = jsonEvent.getInt("online"); // 1-> event is online, 0-> frontal event.
+                                float dist = (online == 0)? getDistance(jsonEvent.get("address").toString(), userAddress) : 0;
+                                if(dist < radius*1000){
+                                    System.out.println(dist);
+                                    result.add(new ProfileEventObject(jsonEvent));
+                                }
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
                         }
-                    });
-        }
-        catch (Exception e){}
+                    }
+                }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Log.d("PF2_setNearEvent","Error::"+error.getMessage());
+                    }
+                });
+        VolleySingleton.getInstance(context).addToRequestQueue(JsonArrayRequest);
+        return result;
     }
 
+    // classes for adapters
     public  class ProfileEventObject{
         private String headline;
         private String date;
@@ -247,7 +231,7 @@ public class ProfileFragment2 extends Fragment {
                 this.location = activity.getString("address");
                 this.imgUrl = activity.getString("picture");
                 this.uid = activity.getLong("id");
-                this.credits = activity.getInt("value_in_coins")+"";
+               // this.credits = activity.getInt("value_in_coins")+"";
                 this.date = "dummydate"; // TODO:: get correct date.
             } catch (JSONException e) {
                 e.printStackTrace();
