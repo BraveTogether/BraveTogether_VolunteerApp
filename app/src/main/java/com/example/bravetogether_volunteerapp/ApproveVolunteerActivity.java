@@ -1,11 +1,17 @@
 package com.example.bravetogether_volunteerapp;
 
+import android.Manifest;
+import android.content.ActivityNotFoundException;
+import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -16,17 +22,21 @@ import com.android.volley.VolleyError;
 import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.StringRequest;
+import com.example.bravetogether_volunteerapp.ImageRetrieving.ImageRetriever;
+import com.nabinbhandari.android.permissions.PermissionHandler;
+import com.nabinbhandari.android.permissions.Permissions;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
 import java.util.Objects;
 
 public class ApproveVolunteerActivity extends AppCompatActivity {
 
-    private String vid = "11"; //TODO: replace hardcoded id!!!
+    private String vid = "13"; //TODO: replace hardcoded id!!!
     private String picture;
     private int online;
     private String duration;
@@ -47,7 +57,7 @@ public class ApproveVolunteerActivity extends AppCompatActivity {
     TextView maxVolView;
     private Button approve;
     private Button messageManager;
-
+    private Context mcontext=this;
 
     String url;
 
@@ -58,27 +68,6 @@ public class ApproveVolunteerActivity extends AppCompatActivity {
         final String url = getString(R.string.apiUrl);
         final int[] manager = new int[1];
 
-
-//
-//            final ImageRetriever imageRetriever = new ImageRetriever();
-//
-//            String[] permissions = {Manifest.permission.WRITE_EXTERNAL_STORAGE};
-//            String rationale = "Please provide storage permission so that you can load your profile picture";
-//            Permissions.Options options = new Permissions.Options()
-//            .setRationaleDialogTitle("Info")
-//            .setSettingsDialogTitle("Warning");
-//
-//            Permissions.check(this/*context*/, permissions, rationale, options, new PermissionHandler() {
-//    @Override
-//    public void onGranted() {
-//            Uri imageURI = Uri.parse(PUT YOUR URI HERE);
-//            filePath = imageRetriever.retrieveImg(imageURI, YOUR_ACTIVITY_NAME.this, YOUR_DESIRED_IMAGE_NAME).getPath();
-//            }
-//    @Override
-//    public void onDenied(Context context, ArrayList<String> deniedPermissions) {
-//            Toast.makeText(TestRetrieveImgFromFirebase.this, "Please allow the the app to access your storage in order to show your profile picture", Toast.LENGTH_SHORT).show();
-//            }
-//            });
 
 
         imageView = (ImageView) findViewById(R.id.uploaded_image_approve_activity);
@@ -101,6 +90,30 @@ public class ApproveVolunteerActivity extends AppCompatActivity {
                         Log.d("success_response", response.toString());
                         try {
                             final JSONObject record = response.getJSONObject(0);
+                            picture = record.getString("picture");
+                            Log.d("storage_uri_from_record", picture);
+
+
+                            final ImageRetriever imageRetriever = new ImageRetriever();
+
+                            String[] permissions = {Manifest.permission.WRITE_EXTERNAL_STORAGE};
+                            String rationale = "Please provide storage permission so that you can load your profile picture";
+                            Permissions.Options options = new Permissions.Options()
+                            .setRationaleDialogTitle("Info")
+                            .setSettingsDialogTitle("Warning");
+
+                            Permissions.check(mcontext, permissions, rationale, options, new PermissionHandler() {
+                                @Override
+                                public void onGranted() {
+                                        Log.d("storage_uri", picture);
+                                        Uri imageURI = Uri.parse(picture);
+//                                        String filePath = imageRetriever.retrieveImg(imageURI, ApproveVolunteerActivity.this, "volunteer_image_approve").getPath();
+                                        }
+                                @Override
+                                public void onDenied(Context context, ArrayList<String> deniedPermissions) {
+                                        Toast.makeText(ApproveVolunteerActivity.this, "Please allow the the app to access your storage in order to show your profile picture", Toast.LENGTH_SHORT).show();
+                                        }
+                                        });
                             manager[0] = record.optInt("manager");
                             nameEditTextView.setText(record.getString("name"));
                             addressView.setText(record.getString("address"));
@@ -195,6 +208,26 @@ public class ApproveVolunteerActivity extends AppCompatActivity {
                             @Override
                             public void onResponse(JSONArray response) {
                                 Log.d("success_response", response.toString());
+                                JSONObject record = null;
+                                String phone = null;
+                                try {
+                                    record = response.getJSONObject(0);
+                                    phone = record.getString("phone_number");
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+                                try {
+                                    // see https://faq.whatsapp.com/general/chats/how-to-use-click-to-chat
+                                    Uri msg_uri = Uri.parse("https://wa.me/972"+ phone); //TODO: insert real number from server
+                                    Intent intent = new Intent(Intent.ACTION_VIEW, msg_uri)
+                                            .setPackage("com.whatsapp");
+                                    startActivity(intent);
+                                } catch (ActivityNotFoundException e) // Whatsapp not installed. send sms:
+                                {
+                                    Uri msg_uri = Uri.parse("smsto:" + phone); //TODO: insert real number from server
+                                    Intent intent = new Intent(Intent.ACTION_SENDTO, msg_uri);
+                                    startActivity(intent);
+                                }
                             }
                         },
                         new Response.ErrorListener() {
