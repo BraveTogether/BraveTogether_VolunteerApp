@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
@@ -117,6 +118,7 @@ public class ProfileFragment2 extends Fragment {
 
     // RecyclerView handlers -- Horizontal scrolling --
     private void setMyVolunteers( ArrayList<ProfileEventObject> list ){
+        stopLoading(MYVOLUNTEER);
         list = createDummyEventList(); //TODO:: need be deleted when setUserEvent completed, for now dummy list.
         rcMyVolunteer = ProfileView.findViewById(R.id.rcMyVolunteers);
         ProfileFragmentEventAdapter adapter = new ProfileFragmentEventAdapter(context,list);
@@ -124,6 +126,7 @@ public class ProfileFragment2 extends Fragment {
     }
 
     private void setNearVolunteer(ArrayList<ProfileEventObject> list){
+        stopLoading(NEAREVENT);
         if( list.size() == 0){
             nearEventsTryAgain();
             return;
@@ -187,13 +190,20 @@ public class ProfileFragment2 extends Fragment {
     private void myEventTryAgain(){
         // TODO:: have not done!! need to create function.
         // TODO:: add all needed elements see nearEventsTryAgain.
+        stopLoading(MYVOLUNTEER);
         return;
     }
 
     private void loadingdate(int id){
-       return;
-        // TODO:: have not done!! need to create function.
-        //  add progress bar while waiting for server response.
+        id = (id == NEAREVENT)? R.id.NE_Pbar: R.id.ME_Pbar;
+        ProgressBar bar =(ProgressBar) ProfileView.findViewById(id);
+        bar.setVisibility(View.VISIBLE);
+    }
+
+    private void stopLoading(int id){
+        id = (id == NEAREVENT)? R.id.NE_Pbar: R.id.ME_Pbar;
+        ProgressBar bar =(ProgressBar) ProfileView.findViewById(id);
+        bar.setVisibility(View.INVISIBLE);
     }
 
     // copied from FillterActivity if function become static we can delete this.
@@ -247,6 +257,7 @@ public class ProfileFragment2 extends Fragment {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         Log.d("PF2_setNearEvent","Error::"+error.getMessage());
+                        setNearVolunteer(result);
                     }
                 });
         VolleySingleton.getInstance(context).addToRequestQueue(JsonArrayRequest);
@@ -254,13 +265,13 @@ public class ProfileFragment2 extends Fragment {
 
     // gets from server list of user events. TODO:: change query to get correct event and all needed information.
     private void setUserEvents(){
-        String url =  getResources().getString(R.string.apiUrl) + "volunteers/confirmed/1";  // TODO:: change query to get user event
         final ArrayList<ProfileEventObject> result = new ArrayList<>();
         final int user_id = mPreferences.getInt("id",-1);
         if (user_id == -1){
             myEventTryAgain();
             return;
         }
+        String url =  getResources().getString(R.string.apiUrl) + "/user/"+user_id+"/volunteers";  // TODO:: change query to get user event info
         JsonArrayRequest JsonArrayRequest = new JsonArrayRequest
                 (Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
                     JSONObject jsonEvent;

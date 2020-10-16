@@ -241,13 +241,22 @@
                 android:textColor="#000000"
                 android:textSize="18sp" />
 
+            <ProgressBar
+                android:id="@+id/NE_Pbar"
+                style="?android:attr/progressBarStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:visibility="invisible" />
+
             <LinearLayout
                 android:id="@+id/LLnotFound"
                 android:layout_width="match_parent"
-                android:layout_height="129dp"
+                android:layout_height="wrap_content"
                 android:layout_below="@+id/TextViewClose"
-                android:layout_marginTop="2dp"
-                android:layout_marginBottom="129dp"
+                android:layout_centerInParent="true"
                 android:orientation="vertical"
                 android:visibility="invisible">
 
@@ -263,6 +272,7 @@
                     android:id="@+id/textView2"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal|center_vertical"
                     android:text="לא נמצאו התנדבויות באזורך אנא בחר טווח חיפוש ונסה שנית"
                     android:textAlignment="center" />
 
@@ -295,6 +305,16 @@
             android:layout_height="wrap_content"
             android:background="#FFFFFF">
 
+
+            <ProgressBar
+                android:id="@+id/ME_Pbar"
+                style="?android:attr/progressBarStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:visibility="invisible" />
 
             <TextView
                 android:id="@+id/TextView1"
