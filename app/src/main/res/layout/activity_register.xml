@@ -123,6 +123,7 @@
         android:layout_marginTop="70dp"
         android:text="דלג עכשיו"
         android:textColor="#0A4459"
+        android:onClick="skipToHomePage"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"

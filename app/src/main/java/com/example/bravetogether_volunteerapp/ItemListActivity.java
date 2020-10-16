@@ -1,21 +1,32 @@
 package com.example.bravetogether_volunteerapp;
 
+import android.Manifest;
+import android.app.Activity;
+import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
+import com.example.bravetogether_volunteerapp.ImageRetrieving.ImageRetriever;
+import com.nabinbhandari.android.permissions.PermissionHandler;
+import com.nabinbhandari.android.permissions.Permissions;
 
+import org.json.JSONObject;
+
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -34,24 +45,26 @@ public class ItemListActivity extends AppCompatActivity {
      */
     private boolean mTwoPane;
     public static Context parentContext;
+    public static List<JSONObject> activitiesList;
+    static ContentResolver content;
+    static Context context;
+    static String filePath;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_item_list);
+        ContentResolver content = getContentResolver();
+        context = this;
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        toolbar.setTitle(getTitle());
+        //Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        //setSupportActionBar(toolbar);
+        //toolbar.setTitle("תוצאות חיפוש");
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
+
+        //Bundle args = getIntent().getBundleExtra("activitiesList");
+        //activitiesList = (List<JSONObject>) args.getSerializable("myList");
+        activitiesList = FilterActivity.activities;
 
         if (findViewById(R.id.item_detail_container) != null) {
             // The detail container view will be present only in the
@@ -66,8 +79,10 @@ public class ItemListActivity extends AppCompatActivity {
         setupRecyclerView((RecyclerView) recyclerView);
     }
 
-    private void setupRecyclerView(@NonNull RecyclerView recyclerView) {
+    private void setupRecyclerView(@NonNull final RecyclerView recyclerView) {
         parentContext = this;
+        //update the list
+        VolunteerList.update();
         recyclerView.setAdapter(new SimpleItemRecyclerViewAdapter(this, VolunteerList.ITEMS, mTwoPane));
     }
 
@@ -114,13 +129,45 @@ public class ItemListActivity extends AppCompatActivity {
             return new ViewHolder(view);
         }
 
+        public void retrieve(final int position, final Context context){
+
+            final ImageRetriever imageRetriever = new ImageRetriever();
+
+            String[] permissions = {Manifest.permission.WRITE_EXTERNAL_STORAGE};
+            String rationale = "Please provide storage permission so that you can load your profile picture";
+            Permissions.Options options = new Permissions.Options()
+                    .setRationaleDialogTitle("Info")
+                    .setSettingsDialogTitle("Warning");
+
+            Permissions.check(context, permissions, rationale, options, new PermissionHandler() {
+                @Override
+                public void onGranted() {
+                    Uri imageURI = Uri.parse(mValues.get(position).URI);
+                    filePath = imageRetriever.retrieveImg(imageURI, (Activity) context, "Noy_VolunteerImage").getPath();
+                }
+                @Override
+                public void onDenied(Context context, ArrayList<String> deniedPermissions) {
+                    Toast.makeText(context, "Please allow the the app to access your storage in order to show your profile picture", Toast.LENGTH_SHORT).show();
+                }
+            });
+
+
+        }
+
         @Override
         public void onBindViewHolder(final ViewHolder holder, int position) {
-            holder.mIdView.setText(mValues.get(position).id);
+            //holder.mIdView.setText(mValues.get(position).id);
             holder.mContentView.setText(mValues.get(position).content);
+            holder.mDuration.setText(mValues.get(position).duration);
+            holder.mDistance.setText(mValues.get(position).distance);
+
+            //Uri imageURI = Uri.parse(mValues.get(position).URI);
+            retrieve(position, context);
+            Bitmap bitmap = BitmapFactory.decodeFile(filePath);
 
             holder.itemView.setTag(mValues.get(position));
             holder.itemView.setOnClickListener(mOnClickListener);
+            holder.mPhoto.setImageBitmap(bitmap);
         }
 
         @Override
@@ -129,13 +176,19 @@ public class ItemListActivity extends AppCompatActivity {
         }
 
         class ViewHolder extends RecyclerView.ViewHolder {
-            final TextView mIdView;
+            //final TextView mIdView;
             final TextView mContentView;
+            final TextView mDuration;
+            final TextView mDistance;
+            final ImageView mPhoto;
 
             ViewHolder(View view) {
                 super(view);
-                mIdView = (TextView) view.findViewById(R.id.id_text);
+                //mIdView = (TextView) view.findViewById(R.id.id_text);
                 mContentView = (TextView) view.findViewById(R.id.content);
+                mDuration = (TextView) view.findViewById(R.id.duration);
+                mDistance = (TextView) view.findViewById(R.id.distance);
+                mPhoto = (ImageView) view.findViewById(R.id.image);
             }
         }
     }

@@ -1,9 +1,5 @@
 package com.example.bravetogether_volunteerapp.LoginFlow;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Paint;
@@ -14,6 +10,11 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -33,6 +34,7 @@ import com.facebook.internal.ImageRequest;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
+import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
@@ -40,7 +42,6 @@ import com.google.android.gms.auth.api.signin.GoogleSignInResult;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.auth.api.Auth;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -51,7 +52,7 @@ import java.util.Map;
 
 public class RegisterActivity extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener {
 
-    private final String url = "http://35.214.78.251:8080";
+    private final String url = getResources().getString(R.string.apiUrl);
     private final String sharedPrefFile = "com.example.android.BraveTogether_VolunteerApp";
     private CallbackManager callbackManager;
     private String uid,firstname,lastname,email,imageURL;
@@ -63,6 +64,7 @@ public class RegisterActivity extends AppCompatActivity implements GoogleApiClie
     private SharedPreferences mPreferences;
     private Button signInWithEmailButton;
     private TextView skipNow,gotAnAccount;
+
 
 
     @Override
@@ -191,78 +193,14 @@ public class RegisterActivity extends AppCompatActivity implements GoogleApiClie
 
         }
     }
-    private void registerSocialUser (final String uid, final String firstname, final String lastname, final String email, final String imageURL) {
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, url + "/users",
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        Log.d("Response", response.toString());
-                    }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        Log.d("error.response", error.getMessage());
-                    }
-                }) {
-            @Override
-            protected Map<String, String> getParams(){
-                Map<String, String> params = new HashMap<>();
-                params.put("uid", uid);
-                params.put("firstname", firstname);
-                params.put("lastname", lastname);
-                params.put("email", email);
-//                params.put("profile_picture", imageURL);
-                return params;
-            }
-        };
-        VolleySingleton.getInstance(this).addToRequestQueue(stringRequest);
-    }
 
     public void skipToHomePage(View view) {
-        //Go to home activity.
+        startActivity(new Intent(RegisterActivity.this, RegisterWhereActivity.class));
     }
 
     @Override
     protected void onPause(){
         super.onPause();
-            String URL = url + "/user/" + email;
-            JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
-                    (Request.Method.GET, URL, null, new Response.Listener<JSONObject>() {
-
-                        @Override
-                        public void onResponse(JSONObject response) {
-                            // fill the preferences file with data regarding the current user
-                            String address=null, fname=null, lname=null, phone=null;
-                            try {
-                                //required details
-                                fname = response.getString("first_name");
-                                lname = response.getString("last_name");
-                            } catch (JSONException e) {
-                                e.printStackTrace();
-                            }
-                            try {
-                                //non required details
-                                address = response.getString("address");
-                                phone = response.getString("phone_number");
-                            } catch (JSONException e) {
-                                e.printStackTrace();
-                            }
-                            SharedPreferences.Editor preferencesEditor = mPreferences.edit();
-                            preferencesEditor.putString("UserEmail", email);
-                            preferencesEditor.putString("UserFirstName", fname);
-                            preferencesEditor.putString("UserLastName", lname);
-                            preferencesEditor.putString("UserAddress", address);
-                            preferencesEditor.putString("UserPhoneNumber", phone);
-                            preferencesEditor.apply();
-                        }
-                    }, new Response.ErrorListener() {
-
-                        @Override
-                        public void onErrorResponse(VolleyError error) { }
-                    });
-            // Access the RequestQueue through your singleton class.
-            VolleySingleton.getInstance(this).addToRequestQueue(jsonObjectRequest);
     }
 
 

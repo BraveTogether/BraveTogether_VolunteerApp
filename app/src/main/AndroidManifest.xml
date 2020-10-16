@@ -15,9 +15,17 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
-        android:name=".app.app"
         android:usesCleartextTraffic="true">
-        <activity android:name=".RegisterWhereActivity"></activity>
+        <activity android:name=".ApproveVolunteerActivity" android:exported="true"/>
+        <activity android:name=".Thanks" />
+        <activity android:name=".LoginFlow.RegisterWhereActivity" />
+        <activity
+            android:name=".ResultsActivity"
+            android:exported="true" />
+        <activity android:name=".ItemDetailActivity" />
+        <activity
+            android:name=".ItemListActivity"
+            android:exported="true" />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -40,7 +48,7 @@
 <!--י-->
 <!--י-->
         <activity
-            android:name=".HomeActivity"
+            android:name=".home"
             android:exported="true"/>
         <activity android:name=".FilterActivity" />
         <activity android:name=".VolunteerApprovalActivity" />

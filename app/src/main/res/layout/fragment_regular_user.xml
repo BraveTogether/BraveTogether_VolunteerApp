@@ -12,26 +12,27 @@
 
         <ImageView
             android:id="@+id/notificationBar"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_notificationbar"
             app:layout_constraintBottom_toTopOf="@+id/down"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.494"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.65999997" />
+            app:layout_constraintVertical_bias="0.48"
+            app:srcCompat="@drawable/ic_notificationbar" />
 
         <ImageView
             android:id="@+id/imageView7"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_notificationbell"
             app:layout_constraintBottom_toTopOf="@+id/down"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.93"
+            app:layout_constraintHorizontal_bias="0.862"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.35000002" />
+            app:layout_constraintVertical_bias="0.239"
+            app:srcCompat="@drawable/ic_notificationbell" />
 
         <TextView
             android:id="@+id/notifications"
@@ -40,54 +41,98 @@
             android:text="התראות על התנדבויות"
             app:layout_constraintBottom_toTopOf="@+id/down"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.75"
+            app:layout_constraintHorizontal_bias="0.629"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.35000002" />
+            app:layout_constraintVertical_bias="0.235" />
 
-        <TextView
-            android:id="@+id/hours"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="להכניס פה שעות"
-            app:layout_constraintBottom_toBottomOf="@+id/notificationBar"
-            app:layout_constraintEnd_toEndOf="@+id/notificationBar"
-            app:layout_constraintHorizontal_bias="0.06"
-            app:layout_constraintStart_toStartOf="@+id/notificationBar"
-            app:layout_constraintTop_toTopOf="@+id/notificationBar" />
 
         <TextView
             android:id="@+id/type"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="TextView"
+            android:layout_marginStart="50dp"
+            android:text="להכניס פה שעות"
+            android:textColor="#8C96A2"
             app:layout_constraintBottom_toBottomOf="@+id/notificationBar"
             app:layout_constraintEnd_toEndOf="@+id/notificationBar"
-            app:layout_constraintHorizontal_bias="0.48"
+            app:layout_constraintHorizontal_bias="0.099"
             app:layout_constraintStart_toStartOf="@+id/notificationBar"
-            app:layout_constraintTop_toTopOf="@+id/notificationBar" />
+            app:layout_constraintTop_toTopOf="@+id/notificationBar"
+            app:layout_constraintVertical_bias="0.428" />
+
+        <TextView
+            android:id="@+id/hours"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="37dp"
+            android:text="TextView"
+            android:textColor="#8C96A2"
+            app:layout_constraintBottom_toBottomOf="@+id/notificationBar"
+            app:layout_constraintEnd_toEndOf="@+id/notificationBar"
+            app:layout_constraintHorizontal_bias="0.405"
+            app:layout_constraintStart_toStartOf="@+id/notificationBar"
+            app:layout_constraintTop_toTopOf="@+id/notificationBar"
+            app:layout_constraintVertical_bias="0.476" />
 
         <TextView
             android:id="@+id/distance"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="15dp"
             android:text="TextView"
+            android:textColor="#8C96A2"
             app:layout_constraintBottom_toBottomOf="@+id/notificationBar"
             app:layout_constraintEnd_toEndOf="@+id/notificationBar"
-            app:layout_constraintHorizontal_bias="0.97"
+            app:layout_constraintHorizontal_bias="0.807"
             app:layout_constraintStart_toStartOf="@+id/notificationBar"
-            app:layout_constraintTop_toTopOf="@+id/notificationBar" />
+            app:layout_constraintTop_toTopOf="@+id/notificationBar"
+            app:layout_constraintVertical_bias="0.428" />
 
         <TextView
             android:id="@+id/duration"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="30dp"
             android:text="TextView"
+            android:textColor="#8C96A2"
             app:layout_constraintBottom_toBottomOf="@+id/notificationBar"
             app:layout_constraintEnd_toEndOf="@+id/notificationBar"
-            app:layout_constraintHorizontal_bias="0.74"
+            app:layout_constraintHorizontal_bias="0.619"
             app:layout_constraintStart_toStartOf="@+id/notificationBar"
-            app:layout_constraintTop_toTopOf="@+id/notificationBar" />
+            app:layout_constraintTop_toTopOf="@+id/notificationBar"
+            app:layout_constraintVertical_bias="0.428" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="20dp"
+            app:layout_constraintEnd_toEndOf="@+id/view"
+            app:layout_constraintTop_toBottomOf="@+id/notificationBar">
+
+
+            <Switch
+                android:id="@+id/switch_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="false"
+                android:elevation="1dp"
+                android:layout_marginEnd="190dp"/>
+
+            <TextView
+                android:layout_width="91dp"
+                android:layout_height="28dp"
+                android:background="@drawable/textfield_d_buttons"
+                android:gravity="center"
+                android:layout_marginEnd="40dp"
+                android:text="ערוך התראה"
+                android:textColor="#001925"
+                android:textSize="14sp"
+                app:layout_constraintEnd_toEndOf="@+id/notificationBar"
+                app:layout_constraintTop_toTopOf="@+id/notificationBar"></TextView>
+
+        </LinearLayout>
 
         <View
             android:id="@+id/view"
@@ -110,6 +155,7 @@
             app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/view" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </FrameLayout>
