@@ -17,7 +17,7 @@ public class RegularProfileActivity extends AppCompatActivity {
         final String sharedPrefFile = "com.example.android.BraveTogether_VolunteerApp";
         SharedPreferences mPreferences = getSharedPreferences(sharedPrefFile, MODE_PRIVATE);
 
-        String UserType = mPreferences.getString("UserAccessType", "user");
+        String UserType = mPreferences.getString("UserAccessType", "volunteerManager");
 
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
 

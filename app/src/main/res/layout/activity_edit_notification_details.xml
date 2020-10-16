@@ -3,7 +3,22 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".NotificationFragment">
+
+<androidx.constraintlayout.widget.ConstraintLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/BottomNavigationViewHome"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/ic_nevigation_bar"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:menu="@menu/botton_menu" />
+
+
 
     <!-- TODO: Update blank fragment layout -->
     <LinearLayout
@@ -197,4 +212,9 @@
             android:background="@drawable/little" />
 
     </LinearLayout>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+
+
 </FrameLayout>
