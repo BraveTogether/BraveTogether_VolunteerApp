@@ -22,6 +22,8 @@ public class VoluntteeriesStory {
     public String getEventDescription() {
         return eventDescription;
     }
+
+
 }
 
 

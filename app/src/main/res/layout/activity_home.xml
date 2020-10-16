@@ -24,13 +24,24 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0"
+        android:paddingBottom="50dp">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:showDividers="middle">
+
+            <!--            <androidx.recyclerview.widget.RecyclerView-->
+            <!--                android:id="@+id/my_recycler_view"-->
+            <!--                android:layout_width="match_parent"-->
+            <!--                android:layout_height="wrap_content"-->
+            <!--                android:nestedScrollingEnabled="false"-->
+            <!--                android:overScrollMode="never">-->
+
+            <!--            </androidx.recyclerview.widget.RecyclerView>-->
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
@@ -106,7 +117,7 @@
                     android:elevation="1dp"
                     android:gravity="right|center_vertical"
                     android:lineSpacingExtra="0sp"
-                    android:text="@string/happy_to_see_you_again"
+                    android:text="שמחים לראותך שוב!"
                     android:textSize="18sp"
                     android:visibility="visible"
                     app:layout_constraintBottom_toBottomOf="@+id/ellipse_home_page"
@@ -120,14 +131,101 @@
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/my_recycler_view"
+            <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:nestedScrollingEnabled="false"
-                android:overScrollMode="never">
+                android:layout_marginEnd="20dp"
+                android:layout_marginRight="20dp"
+                android:padding="2dp">
 
-            </androidx.recyclerview.widget.RecyclerView>
+
+                <Button
+                    android:id="@+id/btnMore_nearBy"
+                    android:layout_width="72dp"
+                    android:layout_height="24dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginEnd="317dp"
+                    android:layout_marginRight="317dp"
+                    android:background="@drawable/ic_group_536"
+                    android:text="@string/עוד" />
+
+                <TextView
+                    android:id="@+id/TextView_nearBy"
+                    android:layout_width="100dp"
+                    android:layout_height="50dp"
+                    android:layout_above="@+id/Recycler_view_list"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="195dp"
+                    android:layout_marginLeft="195dp"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginBottom="-3dp"
+                    android:text="התנדבויות בסביבתך"
+                    android:textSize="18sp" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/Recycler_view_list_nearBy"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/btnMore_nearBy"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginTop="5dp"
+                    android:orientation="vertical" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="20dp"
+                android:layout_marginRight="20dp"
+                android:padding="2dp">
+
+
+                <Button
+                    android:id="@+id/btnMore_other"
+                    android:layout_width="72dp"
+                    android:layout_height="24dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginEnd="317dp"
+                    android:layout_marginRight="317dp"
+                    android:background="@drawable/ic_group_536"
+                    android:text="@string/עוד" />
+
+                <TextView
+                    android:id="@+id/TextView_other"
+                    android:layout_width="100dp"
+                    android:layout_height="50dp"
+                    android:layout_above="@+id/Recycler_view_list"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="195dp"
+                    android:layout_marginLeft="195dp"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginBottom="-3dp"
+                    android:text="אירועים מרכזיים"
+                    android:textSize="18sp" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/Recycler_view_list_other"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/btnMore_other"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginTop="5dp"
+                    android:orientation="vertical" />
+            </RelativeLayout>
 
             <ImageButton
                 android:id="@+id/imageView3"
@@ -154,7 +252,7 @@
 
 
                 <Button
-                    android:id="@+id/btnMore"
+                    android:id="@+id/btnMore_stories"
                     android:layout_width="72dp"
                     android:layout_height="24dp"
                     android:layout_alignParentEnd="true"
@@ -165,7 +263,7 @@
                     android:text="@string/עוד" />
 
                 <TextView
-                    android:id="@+id/TextView1"
+                    android:id="@+id/TextView_stories"
                     android:layout_width="100dp"
                     android:layout_height="50dp"
                     android:layout_above="@+id/Recycler_view_list"
@@ -180,14 +278,14 @@
                     android:layout_marginEnd="10dp"
                     android:layout_marginRight="10dp"
                     android:layout_marginBottom="-3dp"
-                    android:text="@string/stories"
+                    android:text="מתנדבים מספרים"
                     android:textSize="18sp" />
 
                 <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/Recycler_view_list3"
+                    android:id="@+id/Recycler_view_list_stories"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/btnMore"
+                    android:layout_below="@+id/btnMore_stories"
                     android:layout_gravity="center_vertical"
                     android:layout_marginTop="5dp"
                     android:orientation="vertical" />
@@ -224,7 +322,7 @@
                 android:contentDescription="TODO"
                 android:scaleType="center"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="@id/my_recycler_view"
+                app:layout_constraintStart_toStartOf="@id/Recycler_view_list_stories"
                 app:srcCompat="@drawable/ic_frame_18" />
 
 

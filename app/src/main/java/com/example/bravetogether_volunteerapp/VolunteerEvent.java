@@ -17,6 +17,10 @@ public class VolunteerEvent {
         this.location = location;
     }
 
+    public VolunteerEvent() {
+
+    }
+
     public String getLocation() {
         return location;
     }

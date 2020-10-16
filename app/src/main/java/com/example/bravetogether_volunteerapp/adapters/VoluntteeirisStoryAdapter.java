@@ -5,11 +5,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-
-
 import androidx.recyclerview.widget.RecyclerView;
 import com.example.bravetogether_volunteerapp.R;
 import com.example.bravetogether_volunteerapp.VoluntteeriesStory;
+
 import java.util.List;
 
 
@@ -22,11 +21,10 @@ public class VoluntteeirisStoryAdapter extends RecyclerView.Adapter<Voluntteeiri
     // you provide access to all the views for a data item in a view holder
     public static class MyViewHolder extends RecyclerView.ViewHolder {
         // each data item is just a string in this case
-        public View view;
-        TextView title;
-        TextView location;
-        TextView description;
-
+        private View view;
+        private TextView title;
+        private TextView location;
+        private TextView description;
 
         public MyViewHolder(View v) {
             super(v);
@@ -70,7 +68,9 @@ public class VoluntteeirisStoryAdapter extends RecyclerView.Adapter<Voluntteeiri
     public int getItemCount() {
        return (eventList != null ? eventList.size():0 );
     }
-}
+
+    }
+
 
 
 
