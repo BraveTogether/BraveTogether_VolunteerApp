@@ -1,7 +1,6 @@
 package com.example.bravetogether_volunteerapp;
 
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.location.Location;
 import android.os.Bundle;
@@ -13,7 +12,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 import androidx.annotation.NonNull;
@@ -34,12 +32,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -54,6 +47,8 @@ public class ProfileFragment2 extends Fragment {
    private SeekBar sbRadius;
    private TextView txtRadius;
    private int radius;
+   private final int MYVOLUNTEER = 0;
+   private final int NEAREVENT = 1;
 
 
     // DB and sharedPrefFile:
@@ -72,10 +67,11 @@ public class ProfileFragment2 extends Fragment {
         ProfileView = inflater.inflate(R.layout.fragment_profile2, container, false);
         radius = 10;    // init search radius to be 10KM
         setUserDate();
-        setTags();
+        setTags(new ArrayList<TagObject>());                     // TODO:: delete when setUserTag completed
+        setMyVolunteers(new ArrayList<ProfileEventObject>());    // TODO:: delete when setUserTag completed
         setNearEvents();
-        setMyVolunteers();
-
+//        setUserEvents();  TODO:: activate when complete
+//        setUserTags();    TODO:: activate when complete
 
         return ProfileView;
     }
@@ -120,17 +116,14 @@ public class ProfileFragment2 extends Fragment {
 
 
     // RecyclerView handlers -- Horizontal scrolling --
-    private void setMyVolunteers(){
-        // TODO:: poll volunteer history from server.
-        ArrayList<ProfileEventObject> list = createDummyEventList(); // need to change to correct list.
+    private void setMyVolunteers( ArrayList<ProfileEventObject> list ){
+        list = createDummyEventList(); //TODO:: need be deleted when setUserEvent completed, for now dummy list.
         rcMyVolunteer = ProfileView.findViewById(R.id.rcMyVolunteers);
         ProfileFragmentEventAdapter adapter = new ProfileFragmentEventAdapter(context,list);
         setRecyclerViewSetting(rcMyVolunteer,adapter);
     }
 
     private void setNearVolunteer(ArrayList<ProfileEventObject> list){
-        // TODO:: check user location and define near location (what is the radius)
-        // TODO:: poll near volunteer from server.
         if( list.size() == 0){
             nearEventsTryAgain();
             return;
@@ -140,8 +133,8 @@ public class ProfileFragment2 extends Fragment {
         setRecyclerViewSetting(rcNearVolunteers,adapter);
     }
 
-    private void setTags(){
-        ArrayList<TagObject> list = createDummyTagList(); //need to change to correct list
+    private void setTags (ArrayList<TagObject> list){
+        list = createDummyTagList();    //TODO:: need be deleted when setUserTags completed, for now dummy list.
         rcTags = ProfileView.findViewById(R.id.rcTags);
         Tags_ProfileFragment_Adapter adapter = new Tags_ProfileFragment_Adapter(context, list);
         setRecyclerViewSetting(rcTags,adapter);
@@ -191,6 +184,18 @@ public class ProfileFragment2 extends Fragment {
 
     }
 
+    private void myEventTryAgain(){
+        // TODO:: have not done!! need to create function.
+        // TODO:: add all needed elements see nearEventsTryAgain.
+        return;
+    }
+
+    private void loadingdate(int id){
+       return;
+        // TODO:: have not done!! need to create function.
+        //  add progress bar while waiting for server response.
+    }
+
     // copied from FillterActivity if function become static we can delete this.
     public float getDistance(String address1, String address2) {
 
@@ -210,12 +215,11 @@ public class ProfileFragment2 extends Fragment {
         return locationA.distanceTo(locationB);
     }
 
-    // modified Search method from FillterActivity -  set dbNearEvent list with all the near event.
-    private ArrayList<ProfileEventObject> setNearEvents(){
+    // gets from server list of near events. TODO:: change query to get event date as well.
+    private void setNearEvents(){
         String url =  getResources().getString(R.string.apiUrl) + "volunteers/confirmed/1";
-//        final String userAddress = mPreferences.getString("userAddress",
-//                "Remez 8, Tel Aviv, Israel");  // default address may need to change.
-        final String userAddress = "hatikva 27 ramat hasharon";
+        final String userAddress = mPreferences.getString("userAddress",
+                "Remez 8, Tel Aviv, Israel");  // default address may need to change.
         final ArrayList<ProfileEventObject> result = new ArrayList<>();
         JsonArrayRequest JsonArrayRequest = new JsonArrayRequest
                 (Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
@@ -223,15 +227,14 @@ public class ProfileFragment2 extends Fragment {
 
                     @Override
                     public void onResponse(JSONArray response) {
+                        loadingdate(NEAREVENT);         // TODO:: add Progress bar element and set function.
                         Log.d("PF2_setNearEvent","OnResponse_Start");
                         for(int i = 0; i < response.length(); i++){
                             try {
                                 jsonEvent = response.getJSONObject(i);
-                                System.out.println("***"+jsonEvent.getString("name")+"***");
                                 int online = jsonEvent.getInt("online"); // 1-> event is online, 0-> frontal event.
                                 float dist = (online == 0)? getDistance(jsonEvent.get("address").toString(), userAddress) : 0;
                                 if(dist < radius*1000){
-                                    System.out.println(dist);
                                     result.add(new ProfileEventObject(jsonEvent));
                                 }
                             } catch (JSONException e) {
@@ -244,13 +247,77 @@ public class ProfileFragment2 extends Fragment {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         Log.d("PF2_setNearEvent","Error::"+error.getMessage());
-                        setNearVolunteer(result); // need to be deleted;
-
                     }
                 });
         VolleySingleton.getInstance(context).addToRequestQueue(JsonArrayRequest);
-        return result;
     }
+
+    // gets from server list of user events. TODO:: change query to get correct event and all needed information.
+    private void setUserEvents(){
+        String url =  getResources().getString(R.string.apiUrl) + "volunteers/confirmed/1";  // TODO:: change query to get user event
+        final ArrayList<ProfileEventObject> result = new ArrayList<>();
+        final int user_id = mPreferences.getInt("id",-1);
+        if (user_id == -1){
+            myEventTryAgain();
+            return;
+        }
+        JsonArrayRequest JsonArrayRequest = new JsonArrayRequest
+                (Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
+                    JSONObject jsonEvent;
+
+                    @Override
+                    public void onResponse(JSONArray response) {
+                        Log.d("PF2_setUserEvent","OnResponse_Start");
+                        for(int i = 0; i < response.length(); i++){
+                            try {
+                                jsonEvent = response.getJSONObject(i);
+                                result.add(new ProfileEventObject(jsonEvent));
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                        setMyVolunteers(result);
+                    }
+                }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Log.d("PF2_setUserEvent","Error::"+error.getMessage());
+                    }
+                });
+        VolleySingleton.getInstance(context).addToRequestQueue(JsonArrayRequest);
+    }
+
+    // gets from server list of user events. TODO:: change query to get correct event and all needed information.
+    private void setUserTags(){
+        String url =  getResources().getString(R.string.apiUrl) + "volunteers/confirmed/1";  // TODO:: change query to get user tags
+        final ArrayList<TagObject> result = new ArrayList<>();
+        final int user_id = mPreferences.getInt("id",-1);
+        JsonArrayRequest JsonArrayRequest = new JsonArrayRequest
+                (Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
+                    JSONObject jsonEvent;
+
+                    @Override
+                    public void onResponse(JSONArray response) {
+                        Log.d("PF2_setUserTags","OnResponse_Start");
+                        for(int i = 0; i < response.length(); i++){
+                            try {
+                                jsonEvent = response.getJSONObject(i);
+                                result.add(new TagObject(jsonEvent));
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                        setTags(result);
+                    }
+                }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Log.d("PF2_setUserTags","Error::"+error.getMessage());
+                    }
+                });
+        VolleySingleton.getInstance(context).addToRequestQueue(JsonArrayRequest);
+    }
+
 
     // classes for adapters
     public  class ProfileEventObject{
@@ -325,6 +392,17 @@ public class ProfileFragment2 extends Fragment {
             this.tagName = name;
             this.tagDetails = details;
             this.tagImgUrl = imgUrl;
+        }
+
+        public TagObject(JSONObject activity){
+            try {
+                this.tagName = activity.getString("name");          // TODO:: check format.
+                this.tagDetails = activity.getString("details");    // TODO:: check format.
+                this.tagImgUrl = activity.getString("picture");     // TODO:: check format.
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
         }
 
         public String getTagDetails() {
