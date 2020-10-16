@@ -1,6 +1,6 @@
 package com.example.bravetogether_volunteerapp;
 
-public class VolunteerEvent {
+public class VolunteerEventItemList {
     //for each picture in res->drawable there is a id
     int imageIdClock, imageIdLocation, imageIdDate, imageIdCredit;
     String eventName;
@@ -8,7 +8,7 @@ public class VolunteerEvent {
     String eventDescription;
     String numberCredits, duration, location;
 
-    public VolunteerEvent(String eventName, String date, String eventDescription, String numberCredits, String duration, String location) {
+    public VolunteerEventItemList(String eventName, String date, String eventDescription, String numberCredits, String duration, String location) {
         this.eventName = eventName;
         this.date = date;
         this.eventDescription = eventDescription;
@@ -17,7 +17,7 @@ public class VolunteerEvent {
         this.location = location;
     }
 
-    public VolunteerEvent() {
+    public VolunteerEventItemList() {
 
     }
 

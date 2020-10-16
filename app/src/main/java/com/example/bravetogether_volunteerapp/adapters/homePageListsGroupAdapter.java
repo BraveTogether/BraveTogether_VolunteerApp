@@ -5,7 +5,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -13,7 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.bravetogether_volunteerapp.R;
-import com.example.bravetogether_volunteerapp.VolunteerEvent;
+import com.example.bravetogether_volunteerapp.VolunteerEventItemList;
 import com.example.bravetogether_volunteerapp.homeGroupItem;
 
 import java.util.List;
@@ -38,9 +37,9 @@ public class homePageListsGroupAdapter extends RecyclerView.Adapter<homePageList
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         holder.item_title.setText(dataList.get(position).getHeadTitle());
-        List<VolunteerEvent> item = dataList.get(position).getListItem();
+        List<VolunteerEventItemList> item = dataList.get(position).getListItem();
         homeGroupItem event = dataList.get(position);
-        MyItemAdapter adapter = new MyItemAdapter(context, item);
+        VolunteerItemHomeAdapter adapter = new VolunteerItemHomeAdapter(context, item);
         holder.recycler_view_item_list.setHasFixedSize(true);
         holder.recycler_view_item_list.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL,false ));
         holder.recycler_view_item_list.setAdapter(adapter);

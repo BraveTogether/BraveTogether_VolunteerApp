@@ -11,18 +11,18 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.bravetogether_volunteerapp.R;
-import com.example.bravetogether_volunteerapp.VolunteerEvent;
+import com.example.bravetogether_volunteerapp.VolunteerEventItemList;
 import com.example.bravetogether_volunteerapp.interfaces.ItemClickListener;
 
 import java.util.List;
 
-public class MyItemAdapter extends RecyclerView.Adapter<MyItemAdapter.MyViewHolder> {
+public class VolunteerItemHomeAdapter extends RecyclerView.Adapter<VolunteerItemHomeAdapter.MyViewHolder> {
 
     Context context;
     int resource;
-    List<VolunteerEvent> eventList;
+    List<VolunteerEventItemList> eventList;
 
-    public MyItemAdapter(Context context, List<VolunteerEvent> item) {
+    public VolunteerItemHomeAdapter(Context context, List<VolunteerEventItemList> item) {
         this.context = context;
         this.eventList = item;
     }
@@ -36,7 +36,7 @@ public class MyItemAdapter extends RecyclerView.Adapter<MyItemAdapter.MyViewHold
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
-        VolunteerEvent event = eventList.get(position);
+        VolunteerEventItemList event = eventList.get(position);
 
         //holder.eventNameOfOneList.setText(event.getEventName());
         holder.eventDescriptionOfOneList.setText(event.getEventDescription());

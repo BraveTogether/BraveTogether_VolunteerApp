@@ -25,13 +25,9 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
-import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.example.bravetogether_volunteerapp.adapters.ListOfVolunteerEventsAdapter;
-import com.example.bravetogether_volunteerapp.adapters.MyItemAdapter;
 import com.example.bravetogether_volunteerapp.adapters.VoluntteeirisStoryAdapter;
-import com.example.bravetogether_volunteerapp.adapters.homePageListsGroupAdapter;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -44,7 +40,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-public class home extends AppCompatActivity {
+public class HomeActivity extends AppCompatActivity {
 
     private static SharedPreferences mPreferences;
     private final String urlData ="http://35.214.78.251:8080";
@@ -56,8 +52,8 @@ public class home extends AppCompatActivity {
     private TextView userGreetings;
 
     private List<VoluntteeriesStory> storiesList;
-    private List<VolunteerEvent> eventsList;
-    private List<VolunteerEvent> eventsListNearBy;
+    private List<VolunteerEventItemList> eventsList;
+    private List<VolunteerEventItemList> eventsListNearBy;
 
     private int radius;
 
@@ -167,36 +163,32 @@ public class home extends AppCompatActivity {
             };
 
     protected  void volunteersStoriesLoadNew (final Context c) {
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
-                (Request.Method.GET, urlData + "/reviews/users", null, new Response.Listener<JSONObject>() {
 
+        JsonArrayRequest JsonArrayRequest = new JsonArrayRequest
+                (Request.Method.GET, urlData + "/reviews/users", null, new Response.Listener<JSONArray>() {
+                    JSONObject Activity;
                     @Override
-                    public void onResponse(JSONObject response) {
-
+                    public void onResponse(JSONArray response) {
+                        Log.i("Error-Try", "we get it!");
                         try {
-                            Log.i("Error-Try", "we get it!");
                             createStoriesArray(response);
-                            Recycler_view_list_stories = (RecyclerView) findViewById(R.id.Recycler_view_list_stories);
-                            VoluntteeirisStoryAdapter adapterStoriesList = (VoluntteeirisStoryAdapter) new VoluntteeirisStoryAdapter(c,storiesList);
-                            Recycler_view_list_stories.setAdapter(adapterStoriesList);
-                            Recycler_view_list_stories.setHasFixedSize(true);
-                            Recycler_view_list_stories.setLayoutManager(new LinearLayoutManager(c,LinearLayoutManager.HORIZONTAL, false));
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
+                        Recycler_view_list_stories = (RecyclerView) findViewById(R.id.Recycler_view_list_stories);
+                        VoluntteeirisStoryAdapter adapterStoriesList = (VoluntteeirisStoryAdapter) new VoluntteeirisStoryAdapter(c,storiesList);
+                        Recycler_view_list_stories.setAdapter(adapterStoriesList);
+                        Recycler_view_list_stories.setHasFixedSize(true);
+                        Recycler_view_list_stories.setLayoutManager(new LinearLayoutManager(c,LinearLayoutManager.HORIZONTAL, false));
 
                     }
                 }, new Response.ErrorListener() {
-
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        // TODO: Handle error
-
+                        Log.e("Response", "there was an error!!! :(");
                     }
                 });
-
-        // Access the RequestQueue through your singleton class.
-        VolleySingleton.getInstance(this).addToRequestQueue(jsonObjectRequest);
+        VolleySingleton.getInstance(this).addToRequestQueue(JsonArrayRequest);
     }
 
     protected void nearByVolunteerEventsLoad(final Context c) {
@@ -246,15 +238,12 @@ public class home extends AppCompatActivity {
         requestQueue.add(stringRequest);
     }
 
-    private void createStoriesArray(JSONObject jsonResponse) throws JSONException {
-        //we have the array named name inside the object
-        //so here we are getting that json array
-        JSONArray storiesArray = jsonResponse.toJSONArray(jsonResponse.names());
+    private void createStoriesArray(JSONArray jsonResponse) throws JSONException {
 
         //now looping through all the elements of the json array
-        for (int i = 0; i < storiesArray.length(); i++) {
+        for (int i = 0; i < jsonResponse.length(); i++) {
             //getting the json object of the particular index inside the array
-            JSONObject eventObject = storiesArray.getJSONObject(i);
+            JSONObject eventObject = jsonResponse.getJSONObject(i);
 
             Log.i("lala",eventObject.toString());
             //creating a VoluntteeriesStory object and giving them the values from json object
@@ -297,7 +286,7 @@ public class home extends AppCompatActivity {
 
                                 if (distance) {
                                     try {
-                                        eventsListNearBy.add(new VolunteerEvent(Activity.get("name").toString(), Activity.get("date").toString(), Activity.get("about_volunteering").toString(), Activity.get("value_in_coins").toString(), Activity.get("duration").toString(), Activity.get("about_place").toString()));
+                                        eventsListNearBy.add(new VolunteerEventItemList(Activity.get("name").toString(), Activity.get("date").toString(), Activity.get("about_volunteering").toString(), Activity.get("value_in_coins").toString(), Activity.get("duration").toString(), Activity.get("about_place").toString()));
                                     } catch (JSONException e) {
                                         e.printStackTrace();
                                     }
@@ -316,8 +305,6 @@ public class home extends AppCompatActivity {
 // Access the RequestQueue through your singleton class.
         VolleySingleton.getInstance(this).addToRequestQueue(JsonArrayRequest);
     }
-
-
 
 
     //get the user name from shared preference

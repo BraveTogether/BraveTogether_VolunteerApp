@@ -4,10 +4,10 @@ import java.util.List;
 
 public class homeGroupItem {
     private String headTitle;
-    private List<VolunteerEvent> listVolunteerEvent;
+    private List<VolunteerEventItemList> listVolunteerEventItemList;
 
-    public void setListVolunteerEvent(List<VolunteerEvent> listVolunteerEvent) {
-        this.listVolunteerEvent = listVolunteerEvent;
+    public void setListVolunteerEventItemList(List<VolunteerEventItemList> listVolunteerEventItemList) {
+        this.listVolunteerEventItemList = listVolunteerEventItemList;
     }
 
     public homeGroupItem() {
@@ -21,12 +21,12 @@ public class homeGroupItem {
         this.headTitle = headTitle;
     }
 
-    public homeGroupItem(String headTitle, List<VolunteerEvent> listVolunteerEvent) {
+    public homeGroupItem(String headTitle, List<VolunteerEventItemList> listVolunteerEventItemList) {
         this.headTitle = headTitle;
-        this.listVolunteerEvent = listVolunteerEvent;
+        this.listVolunteerEventItemList = listVolunteerEventItemList;
     }
 
-    public List<VolunteerEvent> getListItem() {
-        return  listVolunteerEvent;
+    public List<VolunteerEventItemList> getListItem() {
+        return listVolunteerEventItemList;
     }
 }
