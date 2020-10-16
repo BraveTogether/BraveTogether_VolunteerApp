@@ -72,7 +72,7 @@
         app:layout_constraintVertical_bias="0.0" />
 
     <TextView
-        android:id="@+id/textViewLocation"
+        android:id="@+id/textViewDate"
         android:layout_width="90dp"
         android:layout_height="35dp"
         android:gravity="right"
@@ -87,7 +87,7 @@
         app:layout_constraintVertical_bias="0.0" />
 
     <TextView
-        android:id="@+id/textViewTime"
+        android:id="@+id/textViewPlace"
         android:layout_width="90dp"
         android:layout_height="35dp"
         android:gravity="right"
@@ -116,7 +116,7 @@
         app:layout_constraintVertical_bias="0.02" />
 
     <TextView
-        android:id="@+id/textViewDescription"
+        android:id="@+id/textViewshare"
         android:layout_width="256dp"
         android:layout_height="18dp"
         android:layout_marginBottom="24dp"

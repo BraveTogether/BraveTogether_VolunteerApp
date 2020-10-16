@@ -15,9 +15,16 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
-        android:name=".app.app"
         android:usesCleartextTraffic="true">
-        <activity android:name=".LoginFlow.RegisterWhereActivity"></activity>
+        <activity android:name=".Thanks" />
+        <activity android:name=".LoginFlow.RegisterWhereActivity" />
+        <activity
+            android:name=".ResultsActivity"
+            android:exported="true" />
+        <activity android:name=".ItemDetailActivity" />
+        <activity
+            android:name=".ItemListActivity"
+            android:exported="true" />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -32,18 +39,17 @@
         <activity
             android:name=".Scanner"
             android:exported="true" />
-        <activity
-            android:name=".CreateVolunteerActivity"
-            android:exported="true" />
+        <activity android:name=".CreateVolunteerActivity" />
         <activity
             android:name=".LoginFlow.CreateAccountFirstActivity"
-            android:exported="true" />
-<!--י-->
-<!--י-->
+            android:exported="true" /> <!-- י -->
+        <!-- י -->
         <activity
             android:name=".home"
             android:exported="true" />
-        <activity android:name=".FilterActivity" />
+        <activity
+            android:name=".FilterActivity"
+            android:exported="true" />
         <activity android:name=".VolunteerApprovalActivity" />
         <activity android:name=".GeneralActivity" />
         <activity android:name=".LoginFlow.IntroFirstTimeActivity" />
@@ -73,7 +79,7 @@
         </activity>
         <activity
             android:name=".addToCalendar"
-            android:exported="true"></activity>
+            android:exported="true" />
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"

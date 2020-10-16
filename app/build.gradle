@@ -1,4 +1,5 @@
 apply plugin: 'com.android.application'
+apply plugin: 'com.google.gms.google-services'
 
 android {
 //    signingConfigs {
@@ -29,6 +30,7 @@ android {
     buildTypes {
         release {
             minifyEnabled false
+            android.defaultConfig.vectorDrawables.useSupportLibrary = true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
@@ -52,9 +54,15 @@ dependencies {
     implementation 'com.google.android.libraries.places:places:2.4.0'
     implementation 'com.google.android.material:material:1.2.1'
     implementation 'de.hdodenhof:circleimageview:3.1.0'
+    implementation 'com.google.firebase:firebase-storage:19.2.0'
+    implementation 'com.google.firebase:firebase-auth:19.4.0'
+    implementation 'androidx.cardview:cardview:1.0.0'
+    //noinspection GradleCompatible
+    implementation 'com.android.support:cardview-v7:28.0.0'
     implementation 'com.google.firebase:firebase-storage:19.1.0'
     implementation 'com.google.guava:guava:29.0-android'
     implementation 'com.google.guava:failureaccess:1.0.1'
+    implementation 'org.jetbrains:annotations-java5:15.0'
     annotationProcessor 'com.jakewharton:butterknife-compiler:10.0.0'
     testImplementation 'junit:junit:4.12'
     implementation 'com.budiyev.android:code-scanner:2.1.0'
@@ -66,4 +74,7 @@ dependencies {
     implementation 'com.basgeekball:awesome-validation:2.0'
     implementation 'com.android.support:multidex:1.0.3'
     implementation 'androidmads.library.qrgenearator:QRGenearator:1.0.4'
+    implementation 'de.hdodenhof:circleimageview:3.1.0'
+    implementation 'com.google.android.libraries.places:places:2.4.0'
+    implementation 'com.nabinbhandari.android:permissions:3.8'
 }

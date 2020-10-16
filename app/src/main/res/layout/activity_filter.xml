@@ -7,16 +7,37 @@
     android:layout_alignParentTop="false"
     tools:context=".FilterActivity">
 
-    <TextView
-        android:id="@+id/Sfilters"
-        android:layout_width="0dp"
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/BottomNavigationViewHome"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#00BCD4"
-        android:gravity="center"
-        android:text="סינון חיפוש"
-        android:textAppearance="@style/TextAppearance.AppCompat.Display2"
+        android:background="@drawable/ic_nevigation_bar"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:menu="@menu/botton_menu" />
+
+    <View
+        android:id="@+id/Sfilters"
+        android:layout_width="match_parent"
+        android:layout_height="85dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:background="@drawable/ellipse_59"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/barText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="סינון חיפוש"
+        android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+        app:layout_constraintBottom_toBottomOf="@+id/Sfilters"
+        app:layout_constraintEnd_toEndOf="@+id/Sfilters"
+        app:layout_constraintStart_toStartOf="@+id/Sfilters"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
@@ -26,11 +47,12 @@
         android:text="רדיוס חיפוש התנדבות"
         android:textSize="18sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/duration"
+        app:layout_constraintBottom_toTopOf="@+id/BottomNavigationViewHome"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.909"
+        app:layout_constraintHorizontal_bias="0.93"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/Sfilters" />
+        app:layout_constraintTop_toBottomOf="@+id/Sfilters"
+        app:layout_constraintVertical_bias="0.04000002" />
 
     <TextView
         android:id="@+id/duration"
@@ -39,63 +61,72 @@
         android:text="משך התנדבות עד-"
         android:textSize="18sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/m30"
+        app:layout_constraintBottom_toTopOf="@+id/BottomNavigationViewHome"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintHorizontal_bias="0.93"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/RadiusText" />
+        app:layout_constraintTop_toBottomOf="@+id/Sfilters"
+        app:layout_constraintVertical_bias="0.2" />
 
     <Button
         android:id="@+id/m30"
-        android:layout_width="wrap_content"
-        android:layout_height="48dp"
+        android:layout_width="70dp"
+        android:layout_height="30dp"
         android:background="@drawable/filter_buttons"
         android:onClick="duration"
         android:tag="30"
         android:text="30 דק'"
-        app:layout_constraintBottom_toTopOf="@+id/activity_hours"
+        app:layout_constraintBottom_toTopOf="@+id/BottomNavigationViewHome"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/h1"
-        app:layout_constraintTop_toBottomOf="@+id/duration" />
+        app:layout_constraintHorizontal_bias="0.95"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/Sfilters"
+        app:layout_constraintVertical_bias="0.27" />
 
     <Button
         android:id="@+id/h1"
-        android:layout_width="wrap_content"
-        android:layout_height="48dp"
+        android:layout_width="70dp"
+        android:layout_height="30dp"
         android:background="@drawable/filter_buttons"
         android:onClick="duration"
         android:tag="60"
         android:text="1 שעה"
-        app:layout_constraintBottom_toTopOf="@+id/activity_hours"
-        app:layout_constraintEnd_toStartOf="@+id/m30"
-        app:layout_constraintStart_toEndOf="@+id/h2"
-        app:layout_constraintTop_toBottomOf="@+id/duration" />
+        app:layout_constraintBottom_toTopOf="@+id/BottomNavigationViewHome"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.66"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/Sfilters"
+        app:layout_constraintVertical_bias="0.27" />
 
     <Button
         android:id="@+id/unlimited_time"
-        android:layout_width="wrap_content"
-        android:layout_height="48dp"
+        android:layout_width="70dp"
+        android:layout_height="30dp"
         android:background="@drawable/filter_buttons"
         android:onClick="duration"
         android:tag="10000000"
         android:text="ללא הגבלה"
-        app:layout_constraintBottom_toTopOf="@+id/activity_hours"
-        app:layout_constraintEnd_toStartOf="@+id/h2"
+        app:layout_constraintBottom_toTopOf="@+id/BottomNavigationViewHome"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.05"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/duration" />
+        app:layout_constraintTop_toBottomOf="@+id/Sfilters"
+        app:layout_constraintVertical_bias="0.27" />
 
     <Button
         android:id="@+id/h2"
-        android:layout_width="wrap_content"
-        android:layout_height="48dp"
+        android:layout_width="70dp"
+        android:layout_height="30dp"
         android:background="@drawable/filter_buttons"
         android:onClick="duration"
         android:tag="120"
         android:text="2 שעה"
-        app:layout_constraintBottom_toTopOf="@+id/activity_hours"
-        app:layout_constraintEnd_toStartOf="@+id/h1"
-        app:layout_constraintStart_toEndOf="@+id/unlimited_time"
-        app:layout_constraintTop_toBottomOf="@id/duration" />
+        app:layout_constraintBottom_toTopOf="@+id/BottomNavigationViewHome"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintVertical_bias="0.27"
+        app:layout_constraintHorizontal_bias="0.36"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/Sfilters" />
 
     <TextView
         android:id="@+id/activity_hours"
@@ -104,11 +135,12 @@
         android:text="זמינות"
         android:textSize="18sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/fromtext2"
+        app:layout_constraintBottom_toTopOf="@+id/BottomNavigationViewHome"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintHorizontal_bias="0.93"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/duration" />
+        app:layout_constraintTop_toBottomOf="@+id/Sfilters"
+        app:layout_constraintVertical_bias="0.39" />
 
     <TextView
         android:id="@+id/nature"
@@ -117,23 +149,24 @@
         android:text="אופי ההתנדבות"
         android:textSize="18sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/online"
+        app:layout_constraintBottom_toTopOf="@+id/BottomNavigationViewHome"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintHorizontal_bias="0.93"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/from" />
+        app:layout_constraintTop_toBottomOf="@+id/Sfilters"
+        app:layout_constraintVertical_bias="0.58" />
 
     <TextView
         android:id="@+id/save"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:onClick="Save"
         android:text="שמור אופציה זו כברירת מחדל בחישובים עתידיים"
-        app:layout_constraintBottom_toTopOf="@id/search"
-        app:layout_constraintEnd_toStartOf="@+id/checkBox"
+        app:layout_constraintBottom_toTopOf="@+id/BottomNavigationViewHome"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.35"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/online"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintTop_toBottomOf="@+id/Sfilters"
+        app:layout_constraintVertical_bias="0.8" />
 
     <Button
         android:id="@+id/online"
@@ -141,12 +174,14 @@
         android:layout_height="wrap_content"
         android:background="@drawable/filter_buttons"
         android:onClick="nature"
-        android:tag="true"
+        android:tag="1"
         android:text="להתנדב אונליין"
-        app:layout_constraintBottom_toTopOf="@+id/save"
+        app:layout_constraintBottom_toBottomOf="@+id/BottomNavigationViewHome"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/inplace"
-        app:layout_constraintTop_toBottomOf="@+id/nature" />
+        app:layout_constraintHorizontal_bias="0.76"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/Sfilters"
+        app:layout_constraintVertical_bias="0.65" />
 
     <Button
         android:id="@+id/inplace"
@@ -154,74 +189,85 @@
         android:layout_height="wrap_content"
         android:background="@drawable/filter_buttons"
         android:onClick="nature"
-        android:tag="false"
+        android:tag="0"
         android:text="להתנדב במקום"
-        app:layout_constraintBottom_toTopOf="@+id/save"
-        app:layout_constraintEnd_toStartOf="@+id/online"
+        app:layout_constraintBottom_toBottomOf="@+id/BottomNavigationViewHome"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.25"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/nature" />
+        app:layout_constraintTop_toTopOf="@+id/Sfilters"
+        app:layout_constraintVertical_bias="0.65" />
 
     <CheckBox
         android:id="@+id/checkBox"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toTopOf="@+id/search"
+        android:onClick="Save"
+        app:layout_constraintBottom_toTopOf="@+id/BottomNavigationViewHome"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/save"
-        app:layout_constraintTop_toBottomOf="@+id/online" />
+        app:layout_constraintTop_toBottomOf="@+id/Sfilters"
+        app:layout_constraintVertical_bias="0.8" />
 
     <Button
         android:id="@+id/km_option10"
-        android:layout_width="88dp"
-        android:layout_height="wrap_content"
-
+        android:layout_width="70dp"
+        android:layout_height="30dp"
         android:background="@drawable/filter_buttons"
         android:onClick="radius"
         android:tag="10"
         android:text='10 ק"מ'
-        app:layout_constraintBottom_toTopOf="@+id/duration"
+        app:layout_constraintBottom_toTopOf="@+id/BottomNavigationViewHome"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/km_option15"
-        app:layout_constraintTop_toBottomOf="@+id/RadiusText" />
+        app:layout_constraintHorizontal_bias="0.95"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/Sfilters"
+        app:layout_constraintVertical_bias="0.1" />
 
     <Button
         android:id="@+id/km_option20"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="70dp"
+        android:layout_height="30dp"
         android:background="@drawable/filter_buttons"
         android:onClick="radius"
         android:tag="20"
         android:text='20 ק"מ'
-        app:layout_constraintBottom_toTopOf="@+id/duration"
-        app:layout_constraintEnd_toStartOf="@+id/km_option15"
-        app:layout_constraintStart_toEndOf="@+id/km_option_unlimited"
-        app:layout_constraintTop_toBottomOf="@id/RadiusText" />
+        app:layout_constraintBottom_toTopOf="@+id/BottomNavigationViewHome"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.35"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/Sfilters"
+        app:layout_constraintVertical_bias="0.1" />
 
     <Button
         android:id="@+id/km_option_unlimited"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="70dp"
+        android:layout_height="30dp"
         android:background="@drawable/filter_buttons"
         android:onClick="radius"
         android:tag="100000"
         android:text="ללא הגבלה"
-        app:layout_constraintBottom_toTopOf="@+id/duration"
-        app:layout_constraintEnd_toStartOf="@+id/km_option20"
+        app:layout_constraintBottom_toTopOf="@+id/BottomNavigationViewHome"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.04"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/RadiusText" />
+        app:layout_constraintTop_toBottomOf="@+id/Sfilters"
+        app:layout_constraintVertical_bias="0.1" />
 
     <Button
         android:id="@+id/km_option15"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="70dp"
+        android:layout_height="30dp"
         android:background="@drawable/filter_buttons"
         android:onClick="radius"
         android:tag="15"
         android:text='15 ק"מ'
-        app:layout_constraintBottom_toTopOf="@+id/duration"
-        app:layout_constraintEnd_toStartOf="@+id/km_option10"
-        app:layout_constraintStart_toEndOf="@+id/km_option20"
-        app:layout_constraintTop_toBottomOf="@id/RadiusText" />
+        app:layout_constraintBottom_toTopOf="@+id/BottomNavigationViewHome"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.66"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/Sfilters"
+        app:layout_constraintVertical_bias="0.1" />
 
     <Button
         android:id="@+id/search"
@@ -230,49 +276,55 @@
         android:background="#00BCD4"
         android:onClick="Search"
         android:text="חפש התנדבות"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/BottomNavigationViewHome"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/save" />
+        app:layout_constraintTop_toBottomOf="@+id/Sfilters"
+        app:layout_constraintVertical_bias="0.95" />
 
     <EditText
         android:id="@+id/from"
-        android:layout_width="wrap_content"
+        android:layout_width="150dp"
         android:layout_height="wrap_content"
         android:ems="10"
         android:gravity="center"
         android:hint="14:30"
         android:inputType="time"
-        app:layout_constraintBottom_toTopOf="@+id/nature"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/until"
-        app:layout_constraintTop_toBottomOf="@+id/activity_hours" />
+        app:layout_constraintBottom_toTopOf="@+id/BottomNavigationViewHome"
+        app:layout_constraintEnd_toStartOf="@+id/fromtext2"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/Sfilters"
+        app:layout_constraintVertical_bias="0.48000002" />
 
     <EditText
         android:id="@+id/until"
-        android:layout_width="209dp"
+        android:layout_width="150dp"
         android:layout_height="wrap_content"
         android:ems="10"
         android:gravity="center"
         android:hint="17:00"
         android:inputType="time"
-        app:layout_constraintBottom_toTopOf="@+id/nature"
-        app:layout_constraintEnd_toStartOf="@+id/from"
+        app:layout_constraintBottom_toTopOf="@+id/BottomNavigationViewHome"
+        app:layout_constraintEnd_toStartOf="@+id/untiltext"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/activity_hours" />
+        app:layout_constraintTop_toBottomOf="@+id/Sfilters"
+        app:layout_constraintVertical_bias="0.48000002" />
 
     <TextView
         android:id="@+id/untiltext"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="29dp"
+        android:layout_height="24dp"
         android:text="עד-"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
         android:textSize="20sp"
-        app:layout_constraintBottom_toTopOf="@+id/nature"
+        app:layout_constraintBottom_toTopOf="@+id/BottomNavigationViewHome"
         app:layout_constraintEnd_toStartOf="@+id/from"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toEndOf="@+id/until"
-        app:layout_constraintTop_toBottomOf="@+id/activity_hours" />
+        app:layout_constraintHorizontal_bias="0.92"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/Sfilters"
+        app:layout_constraintVertical_bias="0.48000002" />
 
     <TextView
         android:id="@+id/fromtext2"
@@ -281,9 +333,11 @@
         android:text="מ-"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
         android:textSize="20sp"
-        app:layout_constraintBottom_toTopOf="@+id/nature"
+        app:layout_constraintBottom_toTopOf="@+id/BottomNavigationViewHome"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/from"
-        app:layout_constraintTop_toBottomOf="@+id/activity_hours" />
+        app:layout_constraintHorizontal_bias="0.97"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/Sfilters"
+        app:layout_constraintVertical_bias="0.48" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,28 +1,10 @@
 package com.example.bravetogether_volunteerapp;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentContainerView;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
-
-import android.app.ActionBar;
-import android.app.assist.AssistStructure;
 import android.content.SharedPreferences;
-import android.graphics.Bitmap;
 import android.os.Bundle;
-import android.os.Environment;
-import android.provider.MediaStore;
-import android.text.Layout;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.FrameLayout;
-import android.widget.LinearLayout;
 
-import androidmads.library.qrgenearator.QRGContents;
-import androidmads.library.qrgenearator.QRGEncoder;
-import androidmads.library.qrgenearator.QRGSaver;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentTransaction;
 
 public class RegularProfileActivity extends AppCompatActivity {
 
@@ -35,7 +17,7 @@ public class RegularProfileActivity extends AppCompatActivity {
         final String sharedPrefFile = "com.example.android.BraveTogether_VolunteerApp";
         SharedPreferences mPreferences = getSharedPreferences(sharedPrefFile, MODE_PRIVATE);
 
-        String UserType = mPreferences.getString("UserAccessType", "editor");
+        String UserType = mPreferences.getString("UserAccessType", "manager");
 
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
 
@@ -52,7 +34,7 @@ public class RegularProfileActivity extends AppCompatActivity {
             case "editor":
                 ft.replace(R.id.body, new EditorFragment());
             break;
-            case "VolunteerManager":
+            case "volunteerManager":
                 ft.replace(R.id.body, new VolunteerManagerFragment());
             break;
         }
