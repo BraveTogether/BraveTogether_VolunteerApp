@@ -1,7 +1,7 @@
 package com.example.bravetogether_volunteerapp;
 
 import android.Manifest;
-import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
@@ -9,6 +9,8 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,12 +22,18 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.bravetogether_volunteerapp.ImageRetrieving.ImageRetriever;
+import com.example.bravetogether_volunteerapp.LoginFlow.TestRetrieveImgFromFirebase;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.storage.FileDownloadTask;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 import com.nabinbhandari.android.permissions.PermissionHandler;
 import com.nabinbhandari.android.permissions.Permissions;
 
 import org.json.JSONObject;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -47,7 +55,6 @@ public class ItemListActivity extends AppCompatActivity {
     public static Context parentContext;
     public static List<JSONObject> activitiesList;
     static ContentResolver content;
-    static Context context;
     static String filePath;
 
     @Override
@@ -55,7 +62,25 @@ public class ItemListActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_item_list);
         ContentResolver content = getContentResolver();
-        context = this;
+
+        String[] permissions = {Manifest.permission.WRITE_EXTERNAL_STORAGE};
+        String rationale = "Please provide storage permission so that you can load your profile picture";
+        Permissions.Options options = new Permissions.Options()
+                .setRationaleDialogTitle("Info")
+                .setSettingsDialogTitle("Warning");
+
+        Permissions.check(this/*context*/, permissions, rationale, options, new PermissionHandler() {
+            @Override
+            public void onGranted() {
+                Uri imageURI = Uri.parse("gs://bravetogethervolunteerapp.appspot.com/images/8bd91a65-85d9-412f-a299-26a4cd633194");
+                filePath = retrieveImg(imageURI).getPath();
+            }
+
+            @Override
+            public void onDenied(Context context, ArrayList<String> deniedPermissions) {
+                Toast.makeText(ItemListActivity.this, "Please allow the the app to access your storage in order to show your profile picture", Toast.LENGTH_SHORT).show();
+            }
+        });
 
         //Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         //setSupportActionBar(toolbar);
@@ -77,6 +102,43 @@ public class ItemListActivity extends AppCompatActivity {
         View recyclerView = findViewById(R.id.item_list);
         assert recyclerView != null;
         setupRecyclerView((RecyclerView) recyclerView);
+    }
+
+    private ProgressDialog showProgress(){
+        ProgressDialog  pd = new ProgressDialog(this);
+        pd.setMessage("Downloading... Please Wait");
+        pd.setIndeterminate(true);
+        pd.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        pd.show();
+        return pd;
+    }
+
+    final File rootPath = new File(Environment.getExternalStorageDirectory(), "Brave-Together");
+    private File retrieveImg(Uri uri){
+        final ProgressDialog  pd = showProgress();
+        if (!rootPath.exists()) {
+            rootPath.mkdirs();
+        }
+        final File localFile = new File(rootPath, "braveTogether.jpg");
+
+        StorageReference storageRef = FirebaseStorage.getInstance().getReferenceFromUrl(uri.toString());
+        storageRef.getFile(localFile).addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
+            @Override
+            public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
+                Log.e("firebase ", ";local tem file created  created " + localFile.toString());
+                if (localFile.canRead()){
+                    pd.dismiss();
+                }
+                Toast.makeText(getApplicationContext(), "Download Completed", Toast.LENGTH_SHORT).show();
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception exception) {
+                Log.e("firebase ", ";local tem file not created  created " + exception.toString());
+                Toast.makeText(getApplicationContext(), "Download Incompleted", Toast.LENGTH_LONG).show();
+            }
+        });
+        return localFile;
     }
 
     private void setupRecyclerView(@NonNull final RecyclerView recyclerView) {
@@ -129,30 +191,6 @@ public class ItemListActivity extends AppCompatActivity {
             return new ViewHolder(view);
         }
 
-        public void retrieve(final int position, final Context context){
-
-            final ImageRetriever imageRetriever = new ImageRetriever();
-
-            String[] permissions = {Manifest.permission.WRITE_EXTERNAL_STORAGE};
-            String rationale = "Please provide storage permission so that you can load your profile picture";
-            Permissions.Options options = new Permissions.Options()
-                    .setRationaleDialogTitle("Info")
-                    .setSettingsDialogTitle("Warning");
-
-            Permissions.check(context, permissions, rationale, options, new PermissionHandler() {
-                @Override
-                public void onGranted() {
-                    Uri imageURI = Uri.parse(mValues.get(position).URI);
-                    filePath = imageRetriever.retrieveImg(imageURI, (Activity) context, "Noy_VolunteerImage").getPath();
-                }
-                @Override
-                public void onDenied(Context context, ArrayList<String> deniedPermissions) {
-                    Toast.makeText(context, "Please allow the the app to access your storage in order to show your profile picture", Toast.LENGTH_SHORT).show();
-                }
-            });
-
-
-        }
 
         @Override
         public void onBindViewHolder(final ViewHolder holder, int position) {
@@ -160,11 +198,12 @@ public class ItemListActivity extends AppCompatActivity {
             holder.mContentView.setText(mValues.get(position).content);
             holder.mDuration.setText(mValues.get(position).duration);
             holder.mDistance.setText(mValues.get(position).distance);
-
             //Uri imageURI = Uri.parse(mValues.get(position).URI);
-            retrieve(position, context);
+            //    final File rootPath = new File(Environment.getExternalStorageDirectory(), "Brave-Together");
+
             Bitmap bitmap = BitmapFactory.decodeFile(filePath);
 
+            holder.mPhoto.setImageBitmap(bitmap);
             holder.itemView.setTag(mValues.get(position));
             holder.itemView.setOnClickListener(mOnClickListener);
             holder.mPhoto.setImageBitmap(bitmap);

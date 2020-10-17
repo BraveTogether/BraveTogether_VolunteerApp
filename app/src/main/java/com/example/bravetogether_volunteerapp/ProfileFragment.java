@@ -12,11 +12,14 @@ import androidx.fragment.app.Fragment;
 
 import com.example.bravetogether_volunteerapp.LoginFlow.RegisterActivity;
 
+import org.jetbrains.annotations.NotNull;
+
 public class ProfileFragment extends Fragment implements View.OnClickListener {
 
     public ProfileFragment() {
         // Required empty public constructor
     }
+    @NotNull
     public static ProfileFragment newInstance() {
         ProfileFragment fragment = new ProfileFragment();
         return fragment;

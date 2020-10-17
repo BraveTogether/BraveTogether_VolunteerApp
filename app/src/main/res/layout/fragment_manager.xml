@@ -17,6 +17,7 @@
             android:layout_height="wrap_content"
             android:foregroundGravity="center"
             android:gravity="fill"
+            android:textColor="#001925"
             android:text="אישור התנדבויות חדשות"
             app:layout_constraintBottom_toTopOf="@+id/down"
             app:layout_constraintEnd_toStartOf="@+id/approve"
@@ -31,6 +32,7 @@
             android:layout_height="wrap_content"
             android:foregroundGravity="center"
             android:gravity="fill"
+            android:textColor="#001925"
             android:text="הרשאות"
             app:layout_constraintBottom_toTopOf="@+id/down"
             app:layout_constraintEnd_toStartOf="@+id/permissions"
@@ -42,6 +44,7 @@
         <ImageView
             android:id="@+id/add_new_volunteer"
             android:layout_width="wrap_content"
+            android:textColor="#001925"
             android:layout_height="wrap_content"
             app:layout_constraintBottom_toTopOf="@+id/down"
             app:layout_constraintEnd_toEndOf="parent"
@@ -57,6 +60,7 @@
             android:layout_height="wrap_content"
             android:foregroundGravity="center"
             android:gravity="fill"
+            android:textColor="#001925"
             android:text="יצירת התנדבות חדשה"
             app:layout_constraintBottom_toTopOf="@+id/down"
             app:layout_constraintEnd_toStartOf="@+id/add_new_volunteer"
@@ -75,7 +79,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.65999997"
-            app:srcCompat="@drawable/profile_about_us" />
+            app:srcCompat="@drawable/checkbox_red" />
 
         <ImageView
             android:id="@+id/alert"
@@ -87,7 +91,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.88"
-            app:srcCompat="@drawable/profile_logout" />
+            app:srcCompat="@drawable/ic_notificationbell_red" />
 
         <TextView
             android:id="@+id/alertText"
@@ -101,6 +105,7 @@
             app:layout_constraintHorizontal_bias="0.77"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
+            android:textColor="#001925"
             app:layout_constraintVertical_bias="0.88" />
 
         <ImageView
@@ -113,7 +118,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.44"
-            app:srcCompat="@drawable/profile_contact" />
+            app:srcCompat="@drawable/manager_profile_permission_icon" />
 
         <View
             android:id="@+id/view"
@@ -130,12 +135,13 @@
             android:id="@+id/down"
             android:name="com.example.bravetogether_volunteerapp.ProfileFragment"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
+            android:layout_height="381dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/view" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 
