@@ -1,0 +1,312 @@
+var mysql = require('mysql');
+var myJSON = require("JSON");
+var express = require('express');
+var session = require('express-session');
+var bodyParser = require('body-parser');
+var path = require('path');
+
+const router = express.Router();
+
+var con = mysql.createConnection({
+    host : '35.214.78.251',
+    user : 'admin',
+    password : 'LionAmir1986$',
+    database : "heb_brave_together"
+});
+
+var app = express();
+app.use(session({
+	secret: 'secret123123123123',
+	resave: true,
+	saveUninitialized: true
+}));
+
+app.use(bodyParser.urlencoded({extended : true}));
+app.use(bodyParser.json());
+
+app.get('/', (req,res) => {
+		con.query('SELECT * FROM users', function(error,results){
+		if (error) res.status(500).send(error);
+		res.send(JSON.stringify(results));
+		res.end();
+});
+});
+
+
+app.post('/userFacebook',function(req,res){
+   var uid = req.body.uid;
+   var firstname = req.body.firstname;
+   var lastname = req.body.lastname;
+   var email = req.body.email;
+   var phone_number = req.body.phone_number;
+   var address = req.body.address;
+
+   con.query('INSERT INTO users (uid, firstname, lastname, email, address, phone_number) VALUES (?, ?, ?, ?, ?, ?)', [uid, firstname, lastname, email, address, phone_number], function(error,results){
+	if (error) res.status(500).send(error);
+	res.status(201).send(JSON.stringify(results));
+	res.end();
+   });
+});
+
+app.post('/userNormal',function(req,res){
+   var firstname = req.body.firstname;
+   var lastname = req.body.lastname;
+   var password = req.body.password;
+   var email = req.body.passwqord;
+   var phone_number = req.body.phone_number;
+   var address = req.body.address;
+   var key_sentence = req.body.key_sentence;
+
+
+   con.query('INSERT INTO users (firstname, lastname, password, email, phone_number, address, key_sentence) VALUES (?, ?, ?, ?, ?, ?)' , [firstname, lastname, password, email, phone_number, address, key_sentence], function(error, results){
+	   if(error) res.status(500).send(error);
+	   res.status(201).send(JSON.stringfy(results));
+	   res.end();
+   });
+});
+
+app.put('/user/:email',function(req,res){
+   var email = req.params.email;
+   var first_name = req.body.first_name;
+   var last_name = req.body.last_name;
+   var password = req.body.password;
+   var phone_number = req.body.phone_number;
+   var home_address = req.body.home_address;
+   var about = req.body.about;
+   con.query('UPDATE users SET firstname=?, lastname=?, phone_number=?, home_address=?, about=? WHERE email=?',[first_name, last_name, phone_number, address, about, email], function(error,results){
+        if (error) res.status(500).send(error);
+	res.status(201).send("updated");
+        res.end();
+   });
+});
+
+
+app.get('/user/:email', (req,res) => {
+	var email = req.params.email;
+	con.query('SELECT * FROM users WHERE email=?',[email], function(error,results){
+	if(error) res.status(500).send(error);
+        res.status(200).send(JSON.stringify(results[0]));
+	res.end();
+});
+});
+
+app.get('/volunteers/confirmed/:confirmed', (req,res) => {
+        var confirmed = req.params.confirmed;
+        con.query('SELECT * FROM volunteer_events WHERE confirmed=?',[confirmed], function(error,results){
+        if(error) res.status(500).send(error);
+        res.status(200).send(JSON.stringify(results));
+        res.end();
+});
+});
+
+app.get('/volunteer_events/', (req,res) => {
+        var confirmed = req.params.confirmed;
+        con.query('SELECT * FROM volunteer_events', function(error,results){
+        if(error) res.status(500).send(error);
+        res.status(200).send(JSON.stringify(results));
+        res.end();
+});
+});
+
+
+app.put('/volunteer_events/:id/:confirmed',function(req,res){
+   var id = req.params.id;
+   var approved = req.params.approved;
+   con.query('UPDATE volunteer_events SET confirmed=? WHERE id=?',[confirmed, id], function(error,results){
+        if (error) res.status(500).send(error);
+        res.status(201).send("updated");
+        res.end();
+   });
+});
+
+app.get('/user/:uid/volunteers', (req,res) => {
+        var uid = req.params.uid;
+        con.query('SELECT * FROM users_volunteering_events WHERE uid=?',[uid], function(error,results){
+        if(error) res.status(500).send(error);
+        res.status(200).send(JSON.stringify(results[0]));
+        res.end();
+});
+});
+
+app.post('/volunteers/events/',function(req,res){
+   var name = req.body.name;
+   var manager = req.body.manager;
+   var picture = req.body.picture;
+   var address = req.body.address;
+   var online = req.body.online;
+   var duration = req.body.duration;
+   var about_place = req.body.about_place;
+   var about_volunteering = req.body.about_volunteering;
+   var min_volunteer = req.body.min_volunteer;
+   var max_volunteers = req.body.max_volunteers;
+   var value_in_coins = req.body.value_in_coins;
+   var confirmed = 0;
+   var start_time = req.body.start_time;
+
+   con.query('INSERT INTO volunteer_events (name, manager, picture, address, online, duration, about_place, about_volunteering, min_volunteer, max_volunteers, value_in_coins, confirmed, start_time) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',[name, manager, picture, address, online, duration, about_place, about_volunteering, min_volunteer, max_volunteers, value_in_coins, confirmed, start_time], function(error,results){
+        if (error) res.status(500).send(error);
+        res.status(201).send(JSON.stringify(results));
+	res.end();
+   });
+});
+
+app.post('/volunteers/events/dates',function(req,res){
+	var vid = req.body.vid;
+	var date = req.body.date;
+   con.query('INSERT INTO volunteer_events_dates (vid, date) VALUES (?, ?)',[vid, date], function(error,results){
+        if (error) res.status(500).send(error);
+        res.status(201).send(JSON.stringify(results));
+        res.end();
+   });
+});
+
+app.post('/user/signup/',function(req,res) {
+	var id = req.body.id;
+	var email = req.body.email;
+	var password = req.body.password;
+	var first_name = req.body.first_name;
+	var last_name = req.body.last_name;
+	var created_at = req.body.created_at;
+
+	con.query('INSERT INTO users (email, password, first_name, last_name) VALUES (?,?,?,?)',[email, password, first_name, last_name],function(error,results){
+		if(error) res.status(500).send(error);
+		res.status(201).send(JSON.stringify(results));
+		res.end();
+	});
+});
+
+app.get('/reviews/users', (req,res) => {
+        con.query('SELECT reviews.review_text,users_profile.profile_picture,users.first_name,users.last_name,volunteer_events.name,volunteer_events.address FROM reviews INNER JOIN users_profile ON users_profile.uid = reviews.uid INNER JOIN volunteer_events ON volunteer_events.id = reviews.vid INNER JOIN users ON reviews.id = users.id', function(error,results){
+        if(error) res.status(500).send(error);
+        res.status(200).send(JSON.stringify(results[0]));
+        res.end();
+});
+});
+
+app.post('/user/signup_user_profile',function(req,res){
+	var id = req.body.id;
+	var phone = req.body.phone;
+	var address = req.body.address;
+	var about = req.body.about;
+	var user_type = req.body.user_type;
+	var profile_pic = req.body.profile_pic;
+
+	con.query('INSERT INTO users_profile (uid, phone_number, home_address, about, profile_picture) VALUES (?,?,?,?,?),'[id,phone,address,about,profile_pic],function(error,results){
+		if(error) res.status(500).send(error);
+		res.status(201).send(JSON.stringify(results));
+		res.end();
+	});
+});
+
+app.get('/volunteers/events/get_data/:vid', function(req,res) {
+        var vid = req.params.vid;	
+        con.query('SELECT name, manager, picture, address, online, duration, about_place, about_volunteering, min_volunteer, max_volunteers, value_in_coins, start_time, date FROM volunteer_events v, volunteer_events_dates vd WHERE v.id=? AND v.id = vd.vid',[vid], function(error,results){
+        if(error) res.status(500).send(error);
+        res.status(200).send(JSON.stringify(results));
+        res.end();
+});
+});
+
+app.get('/reviews/get_data/:vid', (req,res) => {
+        var vid = req.params.vid;
+        con.query('SELECT review_text, u.first_name, u.last_name, up.picture  FROM reviews r, users u, users_profile up WHERE r.vid=? LIMIT 3',[vid], function(error,results){
+        if(error) res.status(500).send(error);
+        res.status(200).send(JSON.stringify(results[0]));
+        res.end();
+});
+});
+
+app.post('/user_volunterrings_events/signup',function(req,res){
+        var vid = req.body.vid;
+        var uid = req.body.uid;
+        con.query('INSERT INTO users_volunteering_events (uid, vid) VALUES (?,?),'[uid, vid],function(error,results){
+                if(error) res.status(500).send(error);
+                res.status(201).send(JSON.stringify(results));
+                res.end();
+        });
+});
+
+app.get('/volunteer/manager/phone/:uid',function(req,res){
+        var uid = req.params.uid;
+        con.query('SELECT phone_number FROM users_profile WHERE uid=?'[uid],function(error,results){
+                if(error) res.status(500).send(error);
+                res.status(201).send(JSON.stringify(results));
+                res.end();
+        });
+});
+
+app.get('/volunteer_events/future', (req,res) => {
+        var current = new Date();
+        con.query('SELECT * FROM volunteer_events INNER JOIN volunteer_events_dates ON volunteer_events.id=volunteer_events_dates.vid WHERE volunteer_events_date.date > ?',[current], function(error,results){
+        if(error) res.status(500).send(error);
+        res.status(200).send(JSON.stringify(results[0]));
+        res.end();
+});
+});
+
+app.get('/users_volunteering_events/:uid', (req,res) => {
+        var uid = req.params.uid;
+        con.query('SELECT * FROM users_volunteerings_events WHERE uid=?',[uid], function(error,results){
+        if(error) res.status(500).send(error);
+        res.status(200).send(JSON.stringify(results));
+        res.end();
+});
+});
+
+app.post('/users_volunteerings_events/',function(req,res){
+        var vid = req.body.vid;
+        var uid = req.body.uid;
+   con.query('INSERT INTO users_volunteerings_events (vid, uid) VALUES (?, ?)',[vid, uid], function(error,results){
+        if (error) res.status(500).send(error);
+        res.status(201).send(JSON.stringify(results));
+        res.end();
+   });
+});
+
+app.post('/users_volunteerings_events/unregister',function(req,res){
+        var vid = req.body.vid;
+        var uid = req.body.uid;
+   con.query('DELETE FROM users_volunteerings_events WHERE vid=? AND uid=?',[vid, uid], function(error,results){
+        if (error) res.status(500).send(error);
+        res.status(201).send(JSON.stringify(results));
+        res.end();
+   });
+});
+
+app.post('/users/new_user',function(req,res){
+        var email = req.body.email;
+	var password = req.body.password;
+	var first_name = req.body.first_name;
+	var last_name = req.body.last_name;
+	var created_at = req.body.created_at;
+   con.query('INSERT INTO users (email, password, first_name, last_name, created_at) VALUES (?, ?, ?, ?, ?)',[email, password, first_name, last_name, created_at], function(error,results){
+        if (error) res.status(500).send(error);
+        res.status(201).send(JSON.stringify(results));
+        res.end();
+   });
+});
+
+app.post('/users_profile/new_user',function(req,res){
+        var uid = req.params.uid;
+        var phone_number = req.params.phone_number;
+        var home_address = req.params.home_address;
+        var about = req.params.about;
+	var profile_picture = req.params.profile_picture;
+        var coins = 0;
+
+   con.query('INSERT INTO users_profile (uid, phone_number, home_address, about, profile_picture, coins) VALUES (?, ?, ?, ?, ?, ?, ?)',[uid, phone_number, home_address, about, profile_picture, coins], function(error,results){
+        if (error) res.status(500).send(error);
+        res.status(201).send(JSON.stringify(results));
+        res.end();
+   });
+});
+
+app.post('/volunteers/events/confirm', function(req,res) {
+        var vid = req.body.vid;
+        con.query('UPDATE volunteer_events SET confirmed=1 WHERE id=?',[vid], function(error,results){
+        if(error) res.status(500).send(error);
+        res.status(200).send(JSON.stringify(results));
+        res.end();
+});
+});
+app.listen(8080);

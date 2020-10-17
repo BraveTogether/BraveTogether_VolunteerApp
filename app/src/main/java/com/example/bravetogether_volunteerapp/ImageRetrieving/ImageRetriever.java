@@ -6,13 +6,15 @@ import android.net.Uri;
 import android.os.Environment;
 import android.util.Log;
 import android.widget.Toast;
+
 import androidx.annotation.NonNull;
+
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.storage.FileDownloadTask;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
-import com.nabinbhandari.android.permissions.PermissionHandler;
+
 import java.io.File;
 
 /*
@@ -79,7 +81,7 @@ public class ImageRetriever {
                 if (localFile.canRead()){
                     pd.dismiss();
                 }
-                Toast.makeText(activity, "Download Completed", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(activity, "Download Completed", Toast.LENGTH_SHORT).show();
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override

@@ -52,8 +52,10 @@ public class FilterActivity extends AppCompatActivity {
         String sharedPrefFile = "com.example.android.BraveTogether_VolunteerApp";
         mPreferences = getSharedPreferences(sharedPrefFile, MODE_PRIVATE);
 
+        // edit the form to match the preferences if the user requested
         String UserUntil = mPreferences.getString("UserFilterAvailabilityEnd", null);
         String UserStart = mPreferences.getString("UserFilterAvailabilityStart", null);
+
         if (UserUntil !=null && UserStart!=null)
         {
             ((EditText)findViewById(R.id.until)).setText(UserUntil);
@@ -87,7 +89,6 @@ public class FilterActivity extends AppCompatActivity {
                     duration(findViewById(R.id.unlimited_time));
             }
         }
-        Toast.makeText(FilterActivity.this, UserStart, Toast.LENGTH_LONG).show();
     }
 
     public void radius(View view) {
