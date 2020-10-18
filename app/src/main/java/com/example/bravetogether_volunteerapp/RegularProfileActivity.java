@@ -2,6 +2,7 @@ package com.example.bravetogether_volunteerapp;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentTransaction;
@@ -13,11 +14,10 @@ public class RegularProfileActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_regular_profile);
-
         final String sharedPrefFile = "com.example.android.BraveTogether_VolunteerApp";
         SharedPreferences mPreferences = getSharedPreferences(sharedPrefFile, MODE_PRIVATE);
 
-        String UserType = mPreferences.getString("UserAccessType", "manager");
+        String UserType = mPreferences.getString("UserAccessType", "user");
 
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
 
