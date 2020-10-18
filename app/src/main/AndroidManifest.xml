@@ -34,6 +34,7 @@
         </activity>
         <activity android:name=".ConformationsActivity" />
         <activity android:name=".RegularProfileActivity" />
+        <activity android:name=".EditNotificationDetails"/>
         <activity android:name=".LoginFlow.NotificationActivity" />
         <activity android:name=".LoginFlow.LoginActivity" />
         <activity
