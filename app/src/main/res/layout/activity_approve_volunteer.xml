@@ -1,0 +1,312 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:fillViewport="false">
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:context=".CreateVolunteerActivity">
+
+            <View
+                android:id="@+id/ellipse_59"
+                android:layout_width="match_parent"
+                android:layout_height="88dp"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentTop="true"
+                android:background="@drawable/ellipse_59"
+                android:elevation="1dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+
+            <TextView
+                android:id="@+id/createNewVolunteerHeadline"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginStart="98dp"
+                android:layout_marginLeft="98dp"
+                android:layout_marginTop="33dp"
+                android:layout_marginEnd="99dp"
+                android:layout_marginRight="99dp"
+                android:elevation="1dp"
+                android:gravity="end|center_vertical"
+                android:text="@string/createVolunteerHeadline"
+                android:textAppearance="@style/createHeadlineAppearance"
+                app:layout_constraintEnd_toEndOf="@+id/ellipse_59"
+                app:layout_constraintHorizontal_bias="0.765"
+                app:layout_constraintStart_toStartOf="@+id/ellipse_59"
+                app:layout_constraintTop_toTopOf="@+id/ellipse_59" />
+
+            <View
+                android:id="@+id/vector"
+                android:layout_width="0dp"
+                android:layout_height="165dp"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentRight="true"
+                android:layout_marginTop="65dp"
+                android:background="@drawable/vector"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/ellipse_59" />
+
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:id="@+id/profile_image_2"
+                android:layout_width="139dp"
+                android:layout_height="139dp"
+                android:layout_gravity="center"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.503"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/ellipse_59"
+                />
+
+            <ImageView
+                android:id="@+id/uploaded_image_approve_activity"
+                android:layout_width="139dp"
+                android:layout_height="139dp"
+                android:layout_gravity="center"
+                android:shape="oval"
+                android:padding="30dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.503"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/ellipse_59"
+                />
+
+
+            <TextView
+                android:id="@+id/volunteerNameApprove"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="19dp"
+                android:layout_marginTop="24dp"
+                android:layout_marginEnd="20dp"
+                style="@style/textViewApprove"
+                android:gravity="right|center"
+                android:background="@drawable/textfield_d"
+                android:drawablePadding="10dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.516"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/vector"
+                app:drawableEndCompat="@drawable/hand_heart_line"
+                app:drawableRightCompat="@drawable/hand_heart_line" />
+
+
+            <TextView
+                android:id="@+id/addressApprove"
+                android:name="com.google.android.libraries.places.widget.AutocompleteSupportFragment"
+                android:layout_width="320dp"
+                android:layout_height="48dp"
+                style="@style/textViewApprove"
+                android:gravity="right|center"
+                android:layout_marginStart="19dp"
+                android:layout_marginTop="24dp"
+                android:layout_marginEnd="20dp"
+                android:background="@drawable/textfield_d"
+                android:drawablePadding="10dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.516"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/volunteerNameApprove"
+                app:drawableEndCompat="@drawable/map_pin_line"
+                app:drawableRightCompat="@drawable/map_pin_line" />
+
+
+            <TextView
+                android:id="@+id/placeDescritionApprove"
+                android:layout_width="320dp"
+                android:layout_height="123dp"
+                android:layout_centerHorizontal="true"
+                android:layout_marginStart="21dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="18dp"
+                android:autofillHints=""
+                android:background="@drawable/textfield_d_big"
+                android:drawablePadding="10dp"
+                android:ems="10"
+                style="@style/textViewApprove"
+                android:gravity="right|center"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/addressApprove"
+                app:drawableEndCompat="@drawable/home_smile2_line"
+                app:drawableRightCompat="@drawable/home_smile2_line" />
+
+            <TextView
+                android:id="@+id/todoeDescritionApprove"
+                android:layout_width="320dp"
+                android:layout_height="123dp"
+                android:layout_centerHorizontal="true"
+                android:layout_marginStart="21dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="18dp"
+                android:autofillHints=""
+                android:background="@drawable/textfield_d_big"
+                android:drawableEnd="@drawable/chat_smile_line"
+                android:ems="10"
+                style="@style/textViewApprove"
+                android:gravity="right|center"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.504"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/placeDescritionApprove"
+                app:drawableEndCompat="@drawable/chat_smile_line" />
+
+
+            <ImageView
+                android:id="@+id/timeViewApprove"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/ic_rectangle_72"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/todoeDescritionApprove" />
+
+            <TextView
+                android:id="@+id/dateView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="202dp"
+                android:layout_marginTop="13dp"
+                android:layout_marginEnd="20dp"
+                android:background="#0000"
+                android:elevation="1dp"
+                style="@style/textViewApprove"
+                android:gravity="right|center"
+                app:layout_constraintEnd_toEndOf="@+id/timeViewApprove"
+                app:layout_constraintStart_toStartOf="@+id/timeViewApprove"
+                app:layout_constraintTop_toTopOf="@+id/timeViewApprove" />
+
+
+            <TextView
+                android:id="@+id/hourView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="95dp"
+                android:layout_marginTop="13dp"
+                android:layout_marginEnd="153dp"
+                android:background="#0000"
+                android:elevation="1dp"
+                style="@style/textViewApprove"
+                android:gravity="right|center"
+                app:layout_constraintEnd_toEndOf="@+id/timeViewApprove"
+                app:layout_constraintStart_toStartOf="@+id/timeViewApprove"
+                app:layout_constraintTop_toTopOf="@+id/timeViewApprove" />
+
+            <TextView
+                android:id="@+id/durationView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="22dp"
+                android:layout_marginTop="13dp"
+                android:layout_marginEnd="230dp"
+                android:background="#0000"
+                android:elevation="1dp"
+                style="@style/textViewApprove"
+                android:gravity="right|center"
+                app:layout_constraintEnd_toEndOf="@+id/timeViewApprove"
+                app:layout_constraintStart_toStartOf="@+id/timeViewApprove"
+                app:layout_constraintTop_toTopOf="@+id/timeViewApprove" />
+
+
+            <ImageView
+                android:id="@+id/volNumViewApprove"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/ic_rectangle_72"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/timeViewApprove" />
+
+            <TextView
+                android:id="@+id/minVolViewApprove"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="190dp"
+                android:layout_marginTop="13dp"
+                android:layout_marginEnd="50dp"
+                android:background="#0000"
+                android:elevation="1dp"
+                style="@style/textViewApprove"
+                android:gravity="right|center"
+                app:layout_constraintEnd_toEndOf="@+id/volNumViewApprove"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="@+id/volNumViewApprove"
+                app:layout_constraintTop_toTopOf="@+id/volNumViewApprove" />
+
+            <TextView
+                android:id="@+id/maxVolViewApprove"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="50dp"
+                android:layout_marginTop="12dp"
+                android:layout_marginEnd="50dp"
+                android:background="#0000"
+                android:elevation="1dp"
+                style="@style/textViewApprove"
+                android:gravity="right|center"
+                app:layout_constraintEnd_toEndOf="@+id/volNumViewApprove"
+                app:layout_constraintHorizontal_bias="0.166"
+                app:layout_constraintStart_toStartOf="@+id/volNumViewApprove"
+                app:layout_constraintTop_toTopOf="@+id/volNumViewApprove" />
+
+            <TextView
+                android:id="@+id/onlineApprove"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                style="@style/textViewApprove"
+                android:gravity="right|center"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/volNumViewApprove"
+                />
+
+            <Button
+                android:id="@+id/Approve"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/ic_confirmvolunteer"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.497"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/onlineApprove"
+                app:layout_constraintVertical_bias="0.0" />
+
+            <Button
+                android:id="@+id/messageManager"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="20dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/Approve"
+                android:background="@drawable/ic_messagemanager" />
+
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </LinearLayout>
+</ScrollView>
