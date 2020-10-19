@@ -16,6 +16,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
+        <activity android:name=".ApproveVolunteerActivity" android:exported="true"/>
         <activity android:name=".Thanks" />
         <activity android:name=".LoginFlow.RegisterWhereActivity" />
         <activity
