@@ -53,7 +53,7 @@ public class EditNotificationDetails extends AppCompatActivity {
         //TODO: check if all the mPreferences names are correct
         timesOfVolunteer = mPreferences.getInt("user_notification_dates", 1);
         typeOfVolunteer = mPreferences.getInt("type", 1);
-        uid = new BigInteger(String.valueOf(mPreferences.getInt("id", 123)));
+        uid = new BigInteger(String.valueOf(mPreferences.getInt("id", 8)));
         //TODO: check if all the mPreferences names are correct
 
         //Add all buttons
@@ -72,9 +72,10 @@ public class EditNotificationDetails extends AppCompatActivity {
         //request the profile ID form DB
         //TODO check how to use specific query
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
-                (Request.Method.GET, url + "users_notification/get_ids" + uid , null, new Response.Listener<JSONObject>() {
+                (Request.Method.GET, url + "users_notifications/get_ids/"+ uid , null, new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
+                        Log.d("Gotttttt","id"+id.toString());
                         id = new BigInteger(response.toString());
                     }
                 },new  Response.ErrorListener(){
