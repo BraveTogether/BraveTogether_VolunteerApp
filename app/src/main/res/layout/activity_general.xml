@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     >
+
     <ScrollView
         android:id="@+id/generalActivityScrollView"
         android:layout_width="match_parent"
@@ -459,4 +460,25 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
+
+    <RelativeLayout
+        android:id="@+id/generalActivityHideAll"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:background="@color/quantum_white_100">
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/quantum_white_100"/>
+
+    <ProgressBar
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+
+        />
+    </RelativeLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

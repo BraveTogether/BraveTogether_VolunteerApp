@@ -42,7 +42,7 @@
                 android:ellipsize="end"
                 android:textSize="15dp"
                 android:textDirection="rtl"
-                android:text="שליו כהן"
+                android:text="תמיר שצמן"
                 android:layout_gravity="center_vertical"
                 android:layout_marginRight="7dp"/>
 

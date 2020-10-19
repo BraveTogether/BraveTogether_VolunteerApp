@@ -33,6 +33,7 @@ public class GeneralActivityReviewsAdapter extends RecyclerView.Adapter<GeneralA
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+        holder.review_title.setText(reviews.get(position));
         //TODO: fill actual review from server
     }
 
