@@ -30,12 +30,12 @@ public class CallToServer {
 
 
     public void registerUser(final Context context,final String email, final String password, final String first_name, final String last_name, final String phone, final String address, final String about,
-                             final String user_type,final String profile_pic){
+                             final String user_type,final String profile_pic,final String location,final String switched){
         final StringRequest sr = new StringRequest(Request.Method.POST, url + "/user/signup", new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                Log.d("response",response);
-                getUserId(context,email,phone,address,about,user_type,profile_pic);
+                Log.d("huhuhu",response);
+                getUserId(context,email,phone,address,about,user_type,profile_pic,location,switched);
             }
         }, new Response.ErrorListener() {
             @Override
@@ -57,7 +57,7 @@ public class CallToServer {
     }
 
     public void getUserId (final Context context,final String email, final String phone, final String address, final String about,
-                           final String user_type,final String profile_pic) {
+                           final String user_type,final String profile_pic,final String location,final String switched) {
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url + "/user/" + email,
                 new Response.Listener<String>() {
                     @Override
@@ -71,7 +71,7 @@ public class CallToServer {
                         edit.putString("UID",id);
                         edit.apply();
 
-                        registerUserProfile(context,id,phone,address,about,user_type,profile_pic);
+                        registerUserProfile(context,id,phone,address,about,user_type,profile_pic,location,switched);
                     }
                 },
                 new Response.ErrorListener() {
@@ -91,8 +91,37 @@ public class CallToServer {
     };
 
     public void registerUserProfile(final Context context,final String UID, final String phone, final String address, final String about,
-                                    final String user_type,final String profile_pic){
+                                    final String user_type,final String profile_pic,final String location,final String switched){
         final StringRequest sr = new StringRequest(Request.Method.POST, url + "/user/signup_user_profile", new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                Log.d("response",response);
+                registerUserNotification(context,UID,phone,address,about,user_type,profile_pic,location,switched);
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.d("VolleyError",error.toString());
+            }
+        }) {
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("uid", UID);
+                params.put("phone_number", phone);
+                params.put("home_address", address);
+                params.put("about", about);
+                params.put("user_type",user_type);
+                params.put("profile_picture",profile_pic);
+                return params;
+            }
+        };
+        VolleySingleton.getInstance(context).addToRequestQueue(sr);
+    }
+
+    public void registerUserNotification(final Context context,final String UID, final String phone, final String address, final String about,
+                                    final String user_type,final String profile_pic,final String location,final String switched){
+        final StringRequest sr = new StringRequest(Request.Method.POST, url + "/users_notifications/new_user", new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 Log.d("response",response);
@@ -106,12 +135,8 @@ public class CallToServer {
             @Override
             protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<String, String>();
-                params.put("id", UID);
-                params.put("phone", phone);
-                params.put("address", address);
-                params.put("about", about);
-                params.put("user_type",user_type);
-                params.put("profile_pic",profile_pic);
+                params.put("notification_address", location);
+                params.put("notify_on_day", switched);
                 return params;
             }
         };

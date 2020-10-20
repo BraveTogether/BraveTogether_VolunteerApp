@@ -57,7 +57,7 @@ import java.util.Map;
 public class NotificationActivity extends AppCompatActivity {
 
     private final String apiKey = "AIzaSyA0hReShDEqNU3cdSm9eot1atb8-CKBy0Q";
-    private String first_name,family_name,email,password,phone_number,home_address,about,user_desired_location,chosen_time,address,profilePictureUrl;
+    private String first_name,family_name,email,password,phone_number,home_address,about,user_desired_location,chosen_time,address,location,profilePictureUrl;
     private Context mcontext = this;
     private ConstraintLayout mConstraintLayout;
     private ConstraintSet mConstraintSet = new ConstraintSet();
@@ -73,7 +73,9 @@ public class NotificationActivity extends AppCompatActivity {
     private ArrayList<String> time_windows_strings;
     private TextView time_window_text;
     double latitude,longitude;
+    String switched;
     CallToServer cts;
+    private Switch sw;
 
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
     @Override
@@ -171,7 +173,7 @@ public class NotificationActivity extends AppCompatActivity {
 
         //expanding location box
 
-        Switch sw = findViewById(R.id.switch_button);
+        sw = findViewById(R.id.switch_button);
         sw.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 expandedLocationBox.setVisibility(expandedLocationBox.isShown() ? View.GONE
@@ -295,10 +297,18 @@ public class NotificationActivity extends AppCompatActivity {
             about = getIntent.getStringExtra("about"); //About
             profilePictureUrl = ""; // Get the profile picture URL from intent
         }
-        cts.registerUser(this,email,password,first_name,family_name,phone_number,home_address,about,"1",profilePictureUrl);
+        {
+            if(String.valueOf(latitude).equals("")){
+                location = "";
+            }else{
+                location = Double.toString(latitude) + Double.toString(longitude);
+            }
+            switched = sw.isChecked() ? "0" : "1";
+        }
+        cts.registerUser(this,email,password,first_name,family_name,phone_number,home_address,about,"4",profilePictureUrl,
+                            location,switched);
 
-
-        user_desired_location = getIntent.getStringExtra("location");
+        user_desired_location = getIntent.getStringExtra("location"); //notification_location_pref_id
 
         //**Get the true values from check days
         if(chosen_time == null){
@@ -306,15 +316,13 @@ public class NotificationActivity extends AppCompatActivity {
         }else{
             //write chosen_time to database
         }
+
+
         if(String.valueOf(latitude).equals("")){
             //need to get the user input location
         }else{
-            //send the latitude and longitude
+            String location = Double.toString(latitude) + Double.toString(longitude);
         }
-
-        //TODO take all those fields and get them to the database
-        //TODO put all those fields (or some) in the SharredPreferences
-        //TODO go to home page DONE!!
     }
 
 }
