@@ -189,6 +189,7 @@ public class CreateAccountFirstActivity extends AppCompatActivity {
                 // TODO: Get info about the selected place.
                 Log.i("TAG", "Place: " + place.getName() + ", " + place.getId());
                 autocompleteFragment.setText(place.getAddress());
+                address = place.getName();
             }
 
             @Override
@@ -274,33 +275,30 @@ public class CreateAccountFirstActivity extends AppCompatActivity {
                     String email = mTextUserEmail.getText().toString();
                     String password = mTextPassword.getText().toString();
                     String phoneNumber = mTextPhoneNumber.getText().toString();
-                    String address = mTextAddress.getText().toString();
                     String about = mTextAbout.getText().toString();
 
-                    SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(CreateAccountFirstActivity.this);
-                    SharedPreferences.Editor editor = sharedPreferences.edit();
-                    editor.putString("firstName", firstName);
-                    editor.putString("lastName", lastName);
-                    editor.putString("email", email);
-                    editor.putString("password", password);
-                    editor.putString("phoneNumber", phoneNumber);
-                    editor.putString("address", address);
-                    editor.putString("about", about);
-                    editor.putString("image", imgUri.toString());
-                    editor.apply();
+                    Intent intent = new Intent(CreateAccountFirstActivity.this,RegisterWhereActivity.class);
+                    intent.putExtra("private_name",firstName);
+                    intent.putExtra("family_name",lastName);
+                    intent.putExtra("email",email);
+                    intent.putExtra("password",password);
+                    intent.putExtra("phone_number",phoneNumber);
+                    intent.putExtra("address",address);
+                    intent.putExtra("about",about);
+                    if(imgUri != null) {
+                        intent.putExtra("image", imgUri.toString());
+                    }else{
+                        intent.putExtra("image", "");
+                    }
 
-                    goToRegisterWhere();
+                    startActivity(intent);
+
                 } else{
                     Toast.makeText(getApplicationContext(),
                             "Validation Failed - Please fill all fields correctly", Toast.LENGTH_SHORT).show();
                 }
             }
         });
-    }
-
-    public void goToRegisterWhere() {
-        Intent intent = new Intent(this, RegisterWhereActivity.class);
-        startActivity(intent);
     }
 
     // ------------------------------- Photo Uploading ------------------------------- //

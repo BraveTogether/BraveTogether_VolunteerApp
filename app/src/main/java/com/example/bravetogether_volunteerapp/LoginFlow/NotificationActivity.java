@@ -295,7 +295,7 @@ public class NotificationActivity extends AppCompatActivity {
             phone_number = getIntent.getStringExtra("phone_number"); //Phone number
             home_address = getIntent.getStringExtra("address"); // address
             about = getIntent.getStringExtra("about"); //About
-            profilePictureUrl = ""; // Get the profile picture URL from intent
+            profilePictureUrl = getIntent.getStringExtra("image"); // Get the profile picture URL from intent
         }
         {
             if(String.valueOf(latitude).equals("")){

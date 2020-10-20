@@ -51,6 +51,7 @@ public class RegisterWhereActivity extends AppCompatActivity {
         intent.putExtra("phone_number",getIntent.getStringExtra("phone_number"));
         intent.putExtra("address",getIntent.getStringExtra("address"));
         intent.putExtra("about",getIntent.getStringExtra("about"));
+        intent.putExtra("image",getIntent.getStringExtra("image"));
         if(location == null) {location = "both";}
         intent.putExtra("user_desired_location",location);
         startActivity(intent);
