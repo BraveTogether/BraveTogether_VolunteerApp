@@ -128,7 +128,7 @@ public class ProfileFragment2 extends Fragment {
     private void setNearVolunteer(ArrayList<ProfileEventObject> list){
         stopLoading(NEAREVENT);
         if( list.size() == 0){
-            nearEventsTryAgain();
+            eventsTryAgain(NEAREVENT);
             return;
         }
         rcNearVolunteers = ProfileView.findViewById(R.id.rcNearVolunteer);
@@ -150,13 +150,13 @@ public class ProfileFragment2 extends Fragment {
         view.setNestedScrollingEnabled(false);
     }
 
-    private void nearEventsTryAgain(){
-        final LinearLayout layout = (LinearLayout) ProfileView.findViewById(R.id.LLnotFound);
+    private void eventsTryAgain(int layoutid){
+        final LinearLayout layout = (LinearLayout) ProfileView.findViewById((layoutid == NEAREVENT)?R.id.LLnotFound:R.id.LLnotFoundME);
         layout.setVisibility(View.VISIBLE);
-        ImageView tryAgian = (ImageView) ProfileView.findViewById(R.id.btnTryAgain);
-        sbRadius = (SeekBar) ProfileView.findViewById(R.id.chooseRadius);
+        ImageView tryAgian = (ImageView) ProfileView.findViewById((layoutid == NEAREVENT)?R.id.btnTryAgain:R.id.btnTryAgainME);
+        sbRadius = (SeekBar) ProfileView.findViewById((layoutid == NEAREVENT)?R.id.chooseRadius:R.id.chooseRadiusME);
         sbRadius.setProgress(radius);
-        txtRadius = (TextView) ProfileView.findViewById(R.id.txtRadius);
+        txtRadius = (TextView) ProfileView.findViewById((layoutid == NEAREVENT)?R.id.txtRadius:R.id.txtRadiusME);
         txtRadius.setText(sbRadius.getProgress() + " קילומטר " );
         sbRadius.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
@@ -194,7 +194,7 @@ public class ProfileFragment2 extends Fragment {
         return;
     }
 
-    private void loadingdate(int id){
+    private void loadingdata(int id){
         id = (id == NEAREVENT)? R.id.NE_Pbar: R.id.ME_Pbar;
         ProgressBar bar =(ProgressBar) ProfileView.findViewById(id);
         bar.setVisibility(View.VISIBLE);
@@ -227,7 +227,7 @@ public class ProfileFragment2 extends Fragment {
 
     // gets from server list of near events. TODO:: change query to get event date as well.
     private void setNearEvents(){
-        String url =  getResources().getString(R.string.apiUrl) + "volunteers/confirmed/1";
+        String url =  getResources().getString(R.string.apiUrl) + "volunteer_events/future";
         final String userAddress = mPreferences.getString("userAddress",
                 "Remez 8, Tel Aviv, Israel");  // default address may need to change.
         final ArrayList<ProfileEventObject> result = new ArrayList<>();
@@ -237,7 +237,7 @@ public class ProfileFragment2 extends Fragment {
 
                     @Override
                     public void onResponse(JSONArray response) {
-                        loadingdate(NEAREVENT);         // TODO:: add Progress bar element and set function.
+                        loadingdata(NEAREVENT);         // TODO:: add Progress bar element and set function.
                         Log.d("PF2_setNearEvent","OnResponse_Start");
                         for(int i = 0; i < response.length(); i++){
                             try {
@@ -353,12 +353,13 @@ public class ProfileFragment2 extends Fragment {
         public ProfileEventObject(JSONObject activity){
             try {
                 this.headline = activity.getString("name");
-                this.start_time = activity.get("start_time").toString(); // TODO:: check format.
+                this.start_time = activity.getString("start_time");// TODO:: check format.
                 this.location = activity.getString("address");
                 this.imgUrl = activity.getString("picture");
                 this.uid = activity.getLong("id");
-               // this.credits = activity.getInt("value_in_coins")+"";
-                this.date = "dummydate"; // TODO:: get correct date.
+                this.credits = activity.getString("value_in_coins")+"";
+                this.date = activity.getString("date");//"dummydate"; // TODO:: format date
+
             } catch (JSONException e) {
                 e.printStackTrace();
             }
@@ -433,7 +434,7 @@ public class ProfileFragment2 extends Fragment {
     // Dummy function for test ** need to be deleted **
     private ArrayList<ProfileEventObject> createDummyEventList(){
         ArrayList<ProfileEventObject> dummyList =  new ArrayList<>();
-        dummyList.add(new ProfileEventObject(1,"עזרה בקניות","16.6.2020","17:30",
+        dummyList.add(new ProfileEventObject(11,"עזרה בקניות","16.6.2020","17:30",
                                             "הורקנוס 7, תל אביב","300","" ));
         dummyList.add(new ProfileEventObject(2,"עזרה בקניות","16.6.2020","17:30",
                                     "הורקנוס 7, תל אביב","300","" ));
