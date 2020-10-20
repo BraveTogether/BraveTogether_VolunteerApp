@@ -1,5 +1,8 @@
 package com.example.bravetogether_volunteerapp;
 
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -58,7 +61,22 @@ public class NotificationFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_notification, container, false);
+
+        String sharedPrefFile = "com.example.android.BraveTogether_VolunteerApp";
+        SharedPreferences mPreferences = this.getActivity().getSharedPreferences(sharedPrefFile, Context.MODE_PRIVATE);
+        //TODO: check if all the mPreferences names are correct
+        String notification_address = mPreferences.getString("notification_address", "10");
+        String duration = mPreferences.getString("duration", "2");
+        String times = mPreferences.getString("times", "3");
+        String typeOfVolunteer = mPreferences.getString("type", "1");
+        //TODO: check if all the mPreferences names are correct
+
+        View v =  inflater.inflate(R.layout.fragment_notification, container, false);
+
+        return v;
+    }
+
+    public void setDetail(View view){
+        view.setBackgroundColor(Color.parseColor("#001925"));
     }
 }
