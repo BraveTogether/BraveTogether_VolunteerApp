@@ -29,15 +29,15 @@ public class RegisterWhereActivity extends AppCompatActivity {
         switch ((String)view.getTag()) {
             case "home":
                 c.setVerticalBias(R.id.checker, (float)0.14);
-                location = "online";
+                location = "1";
                 break;
             case "near":
                 c.setVerticalBias(R.id.checker, (float)0.5);
-                location = "notOnline";
+                location = "2";
                 break;
             default:
                 c.setVerticalBias(R.id.checker, (float)0.86);
-                location = "both";
+                location = "3";
         }
     }
 
@@ -52,7 +52,7 @@ public class RegisterWhereActivity extends AppCompatActivity {
         intent.putExtra("address",getIntent.getStringExtra("address"));
         intent.putExtra("about",getIntent.getStringExtra("about"));
         intent.putExtra("image",getIntent.getStringExtra("image"));
-        if(location == null) {location = "both";}
+        if(location == null) {location = "3";}
         intent.putExtra("user_desired_location",location);
         startActivity(intent);
     }

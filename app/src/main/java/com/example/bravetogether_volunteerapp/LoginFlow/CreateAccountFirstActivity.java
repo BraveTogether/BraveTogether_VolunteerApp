@@ -283,7 +283,11 @@ public class CreateAccountFirstActivity extends AppCompatActivity {
                     intent.putExtra("email",email);
                     intent.putExtra("password",password);
                     intent.putExtra("phone_number",phoneNumber);
-                    intent.putExtra("address",address);
+                    if(address != null) {
+                        intent.putExtra("address", address);
+                    }else{
+                        intent.putExtra("address", "");
+                    }
                     intent.putExtra("about",about);
                     if(imgUri != null) {
                         intent.putExtra("image", imgUri.toString());
