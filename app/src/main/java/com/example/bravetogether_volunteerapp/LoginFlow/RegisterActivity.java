@@ -52,7 +52,6 @@ import java.util.Map;
 
 public class RegisterActivity extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener {
 
-    private final String url = getResources().getString(R.string.apiUrl);
     private final String sharedPrefFile = "com.example.android.BraveTogether_VolunteerApp";
     private CallbackManager callbackManager;
     private String uid,firstname,lastname,email,imageURL;

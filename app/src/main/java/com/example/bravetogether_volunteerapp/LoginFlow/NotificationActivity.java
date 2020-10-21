@@ -57,7 +57,7 @@ import java.util.Map;
 public class NotificationActivity extends AppCompatActivity {
 
     private final String apiKey = "AIzaSyA0hReShDEqNU3cdSm9eot1atb8-CKBy0Q";
-    private String first_name,family_name,email,password,phone_number,home_address,about,user_desired_location,chosen_time,address,location,profilePictureUrl;
+    private String first_name,family_name,email,password,phone_number,home_address,about,user_desired_location,chosen_time,address,location,profilePictureUrl,User_desired_location;
     private Context mcontext = this;
     private ConstraintLayout mConstraintLayout;
     private ConstraintSet mConstraintSet = new ConstraintSet();
@@ -295,7 +295,7 @@ public class NotificationActivity extends AppCompatActivity {
             phone_number = getIntent.getStringExtra("phone_number"); //Phone number
             home_address = getIntent.getStringExtra("address"); // address
             about = getIntent.getStringExtra("about"); //About
-            profilePictureUrl = ""; // Get the profile picture URL from intent
+            profilePictureUrl = getIntent.getStringExtra("image"); // Get the profile picture URL from intent
         }
         {
             if(String.valueOf(latitude).equals("")){
@@ -305,10 +305,11 @@ public class NotificationActivity extends AppCompatActivity {
             }
             switched = sw.isChecked() ? "0" : "1";
         }
-        cts.registerUser(this,email,password,first_name,family_name,phone_number,home_address,about,"4",profilePictureUrl,
-                            location,switched);
 
-        user_desired_location = getIntent.getStringExtra("location"); //notification_location_pref_id
+        user_desired_location = getIntent.getStringExtra("user_desired_location"); //notification_location_pref_id
+
+        cts.registerUser(this,email,password,first_name,family_name,phone_number,home_address,about,"4",profilePictureUrl,
+                            location,switched,user_desired_location);
 
         //**Get the true values from check days
         if(chosen_time == null){
