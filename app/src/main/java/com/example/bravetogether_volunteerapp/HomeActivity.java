@@ -1,15 +1,17 @@
 package com.example.bravetogether_volunteerapp;
 
+import android.Manifest;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -21,15 +23,16 @@ import androidx.recyclerview.widget.RecyclerView;
 
 
 import com.android.volley.Request;
-import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
-import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
+import com.example.bravetogether_volunteerapp.ImageRetrieving.ImageRetriever;
+import com.example.bravetogether_volunteerapp.adapters.VolunteerItemHomeAdapter;
 import com.example.bravetogether_volunteerapp.adapters.VoluntteeirisStoryAdapter;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.nabinbhandari.android.permissions.PermissionHandler;
+import com.nabinbhandari.android.permissions.Permissions;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -47,18 +50,15 @@ public class HomeActivity extends AppCompatActivity {
     //private String urlData;
 
     private RecyclerView my_recycler_view_nearBy;
-    private RecyclerView Recycler_view_list_other;
+    private RecyclerView Recycler_view_list_Central;
     private RecyclerView Recycler_view_list_stories;
     private TextView userGreetings;
 
     private List<VoluntteeriesStory> storiesList;
-    private List<VolunteerEventItemList> eventsList;
+    private List<VolunteerEventItemList> volunteerEventItemLists;
     private List<VolunteerEventItemList> eventsListNearBy;
-
     private int radius;
 
-    //private homeGroupItem eventsNearByListItem;
-    //private homeGroupItem eventsListItem;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,12 +70,13 @@ public class HomeActivity extends AppCompatActivity {
         //mPreferences = getSharedPreferences(sharedPrefFile, MODE_PRIVATE);
         //set the text Greeting in the top of the page
        // UserGreetingText(getUserName());
+        radius= 1000;
         UserGreetingText("עומר");
         // List<homeGroupItem> listGroup = new ArrayList<>();
 
         //initialization of page list
         storiesList = new ArrayList<>();
-        eventsList = new ArrayList<>();
+        volunteerEventItemLists = new ArrayList<>();
         eventsListNearBy = new ArrayList<>();
         //eventsNearByListItem = new homeGroupItem();
 
@@ -83,7 +84,30 @@ public class HomeActivity extends AppCompatActivity {
         BottomNavigationView BottomNavigationViewHome = findViewById(R.id.BottomNavigationViewHome);
         BottomNavigationViewHome.setOnNavigationItemSelectedListener(navListener);
 
-        volunteersStoriesLoadNew(this);
+
+        String[] permissions = {Manifest.permission.WRITE_EXTERNAL_STORAGE};
+            String rationale = "Please provide storage permission so that you can load your profile picture";
+            Permissions.Options options = new Permissions.Options()
+            .setRationaleDialogTitle("Info")
+            .setSettingsDialogTitle("Warning");
+
+            Permissions.check(this/*context*/, permissions, rationale, options, new PermissionHandler() {
+    @Override
+    public void onGranted() {
+        storiesList(HomeActivity.this);
+       // try {
+            //createEventsNearByArray(HomeActivity.this);
+            //createCentralEventsNearByArray(HomeActivity.this);
+        //} catch (ParseException e) {
+           // e.printStackTrace();
+       // }
+            }
+    @Override
+    public void onDenied(Context context, ArrayList<String> deniedPermissions) {
+            Toast.makeText(HomeActivity.this, "Please allow the the app to access your storage in order to show your profile picture", Toast.LENGTH_SHORT).show();
+            }
+            });
+
 
         //eventsList.add(new VolunteerEvent("עזרה בקניות", "13/14/15", "גיל הזהב", "120", "3", "300"));
        // eventsList.add(new VolunteerEvent("עזרה בקניות", "13/14/15", "גיל הזהב", "120", "3", "300"));
@@ -162,8 +186,8 @@ public class HomeActivity extends AppCompatActivity {
                 }
             };
 
-    protected  void volunteersStoriesLoadNew (final Context c) {
 
+    protected void storiesList(final Context c) {
         JsonArrayRequest JsonArrayRequest = new JsonArrayRequest
                 (Request.Method.GET, urlData + "/reviews/users", null, new Response.Listener<JSONArray>() {
                     JSONObject Activity;
@@ -171,7 +195,20 @@ public class HomeActivity extends AppCompatActivity {
                     public void onResponse(JSONArray response) {
                         Log.i("Error-Try", "we get it!");
                         try {
-                            createStoriesArray(response);
+                            //now looping through all the elements of the json array
+                            for (int i = 0; i < response.length(); i++) {
+                                //getting the json object of the particular index inside the array
+                                JSONObject eventObject = response.getJSONObject(i);
+                                //creating a VoluntteeriesStory object and giving them the values from json object
+                                final ImageRetriever imageRetriever = new ImageRetriever();
+                                //Uri imageURI = Uri.parse(eventObject.getString("profile_picture"));
+                                Uri imageURI = Uri.parse("gs://bravetogethervolunteerapp.appspot.com/images/02f6bcae-a2e4-4ced-9759-4afd44b5c514");
+                                String filePath = imageRetriever.retrieveImg(imageURI, HomeActivity.this, "Home - Pic").getPath();
+
+                                VoluntteeriesStory story = new VoluntteeriesStory(eventObject.getString("name"), eventObject.getString("address"), eventObject.getString("review_text"), filePath);
+                                //adding the story to storiesArray
+                                storiesList.add(story);
+                            }
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
@@ -185,92 +222,24 @@ public class HomeActivity extends AppCompatActivity {
                 }, new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        Log.e("Response", "there was an error!!! :(");
+                        Log.e("Response", String.valueOf(error));
                     }
                 });
         VolleySingleton.getInstance(this).addToRequestQueue(JsonArrayRequest);
     }
 
-    protected void nearByVolunteerEventsLoad(final Context c) {
-        //getting the progressbar
-        final ProgressBar progressBar = (ProgressBar) Recycler_view_list_stories.findViewById(R.id.progressBar);
-
-        //making the progressbar visible
-        progressBar.setVisibility(View.VISIBLE);
-
-
-        //creating a string request to send request to the url
-        StringRequest stringRequest = new StringRequest(Request.Method.GET, urlData,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        //hiding the progressbar after completion
-                        progressBar.setVisibility(View.INVISIBLE);
-
-                        try {
-                            //getting the whole json object from the response
-                            JSONObject obj = new JSONObject(response);
-                            createEventsNearByArray(obj, "nameOfArry");
-
-                            //creating custom adapter object
-                            VoluntteeirisStoryAdapter adapterForStories = (VoluntteeirisStoryAdapter) new VoluntteeirisStoryAdapter(getApplicationContext(), storiesList);
-
-                            //adding the adapter to recyclerView
-
-
-                        } catch (JSONException | ParseException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        //displaying the error in toast if occurrs
-                        Toast.makeText(getApplicationContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
-                    }
-                });
-
-        //creating a request queue
-        RequestQueue requestQueue = Volley.newRequestQueue(this);
-
-        //adding the string request to request queue
-        requestQueue.add(stringRequest);
-    }
-
-    private void createStoriesArray(JSONArray jsonResponse) throws JSONException {
-
-        //now looping through all the elements of the json array
-        for (int i = 0; i < jsonResponse.length(); i++) {
-            //getting the json object of the particular index inside the array
-            JSONObject eventObject = jsonResponse.getJSONObject(i);
-
-            Log.i("lala",eventObject.toString());
-            //creating a VoluntteeriesStory object and giving them the values from json object
-            VoluntteeriesStory story = new VoluntteeriesStory(eventObject.getString("name"), eventObject.getString("address"), eventObject.getString("review_text"));
-
-            //adding the story to storiesArray
-            storiesList.add(story);
-        }
-    }
-
-    public void createEventsNearByArray(JSONObject context, String strAddress) throws ParseException {
-
-        String email = mPreferences.getString("UserEmail", "null");
+    public void createEventsNearByArray(final Context c) throws ParseException {
+        //String email = mPreferences.getString("UserEmail", "null");
         // send GET request for user information to get address
-        String URL = getResources().getString(R.string.apiUrl) + "/user/" + email;
         JsonArrayRequest JsonArrayRequest = new JsonArrayRequest
-                (Request.Method.GET, URL, null, new Response.Listener<JSONArray>() {
+                (Request.Method.GET, urlData + "/events", null, new Response.Listener<JSONArray>() {
                     JSONObject Activity;
 
                     @Override
                     public void onResponse(JSONArray response) {
                         // get the user address from the shared preference file
-                        String UserAddress = mPreferences.getString("UserAddress", "null");
-                        if (UserAddress == null) {
-                            String message = "לפני שתוכל לחפש עלייך להזין את כתובתך בדף ההגדרות";
-                            //Toast.makeText(this, message, Toast.LENGTH_LONG).show();
-                        } else {
+                        //String UserAddress = mPreferences.getString("UserAddress", "null");
+                        String UserAddress = "hatikva 27 ramat hasharon";
                             boolean distance = false;
                             for (int i = 0; i < response.length(); i++) {
                                 try {
@@ -279,21 +248,26 @@ public class HomeActivity extends AppCompatActivity {
                                     e.printStackTrace();
                                 }
                                 try {
-                                    distance = getDistance(Activity.get("address").toString(), UserAddress) < radius;
+                                    float dist = getDistance(Activity.get("address").toString(), UserAddress);
+                                    distance = dist < (radius*1000);
                                 } catch (JSONException e) {
                                     e.printStackTrace();
                                 }
 
                                 if (distance) {
                                     try {
-                                        eventsListNearBy.add(new VolunteerEventItemList(Activity.get("name").toString(), Activity.get("date").toString(), Activity.get("about_volunteering").toString(), Activity.get("value_in_coins").toString(), Activity.get("duration").toString(), Activity.get("about_place").toString()));
+                                        eventsListNearBy.add(new VolunteerEventItemList(Activity.get("name").toString(), Activity.get("date").toString(), Activity.get("about_volunteering").toString(), Activity.get("value_in_coins").toString(), Activity.get("duration").toString(), Activity.get("about_place").toString(), Activity.get("picture").toString()));
                                     } catch (JSONException e) {
                                         e.printStackTrace();
                                     }
                                 }
                             }
+                            my_recycler_view_nearBy = (RecyclerView) findViewById(R.id.Recycler_view_list_nearBy);
+                            VolunteerItemHomeAdapter adapter_nearBy = (VolunteerItemHomeAdapter) new VolunteerItemHomeAdapter(c, eventsListNearBy);
+                            my_recycler_view_nearBy.setAdapter(adapter_nearBy);
+                            my_recycler_view_nearBy.setHasFixedSize(true);
+                            my_recycler_view_nearBy.setLayoutManager(new LinearLayoutManager(c,LinearLayoutManager.HORIZONTAL, false));
                         }
-                    }
                 }, new Response.ErrorListener() {
 
                     @Override
@@ -306,6 +280,62 @@ public class HomeActivity extends AppCompatActivity {
         VolleySingleton.getInstance(this).addToRequestQueue(JsonArrayRequest);
     }
 
+    public void createCentralEventsNearByArray(final Context c) throws ParseException {
+        //String email = mPreferences.getString("UserEmail", "null");
+        // send GET request for user information to get address
+        JsonArrayRequest JsonArrayRequest = new JsonArrayRequest
+                (Request.Method.GET, urlData + "/events", null, new Response.Listener<JSONArray>() {
+                    JSONObject Activity;
+
+                    @Override
+                    public void onResponse(JSONArray response) {
+                        // get the user address from the shared preference file
+                        //String UserAddress = mPreferences.getString("UserAddress", "null");
+                        String UserAddress = "hatikva 27 ramat hasharon";
+                        boolean distance = false;
+                        int central = 0;
+                        for (int i = 0; i < response.length(); i++) {
+                            try {
+                                Activity = response.getJSONObject(i);
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                            try {
+                                float dist = getDistance(Activity.get("address").toString(), UserAddress);
+                                distance = dist < (radius*1000);
+                                String c = Activity.get("main").toString();
+                                if(c != "null")
+                                central = (Integer.parseInt(c));
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+
+                            if (central==1 && distance) {
+                                try {
+                                    volunteerEventItemLists.add(new VolunteerEventItemList(Activity.get("name").toString(), Activity.get("date").toString(), Activity.get("about_volunteering").toString(), Activity.get("value_in_coins").toString(), Activity.get("duration").toString(), Activity.get("about_place").toString(), Activity.get("picture").toString()));
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        }
+                        Recycler_view_list_Central = (RecyclerView) findViewById(R.id.Recycler_view_list_Central);
+                        VolunteerItemHomeAdapter adapter_list_Central = (VolunteerItemHomeAdapter) new VolunteerItemHomeAdapter(c, eventsListNearBy);
+                        Recycler_view_list_Central.setAdapter(adapter_list_Central);
+                        Recycler_view_list_Central.setHasFixedSize(true);
+                        Recycler_view_list_Central.setLayoutManager(new LinearLayoutManager(c,LinearLayoutManager.HORIZONTAL, false));
+
+                    }
+                }, new Response.ErrorListener() {
+
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Log.e("Response", "there was an error!!! :(");
+                    }
+                });
+
+// Access the RequestQueue through your singleton class.
+        VolleySingleton.getInstance(this).addToRequestQueue(JsonArrayRequest);
+    }
 
     //get the user name from shared preference
     protected String getUserName()  {
@@ -334,11 +364,6 @@ public class HomeActivity extends AppCompatActivity {
         }
     }
 
-    protected void radius(View view) {
-        view.setSelected(!view.isSelected());
-        radius = Integer.parseInt(view.getTag().toString());
-    }
-
     protected float getDistance(String address1, String address2) {
 
         Context cont = getApplicationContext();
@@ -356,7 +381,7 @@ public class HomeActivity extends AppCompatActivity {
 
         return locationA.distanceTo(locationB);
     }
-
+    // הופך כתובת לאורך ורוחב
     protected static LatLng getLocationFromAddress(Context context, String strAddress) {
         Geocoder coder = new Geocoder(context);
         List<Address> address;
@@ -376,7 +401,6 @@ public class HomeActivity extends AppCompatActivity {
         }
         return mylocation;
     }
-
 }
 
 

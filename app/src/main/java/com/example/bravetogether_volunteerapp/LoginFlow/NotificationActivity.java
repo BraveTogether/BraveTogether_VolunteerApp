@@ -36,7 +36,7 @@ import com.example.bravetogether_volunteerapp.CallToServer;
 import com.example.bravetogether_volunteerapp.R;
 import com.example.bravetogether_volunteerapp.VolleySingleton;
 import com.example.bravetogether_volunteerapp.adapters.spinnerAdapter;
-import com.example.bravetogether_volunteerapp.home;
+import com.example.bravetogether_volunteerapp.HomeActivity;
 import com.example.bravetogether_volunteerapp.ui.SlideAnimation;
 import com.google.android.gms.common.api.Status;
 import com.google.android.gms.maps.model.LatLng;
@@ -281,7 +281,7 @@ public class NotificationActivity extends AppCompatActivity {
     }
 
     public void letsVolunteer(View view) {
-        Intent intent = new Intent(NotificationActivity.this, home.class);
+        Intent intent = new Intent(NotificationActivity.this, HomeActivity.class);
         Intent getIntent = getIntent();
         {
             first_name = getIntent.getStringExtra("first_name");

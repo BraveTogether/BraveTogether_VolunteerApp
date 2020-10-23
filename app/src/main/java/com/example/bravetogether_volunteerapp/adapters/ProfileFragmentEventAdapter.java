@@ -15,7 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.bravetogether_volunteerapp.ProfileFragment2;
 import com.example.bravetogether_volunteerapp.R;
-import com.example.bravetogether_volunteerapp.VolunteerEvent;
+import com.example.bravetogether_volunteerapp.VolunteerEventItemList;
 import com.example.bravetogether_volunteerapp.interfaces.ItemClickListener;
 
 import java.util.List;

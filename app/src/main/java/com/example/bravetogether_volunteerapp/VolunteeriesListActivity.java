@@ -20,12 +20,12 @@ public class VolunteeriesListActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_volunteeries_list);
 
-        eventsList = new ArrayList<>();
-        eventsList.add(new VolunteerEventItemList("עזרה בקניות","13/14/15","גיל הזהב", "120" ,"3" , "300"));
-        eventsList.add(new VolunteerEventItemList("עזרה בקניות","13/14/15","גיל הזהב", "120" ,"3" , "300"));
-        eventsList.add(new VolunteerEventItemList("עזרה בקניות","13/14/15","גיל הזהב", "120" ,"3" , "300"));
-        listview = (ListView)findViewById(R.id.ListViewEvents);
-        ListOfVolunteerEventsAdapter adapter = new ListOfVolunteerEventsAdapter(this, R.layout.volunteer_list_item, eventsList);
-        listview.setAdapter(adapter);
+//        eventsList = new ArrayList<>();
+//        eventsList.add(new VolunteerEventItemList("עזרה בקניות","13/14/15","גיל הזהב", "120" ,"3" , "300"));
+//        eventsList.add(new VolunteerEventItemList("עזרה בקניות","13/14/15","גיל הזהב", "120" ,"3" , "300"));
+//        eventsList.add(new VolunteerEventItemList("עזרה בקניות","13/14/15","גיל הזהב", "120" ,"3" , "300"));
+//        listview = (ListView)findViewById(R.id.ListViewEvents);
+//        ListOfVolunteerEventsAdapter adapter = new ListOfVolunteerEventsAdapter(this, R.layout.volunteer_list_item, eventsList);
+//        listview.setAdapter(adapter);
     }
 }

@@ -10,7 +10,7 @@ import androidx.preference.PreferenceManager;
 import com.example.bravetogether_volunteerapp.LoginFlow.CreateAccountFirstActivity;
 import com.example.bravetogether_volunteerapp.LoginFlow.IntroFirstTimeActivity;
 import com.example.bravetogether_volunteerapp.LoginFlow.RegisterActivity;
-import com.example.bravetogether_volunteerapp.home;
+import com.example.bravetogether_volunteerapp.HomeActivity;
 
 import com.google.common.hash.HashCode;
 import com.google.common.hash.Hashing;
@@ -59,7 +59,7 @@ public class app extends Application {
             startActivity(intent);
         }
         if(prefs.contains("UID")){ //Checks if there is a user logged in
-            Intent intent = new Intent(this, home.class);
+            Intent intent = new Intent(this, HomeActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(intent);
         }else{

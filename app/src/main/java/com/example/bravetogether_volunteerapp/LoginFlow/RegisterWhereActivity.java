@@ -10,7 +10,7 @@ import androidx.constraintlayout.widget.ConstraintSet;
 import androidx.preference.PreferenceManager;
 
 import com.example.bravetogether_volunteerapp.R;
-import com.example.bravetogether_volunteerapp.home;
+import com.example.bravetogether_volunteerapp.HomeActivity;
 
 public class RegisterWhereActivity extends AppCompatActivity {
 
@@ -57,6 +57,6 @@ public class RegisterWhereActivity extends AppCompatActivity {
     }
 
     public void skip(View view) {
-        startActivity(new Intent(RegisterWhereActivity.this, home.class));
+        startActivity(new Intent(RegisterWhereActivity.this, HomeActivity.class));
     }
 }

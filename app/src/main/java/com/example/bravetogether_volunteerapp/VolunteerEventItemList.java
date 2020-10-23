@@ -7,14 +7,16 @@ public class VolunteerEventItemList {
     String date;
     String eventDescription;
     String numberCredits, duration, location;
+    String picture;
 
-    public VolunteerEventItemList(String eventName, String date, String eventDescription, String numberCredits, String duration, String location) {
+    public VolunteerEventItemList(String eventName, String date, String eventDescription, String numberCredits, String duration, String location, String pic) {
         this.eventName = eventName;
         this.date = date;
         this.eventDescription = eventDescription;
         this.numberCredits = numberCredits;
         this.duration = duration;
         this.location = location;
+        this.picture = pic;
     }
 
     public VolunteerEventItemList() {

@@ -218,7 +218,7 @@
                     android:textSize="18sp" />
 
                 <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/Recycler_view_list_other"
+                    android:id="@+id/Recycler_view_list_Central"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/btnMore_other"
