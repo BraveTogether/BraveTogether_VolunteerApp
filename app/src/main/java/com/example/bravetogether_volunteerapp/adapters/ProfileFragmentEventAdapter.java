@@ -13,6 +13,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.bravetogether_volunteerapp.GeneralActivity;
 import com.example.bravetogether_volunteerapp.ProfileFragment2;
 import com.example.bravetogether_volunteerapp.R;
 import com.example.bravetogether_volunteerapp.VolunteerEventItemList;
@@ -59,7 +60,19 @@ public class ProfileFragmentEventAdapter extends RecyclerView.Adapter<ProfileFra
             }
         });
 
-        holder.Vpic.setOnClickListener(new View.OnClickListener() {
+//        holder.Vpic.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                directToEventPage(event);
+//            }
+//        });
+        holder.headline.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                directToEventPage(event);
+            }
+        });
+        holder.details.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 directToEventPage(event);
@@ -69,7 +82,9 @@ public class ProfileFragmentEventAdapter extends RecyclerView.Adapter<ProfileFra
     }
 
     private void directToEventPage(ProfileFragment2.ProfileEventObject event){
-        // TODO:: complete method
+        Intent activity = new Intent(context, GeneralActivity.class);
+        activity.putExtra("vid", event.getUid());
+        context.startActivity(activity);
     }
 
     @Override

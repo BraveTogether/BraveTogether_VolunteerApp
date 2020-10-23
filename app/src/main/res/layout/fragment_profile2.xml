@@ -223,7 +223,7 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="203dp"
+            android:layout_height="wrap_content"
             android:background="#FFFFFF">
 
 
@@ -247,8 +247,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
-                android:layout_centerHorizontal="true"
-                android:layout_centerVertical="true"
                 android:visibility="invisible" />
 
             <LinearLayout
@@ -294,7 +292,7 @@
                 android:id="@+id/rcNearVolunteer"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
+                android:layout_gravity="center|center_horizontal|center_vertical"
                 android:layout_marginTop="5dp"
                 android:orientation="vertical" />
 
@@ -305,6 +303,32 @@
             android:layout_height="wrap_content"
             android:background="#FFFFFF">
 
+
+            <LinearLayout
+                android:id="@+id/LLnotFoundME"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:orientation="vertical"
+                android:visibility="invisible">
+
+                <ImageView
+                    android:id="@+id/btnTryAgainME"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal|center_vertical"
+                    android:layout_marginTop="50dp"
+                    android:src="@android:drawable/ic_menu_rotate" />
+
+                <TextView
+                    android:id="@+id/textView22"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal|center_vertical"
+                    android:text="לא נמצאו התנדבויות"
+                    android:textAlignment="center" />
+
+            </LinearLayout>
 
             <ProgressBar
                 android:id="@+id/ME_Pbar"

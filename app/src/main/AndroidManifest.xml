@@ -16,7 +16,6 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".ApproveVolunteerActivity" android:exported="true"/>
         <activity android:name=".Thanks" />
         <activity android:name=".LoginFlow.RegisterWhereActivity" />
         <activity
@@ -35,6 +34,7 @@
         </activity>
         <activity android:name=".ConformationsActivity" />
         <activity android:name=".RegularProfileActivity" />
+        <activity android:name=".EditNotificationDetails"/>
         <activity android:name=".LoginFlow.NotificationActivity" />
         <activity android:name=".LoginFlow.LoginActivity" />
         <activity
@@ -78,6 +78,7 @@
                 <data android:scheme="@string/fb_login_protocol_scheme" />
             </intent-filter>
         </activity>
+        <activity android:name=".Popup"></activity>
         <activity
             android:name=".addToCalendar"
             android:exported="true"></activity>

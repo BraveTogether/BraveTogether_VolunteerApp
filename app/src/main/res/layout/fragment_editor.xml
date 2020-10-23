@@ -69,7 +69,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/add_new_volunteer"
                 app:layout_constraintVertical_bias="0.8"
-                app:srcCompat="@drawable/profile_about_us" />
+                app:srcCompat="@drawable/checkbox_red" />
 
             <ImageView
                 android:id="@+id/alert"
@@ -81,7 +81,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/approve"
                 app:layout_constraintVertical_bias="0.88"
-                app:srcCompat="@drawable/profile_logout" />
+                app:srcCompat="@drawable/ic_notificationbell_red" />
 
             <TextView
                 android:id="@+id/alertText"
@@ -115,12 +115,13 @@
             android:id="@+id/down"
             android:name="com.example.bravetogether_volunteerapp.ProfileFragment"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
+            android:layout_height="381dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/view" />
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
