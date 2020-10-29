@@ -8,30 +8,26 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.CalendarContract;
-import android.view.MenuItem;
+import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
-import android.widget.AdapterView;
+import android.view.WindowManager;
 import android.widget.ImageView;
-import android.widget.ListView;
+import android.widget.PopupWindow;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.ScrollView;
-import android.widget.Toast;
 
 import com.example.bravetogether_volunteerapp.adapters.GeneralActivityReviewsAdapter;
-import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.example.bravetogether_volunteerapp.adapters.GeneralActivityListAdapter;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -127,15 +123,33 @@ public class GeneralActivity extends AppCompatActivity implements OnMapReadyCall
         //TODO: change to load later.
         initReviews();
 
-        /*  //TODO: finish popups:
         final ImageView volunteerRegister = (ImageView) findViewById(R.id.volunteerRegister);
         volunteerRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getApplicationContext(), Popup.class));
+                View popupView = getLayoutInflater().inflate(R.layout.popup_registered_user, null);
+                PopupWindow popUp = new PopupWindow(popupView, RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
+                popUp.setAnimationStyle(R.style.Animation_Design_BottomSheetDialog);
+                popUp.setOutsideTouchable(false);
+                popUp.setFocusable(true);
+
+                //
+                popUp.showAtLocation(volunteerRegister, Gravity.CENTER, 0,0);
+
+                View container = (View) popUp.getContentView().getParent();
+                WindowManager wm = (WindowManager) getSystemService(Context.WINDOW_SERVICE);
+                WindowManager.LayoutParams p = (WindowManager.LayoutParams) container.getLayoutParams();
+                // add flag
+                p.flags |= WindowManager.LayoutParams.FLAG_DIM_BEHIND;
+                p.dimAmount = 0.5f;
+                wm.updateViewLayout(container, p);
+
+
+
             }
         });
-        */
+
+
 
     }
 

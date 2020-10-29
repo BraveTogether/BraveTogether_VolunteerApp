@@ -11,18 +11,18 @@ import androidx.annotation.NonNull;
 
 
 import com.example.bravetogether_volunteerapp.R;
-import com.example.bravetogether_volunteerapp.VolunteerEvent;
+import com.example.bravetogether_volunteerapp.VolunteerEventItemList;
 
 import java.util.List;
 
-public class ListOfVolunteerEventsAdapter extends ArrayAdapter<VolunteerEvent> {
+public class ListOfVolunteerEventsAdapter extends ArrayAdapter<VolunteerEventItemList> {
 
     Context context;
     int resource;
-    List<VolunteerEvent> eventList;
+    List<VolunteerEventItemList> eventList;
 
     //Builder of thr adapter
-    public ListOfVolunteerEventsAdapter(@NonNull Context context, int resource, @NonNull List<VolunteerEvent> eventList) {
+    public ListOfVolunteerEventsAdapter(@NonNull Context context, int resource, @NonNull List<VolunteerEventItemList> eventList) {
         super(context, resource, eventList);
         this.context = context;
         this.resource = resource;
@@ -41,7 +41,7 @@ public class ListOfVolunteerEventsAdapter extends ArrayAdapter<VolunteerEvent> {
         TextView eventDurationOfOneList = rowInTheTable.findViewById(R.id.textViewTime);
         TextView eventCoinsOfOneList = rowInTheTable.findViewById(R.id.textViewCoinsNum);
 
-        VolunteerEvent event = eventList.get(position);
+        VolunteerEventItemList event = eventList.get(position);
 
         eventNameOfOneList.setText(event.getEventName());
         eventDescriptionOfOneList.setText(event.getEventDescription());

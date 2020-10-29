@@ -40,17 +40,17 @@
         <activity
             android:name=".Scanner"
             android:exported="true" />
-        <activity android:name=".CreateVolunteerActivity" />
+        <activity
+            android:name=".CreateVolunteerActivity" />
         <activity
             android:name=".LoginFlow.CreateAccountFirstActivity"
-            android:exported="true" /> <!-- י -->
-        <!-- י -->
-        <activity
-            android:name=".home"
             android:exported="true" />
+<!--י-->
+<!--י-->
         <activity
-            android:name=".FilterActivity"
-            android:exported="true" />
+            android:name=".HomeActivity"
+            android:exported="true"/>
+        <activity android:name=".FilterActivity" />
         <activity android:name=".VolunteerApprovalActivity" />
         <activity android:name=".GeneralActivity" />
         <activity android:name=".LoginFlow.IntroFirstTimeActivity" />
@@ -78,9 +78,10 @@
                 <data android:scheme="@string/fb_login_protocol_scheme" />
             </intent-filter>
         </activity>
+        <activity android:name=".Popup"></activity>
         <activity
             android:name=".addToCalendar"
-            android:exported="true" />
+            android:exported="true"></activity>
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"

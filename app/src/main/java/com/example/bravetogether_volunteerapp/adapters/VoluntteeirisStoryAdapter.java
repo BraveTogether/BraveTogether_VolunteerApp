@@ -1,15 +1,18 @@
 package com.example.bravetogether_volunteerapp.adapters;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
-
-
 import androidx.recyclerview.widget.RecyclerView;
 import com.example.bravetogether_volunteerapp.R;
 import com.example.bravetogether_volunteerapp.VoluntteeriesStory;
+
+import java.io.File;
 import java.util.List;
 
 
@@ -22,11 +25,12 @@ public class VoluntteeirisStoryAdapter extends RecyclerView.Adapter<Voluntteeiri
     // you provide access to all the views for a data item in a view holder
     public static class MyViewHolder extends RecyclerView.ViewHolder {
         // each data item is just a string in this case
-        public View view;
-        TextView title;
-        TextView location;
-        TextView description;
-
+        private View view;
+        private TextView title;
+        private TextView location;
+        private TextView description;
+        private ImageView profile_image;
+        private File filePath;
 
         public MyViewHolder(View v) {
             super(v);
@@ -34,8 +38,10 @@ public class VoluntteeirisStoryAdapter extends RecyclerView.Adapter<Voluntteeiri
             title = (TextView)v.findViewById(R.id.textViewDescription3);
             location = (TextView)v.findViewById(R.id.textViewLocation);
             description = (TextView)v.findViewById(R.id.textViewDescription);
+            profile_image = (ImageView) v.findViewById(R.id.imageOfVolunteer);
         }
     }
+
 
     // Provide a suitable constructor (depends on the kind of dataset)
     public VoluntteeirisStoryAdapter(Context context, List<VoluntteeriesStory> eventList) {
@@ -59,10 +65,11 @@ public class VoluntteeirisStoryAdapter extends RecyclerView.Adapter<Voluntteeiri
         // - replace the contents of the view with that element
 
         VoluntteeriesStory event = eventList.get(position);
-
        holder.title.setText(event.getTitle());
        holder.location.setText(event.getLocation());
        holder.description.setText(event.getEventDescription());
+        Bitmap bitmap = BitmapFactory.decodeFile(event.getProfilePic());
+        holder.profile_image.setImageBitmap(bitmap);
     }
 
     // Return the size of your dataset (invoked by the layout manager)
@@ -70,7 +77,9 @@ public class VoluntteeirisStoryAdapter extends RecyclerView.Adapter<Voluntteeiri
     public int getItemCount() {
        return (eventList != null ? eventList.size():0 );
     }
-}
+
+    }
+
 
 
 

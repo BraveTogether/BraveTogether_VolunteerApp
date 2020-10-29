@@ -15,7 +15,7 @@ public class Thanks extends AppCompatActivity {
     }
 
     public void goTohome(View view) {
-        Intent intent = new Intent(this, home.class);
+        Intent intent = new Intent(this, HomeActivity.class);
         startActivity(intent);
     }
 }

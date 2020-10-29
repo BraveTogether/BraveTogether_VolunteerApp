@@ -36,7 +36,7 @@ import com.example.bravetogether_volunteerapp.CallToServer;
 import com.example.bravetogether_volunteerapp.R;
 import com.example.bravetogether_volunteerapp.VolleySingleton;
 import com.example.bravetogether_volunteerapp.adapters.spinnerAdapter;
-import com.example.bravetogether_volunteerapp.home;
+import com.example.bravetogether_volunteerapp.HomeActivity;
 import com.example.bravetogether_volunteerapp.ui.SlideAnimation;
 import com.google.android.gms.common.api.Status;
 import com.google.android.gms.maps.model.LatLng;
@@ -57,7 +57,7 @@ import java.util.Map;
 public class NotificationActivity extends AppCompatActivity {
 
     private final String apiKey = "AIzaSyA0hReShDEqNU3cdSm9eot1atb8-CKBy0Q";
-    private String first_name,family_name,email,password,phone_number,home_address,about,user_desired_location,chosen_time,address,profilePictureUrl;
+    private String first_name,family_name,email,password,phone_number,home_address,about,user_desired_location,chosen_time,address,location,profilePictureUrl,User_desired_location;
     private Context mcontext = this;
     private ConstraintLayout mConstraintLayout;
     private ConstraintSet mConstraintSet = new ConstraintSet();
@@ -73,7 +73,9 @@ public class NotificationActivity extends AppCompatActivity {
     private ArrayList<String> time_windows_strings;
     private TextView time_window_text;
     double latitude,longitude;
+    String switched;
     CallToServer cts;
+    private Switch sw;
 
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
     @Override
@@ -171,7 +173,7 @@ public class NotificationActivity extends AppCompatActivity {
 
         //expanding location box
 
-        Switch sw = findViewById(R.id.switch_button);
+        sw = findViewById(R.id.switch_button);
         sw.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 expandedLocationBox.setVisibility(expandedLocationBox.isShown() ? View.GONE
@@ -281,7 +283,7 @@ public class NotificationActivity extends AppCompatActivity {
     }
 
     public void letsVolunteer(View view) {
-        Intent intent = new Intent(NotificationActivity.this, home.class);
+        Intent intent = new Intent(NotificationActivity.this, HomeActivity.class);
         Intent getIntent = getIntent();
         {
             first_name = getIntent.getStringExtra("first_name");
@@ -293,12 +295,21 @@ public class NotificationActivity extends AppCompatActivity {
             phone_number = getIntent.getStringExtra("phone_number"); //Phone number
             home_address = getIntent.getStringExtra("address"); // address
             about = getIntent.getStringExtra("about"); //About
-            profilePictureUrl = ""; // Get the profile picture URL from intent
+            profilePictureUrl = getIntent.getStringExtra("image"); // Get the profile picture URL from intent
         }
-        cts.registerUser(this,email,password,first_name,family_name,phone_number,home_address,about,"1",profilePictureUrl);
+        {
+            if(String.valueOf(latitude).equals("")){
+                location = "";
+            }else{
+                location = Double.toString(latitude) + Double.toString(longitude);
+            }
+            switched = sw.isChecked() ? "0" : "1";
+        }
 
+        user_desired_location = getIntent.getStringExtra("user_desired_location"); //notification_location_pref_id
 
-        user_desired_location = getIntent.getStringExtra("location");
+        cts.registerUser(this,email,password,first_name,family_name,phone_number,home_address,about,"4",profilePictureUrl,
+                            location,switched,user_desired_location);
 
         //**Get the true values from check days
         if(chosen_time == null){
@@ -306,15 +317,13 @@ public class NotificationActivity extends AppCompatActivity {
         }else{
             //write chosen_time to database
         }
+
+
         if(String.valueOf(latitude).equals("")){
             //need to get the user input location
         }else{
-            //send the latitude and longitude
+            String location = Double.toString(latitude) + Double.toString(longitude);
         }
-
-        //TODO take all those fields and get them to the database
-        //TODO put all those fields (or some) in the SharredPreferences
-        //TODO go to home page DONE!!
     }
 
 }
