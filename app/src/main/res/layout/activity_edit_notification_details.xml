@@ -28,7 +28,7 @@
         android:gravity="right"
         android:layout_marginTop="40dp"
         >
-      <!--  <TextView
+        <TextView
             android:layout_marginEnd="40dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -53,7 +53,8 @@
                 android:onClick="setDistanceRadius"
                 android:layout_marginEnd="10dp"
                 android:textColor="#001925"
-                android:textSize="14sp"></TextView>
+                android:textSize="14sp"
+                tools:ignore="OnClick"></TextView>
 
             <TextView
                 android:layout_width="91dp"
@@ -65,7 +66,8 @@
                 android:gravity="center"
                 android:text="20 קמ"
                 android:textColor="#001925"
-                android:textSize="14sp"></TextView>
+                android:textSize="14sp"
+                tools:ignore="OnClick"></TextView>
             <TextView
                 android:layout_width="91dp"
                 android:id="@+id/distance15"
@@ -76,7 +78,8 @@
                 android:gravity="center"
                 android:text="15 קמ"
                 android:textColor="#001925"
-                android:textSize="14sp"></TextView>
+                android:textSize="14sp"
+                tools:ignore="OnClick"></TextView>
             <TextView
                 android:layout_width="91dp"
                 android:layout_height="28dp"
@@ -86,8 +89,9 @@
                 android:onClick="setDistanceRadius"
                 android:text="10 קמ"
                 android:textColor="#001925"
-                android:textSize="14sp"></TextView>
-        </LinearLayout>-->
+                android:textSize="14sp"
+                tools:ignore="OnClick"></TextView>
+        </LinearLayout>
 
 
         <TextView
