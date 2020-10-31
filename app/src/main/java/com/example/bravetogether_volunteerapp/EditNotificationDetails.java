@@ -11,20 +11,31 @@ import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.NetworkResponse;
 import com.android.volley.Request;
+import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.VolleyLog;
+import com.android.volley.toolbox.HttpHeaderParser;
+import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.JsonRequest;
 import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.example.bravetogether_volunteerapp.LoginFlow.RegisterActivity;
+import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.UnsupportedEncodingException;
 import java.math.BigInteger;
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class EditNotificationDetails extends AppCompatActivity {
 
@@ -42,7 +53,6 @@ public class EditNotificationDetails extends AppCompatActivity {
     ArrayList<TextView> buttonsTimesOfVolunteer = new ArrayList<>();
     ArrayList<TextView> buttonsTypeOfVolunteer = new ArrayList<>();
 
-    static boolean c = true;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -72,63 +82,37 @@ public class EditNotificationDetails extends AppCompatActivity {
         buttonsTypeOfVolunteer.add((TextView)this.findViewById(R.id.typeUnlimited));
 
 
-
-
-
-        //TODO check how to use specific query
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
-                (Request.Method.GET, url + "users_notifications/get_ids_and_preference/"+ uid , null, new Response.Listener<JSONObject>() {
+        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest
+                (Request.Method.GET,
+                        url + "users_notifications/get_ids_and_preference/" + uid,
+                        null, new Response.Listener<JSONArray>() {
+                    /**
+                     * Called when a response is received.
+                     *
+                     * @param response
+                     */
                     @Override
-                    public void onResponse(JSONObject response) {
-                        Log.d("success_response", response.toString());
+                    public void onResponse(JSONArray response) {
                         try {
-                            id = BigInteger.valueOf(response.getInt("id"));
-                            typeOfVolunteer = response.getInt("notification_location_pref_id");
-                            distanceRadius = response.getInt("distance");
-                            c = false;
-                        }
-
-                        catch (JSONException e) {
+                            JSONObject object = (JSONObject) response.get(0);
+                            id = new BigInteger(String.valueOf(object.getInt("id")));
+                            typeOfVolunteer = object.getInt("notification_location_pref_id");
+                            distanceRadius = object.getInt("distance");
+                            timesOfVolunteer = object.getInt("time_window_id");
+                            setDistanceRadius(null);
+                            setTimesOfVolunteer(null);
+                            setTypeOfVolunteer(null);
+                            } catch (JSONException e) {
                             e.printStackTrace();
                         }
                     }
-                },new  Response.ErrorListener(){
+                    }, new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        // TODO: Handle error
-
-                    }
-        });
-        VolleySingleton.getInstance(EditNotificationDetails.this).addToRequestQueue(jsonObjectRequest);
-
-        //request the profile ID form DB don't exit while loop if response from server not got back
-        while (c){};
-
-        JsonObjectRequest jsonObjectRequest2 = new JsonObjectRequest
-                (Request.Method.GET, url + "users_notifications/get_times/"+ id , null, new Response.Listener<JSONObject>() {
-                    @Override
-                    public void onResponse(JSONObject response) {
-                        Log.d("success_response", response.toString());
-                        try {
-                         timesOfVolunteer = response.getInt("users_notifications_id");
-                        }
-
-                        catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                },new  Response.ErrorListener(){
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        // TODO: Handle error
-
+                        Log.e("ERROR", String.valueOf(error));
                     }
                 });
-        VolleySingleton.getInstance(EditNotificationDetails.this).addToRequestQueue(jsonObjectRequest2);
-
-        setDistanceRadius(null);
-        setTimesOfVolunteer(null);
-        setTypeOfVolunteer(null);
+        VolleySingleton.getInstance(EditNotificationDetails.this).addToRequestQueue(jsonArrayRequest);
     }
 
 
@@ -241,53 +225,53 @@ public class EditNotificationDetails extends AppCompatActivity {
 
     //TODO need to edit the profile on the DB
     public void submitEdit(View view){
-        JSONObject distancePref = new JSONObject();
-        JSONObject locationPref = new JSONObject();
-        JSONObject timePref = new JSONObject();
+        JSONObject jsonBody = new JSONObject();
         try {
-            distancePref.put("distance", distanceRadius);
-            locationPref.put("location_pref_id", typeOfVolunteer);
-            timePref.put("time_window", timesOfVolunteer);
+            jsonBody.put("distance", distanceRadius);
+            jsonBody.put("uid", uid);
 
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        final String requestBodyLocation = locationPref.toString();
-        final String requestBodyTime = timePref.toString();
-        StringRequest stringRequestLocation = new StringRequest(Request.Method.POST, url + "user_notification/updates" + uid,
+        final String requestBody = jsonBody.toString();
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, url + "users_notifications/distance" ,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
                         Log.d("success_Response", response);
                     }
-                },
-                new Response.ErrorListener() {
+                }, new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-
+                        Log.e("VOLLEY", error.toString());
                     }
+                })
+        {
+            @Override
+            public byte[] getBody() throws AuthFailureError{
+                try {
+                    return requestBody == null? null : requestBody.getBytes("utf-8");
+                } catch (UnsupportedEncodingException uee){
+                    VolleyLog.wtf("Unsupported Encoding while trying to get the bytes of %s using %s\", requestBody, \"utf-8\"");
+                    return null;
                 }
-        );
+            }
 
-        StringRequest stringRequestTime = new StringRequest(Request.Method.POST, url + "user_notification_dates/" + id,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        Log.d("success_Response", response);
-                    }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-
-                    }
+            @Override
+            protected Response<String> parseNetworkResponse(NetworkResponse response) {
+                String responseString = "";
+                if (response != null) {
+                    responseString = String.valueOf(response.statusCode);
+                    // can get more details such as response.headers
                 }
-        );
+                return Response.success(responseString, HttpHeaderParser.parseCacheHeaders(response));
+            }
 
-        VolleySingleton.getInstance(EditNotificationDetails.this).addToRequestQueue(stringRequestLocation);
-        VolleySingleton.getInstance(EditNotificationDetails.this).addToRequestQueue(stringRequestTime);
-        Intent intent = new Intent(this, RegularProfileActivity.class);
-        startActivity(intent);
+            @Override
+            public String getBodyContentType(){
+                return "application/json";
+            }};
+            VolleySingleton.getInstance(EditNotificationDetails.this).addToRequestQueue(stringRequest);
+
     }
-
 }
