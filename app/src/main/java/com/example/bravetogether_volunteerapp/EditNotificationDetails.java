@@ -40,7 +40,7 @@ import java.util.Objects;
 public class EditNotificationDetails extends AppCompatActivity {
 
     // variable that holds the details of the user volunteer,
-    private Integer distanceRadius = 500;//radius preference
+    private int distanceRadius = 500;//radius preference
     private Integer timesOfVolunteer = 3;//1-morning, 2-noon, 3-evening, 4-no_limit
     private Integer typeOfVolunteer = 1;//1-online, 2-close, 3 anywhere
     private BigInteger uid;// id
@@ -195,7 +195,7 @@ public class EditNotificationDetails extends AppCompatActivity {
 
 
     public void setTypeOfVolunteer(View view){
-        int position = 0;
+        int position = 1;
         if (view != null) {
             for (View v : buttonsTypeOfVolunteer) {
                 if (v.getId() == view.getId()) {
@@ -227,6 +227,9 @@ public class EditNotificationDetails extends AppCompatActivity {
     public void submitEdit(View view){
         JSONObject jsonBody = new JSONObject();
         try {
+            jsonBody.put("id", id);
+            jsonBody.put("time_window_id",timesOfVolunteer);
+            jsonBody.put("location_pref_id", typeOfVolunteer);
             jsonBody.put("distance", distanceRadius);
             jsonBody.put("uid", uid);
 
@@ -234,7 +237,8 @@ public class EditNotificationDetails extends AppCompatActivity {
             e.printStackTrace();
         }
         final String requestBody = jsonBody.toString();
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, url + "users_notifications/distance" ,
+
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, url + "users_notification/updates" ,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
@@ -272,6 +276,6 @@ public class EditNotificationDetails extends AppCompatActivity {
                 return "application/json";
             }};
             VolleySingleton.getInstance(EditNotificationDetails.this).addToRequestQueue(stringRequest);
-
+            this.finish();
     }
 }
