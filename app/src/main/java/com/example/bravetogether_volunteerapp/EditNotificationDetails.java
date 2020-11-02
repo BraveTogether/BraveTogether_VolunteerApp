@@ -223,7 +223,7 @@ public class EditNotificationDetails extends AppCompatActivity {
     }
 
 
-    //TODO need to edit the profile on the DB
+
     public void submitEdit(View view){
         JSONObject jsonBody = new JSONObject();
         try {
@@ -276,6 +276,8 @@ public class EditNotificationDetails extends AppCompatActivity {
                 return "application/json";
             }};
             VolleySingleton.getInstance(EditNotificationDetails.this).addToRequestQueue(stringRequest);
-            this.finish();
+            Intent intent = new Intent(this, RegularProfileActivity.class);
+            startActivity(intent);
+            finish();
     }
 }
