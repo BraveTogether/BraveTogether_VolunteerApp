@@ -56,7 +56,7 @@ import java.util.Map;
 
 public class NotificationActivity extends AppCompatActivity {
 
-    private final String apiKey = "AIzaSyA0hReShDEqNU3cdSm9eot1atb8-CKBy0Q";
+    private final String apiKey = "";
     private String first_name,family_name,email,password,phone_number,home_address,about,user_desired_location,chosen_time,address,location,profilePictureUrl,User_desired_location;
     private Context mcontext = this;
     private ConstraintLayout mConstraintLayout;
